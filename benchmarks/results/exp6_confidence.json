@@ -1,0 +1,120 @@
+{
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "stanfordnlp/sst2",
+    "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "question": "Is the sentiment of this review positive or negative?",
+    "options": [
+      "negative",
+      "positive"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "ablation_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 872,
+      "train_label_counts": {
+        "0": 1327,
+        "1": 1673
+      },
+      "cal_label_counts": {
+        "1": 558,
+        "0": 442
+      },
+      "test_label_counts": {
+        "1": 444,
+        "0": 428
+      },
+      "test_source": "official validation split (capped)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0
+    }
+  },
+  "experiment": "exp6",
+  "description": "confidence methods on test logits (SINGLE SEED)",
+  "n_seeds": 1,
+  "seed": 0,
+  "results": {
+    "max_probability": {
+      "ece_of_confidence": 0.03711711902410613,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.73830182679476,
+      "conf_std": 0.1240332274425131
+    },
+    "margin": {
+      "ece_of_confidence": 0.2355523106018338,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.47660365270091853,
+      "conf_std": 0.2480664529182931
+    },
+    "entropy": {
+      "ece_of_confidence": 0.47944600660357256,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.23270995669917985,
+      "conf_std": 0.2117375793867645
+    },
+    "energy": {
+      "ece_of_confidence": 0.343289704457216,
+      "aurc": 0.2897665500640869,
+      "coverage_at_risk_0.1": 0.0,
+      "coverage_at_risk_0.2": 0.06995412707328796,
+      "conf_mean": 0.37800874216524766,
+      "conf_std": 0.1502303638346958
+    }
+  },
+  "rank_by_ece_of_confidence": [
+    "max_probability",
+    "margin",
+    "energy",
+    "entropy"
+  ],
+  "rank_by_aurc": [
+    "max_probability",
+    "margin",
+    "entropy",
+    "energy"
+  ],
+  "rank_by_coverage_at_risk_0.1": [
+    "max_probability",
+    "margin",
+    "entropy",
+    "energy"
+  ],
+  "wall_time_s": 12.43
+}

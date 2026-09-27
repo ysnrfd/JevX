@@ -1,0 +1,323 @@
+{
+  "provenance": {
+    "modality": "vision",
+    "backbone_id": "facebook/deit-tiny-patch16-224",
+    "backbone_revision_api": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_revision_loaded": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_params": 5561472,
+    "dataset": {
+      "dataset_id": "frgfm/imagenette",
+      "dataset_revision": "a8a496123b40fa739da2acf9b0dae339d30c7bae",
+      "config": "imagenette2-160",
+      "archive": {
+        "url": "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz",
+        "cached": true,
+        "bytes": 99003388,
+        "sha256": "64d0c4859f35a461889e0147755a999a48b49bf38a7e0f9bd27003f10db02fe5",
+        "etag": null
+      },
+      "metadata_train": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/train.txt",
+        "bytes": 499691,
+        "sha256": "971de5a44d69360ebb362bc104887995be67e4cdefdec3d2c51762073b549967"
+      },
+      "metadata_val": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/val.txt",
+        "bytes": 199182,
+        "sha256": "fb0f7c7d9eb125e0fb69d30fc3a2da29d836b080c0a3f61f9e59a09f65ce0221"
+      },
+      "archive_members_indexed": {
+        "train": 9469,
+        "val": 3925,
+        "unmatched": 0
+      }
+    },
+    "question": "Which category does this image belong to?",
+    "options": [
+      "tench",
+      "English springer",
+      "cassette player",
+      "chain saw",
+      "church",
+      "French horn",
+      "garbage truck",
+      "gas pump",
+      "golf ball",
+      "parachute"
+    ],
+    "pooling": "pooling_method='cls' (adapter default = masked_mean); vision: 'cls' because the deit checkpoint has no trained pooler (load report: pooler.dense.* MISSING)",
+    "decision_hidden_size": 192,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 8,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": null
+    },
+    "splits": {
+      "train_n": 800,
+      "cal_n": 300,
+      "test_n": 500,
+      "train_label_counts": {
+        "6": 81,
+        "9": 81,
+        "4": 80,
+        "2": 84,
+        "5": 81,
+        "8": 80,
+        "3": 72,
+        "1": 81,
+        "0": 81,
+        "7": 79
+      },
+      "cal_label_counts": {
+        "0": 31,
+        "2": 32,
+        "8": 30,
+        "9": 30,
+        "1": 30,
+        "4": 30,
+        "7": 30,
+        "6": 30,
+        "5": 30,
+        "3": 27
+      },
+      "test_label_counts": {
+        "2": 46,
+        "1": 50,
+        "6": 50,
+        "4": 52,
+        "9": 50,
+        "3": 49,
+        "0": 49,
+        "7": 53,
+        "5": 50,
+        "8": 51
+      },
+      "train_source": "stratified carve from official train split (disjoint, seed=0)",
+      "test_source": "official validation split, stratified subsample (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "b1_linear": {
+        "train_loss_first": 2.1692687273025513,
+        "train_loss_last": 0.3315922411588522,
+        "trainable_params": 1930,
+        "test": {
+          "accuracy": 0.9440000057220459,
+          "macro_f1": 0.9445561994737697,
+          "nll": 0.2857835548621538,
+          "brier": 0.1043723669613847,
+          "ece": 0.13268034806847573,
+          "mce": 0.4305316739612155
+        }
+      },
+      "b4_linear_temperature": {
+        "accuracy": 0.9440000057220459,
+        "macro_f1": 0.9445561994737697,
+        "nll": 0.15764690368839562,
+        "brier": 0.07075606408916377,
+        "ece": 0.017813877463340767,
+        "mce": 0.43681531548500063
+      },
+      "b2_mlp": {
+        "train_loss_first": 1.495776428626134,
+        "train_loss_last": 0.0668387905909465,
+        "trainable_params": 38986,
+        "test": {
+          "accuracy": 0.972000002861023,
+          "macro_f1": 0.9722108823462594,
+          "nll": 0.10568018263231509,
+          "brier": 0.04690731553162223,
+          "ece": 0.030502836197614694,
+          "mce": 0.7288584113121033
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "b1_linear": {
+        "train_loss_first": 2.164816828874441,
+        "train_loss_last": 0.3266647011041641,
+        "trainable_params": 1930,
+        "test": {
+          "accuracy": 0.9440000057220459,
+          "macro_f1": 0.9440497019463606,
+          "nll": 0.27643140971728153,
+          "brier": 0.10172340776673335,
+          "ece": 0.1299929209649563,
+          "mce": 0.3584875281040486
+        }
+      },
+      "b4_linear_temperature": {
+        "accuracy": 0.9440000057220459,
+        "macro_f1": 0.9440497019463606,
+        "nll": 0.15732314644938636,
+        "brier": 0.07455382452801304,
+        "ece": 0.026296685338020327,
+        "mce": 0.4245969355106354
+      },
+      "b2_mlp": {
+        "train_loss_first": 1.5257647679402278,
+        "train_loss_last": 0.06856027560738417,
+        "trainable_params": 38986,
+        "test": {
+          "accuracy": 0.9639999866485596,
+          "macro_f1": 0.9643990735577175,
+          "nll": 0.11215319939786818,
+          "brier": 0.050103678173698506,
+          "ece": 0.02231319814920421,
+          "mce": 0.8023070991039276
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "b1_linear": {
+        "train_loss_first": 2.26139825124007,
+        "train_loss_last": 0.37360899264995867,
+        "trainable_params": 1930,
+        "test": {
+          "accuracy": 0.9520000219345093,
+          "macro_f1": 0.9523443313862965,
+          "nll": 0.3077906307206214,
+          "brier": 0.11129855932584679,
+          "ece": 0.1500413951277733,
+          "mce": 0.38784290495372953
+        }
+      },
+      "b4_linear_temperature": {
+        "accuracy": 0.9520000219345093,
+        "macro_f1": 0.9523443313862965,
+        "nll": 0.16544455962068572,
+        "brier": 0.07369612698337624,
+        "ece": 0.022173563480377197,
+        "mce": 0.33422848582267767
+      },
+      "b2_mlp": {
+        "train_loss_first": 1.5683488295628474,
+        "train_loss_last": 0.061047927977947086,
+        "trainable_params": 38986,
+        "test": {
+          "accuracy": 0.9660000205039978,
+          "macro_f1": 0.9662041231452525,
+          "nll": 0.10757913501452881,
+          "brier": 0.04936062617870864,
+          "ece": 0.02503715905547144,
+          "mce": 0.29749167561531076
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "b1_linear": {
+      "accuracy": {
+        "mean": 0.9466666777928671,
+        "std": 0.004618811513787102
+      },
+      "macro_f1": {
+        "mean": 0.9469834109354757,
+        "std": 0.004649595250808409
+      },
+      "nll": {
+        "mean": 0.2900018651000189,
+        "std": 0.016099558734053443
+      },
+      "brier": {
+        "mean": 0.10579811135132161,
+        "std": 0.004944233221044044
+      },
+      "ece": {
+        "mean": 0.13757155472040178,
+        "std": 0.010882474716174149
+      },
+      "mce": {
+        "mean": 0.39228736900633115,
+        "std": 0.03622712635040676
+      }
+    },
+    "b2_mlp": {
+      "accuracy": {
+        "mean": 0.9673333366711935,
+        "std": 0.004163335664007669
+      },
+      "macro_f1": {
+        "mean": 0.9676046930164098,
+        "std": 0.004089900501256773
+      },
+      "nll": {
+        "mean": 0.10847083901490402,
+        "std": 0.0033273620978181376
+      },
+      "brier": {
+        "mean": 0.04879053996134313,
+        "std": 0.0016727020823618887
+      },
+      "ece": {
+        "mean": 0.025951064467430115,
+        "std": 0.004170606690578564
+      },
+      "mce": {
+        "mean": 0.6095523953437806,
+        "std": 0.27273631410700183
+      }
+    },
+    "b4_linear_temperature": {
+      "accuracy": {
+        "mean": 0.9466666777928671,
+        "std": 0.004618811513787102
+      },
+      "macro_f1": {
+        "mean": 0.9469834109354757,
+        "std": 0.004649595250808409
+      },
+      "nll": {
+        "mean": 0.16013820325282258,
+        "std": 0.0045982896944977356
+      },
+      "brier": {
+        "mean": 0.07300200520018435,
+        "std": 0.0019917579860887404
+      },
+      "ece": {
+        "mean": 0.022094708760579434,
+        "std": 0.004241953666626637
+      },
+      "mce": {
+        "mean": 0.3985469122727712,
+        "std": 0.05603541012664727
+      }
+    }
+  },
+  "invariants": {
+    "n_batches_checked": 117,
+    "max_prob_sum_abs_dev": 3.5762786865234375e-07,
+    "min_prob": 2.930815738135355e-40,
+    "max_prob": 1.0,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "wall_s": 5.44
+}

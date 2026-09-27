@@ -1,0 +1,237 @@
+{
+  "experiment": "level4_structural_gates",
+  "purpose": "Phase-92 execution protocol on the checkpoints that carry the level-4 quality evidence, plus a trained-vs-random probe of each named pooled field.",
+  "command": "run_level4_continue.py --stage gates",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 2,
+    "cuda_available": false,
+    "dtype": "float32",
+    "hf_home": "D:\\jevx_tmp\\hf"
+  },
+  "platform": "Windows-11-10.0.26100-SP0",
+  "started_utc": "2026-09-26T16:08:42Z",
+  "protocol_source": "tests/integration/matrix_common.execute_matrix_case",
+  "note": "vendor/reports/_jevx_matrix_results.json is NOT written by this run: the harness atexit hook is unregistered so another run's artifact is left untouched.",
+  "results": {
+    "bert | google/bert_uncased_L-2_H-128_A-2": {
+      "family": "bert",
+      "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+      "modality_kind": "text",
+      "pooling": "cls",
+      "matrix_row_status": "bert row exists",
+      "trained_pooled_field": {
+        "backbone": "google/bert_uncased_L-2_H-128_A-2",
+        "pooling": "cls",
+        "params_total": 4385920,
+        "model_class": "BertModel",
+        "config_add_pooling_layer": null,
+        "params_differing_between_two_loads": {},
+        "n_params_differing": 0,
+        "all_params_bitwise_stable": true,
+        "pooler_output_max_abs_diff_two_loads": 0.0,
+        "last_hidden_state_max_abs_diff_two_loads": 0.0,
+        "verdict": "TRAINED_STABLE: every parameter is bit-stable across two independent loads"
+      },
+      "gate": {
+        "status": "PASS",
+        "record": {
+          "family": "bert",
+          "model_id": "google/bert_uncased_L-2_H-128_A-2",
+          "sha": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+          "params": 5666305,
+          "load_seconds": 3.726,
+          "adapter": "encoder",
+          "jevx_conversion": "supported",
+          "representation_field": "pooler_output",
+          "extracted_field": "last_hidden_state",
+          "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+          "model_type": "bert",
+          "architecture": "BertModel",
+          "input_kind": "text",
+          "state_repr_layout": "btd: (1, 128)",
+          "invariants": {
+            "choice_questions": 2,
+            "score_expected_score": 2.015763998031616,
+            "noul_p_yes": 0.47960132360458374,
+            "batch_B2_decisions": 4
+          },
+          "save_load_max_abs_error": 0.0,
+          "base_forward_max_abs_error": 0.0,
+          "backbone_forward_calls_m4": 1,
+          "forward_seconds_m4": 0.0221,
+          "extract_max_abs_error": 0.0,
+          "state_representation_max_abs_error": 0.0,
+          "test": "benchmarks/run_level4_continue.py",
+          "notes": "WAVE-4 level-4 gate on the checkpoint that carries the quality evidence"
+        }
+      },
+      "wall_s": 24.37
+    },
+    "bert | google-bert/bert-base-uncased": {
+      "family": "bert",
+      "backbone_id": "google-bert/bert-base-uncased",
+      "modality_kind": "text",
+      "pooling": "cls",
+      "matrix_row_status": "bert row exists",
+      "trained_pooled_field": {
+        "backbone": "google-bert/bert-base-uncased",
+        "pooling": "cls",
+        "params_total": 109482240,
+        "model_class": "BertModel",
+        "config_add_pooling_layer": null,
+        "params_differing_between_two_loads": {},
+        "n_params_differing": 0,
+        "all_params_bitwise_stable": true,
+        "pooler_output_max_abs_diff_two_loads": 0.0,
+        "last_hidden_state_max_abs_diff_two_loads": 0.0,
+        "verdict": "TRAINED_STABLE: every parameter is bit-stable across two independent loads"
+      },
+      "gate": {
+        "status": "PASS",
+        "record": {
+          "family": "bert",
+          "model_id": "google-bert/bert-base-uncased",
+          "sha": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "params": 123061505,
+          "load_seconds": 3.574,
+          "adapter": "encoder",
+          "jevx_conversion": "supported",
+          "representation_field": "pooler_output",
+          "extracted_field": "last_hidden_state",
+          "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+          "model_type": "bert",
+          "architecture": "BertForMaskedLM",
+          "input_kind": "text",
+          "state_repr_layout": "btd: (1, 768)",
+          "invariants": {
+            "choice_questions": 2,
+            "score_expected_score": 1.8937225341796875,
+            "noul_p_yes": 0.617209255695343,
+            "batch_B2_decisions": 4
+          },
+          "save_load_max_abs_error": 0.0,
+          "base_forward_max_abs_error": 0.0,
+          "backbone_forward_calls_m4": 1,
+          "forward_seconds_m4": 1.6232,
+          "extract_max_abs_error": 0.0,
+          "state_representation_max_abs_error": 0.0,
+          "test": "benchmarks/run_level4_continue.py",
+          "notes": "WAVE-4 level-4 gate on the checkpoint that carries the quality evidence"
+        }
+      },
+      "wall_s": 27.76
+    },
+    "roberta | FacebookAI/roberta-base": {
+      "family": "roberta",
+      "backbone_id": "FacebookAI/roberta-base",
+      "modality_kind": "text",
+      "pooling": "cls",
+      "matrix_row_status": "roberta row exists",
+      "trained_pooled_field": {
+        "backbone": "FacebookAI/roberta-base",
+        "pooling": "cls",
+        "params_total": 124645632,
+        "model_class": "RobertaModel",
+        "config_add_pooling_layer": null,
+        "params_differing_between_two_loads": {
+          "pooler.dense.weight": 0.14059895277023315
+        },
+        "n_params_differing": 1,
+        "all_params_bitwise_stable": false,
+        "pooler_output_max_abs_diff_two_loads": 1.1069602966308594,
+        "last_hidden_state_max_abs_diff_two_loads": 0.0,
+        "verdict": "NOT_TRAINED: 1 parameters differ between two independent loads of the same checkpoint"
+      },
+      "gate": {
+        "status": "FAIL",
+        "error": "AssertionError: FacebookAI/roberta-base: base_forward diverged from the raw checkpoint by 8.695e-01"
+      },
+      "wall_s": 41.86
+    },
+    "deit | facebook/deit-tiny-patch16-224": {
+      "family": "deit",
+      "backbone_id": "facebook/deit-tiny-patch16-224",
+      "modality_kind": "vision",
+      "pooling": "masked_mean",
+      "matrix_row_status": "deit has NO matrix row (breadth-sweep marker only)",
+      "trained_pooled_field": {
+        "backbone": "facebook/deit-tiny-patch16-224",
+        "pooling": "masked_mean",
+        "params_total": 5561472,
+        "model_class": "ViTModel",
+        "config_add_pooling_layer": null,
+        "params_differing_between_two_loads": {
+          "pooler.dense.weight": 0.13297396898269653
+        },
+        "n_params_differing": 1,
+        "all_params_bitwise_stable": false,
+        "error": "ValueError: Couldn't instantiate the backend tokenizer from one of: \n(1) a `tokenizers` library serialization file, \n(2) a slow tokenizer instance to convert or \n(3) an equivalent slow tokenizer class to instantiate and convert. \nYou need to have sentencepiece or tiktoken installed to convert a slow tokenizer to a fast one."
+      },
+      "gate": {
+        "status": "FAIL",
+        "error": "AssertionError: facebook/deit-tiny-patch16-224: base_forward diverged from the raw checkpoint by 1.206e+00"
+      },
+      "wall_s": 36.12
+    },
+    "wav2vec2 | superb/wav2vec2-base-superb-ks": {
+      "family": "wav2vec2",
+      "backbone_id": "superb/wav2vec2-base-superb-ks",
+      "modality_kind": "audio",
+      "pooling": "masked_mean",
+      "matrix_row_status": "wav2vec2 row exists but cites different checkpoints",
+      "trained_pooled_field": {
+        "backbone": "superb/wav2vec2-base-superb-ks",
+        "pooling": "masked_mean",
+        "params_total": 94371712,
+        "model_class": "Wav2Vec2Model",
+        "config_add_pooling_layer": null,
+        "params_differing_between_two_loads": {},
+        "n_params_differing": 0,
+        "all_params_bitwise_stable": true,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType"
+      },
+      "gate": {
+        "status": "PASS",
+        "record": {
+          "family": "wav2vec2",
+          "model_id": "superb/wav2vec2-base-superb-ks",
+          "sha": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+          "params": 107950977,
+          "load_seconds": 31.029,
+          "adapter": "audio",
+          "jevx_conversion": "supported",
+          "representation_field": "last_hidden_state",
+          "extracted_field": "last_hidden_state",
+          "output_class": "Wav2Vec2BaseModelOutput",
+          "model_type": "wav2vec2",
+          "architecture": "Wav2Vec2ForSequenceClassification",
+          "input_kind": "audio",
+          "state_repr_layout": "btd: (1, 768)",
+          "invariants": {
+            "choice_questions": 2,
+            "score_expected_score": 2.0231056213378906,
+            "noul_p_yes": 0.4815979599952698
+          },
+          "save_load_max_abs_error": 0.0,
+          "base_forward_max_abs_error": 0.0,
+          "backbone_forward_calls_m4": 1,
+          "forward_seconds_m4": 0.7222,
+          "extract_max_abs_error": 0.0,
+          "state_representation_max_abs_error": 0.0,
+          "test": "benchmarks/run_level4_continue.py",
+          "notes": "WAVE-4 level-4 gate on the checkpoint that carries the quality evidence"
+        }
+      },
+      "wall_s": 163.02
+    }
+  },
+  "finished_utc": "2026-09-26T16:13:37Z"
+}

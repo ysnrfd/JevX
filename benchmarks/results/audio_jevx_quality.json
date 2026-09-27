@@ -1,0 +1,304 @@
+{
+  "provenance": {
+    "modality": "audio",
+    "backbone_id": "superb/wav2vec2-base-superb-ks",
+    "backbone_revision_api": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_revision_loaded": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_params": 94371712,
+    "dataset": {
+      "dataset_id": "Codec-SUPERB/RAVDESS",
+      "dataset_revision": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "snapshot_component": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "n_clips": 1440,
+      "label_counts": {
+        "neutral": 96,
+        "calm": 192,
+        "happy": 192,
+        "sad": 192,
+        "angry": 192,
+        "fearful": 192,
+        "disgusted": 192,
+        "surprised": 192
+      },
+      "download_wall_s": 3.85
+    },
+    "question": "Which emotion is spoken in this audio?",
+    "options": [
+      "neutral",
+      "calm",
+      "happy",
+      "sad",
+      "angry",
+      "fearful",
+      "disgusted",
+      "surprised"
+    ],
+    "pooling": "pooling_method=None (adapter default = masked_mean); audio: native default -> wav2vec2 has no pooler, adapter masked_mean over frames",
+    "decision_hidden_size": 768,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 16,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": 3.0
+    },
+    "splits": {
+      "train_n": 700,
+      "cal_n": 240,
+      "test_n": 500,
+      "train_label_counts": {
+        "7": 93,
+        "5": 93,
+        "3": 93,
+        "1": 94,
+        "4": 93,
+        "6": 93,
+        "2": 94,
+        "0": 47
+      },
+      "cal_label_counts": {
+        "5": 32,
+        "7": 32,
+        "1": 32,
+        "2": 32,
+        "3": 32,
+        "4": 32,
+        "6": 32,
+        "0": 16
+      },
+      "test_label_counts": {
+        "4": 67,
+        "1": 66,
+        "6": 67,
+        "5": 67,
+        "2": 66,
+        "0": 33,
+        "3": 67,
+        "7": 67
+      },
+      "train_source": "stratified carve from the corpus pool (disjoint, seed=0)",
+      "test_source": "disjoint remainder of the pool after train/cal (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "train_loss_first": 280.33616334741765,
+      "train_loss_last": 2.175676324150779,
+      "trainable_params": 13382401,
+      "uncalibrated": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.02954144620811288,
+        "nll": 3.734736441619785,
+        "brier": 1.1506928464668085,
+        "ece": 0.3810324061512948,
+        "mce": 0.4002786674960094
+      },
+      "temperature": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.02954144620811288,
+        "nll": 2.062589597420597,
+        "brier": 0.8714934694808348,
+        "ece": 0.019771587312221506,
+        "mce": 0.019771587312221506
+      },
+      "isotonic": {
+        "accuracy": 0.13199999928474426,
+        "macro_f1": 0.052759724126965196,
+        "nll": 3.382894844653496,
+        "brier": 1.2612078212277897,
+        "ece": 0.5765984853506088,
+        "mce": 0.7017265784479405
+      }
+    },
+    {
+      "seed": 1,
+      "train_loss_first": 219.7025472467596,
+      "train_loss_last": 2.562583229758523,
+      "trainable_params": 13382401,
+      "uncalibrated": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.036172917158057497,
+        "nll": 2.08871315155152,
+        "brier": 0.8771359678656604,
+        "ece": 0.018812668114900583,
+        "mce": 0.15441860045705522
+      },
+      "temperature": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.036172917158057497,
+        "nll": 2.079448010082612,
+        "brier": 0.875001616010609,
+        "ece": 0.008946826577186595,
+        "mce": 0.008946826577186595
+      },
+      "isotonic": {
+        "accuracy": 0.1679999977350235,
+        "macro_f1": 0.07130971322498769,
+        "nll": 2.08335390891562,
+        "brier": 0.8749901739493525,
+        "ece": 0.014189664065837885,
+        "mce": 0.6749975383281708
+      }
+    },
+    {
+      "seed": 2,
+      "train_loss_first": 180.66743152791804,
+      "train_loss_last": 4.128642624074763,
+      "trainable_params": 13382401,
+      "uncalibrated": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.02954144620811288,
+        "nll": 2.0605899235534197,
+        "brier": 0.8686321281223826,
+        "ece": 0.05621311035752295,
+        "mce": 0.6521378457546234
+      },
+      "temperature": {
+        "accuracy": 0.1340000033378601,
+        "macro_f1": 0.02954144620811288,
+        "nll": 2.060667495067246,
+        "brier": 0.8686422046500067,
+        "ece": 0.056632818102836616,
+        "mce": 0.6503244936466217
+      },
+      "isotonic": {
+        "accuracy": 0.10400000214576721,
+        "macro_f1": 0.046293038451872326,
+        "nll": 2.2538313352117396,
+        "brier": 0.8720114780159506,
+        "ece": 0.09408010309934617,
+        "mce": 0.1666666517655055
+      }
+    }
+  ],
+  "aggregate": {
+    "uncalibrated": {
+      "accuracy": {
+        "mean": 0.1340000033378601,
+        "std": 0.0
+      },
+      "macro_f1": {
+        "mean": 0.03175193652476108,
+        "std": 0.0038286815380737076
+      },
+      "nll": {
+        "mean": 2.628013172241575,
+        "std": 0.9585536110336521
+      },
+      "brier": {
+        "mean": 0.9654869808182838,
+        "std": 0.16044933258059807
+      },
+      "ece": {
+        "mean": 0.15201939487457278,
+        "std": 0.19921073708640794
+      },
+      "mce": {
+        "mean": 0.402278371235896,
+        "std": 0.24886564828473354
+      }
+    },
+    "temperature": {
+      "accuracy": {
+        "mean": 0.1340000033378601,
+        "std": 0.0
+      },
+      "macro_f1": {
+        "mean": 0.03175193652476108,
+        "std": 0.0038286815380737076
+      },
+      "nll": {
+        "mean": 2.067568367523485,
+        "std": 0.010332862617089909
+      },
+      "brier": {
+        "mean": 0.8717124300471503,
+        "std": 0.0031853549269335907
+      },
+      "ece": {
+        "mean": 0.028450410664081573,
+        "std": 0.024999598557290576
+      },
+      "mce": {
+        "mean": 0.22634763584534326,
+        "std": 0.36721461820647444
+      }
+    },
+    "isotonic": {
+      "accuracy": {
+        "mean": 0.13466666638851166,
+        "std": 0.03208322293563947
+      },
+      "macro_f1": {
+        "mean": 0.05678749193460841,
+        "std": 0.012985595454586283
+      },
+      "nll": {
+        "mean": 2.5733600295936188,
+        "std": 0.7062404695389947
+      },
+      "brier": {
+        "mean": 1.0027364910643641,
+        "std": 0.22384769273929045
+      },
+      "ece": {
+        "mean": 0.22828941750526424,
+        "std": 0.30427787566583164
+      },
+      "mce": {
+        "mean": 0.5144635895138723,
+        "std": 0.30149733469267526
+      }
+    }
+  },
+  "equivalence": [
+    {
+      "seed": 0,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 1,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 2,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    }
+  ],
+  "invariants": {
+    "n_batches_checked": 36,
+    "max_prob_sum_abs_dev": 2.384185791015625e-07,
+    "min_prob": 1.033811827255704e-06,
+    "max_prob": 0.5565097332000732,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "wall_s": 227.86
+}

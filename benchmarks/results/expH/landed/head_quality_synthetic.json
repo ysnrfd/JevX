@@ -1,0 +1,462 @@
+{
+  "experiment": "exp_h_head_quality",
+  "dataset": "synthetic",
+  "smoke": false,
+  "head_version_under_test": "v1 (as shipped)",
+  "protocol": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "epochs": 4,
+    "lr": 0.001,
+    "batch_size": 64,
+    "train_n": 3000,
+    "test_n": 1500,
+    "feature_dim": 128,
+    "num_classes": 4,
+    "question": "Which Gaussian component generated this vector?",
+    "options": [
+      "c0",
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "optimizer": "torch.optim.AdamW (HeadTrainer default), grad_clip=1.0",
+    "loss": "jevx.training.choice_loss (masked cross-entropy)",
+    "note": "IDENTICAL protocol for every cell: same frozen feature matrix, same splits, same seeds, same optimizer / lr / epochs / batch, same choice_loss. The frozen backbone is not in the loop (featurize-once)."
+  },
+  "features": {
+    "kind": "synthetic_gaussian_mixture",
+    "dim": 128,
+    "classes": 4,
+    "snr_margin": 0.28,
+    "note": "Kingman-style equiangular Gaussian mixture, unit-variance features, D=128=K-free control matching the tiny BERT backbone width. No backbone / no text: any head-vs-probe gap is purely the scoring function.",
+    "source": "computed"
+  },
+  "cells": {
+    "p1_linear": {
+      "label": "P1 Linear probe [D->K] on pooled state (= baseline B1)",
+      "per_seed": [
+        {
+          "seed": 0,
+          "accuracy": 0.9366666674613953,
+          "macro_f1": 0.9368925056625763,
+          "nll": 0.32226353048319795,
+          "ece": 0.1674010761578878,
+          "brier": 0.14220542989569723,
+          "train_loss_first": 1.1524836471740236,
+          "train_loss_last": 0.34553395433628814,
+          "trainable_params": 516
+        },
+        {
+          "seed": 1,
+          "accuracy": 0.9386666417121887,
+          "macro_f1": 0.9389474385585168,
+          "nll": 0.3392680891219158,
+          "ece": 0.18463159964481987,
+          "brier": 0.15001284773624501,
+          "train_loss_first": 1.2847918893428558,
+          "train_loss_last": 0.3598949909210205,
+          "trainable_params": 516
+        },
+        {
+          "seed": 2,
+          "accuracy": 0.9393333196640015,
+          "macro_f1": 0.9397341077383263,
+          "nll": 0.321147720040297,
+          "ece": 0.1737370331486066,
+          "brier": 0.14068313838648364,
+          "train_loss_first": 1.166609838921973,
+          "train_loss_last": 0.34542442350945574,
+          "trainable_params": 516
+        }
+      ],
+      "aggregate": {
+        "seed": {
+          "mean": 1.0,
+          "std": 1.0
+        },
+        "accuracy": {
+          "mean": 0.9382222096125284,
+          "std": 0.0013877674195708846
+        },
+        "macro_f1": {
+          "mean": 0.9385246839864733,
+          "std": 0.001467213910908891
+        },
+        "nll": {
+          "mean": 0.32755977988180357,
+          "std": 0.010155030141890006
+        },
+        "ece": {
+          "mean": 0.1752565696504381,
+          "std": 0.008715186647096444
+        },
+        "brier": {
+          "mean": 0.14430047200614196,
+          "std": 0.005005274240354743
+        },
+        "train_loss_first": {
+          "mean": 1.2012951251462842,
+          "std": 0.07265445304176735
+        },
+        "train_loss_last": {
+          "mean": 0.3502844562555881,
+          "std": 0.008323147341427686
+        },
+        "trainable_params": {
+          "mean": 516.0,
+          "std": 0.0
+        }
+      },
+      "wall_s": 160.59
+    },
+    "p2_mlp": {
+      "label": "P2 MLP probe [D->H->K] on pooled state (= baseline B2)",
+      "per_seed": [
+        {
+          "seed": 0,
+          "accuracy": 0.9606666564941406,
+          "macro_f1": 0.9607021959865756,
+          "nll": 0.12061520796416142,
+          "ece": 0.031321123699347204,
+          "brier": 0.05991476074001127,
+          "train_loss_first": 0.9205897298265011,
+          "train_loss_last": 0.0915163237839303,
+          "trainable_params": 17028
+        },
+        {
+          "seed": 1,
+          "accuracy": 0.9599999785423279,
+          "macro_f1": 0.960196731076239,
+          "nll": 0.12372487002322616,
+          "ece": 0.027863023499647754,
+          "brier": 0.061749715441626954,
+          "train_loss_first": 0.9191225183771011,
+          "train_loss_last": 0.09097284950474475,
+          "trainable_params": 17028
+        },
+        {
+          "seed": 2,
+          "accuracy": 0.9639999866485596,
+          "macro_f1": 0.9641551426930155,
+          "nll": 0.12231583290647371,
+          "ece": 0.031334022283554044,
+          "brier": 0.060172984033044934,
+          "train_loss_first": 0.8915884304553905,
+          "train_loss_last": 0.09083558373311733,
+          "trainable_params": 17028
+        }
+      ],
+      "aggregate": {
+        "seed": {
+          "mean": 1.0,
+          "std": 1.0
+        },
+        "accuracy": {
+          "mean": 0.961555540561676,
+          "std": 0.002143035785193172
+        },
+        "macro_f1": {
+          "mean": 0.9616846899186101,
+          "std": 0.0021543505696197877
+        },
+        "nll": {
+          "mean": 0.12221863696462043,
+          "std": 0.0015571078378619919
+        },
+        "ece": {
+          "mean": 0.03017272316084967,
+          "std": 0.002000268978684069
+        },
+        "brier": {
+          "mean": 0.06061248673822772,
+          "std": 0.000993295857306681
+        },
+        "train_loss_first": {
+          "mean": 0.9104335595529975,
+          "std": 0.016336840128630157
+        },
+        "train_loss_last": {
+          "mean": 0.09110825234059745,
+          "std": 0.000360003055768879
+        },
+        "trainable_params": {
+          "mean": 17028.0,
+          "std": 0.0
+        }
+      },
+      "wall_s": 160.6
+    },
+    "p4_state_only": {
+      "label": "P4 JevX head v1, question/schema pathway bypassed (state-only)",
+      "per_seed": [
+        {
+          "seed": 0,
+          "accuracy": 0.949999988079071,
+          "macro_f1": 0.9501105201348838,
+          "nll": 0.18530178709058373,
+          "ece": 0.024422508915265484,
+          "brier": 0.07850965185660531,
+          "train_loss_first": 0.2747219374125942,
+          "train_loss_last": 0.07571303247018381,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 1,
+          "accuracy": 0.9559999704360962,
+          "macro_f1": 0.9559394439536175,
+          "nll": 0.18719089786086798,
+          "ece": 0.024626183867454503,
+          "brier": 0.07575036958574906,
+          "train_loss_first": 0.30958999851916696,
+          "train_loss_last": 0.0769794109064412,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 2,
+          "accuracy": 0.9539999961853027,
+          "macro_f1": 0.9540281196836558,
+          "nll": 0.1754108439722119,
+          "ece": 0.024448765178521452,
+          "brier": 0.07202454874222536,
+          "train_loss_first": 0.2577016363118557,
+          "train_loss_last": 0.07719902350428573,
+          "trainable_params": 1263873
+        }
+      ],
+      "aggregate": {
+        "seed": {
+          "mean": 1.0,
+          "std": 1.0
+        },
+        "accuracy": {
+          "mean": 0.95333331823349,
+          "std": 0.003055043647761548
+        },
+        "macro_f1": {
+          "mean": 0.9533593612573856,
+          "std": 0.002971450251254527
+        },
+        "nll": {
+          "mean": 0.1826345096412212,
+          "std": 0.006326783870879318
+        },
+        "ece": {
+          "mean": 0.024499152653747146,
+          "std": 0.00011079280112902116
+        },
+        "brier": {
+          "mean": 0.07542819006152658,
+          "std": 0.0032545338123003606
+        },
+        "train_loss_first": {
+          "mean": 0.28067119074787233,
+          "std": 0.026450817465151613
+        },
+        "train_loss_last": {
+          "mean": 0.07663048896030358,
+          "std": 0.0008020924084730964
+        },
+        "trainable_params": {
+          "mean": 1263873.0,
+          "std": 0.0
+        }
+      },
+      "wall_s": 160.6
+    },
+    "p15_option_unnormalized": {
+      "label": "P15 v2 head, option_normalize=False (the PRE-FIX formula, shipped flag off)",
+      "per_seed": [
+        {
+          "seed": 0,
+          "accuracy": 0.9486666917800903,
+          "macro_f1": 0.9490497238104182,
+          "nll": 0.1554062325220729,
+          "ece": 0.010237525204817449,
+          "brier": 0.07968290429293731,
+          "train_loss_first": 0.38274879262168354,
+          "train_loss_last": 0.10983454610439057,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 1,
+          "accuracy": 0.9513333439826965,
+          "macro_f1": 0.9511573770856339,
+          "nll": 0.1629135063075446,
+          "ece": 0.02259124698241555,
+          "brier": 0.0752298404390175,
+          "train_loss_first": 0.39172576130070585,
+          "train_loss_last": 0.10551476115955317,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 2,
+          "accuracy": 0.9446666836738586,
+          "macro_f1": 0.9446384348354091,
+          "nll": 0.1739787555323334,
+          "ece": 0.018546973705291757,
+          "brier": 0.08271371296721267,
+          "train_loss_first": 0.4361164704599279,
+          "train_loss_last": 0.09935495522903635,
+          "trainable_params": 1263873
+        }
+      ],
+      "aggregate": {
+        "seed": {
+          "mean": 1.0,
+          "std": 1.0
+        },
+        "accuracy": {
+          "mean": 0.9482222398122152,
+          "std": 0.003355479560684241
+        },
+        "macro_f1": {
+          "mean": 0.9482818452438204,
+          "std": 0.0033266169204195398
+        },
+        "nll": {
+          "mean": 0.1640994981206503,
+          "std": 0.00934288955180513
+        },
+        "ece": {
+          "mean": 0.017125248630841586,
+          "std": 0.006298379718631265
+        },
+        "brier": {
+          "mean": 0.07920881923305582,
+          "std": 0.0037643929773033416
+        },
+        "train_loss_first": {
+          "mean": 0.40353034146077243,
+          "std": 0.02857513506579169
+        },
+        "train_loss_last": {
+          "mean": 0.10490142083099337,
+          "std": 0.0052666494090341945
+        },
+        "trainable_params": {
+          "mean": 1263873.0,
+          "std": 0.0
+        }
+      },
+      "wall_s": 160.6
+    },
+    "p13_unit_option": {
+      "label": "P13 v2 head + candidate (b3): option rows L2-normalized to a unit direction",
+      "per_seed": [
+        {
+          "seed": 0,
+          "accuracy": 0.9486666917800903,
+          "macro_f1": 0.9485295636305976,
+          "nll": 0.16042850147179813,
+          "ece": 0.014997052053610491,
+          "brier": 0.07871994933886962,
+          "train_loss_first": 0.39357652138680854,
+          "train_loss_last": 0.0936768904050931,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 1,
+          "accuracy": 0.9446666836738586,
+          "macro_f1": 0.9443988310289984,
+          "nll": 0.1845701697816347,
+          "ece": 0.029042806565761498,
+          "brier": 0.08297885254557195,
+          "train_loss_first": 0.40083029842440115,
+          "train_loss_last": 0.09929779253186698,
+          "trainable_params": 1263873
+        },
+        {
+          "seed": 2,
+          "accuracy": 0.9453333616256714,
+          "macro_f1": 0.9452270907837893,
+          "nll": 0.19379821731752703,
+          "ece": 0.025409225404262544,
+          "brier": 0.08744658317747045,
+          "train_loss_first": 0.39710123630914285,
+          "train_loss_last": 0.09230232561760127,
+          "trainable_params": 1263873
+        }
+      ],
+      "aggregate": {
+        "seed": {
+          "mean": 1.0,
+          "std": 1.0
+        },
+        "accuracy": {
+          "mean": 0.9462222456932068,
+          "std": 0.002143035785193172
+        },
+        "macro_f1": {
+          "mean": 0.9460518284811285,
+          "std": 0.0021853791795791127
+        },
+        "nll": {
+          "mean": 0.17959896285698662,
+          "std": 0.017231342304705237
+        },
+        "ece": {
+          "mean": 0.023149694674544846,
+          "std": 0.007290398774608049
+        },
+        "brier": {
+          "mean": 0.08304846168730401,
+          "std": 0.004363733334280722
+        },
+        "train_loss_first": {
+          "mean": 0.39716935204011755,
+          "std": 0.003627368211580005
+        },
+        "train_loss_last": {
+          "mean": 0.09509233618485378,
+          "std": 0.003706312777374341
+        },
+        "trainable_params": {
+          "mean": 1263873.0,
+          "std": 0.0
+        }
+      },
+      "wall_s": 160.6
+    }
+  },
+  "ranking_by_accuracy": [
+    {
+      "cell": "p2_mlp",
+      "accuracy": 0.961555540561676
+    },
+    {
+      "cell": "p4_state_only",
+      "accuracy": 0.95333331823349
+    },
+    {
+      "cell": "p15_option_unnormalized",
+      "accuracy": 0.9482222398122152
+    },
+    {
+      "cell": "p13_unit_option",
+      "accuracy": 0.9462222456932068
+    },
+    {
+      "cell": "p1_linear",
+      "accuracy": 0.9382222096125284
+    }
+  ],
+  "failures": {},
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 2,
+    "cuda_available": false,
+    "dtype": "float32"
+  },
+  "wall_s": 162.45
+}

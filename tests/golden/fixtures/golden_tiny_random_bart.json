@@ -1,0 +1,67 @@
+{
+  "model_id": "hf-internal-testing/tiny-random-BartForConditionalGeneration",
+  "seed": 0,
+  "decision_type": "choice",
+  "state": "The maintenance crew inspected the bridge deck and confirmed that the support damage had been repaired before the storm arrived.",
+  "state_kind": "text",
+  "questions": [
+    "Is this content safe to deploy?",
+    "Which disposition fits this item?"
+  ],
+  "options": [
+    [
+      "safe",
+      "unsafe"
+    ],
+    [
+      "approve",
+      "review",
+      "reject"
+    ]
+  ],
+  "tolerance": 1e-06,
+  "adapter": "encoder_decoder",
+  "representation_field": "encoder_last_hidden_state",
+  "jevx_conversion": "supported",
+  "probs": [
+    [
+      0.4996584,
+      0.5003415,
+      0.0
+    ],
+    [
+      0.3337221,
+      0.3322302,
+      0.3340478
+    ]
+  ],
+  "predicted_indices": [
+    1,
+    2
+  ],
+  "state_representation": {
+    "sum": -2e-07,
+    "mean": -0.0,
+    "std": 0.9707023
+  },
+  "config": {
+    "model_type": "jevx",
+    "base_model_name_or_path": "hf-internal-testing/tiny-random-BartForConditionalGeneration",
+    "base_model_type": "bart",
+    "representation_strategy": "native",
+    "pooling_method": null,
+    "fusion_type": "concat",
+    "decision_hidden_size": 16,
+    "question_hidden_size": 16,
+    "schema_hidden_size": 16,
+    "decision_primitives": [
+      "choice",
+      "score",
+      "noul"
+    ],
+    "calibration_method": "none",
+    "confidence_method": "max_probability",
+    "freeze_base_model": true,
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,566 @@
+{
+  "hf-internal-testing/tiny-random-bert": {
+    "family": "bert",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "f171d7baecaf37b5da5a3616d8833b9969753535",
+      "pipeline_tag": null,
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "bert",
+      "architectures": null,
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:BertTokenizer",
+      "processor": "ok:BertTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-BertModel": {
+    "family": "bert",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "fc08ad9cc33be9aef4f55cc80e16ef5ae3d5981c",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "bert",
+      "architectures": [
+        "BertModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:BertTokenizer",
+      "processor": "ok:BertTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-t5": {
+    "family": "t5",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "2f582cd79ed5795b71539951d237945bc1c5ac7e",
+      "pipeline_tag": null,
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "t5",
+      "architectures": null,
+      "is_encoder_decoder": true,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:T5Tokenizer",
+      "processor": "ok:T5Tokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-T5Model": {
+    "family": "t5",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "2a5ee5333756aada4e25b81a06ec7a6406e6b126",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "t5",
+      "architectures": [
+        "T5Model"
+      ],
+      "is_encoder_decoder": true,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:T5Tokenizer",
+      "processor": "ok:T5Tokenizer"
+    }
+  },
+  "sshleifer/tiny-gpt2": {
+    "family": "gpt2",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be",
+      "pipeline_tag": "text-generation",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "gpt2",
+      "architectures": [
+        "GPT2LMHeadModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:GPT2Tokenizer",
+      "processor": "ok:GPT2Tokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-GPT2Model": {
+    "family": "gpt2",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "d6694b0d8fe17978761c9305dc151780506b192e",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "gpt2",
+      "architectures": [
+        "GPT2Model"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:GPT2Tokenizer",
+      "processor": "ok:GPT2Tokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-RobertaModel": {
+    "family": "roberta",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "5f1d755e93e9fe46b9bb90404f1e810515b2410a",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "roberta",
+      "architectures": [
+        "RobertaModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:RobertaTokenizer",
+      "processor": "ok:RobertaTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-DistilBertModel": {
+    "family": "distilbert",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "cc4425ad0676f3ec00e8bffe485fe83cae61041a",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "distilbert",
+      "architectures": [
+        "DistilBertModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:DistilBertTokenizer",
+      "processor": "ok:DistilBertTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-AlbertModel": {
+    "family": "albert",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "34a63314686b64aaeb595ddb95006f1ff2ffda17",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "albert",
+      "architectures": [
+        "AlbertModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:AlbertTokenizer",
+      "processor": "ok:AlbertTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-DebertaV2Model": {
+    "family": "deberta-v2",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "9dab549e7d9f719c1438cdd3928d59545c72b0d0",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "deberta-v2",
+      "architectures": [
+        "DebertaV2Model"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:DebertaV2Tokenizer",
+      "processor": "ok:DebertaV2Tokenizer"
+    }
+  },
+  "yujiepan/qwen2-tiny-random": {
+    "family": "qwen2",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "b01b9c82aaf1efb4c26c94b6342d611b397245ff",
+      "pipeline_tag": "text-generation",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "qwen2",
+      "architectures": [
+        "Qwen2ForCausalLM"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:Qwen2Tokenizer",
+      "processor": "ok:Qwen2Tokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-LlamaForCausalLM": {
+    "family": "llama",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "9fb191250dd56d0ba7ec9785a025ed29c03d5998",
+      "pipeline_tag": "text-generation",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "llama",
+      "architectures": [
+        "LlamaForCausalLM"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:LlamaTokenizer",
+      "processor": "ok:LlamaTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-BartForConditionalGeneration": {
+    "family": "bart",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "45bbb767e8601574fe69ce80e82ed295716c9076",
+      "pipeline_tag": null,
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "bart",
+      "architectures": [
+        "BartForConditionalGeneration"
+      ],
+      "is_encoder_decoder": true,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:RobertaTokenizer",
+      "processor": "ok:RobertaTokenizer"
+    }
+  },
+  "sentence-transformers/all-MiniLM-L6-v2": {
+    "family": "semantic-bert",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "pipeline_tag": "sentence-similarity",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": false,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "bert",
+      "architectures": [
+        "BertModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "tokenizer": "ok:BertTokenizer",
+      "processor": "ok:BertTokenizer"
+    }
+  },
+  "hf-internal-testing/tiny-random-ViTModel": {
+    "family": "vit",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "31817b7a64ebc3333fcd4801dfbb356ab07b13dd",
+      "pipeline_tag": "image-feature-extraction",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "vit",
+      "architectures": [
+        "ViTModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "processor": "ok:ViTImageProcessor"
+    }
+  },
+  "hf-internal-testing/tiny-random-CLIPModel": {
+    "family": "clip",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "703b075aa101387f504f075dca2e0c78c99ee420",
+      "pipeline_tag": "zero-shot-image-classification",
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "clip",
+      "architectures": [
+        "CLIPModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": true,
+      "text_config": true
+    },
+    "featurizers": {
+      "processor": "ok:CLIPProcessor"
+    }
+  },
+  "hf-internal-testing/tiny-random-SiglipModel": {
+    "family": "siglip",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "5f4a673ccb0e7dc620d13a946dd99f95dba45653",
+      "pipeline_tag": "zero-shot-image-classification",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "siglip",
+      "architectures": [
+        "SiglipModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": true,
+      "text_config": true
+    },
+    "featurizers": {
+      "processor": "FAIL:ImportError: \nSiglipTokenizer requires the SentencePiece library but it was not found in your environment. Check out the instructions on the\ninstallation page of its repo: h",
+      "feature_extractor": "FAIL:ValueError: Unrecognized feature extractor in hf-internal-testing/tiny-random-SiglipModel. Should have a `feature_extractor_type` key in its preprocessor_config.json of con"
+    }
+  },
+  "hf-internal-testing/tiny-random-Wav2Vec2Model": {
+    "family": "wav2vec2",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "7a998ee3ee0619a52828a79c3eed6872fd053f37",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "wav2vec2",
+      "architectures": [
+        "Wav2Vec2Model"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "processor": "ok:Wav2Vec2Processor"
+    }
+  },
+  "hf-internal-testing/tiny-random-ASTModel": {
+    "family": "ast",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "75e68f956f6f2c0709b01e596e7a6aecb1b29dce",
+      "pipeline_tag": "feature-extraction",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "audio-spectrogram-transformer",
+      "architectures": [
+        "ASTModel"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "processor": "ok:ASTFeatureExtractor"
+    }
+  },
+  "hf-internal-testing/tiny-random-WhisperForConditionalGeneration": {
+    "family": "whisper",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "598101b885b24508042d9292e54aa04bff96318e",
+      "pipeline_tag": "automatic-speech-recognition",
+      "has_tokenizer_json": false,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "whisper",
+      "architectures": [
+        "WhisperForConditionalGeneration"
+      ],
+      "is_encoder_decoder": true,
+      "vision_config": false,
+      "text_config": false
+    },
+    "featurizers": {
+      "processor": "ok:WhisperProcessor"
+    }
+  },
+  "katuni4ka/tiny-random-llava-next": {
+    "family": "llava_next",
+    "api": {
+      "http": 200,
+      "exists": true,
+      "sha": "7ca7d02e9a5da08ddd26b306b9482632578dc471",
+      "pipeline_tag": null,
+      "has_tokenizer_json": true,
+      "has_processor_config": false,
+      "has_preprocessor_config": true,
+      "has_fe_config": false
+    },
+    "config": {
+      "ok": true,
+      "model_type": "llava_next",
+      "architectures": [
+        "LlavaNextForConditionalGeneration"
+      ],
+      "is_encoder_decoder": false,
+      "vision_config": true,
+      "text_config": true
+    },
+    "featurizers": {
+      "processor": "ok:LlavaNextProcessor"
+    }
+  },
+  "_libs": {
+    "soundfile": false,
+    "sentencepiece": false,
+    "librosa": false,
+    "torchaudio": false
+  },
+  "_python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]"
+}

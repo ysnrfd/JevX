@@ -1,0 +1,126 @@
+{
+  "provenance": {
+    "modality": "audio",
+    "backbone_id": "superb/wav2vec2-base-superb-ks",
+    "backbone_revision_api": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_revision_loaded": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_params": 94371712,
+    "dataset": {
+      "dataset_id": "Codec-SUPERB/RAVDESS",
+      "dataset_revision": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "snapshot_component": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "n_clips": 1440,
+      "label_counts": {
+        "neutral": 96,
+        "calm": 192,
+        "happy": 192,
+        "sad": 192,
+        "angry": 192,
+        "fearful": 192,
+        "disgusted": 192,
+        "surprised": 192
+      },
+      "download_wall_s": 3.85
+    },
+    "question": "Which emotion is spoken in this audio?",
+    "options": [
+      "neutral",
+      "calm",
+      "happy",
+      "sad",
+      "angry",
+      "fearful",
+      "disgusted",
+      "surprised"
+    ],
+    "pooling": "pooling_method=None (adapter default = masked_mean); audio: native default -> wav2vec2 has no pooler, adapter masked_mean over frames",
+    "decision_hidden_size": 768,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 16,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": 3.0
+    },
+    "splits": {
+      "train_n": 700,
+      "cal_n": 240,
+      "test_n": 500,
+      "train_label_counts": {
+        "7": 93,
+        "5": 93,
+        "3": 93,
+        "1": 94,
+        "4": 93,
+        "6": 93,
+        "2": 94,
+        "0": 47
+      },
+      "cal_label_counts": {
+        "5": 32,
+        "7": 32,
+        "1": 32,
+        "2": 32,
+        "3": 32,
+        "4": 32,
+        "6": 32,
+        "0": 16
+      },
+      "test_label_counts": {
+        "4": 67,
+        "1": 66,
+        "6": 67,
+        "5": 67,
+        "2": 66,
+        "0": 33,
+        "3": 67,
+        "7": 67
+      },
+      "train_source": "stratified carve from the corpus pool (disjoint, seed=0)",
+      "test_source": "disjoint remainder of the pool after train/cal (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "latency": {
+    "jevx_choice_e2e_batch1": {
+      "mean_ms": 2302.150719000201,
+      "std_ms": 803.8377446204765,
+      "min_ms": 1395.6687999889255,
+      "max_ms": 7617.895800009137,
+      "warmup": 10,
+      "iters": 100
+    },
+    "linear_probe_head_only_batch1": {
+      "mean_ms": 0.27789199783001095,
+      "std_ms": 0.3102616008111882,
+      "min_ms": 0.1373999984934926,
+      "max_ms": 2.674899995326996,
+      "warmup": 10,
+      "iters": 100
+    },
+    "warmup": 10,
+    "iters": 100,
+    "note": "ms per single-example call on a shared host; e2e = processor + frozen backbone + JevX heads through model.choice (torch.no_grad); head-only = cached feature -> Linear"
+  },
+  "wall_s": 252.52
+}

@@ -1,0 +1,6754 @@
+{
+ "base": [
+  {
+   "model_type": "afmoe",
+   "base_model_class": "AfmoeModel",
+   "config_class": "AfmoeConfig"
+  },
+  {
+   "model_type": "aimv2",
+   "base_model_class": "Aimv2Model",
+   "config_class": "Aimv2Config"
+  },
+  {
+   "model_type": "aimv2_vision_model",
+   "base_model_class": "Aimv2VisionModel",
+   "config_class": "Aimv2VisionConfig"
+  },
+  {
+   "model_type": "albert",
+   "base_model_class": "AlbertModel",
+   "config_class": "AlbertConfig"
+  },
+  {
+   "model_type": "align",
+   "base_model_class": "AlignModel",
+   "config_class": "AlignConfig"
+  },
+  {
+   "model_type": "altclip",
+   "base_model_class": "AltCLIPModel",
+   "config_class": "AltCLIPConfig"
+  },
+  {
+   "model_type": "apertus",
+   "base_model_class": "ApertusModel",
+   "config_class": "ApertusConfig"
+  },
+  {
+   "model_type": "arcee",
+   "base_model_class": "ArceeModel",
+   "config_class": "ArceeConfig"
+  },
+  {
+   "model_type": "aria",
+   "base_model_class": "AriaModel",
+   "config_class": "AriaConfig"
+  },
+  {
+   "model_type": "aria_text",
+   "base_model_class": "AriaTextModel",
+   "config_class": "AriaTextConfig"
+  },
+  {
+   "model_type": "audio-spectrogram-transformer",
+   "base_model_class": "ASTModel",
+   "config_class": "ASTConfig"
+  },
+  {
+   "model_type": "audioflamingo3",
+   "base_model_class": "AudioFlamingo3Model",
+   "config_class": "AudioFlamingo3Config"
+  },
+  {
+   "model_type": "audioflamingo3_encoder",
+   "base_model_class": "AudioFlamingo3Encoder",
+   "config_class": "AudioFlamingo3EncoderConfig"
+  },
+  {
+   "model_type": "autoformer",
+   "base_model_class": "AutoformerModel",
+   "config_class": "AutoformerConfig"
+  },
+  {
+   "model_type": "axk1",
+   "base_model_class": "AXK1Model",
+   "config_class": "AXK1Config"
+  },
+  {
+   "model_type": "axk2",
+   "base_model_class": "AXK2Model",
+   "config_class": "AXK2Config"
+  },
+  {
+   "model_type": "aya_vision",
+   "base_model_class": "AyaVisionModel",
+   "config_class": "AyaVisionConfig"
+  },
+  {
+   "model_type": "bamba",
+   "base_model_class": "BambaModel",
+   "config_class": "BambaConfig"
+  },
+  {
+   "model_type": "bark",
+   "base_model_class": "BarkModel",
+   "config_class": "BarkConfig"
+  },
+  {
+   "model_type": "bart",
+   "base_model_class": "BartModel",
+   "config_class": "BartConfig"
+  },
+  {
+   "model_type": "beit",
+   "base_model_class": "BeitModel",
+   "config_class": "BeitConfig"
+  },
+  {
+   "model_type": "bert",
+   "base_model_class": "BertModel",
+   "config_class": "BertConfig"
+  },
+  {
+   "model_type": "bert-generation",
+   "base_model_class": "BertGenerationEncoder",
+   "config_class": "BertGenerationConfig"
+  },
+  {
+   "model_type": "big_bird",
+   "base_model_class": "BigBirdModel",
+   "config_class": "BigBirdConfig"
+  },
+  {
+   "model_type": "bigbird_pegasus",
+   "base_model_class": "BigBirdPegasusModel",
+   "config_class": "BigBirdPegasusConfig"
+  },
+  {
+   "model_type": "biogpt",
+   "base_model_class": "BioGptModel",
+   "config_class": "BioGptConfig"
+  },
+  {
+   "model_type": "bit",
+   "base_model_class": "BitModel",
+   "config_class": "BitConfig"
+  },
+  {
+   "model_type": "bitnet",
+   "base_model_class": "BitNetModel",
+   "config_class": "BitNetConfig"
+  },
+  {
+   "model_type": "blenderbot",
+   "base_model_class": "BlenderbotModel",
+   "config_class": "BlenderbotConfig"
+  },
+  {
+   "model_type": "blenderbot-small",
+   "base_model_class": "BlenderbotSmallModel",
+   "config_class": "BlenderbotSmallConfig"
+  },
+  {
+   "model_type": "blip",
+   "base_model_class": "BlipModel",
+   "config_class": "BlipConfig"
+  },
+  {
+   "model_type": "blip-2",
+   "base_model_class": "Blip2Model",
+   "config_class": "Blip2Config"
+  },
+  {
+   "model_type": "blip_2_qformer",
+   "base_model_class": "Blip2QFormerModel",
+   "config_class": "Blip2QFormerConfig"
+  },
+  {
+   "model_type": "bloom",
+   "base_model_class": "BloomModel",
+   "config_class": "BloomConfig"
+  },
+  {
+   "model_type": "blt",
+   "base_model_class": "BltModel",
+   "config_class": "BltConfig"
+  },
+  {
+   "model_type": "bridgetower",
+   "base_model_class": "BridgeTowerModel",
+   "config_class": "BridgeTowerConfig"
+  },
+  {
+   "model_type": "bros",
+   "base_model_class": "BrosModel",
+   "config_class": "BrosConfig"
+  },
+  {
+   "model_type": "camembert",
+   "base_model_class": "CamembertModel",
+   "config_class": "CamembertConfig"
+  },
+  {
+   "model_type": "canine",
+   "base_model_class": "CanineModel",
+   "config_class": "CanineConfig"
+  },
+  {
+   "model_type": "chameleon",
+   "base_model_class": "ChameleonModel",
+   "config_class": "ChameleonConfig"
+  },
+  {
+   "model_type": "chinese_clip",
+   "base_model_class": "ChineseCLIPModel",
+   "config_class": "ChineseCLIPConfig"
+  },
+  {
+   "model_type": "chinese_clip_vision_model",
+   "base_model_class": "ChineseCLIPVisionModel",
+   "config_class": "ChineseCLIPVisionConfig"
+  },
+  {
+   "model_type": "clap",
+   "base_model_class": "ClapModel",
+   "config_class": "ClapConfig"
+  },
+  {
+   "model_type": "clip",
+   "base_model_class": "CLIPModel",
+   "config_class": "CLIPConfig"
+  },
+  {
+   "model_type": "clip_text_model",
+   "base_model_class": "CLIPTextModel",
+   "config_class": "CLIPTextConfig"
+  },
+  {
+   "model_type": "clip_vision_model",
+   "base_model_class": "CLIPVisionModel",
+   "config_class": "CLIPVisionConfig"
+  },
+  {
+   "model_type": "clipseg",
+   "base_model_class": "CLIPSegModel",
+   "config_class": "CLIPSegConfig"
+  },
+  {
+   "model_type": "clvp",
+   "base_model_class": "ClvpModelForConditionalGeneration",
+   "config_class": "ClvpConfig"
+  },
+  {
+   "model_type": "codegen",
+   "base_model_class": "CodeGenModel",
+   "config_class": "CodeGenConfig"
+  },
+  {
+   "model_type": "cohere",
+   "base_model_class": "CohereModel",
+   "config_class": "CohereConfig"
+  },
+  {
+   "model_type": "cohere2",
+   "base_model_class": "Cohere2Model",
+   "config_class": "Cohere2Config"
+  },
+  {
+   "model_type": "cohere2_moe",
+   "base_model_class": "Cohere2MoeModel",
+   "config_class": "Cohere2MoeConfig"
+  },
+  {
+   "model_type": "cohere2_vision",
+   "base_model_class": "Cohere2VisionModel",
+   "config_class": "Cohere2VisionConfig"
+  },
+  {
+   "model_type": "cohere_asr",
+   "base_model_class": "CohereAsrModel",
+   "config_class": "CohereAsrConfig"
+  },
+  {
+   "model_type": "cohere_compass",
+   "base_model_class": "CohereCompassModel",
+   "config_class": "CohereCompassConfig"
+  },
+  {
+   "model_type": "cohere_compass_text",
+   "base_model_class": "CohereCompassTextModel",
+   "config_class": "CohereCompassTextConfig"
+  },
+  {
+   "model_type": "cohere_compass_vision",
+   "base_model_class": "CohereCompassVisionModel",
+   "config_class": "CohereCompassVisionConfig"
+  },
+  {
+   "model_type": "conditional_detr",
+   "base_model_class": "ConditionalDetrModel",
+   "config_class": "ConditionalDetrConfig"
+  },
+  {
+   "model_type": "convbert",
+   "base_model_class": "ConvBertModel",
+   "config_class": "ConvBertConfig"
+  },
+  {
+   "model_type": "convnext",
+   "base_model_class": "ConvNextModel",
+   "config_class": "ConvNextConfig"
+  },
+  {
+   "model_type": "convnextv2",
+   "base_model_class": "ConvNextV2Model",
+   "config_class": "ConvNextV2Config"
+  },
+  {
+   "model_type": "cosmos3_edge",
+   "base_model_class": "Cosmos3EdgeModel",
+   "config_class": "Cosmos3EdgeConfig"
+  },
+  {
+   "model_type": "cosmos3_edge_text",
+   "base_model_class": "Cosmos3EdgeTextModel",
+   "config_class": "Cosmos3EdgeTextConfig"
+  },
+  {
+   "model_type": "cosmos3_edge_vision",
+   "base_model_class": "Cosmos3EdgeVisionModel",
+   "config_class": "Cosmos3EdgeVisionConfig"
+  },
+  {
+   "model_type": "cosmos3_omni",
+   "base_model_class": "Cosmos3OmniModel",
+   "config_class": "Cosmos3OmniConfig"
+  },
+  {
+   "model_type": "cpmant",
+   "base_model_class": "CpmAntModel",
+   "config_class": "CpmAntConfig"
+  },
+  {
+   "model_type": "csm",
+   "base_model_class": "CsmForConditionalGeneration",
+   "config_class": "CsmConfig"
+  },
+  {
+   "model_type": "ctrl",
+   "base_model_class": "CTRLModel",
+   "config_class": "CTRLConfig"
+  },
+  {
+   "model_type": "cvt",
+   "base_model_class": "CvtModel",
+   "config_class": "CvtConfig"
+  },
+  {
+   "model_type": "cwm",
+   "base_model_class": "CwmModel",
+   "config_class": "CwmConfig"
+  },
+  {
+   "model_type": "d_fine",
+   "base_model_class": "DFineModel",
+   "config_class": "DFineConfig"
+  },
+  {
+   "model_type": "dab-detr",
+   "base_model_class": "DabDetrModel",
+   "config_class": "DabDetrConfig"
+  },
+  {
+   "model_type": "dac",
+   "base_model_class": "DacModel",
+   "config_class": "DacConfig"
+  },
+  {
+   "model_type": "data2vec-audio",
+   "base_model_class": "Data2VecAudioModel",
+   "config_class": "Data2VecAudioConfig"
+  },
+  {
+   "model_type": "data2vec-text",
+   "base_model_class": "Data2VecTextModel",
+   "config_class": "Data2VecTextConfig"
+  },
+  {
+   "model_type": "data2vec-vision",
+   "base_model_class": "Data2VecVisionModel",
+   "config_class": "Data2VecVisionConfig"
+  },
+  {
+   "model_type": "dbrx",
+   "base_model_class": "DbrxModel",
+   "config_class": "DbrxConfig"
+  },
+  {
+   "model_type": "deberta",
+   "base_model_class": "DebertaModel",
+   "config_class": "DebertaConfig"
+  },
+  {
+   "model_type": "deberta-v2",
+   "base_model_class": "DebertaV2Model",
+   "config_class": "DebertaV2Config"
+  },
+  {
+   "model_type": "decision_transformer",
+   "base_model_class": "DecisionTransformerModel",
+   "config_class": "DecisionTransformerConfig"
+  },
+  {
+   "model_type": "deepseek_ocr2",
+   "base_model_class": "DeepseekOcr2Model",
+   "config_class": "DeepseekOcr2Config"
+  },
+  {
+   "model_type": "deepseek_v2",
+   "base_model_class": "DeepseekV2Model",
+   "config_class": "DeepseekV2Config"
+  },
+  {
+   "model_type": "deepseek_v3",
+   "base_model_class": "DeepseekV3Model",
+   "config_class": "DeepseekV3Config"
+  },
+  {
+   "model_type": "deepseek_v32",
+   "base_model_class": "DeepseekV32Model",
+   "config_class": "DeepseekV32Config"
+  },
+  {
+   "model_type": "deepseek_v4",
+   "base_model_class": "DeepseekV4Model",
+   "config_class": "DeepseekV4Config"
+  },
+  {
+   "model_type": "deepseek_vl",
+   "base_model_class": "DeepseekVLModel",
+   "config_class": "DeepseekVLConfig"
+  },
+  {
+   "model_type": "deepseek_vl_hybrid",
+   "base_model_class": "DeepseekVLHybridModel",
+   "config_class": "DeepseekVLHybridConfig"
+  },
+  {
+   "model_type": "deformable_detr",
+   "base_model_class": "DeformableDetrModel",
+   "config_class": "DeformableDetrConfig"
+  },
+  {
+   "model_type": "deimv2",
+   "base_model_class": "Deimv2Model",
+   "config_class": "Deimv2Config"
+  },
+  {
+   "model_type": "deit",
+   "base_model_class": "DeiTModel",
+   "config_class": "DeiTConfig"
+  },
+  {
+   "model_type": "depth_pro",
+   "base_model_class": "DepthProModel",
+   "config_class": "DepthProConfig"
+  },
+  {
+   "model_type": "detr",
+   "base_model_class": "DetrModel",
+   "config_class": "DetrConfig"
+  },
+  {
+   "model_type": "dia",
+   "base_model_class": "DiaModel",
+   "config_class": "DiaConfig"
+  },
+  {
+   "model_type": "diffllama",
+   "base_model_class": "DiffLlamaModel",
+   "config_class": "DiffLlamaConfig"
+  },
+  {
+   "model_type": "diffusion_gemma",
+   "base_model_class": "DiffusionGemmaModel",
+   "config_class": "DiffusionGemmaConfig"
+  },
+  {
+   "model_type": "dinat",
+   "base_model_class": "DinatModel",
+   "config_class": "DinatConfig"
+  },
+  {
+   "model_type": "dinov2",
+   "base_model_class": "Dinov2Model",
+   "config_class": "Dinov2Config"
+  },
+  {
+   "model_type": "dinov2_with_registers",
+   "base_model_class": "Dinov2WithRegistersModel",
+   "config_class": "Dinov2WithRegistersConfig"
+  },
+  {
+   "model_type": "dinov3_convnext",
+   "base_model_class": "DINOv3ConvNextModel",
+   "config_class": "DINOv3ConvNextConfig"
+  },
+  {
+   "model_type": "dinov3_vit",
+   "base_model_class": "DINOv3ViTModel",
+   "config_class": "DINOv3ViTConfig"
+  },
+  {
+   "model_type": "distilbert",
+   "base_model_class": "DistilBertModel",
+   "config_class": "DistilBertConfig"
+  },
+  {
+   "model_type": "doge",
+   "base_model_class": "DogeModel",
+   "config_class": "DogeConfig"
+  },
+  {
+   "model_type": "donut-swin",
+   "base_model_class": "DonutSwinModel",
+   "config_class": "DonutSwinConfig"
+  },
+  {
+   "model_type": "dots1",
+   "base_model_class": "Dots1Model",
+   "config_class": "Dots1Config"
+  },
+  {
+   "model_type": "dpr",
+   "base_model_class": "DPRQuestionEncoder",
+   "config_class": "DPRConfig"
+  },
+  {
+   "model_type": "dpt",
+   "base_model_class": "DPTModel",
+   "config_class": "DPTConfig"
+  },
+  {
+   "model_type": "edgetam",
+   "base_model_class": "EdgeTamModel",
+   "config_class": "EdgeTamConfig"
+  },
+  {
+   "model_type": "edgetam_video",
+   "base_model_class": "EdgeTamVideoModel",
+   "config_class": "EdgeTamVideoConfig"
+  },
+  {
+   "model_type": "edgetam_vision_model",
+   "base_model_class": "EdgeTamVisionModel",
+   "config_class": "EdgeTamVisionConfig"
+  },
+  {
+   "model_type": "efficientloftr",
+   "base_model_class": "EfficientLoFTRModel",
+   "config_class": "EfficientLoFTRConfig"
+  },
+  {
+   "model_type": "efficientnet",
+   "base_model_class": "EfficientNetModel",
+   "config_class": "EfficientNetConfig"
+  },
+  {
+   "model_type": "electra",
+   "base_model_class": "ElectraModel",
+   "config_class": "ElectraConfig"
+  },
+  {
+   "model_type": "emu3",
+   "base_model_class": "Emu3Model",
+   "config_class": "Emu3Config"
+  },
+  {
+   "model_type": "encodec",
+   "base_model_class": "EncodecModel",
+   "config_class": "EncodecConfig"
+  },
+  {
+   "model_type": "ernie",
+   "base_model_class": "ErnieModel",
+   "config_class": "ErnieConfig"
+  },
+  {
+   "model_type": "ernie4_5",
+   "base_model_class": "Ernie4_5Model",
+   "config_class": "Ernie4_5Config"
+  },
+  {
+   "model_type": "ernie4_5_moe",
+   "base_model_class": "Ernie4_5_MoeModel",
+   "config_class": "Ernie4_5_MoeConfig"
+  },
+  {
+   "model_type": "ernie4_5_vl_moe",
+   "base_model_class": "Ernie4_5_VLMoeModel",
+   "config_class": "Ernie4_5_VLMoeConfig"
+  },
+  {
+   "model_type": "esm",
+   "base_model_class": "EsmModel",
+   "config_class": "EsmConfig"
+  },
+  {
+   "model_type": "esmc",
+   "base_model_class": "EsmcModel",
+   "config_class": "EsmcConfig"
+  },
+  {
+   "model_type": "eurobert",
+   "base_model_class": "EuroBertModel",
+   "config_class": "EuroBertConfig"
+  },
+  {
+   "model_type": "evolla",
+   "base_model_class": "EvollaModel",
+   "config_class": "EvollaConfig"
+  },
+  {
+   "model_type": "exaone4",
+   "base_model_class": "Exaone4Model",
+   "config_class": "Exaone4Config"
+  },
+  {
+   "model_type": "exaone4_5",
+   "base_model_class": "Exaone4_5_Model",
+   "config_class": "Exaone4_5_Config"
+  },
+  {
+   "model_type": "exaone4_5_vision",
+   "base_model_class": "Exaone4_5_VisionModel",
+   "config_class": "Exaone4_5_VisionConfig"
+  },
+  {
+   "model_type": "exaone_moe",
+   "base_model_class": "ExaoneMoeModel",
+   "config_class": "ExaoneMoeConfig"
+  },
+  {
+   "model_type": "falcon",
+   "base_model_class": "FalconModel",
+   "config_class": "FalconConfig"
+  },
+  {
+   "model_type": "falcon_h1",
+   "base_model_class": "FalconH1Model",
+   "config_class": "FalconH1Config"
+  },
+  {
+   "model_type": "falcon_mamba",
+   "base_model_class": "FalconMambaModel",
+   "config_class": "FalconMambaConfig"
+  },
+  {
+   "model_type": "fast_vlm",
+   "base_model_class": "FastVlmModel",
+   "config_class": "FastVlmConfig"
+  },
+  {
+   "model_type": "fastspeech2_conformer",
+   "base_model_class": "FastSpeech2ConformerModel",
+   "config_class": "FastSpeech2ConformerConfig"
+  },
+  {
+   "model_type": "fastspeech2_conformer_with_hifigan",
+   "base_model_class": "FastSpeech2ConformerWithHifiGan",
+   "config_class": "FastSpeech2ConformerWithHifiGanConfig"
+  },
+  {
+   "model_type": "flaubert",
+   "base_model_class": "FlaubertModel",
+   "config_class": "FlaubertConfig"
+  },
+  {
+   "model_type": "flava",
+   "base_model_class": "FlavaModel",
+   "config_class": "FlavaConfig"
+  },
+  {
+   "model_type": "flex_olmo",
+   "base_model_class": "FlexOlmoModel",
+   "config_class": "FlexOlmoConfig"
+  },
+  {
+   "model_type": "florence2",
+   "base_model_class": "Florence2Model",
+   "config_class": "Florence2Config"
+  },
+  {
+   "model_type": "fnet",
+   "base_model_class": "FNetModel",
+   "config_class": "FNetConfig"
+  },
+  {
+   "model_type": "focalnet",
+   "base_model_class": "FocalNetModel",
+   "config_class": "FocalNetConfig"
+  },
+  {
+   "model_type": "fsmt",
+   "base_model_class": "FSMTModel",
+   "config_class": "FSMTConfig"
+  },
+  {
+   "model_type": "fuyu",
+   "base_model_class": "FuyuModel",
+   "config_class": "FuyuConfig"
+  },
+  {
+   "model_type": "gemma",
+   "base_model_class": "GemmaModel",
+   "config_class": "GemmaConfig"
+  },
+  {
+   "model_type": "gemma2",
+   "base_model_class": "Gemma2Model",
+   "config_class": "Gemma2Config"
+  },
+  {
+   "model_type": "gemma3",
+   "base_model_class": "Gemma3Model",
+   "config_class": "Gemma3Config"
+  },
+  {
+   "model_type": "gemma3_text",
+   "base_model_class": "Gemma3TextModel",
+   "config_class": "Gemma3TextConfig"
+  },
+  {
+   "model_type": "gemma3n",
+   "base_model_class": "Gemma3nModel",
+   "config_class": "Gemma3nConfig"
+  },
+  {
+   "model_type": "gemma3n_audio",
+   "base_model_class": "Gemma3nAudioEncoder",
+   "config_class": "Gemma3nAudioConfig"
+  },
+  {
+   "model_type": "gemma3n_text",
+   "base_model_class": "Gemma3nTextModel",
+   "config_class": "Gemma3nTextConfig"
+  },
+  {
+   "model_type": "gemma3n_vision",
+   "base_model_class": "TimmWrapperModel",
+   "config_class": "Gemma3nVisionConfig"
+  },
+  {
+   "model_type": "gemma4",
+   "base_model_class": "Gemma4Model",
+   "config_class": "Gemma4Config"
+  },
+  {
+   "model_type": "gemma4_audio",
+   "base_model_class": "Gemma4AudioModel",
+   "config_class": "Gemma4AudioConfig"
+  },
+  {
+   "model_type": "gemma4_text",
+   "base_model_class": "Gemma4TextModel",
+   "config_class": "Gemma4TextConfig"
+  },
+  {
+   "model_type": "gemma4_unified",
+   "base_model_class": "Gemma4UnifiedModel",
+   "config_class": "Gemma4UnifiedConfig"
+  },
+  {
+   "model_type": "gemma4_unified_text",
+   "base_model_class": "Gemma4UnifiedTextModel",
+   "config_class": "Gemma4UnifiedTextConfig"
+  },
+  {
+   "model_type": "gemma4_vision",
+   "base_model_class": "Gemma4VisionModel",
+   "config_class": "Gemma4VisionConfig"
+  },
+  {
+   "model_type": "git",
+   "base_model_class": "GitModel",
+   "config_class": "GitConfig"
+  },
+  {
+   "model_type": "glm",
+   "base_model_class": "GlmModel",
+   "config_class": "GlmConfig"
+  },
+  {
+   "model_type": "glm4",
+   "base_model_class": "Glm4Model",
+   "config_class": "Glm4Config"
+  },
+  {
+   "model_type": "glm46v",
+   "base_model_class": "Glm46VModel",
+   "config_class": "Glm46VConfig"
+  },
+  {
+   "model_type": "glm4_moe",
+   "base_model_class": "Glm4MoeModel",
+   "config_class": "Glm4MoeConfig"
+  },
+  {
+   "model_type": "glm4_moe_lite",
+   "base_model_class": "Glm4MoeLiteModel",
+   "config_class": "Glm4MoeLiteConfig"
+  },
+  {
+   "model_type": "glm4v",
+   "base_model_class": "Glm4vModel",
+   "config_class": "Glm4vConfig"
+  },
+  {
+   "model_type": "glm4v_moe",
+   "base_model_class": "Glm4vMoeModel",
+   "config_class": "Glm4vMoeConfig"
+  },
+  {
+   "model_type": "glm4v_moe_text",
+   "base_model_class": "Glm4vMoeTextModel",
+   "config_class": "Glm4vMoeTextConfig"
+  },
+  {
+   "model_type": "glm4v_moe_vision",
+   "base_model_class": "Glm4vMoeVisionModel",
+   "config_class": "Glm4vMoeVisionConfig"
+  },
+  {
+   "model_type": "glm4v_text",
+   "base_model_class": "Glm4vTextModel",
+   "config_class": "Glm4vTextConfig"
+  },
+  {
+   "model_type": "glm4v_vision",
+   "base_model_class": "Glm4vVisionModel",
+   "config_class": "Glm4vVisionConfig"
+  },
+  {
+   "model_type": "glm5_next",
+   "base_model_class": "Glm5NextModel",
+   "config_class": "Glm5NextConfig"
+  },
+  {
+   "model_type": "glm5_next_text",
+   "base_model_class": "Glm5NextTextModel",
+   "config_class": "Glm5NextTextConfig"
+  },
+  {
+   "model_type": "glm5_next_vision",
+   "base_model_class": "Glm5NextVisionModel",
+   "config_class": "Glm5NextVisionConfig"
+  },
+  {
+   "model_type": "glm_image",
+   "base_model_class": "GlmImageModel",
+   "config_class": "GlmImageConfig"
+  },
+  {
+   "model_type": "glm_image_text",
+   "base_model_class": "GlmImageTextModel",
+   "config_class": "GlmImageTextConfig"
+  },
+  {
+   "model_type": "glm_image_vision",
+   "base_model_class": "GlmImageVisionModel",
+   "config_class": "GlmImageVisionConfig"
+  },
+  {
+   "model_type": "glm_image_vqmodel",
+   "base_model_class": "GlmImageVQVAE",
+   "config_class": "GlmImageVQVAEConfig"
+  },
+  {
+   "model_type": "glm_moe_dsa",
+   "base_model_class": "GlmMoeDsaModel",
+   "config_class": "GlmMoeDsaConfig"
+  },
+  {
+   "model_type": "glm_ocr",
+   "base_model_class": "GlmOcrModel",
+   "config_class": "GlmOcrConfig"
+  },
+  {
+   "model_type": "glm_ocr_text",
+   "base_model_class": "GlmOcrTextModel",
+   "config_class": "GlmOcrTextConfig"
+  },
+  {
+   "model_type": "glm_ocr_vision",
+   "base_model_class": "GlmOcrVisionModel",
+   "config_class": "GlmOcrVisionConfig"
+  },
+  {
+   "model_type": "glmasr",
+   "base_model_class": "GlmAsrModel",
+   "config_class": "GlmAsrConfig"
+  },
+  {
+   "model_type": "glmasr_encoder",
+   "base_model_class": "GlmAsrEncoder",
+   "config_class": "GlmAsrEncoderConfig"
+  },
+  {
+   "model_type": "glmga",
+   "base_model_class": "Glm46VModel",
+   "config_class": "GlmgaConfig"
+  },
+  {
+   "model_type": "glpn",
+   "base_model_class": "GLPNModel",
+   "config_class": "GLPNConfig"
+  },
+  {
+   "model_type": "got_ocr2",
+   "base_model_class": "GotOcr2Model",
+   "config_class": "GotOcr2Config"
+  },
+  {
+   "model_type": "gpt-sw3",
+   "base_model_class": "GPT2Model",
+   "config_class": "GPT2Config"
+  },
+  {
+   "model_type": "gpt2",
+   "base_model_class": "GPT2Model",
+   "config_class": "GPT2Config"
+  },
+  {
+   "model_type": "gpt_bigcode",
+   "base_model_class": "GPTBigCodeModel",
+   "config_class": "GPTBigCodeConfig"
+  },
+  {
+   "model_type": "gpt_neo",
+   "base_model_class": "GPTNeoModel",
+   "config_class": "GPTNeoConfig"
+  },
+  {
+   "model_type": "gpt_neox",
+   "base_model_class": "GPTNeoXModel",
+   "config_class": "GPTNeoXConfig"
+  },
+  {
+   "model_type": "gpt_neox_japanese",
+   "base_model_class": "GPTNeoXJapaneseModel",
+   "config_class": "GPTNeoXJapaneseConfig"
+  },
+  {
+   "model_type": "gpt_oss",
+   "base_model_class": "GptOssModel",
+   "config_class": "GptOssConfig"
+  },
+  {
+   "model_type": "gptj",
+   "base_model_class": "GPTJModel",
+   "config_class": "GPTJConfig"
+  },
+  {
+   "model_type": "granite",
+   "base_model_class": "GraniteModel",
+   "config_class": "GraniteConfig"
+  },
+  {
+   "model_type": "granite4_vision",
+   "base_model_class": "Granite4VisionModel",
+   "config_class": "Granite4VisionConfig"
+  },
+  {
+   "model_type": "granite_speech",
+   "base_model_class": "GraniteSpeechModel",
+   "config_class": "GraniteSpeechConfig"
+  },
+  {
+   "model_type": "granite_speech5_ctc",
+   "base_model_class": "GraniteSpeech5ForCTC",
+   "config_class": "GraniteSpeech5CTCConfig"
+  },
+  {
+   "model_type": "granite_speech5_encoder",
+   "base_model_class": "GraniteSpeech5Encoder",
+   "config_class": "GraniteSpeech5EncoderConfig"
+  },
+  {
+   "model_type": "granite_speech_plus",
+   "base_model_class": "GraniteSpeechPlusModel",
+   "config_class": "GraniteSpeechPlusConfig"
+  },
+  {
+   "model_type": "granite_swa",
+   "base_model_class": "GraniteSWAModel",
+   "config_class": "GraniteSWAConfig"
+  },
+  {
+   "model_type": "granitemoe",
+   "base_model_class": "GraniteMoeModel",
+   "config_class": "GraniteMoeConfig"
+  },
+  {
+   "model_type": "granitemoe_swa",
+   "base_model_class": "GraniteMoeSWAModel",
+   "config_class": "GraniteMoeSWAConfig"
+  },
+  {
+   "model_type": "granitemoehybrid",
+   "base_model_class": "GraniteMoeHybridModel",
+   "config_class": "GraniteMoeHybridConfig"
+  },
+  {
+   "model_type": "granitemoeshared",
+   "base_model_class": "GraniteMoeSharedModel",
+   "config_class": "GraniteMoeSharedConfig"
+  },
+  {
+   "model_type": "grounding-dino",
+   "base_model_class": "GroundingDinoModel",
+   "config_class": "GroundingDinoConfig"
+  },
+  {
+   "model_type": "groupvit",
+   "base_model_class": "GroupViTModel",
+   "config_class": "GroupViTConfig"
+  },
+  {
+   "model_type": "helium",
+   "base_model_class": "HeliumModel",
+   "config_class": "HeliumConfig"
+  },
+  {
+   "model_type": "hgnet_v2",
+   "base_model_class": "HGNetV2Backbone",
+   "config_class": "HGNetV2Config"
+  },
+  {
+   "model_type": "hiera",
+   "base_model_class": "HieraModel",
+   "config_class": "HieraConfig"
+  },
+  {
+   "model_type": "higgs_audio_v2",
+   "base_model_class": "HiggsAudioV2ForConditionalGeneration",
+   "config_class": "HiggsAudioV2Config"
+  },
+  {
+   "model_type": "higgs_audio_v2_tokenizer",
+   "base_model_class": "HiggsAudioV2TokenizerModel",
+   "config_class": "HiggsAudioV2TokenizerConfig"
+  },
+  {
+   "model_type": "hrm_text",
+   "base_model_class": "HrmTextModel",
+   "config_class": "HrmTextConfig"
+  },
+  {
+   "model_type": "hubert",
+   "base_model_class": "HubertModel",
+   "config_class": "HubertConfig"
+  },
+  {
+   "model_type": "hunyuan_v1_dense",
+   "base_model_class": "HunYuanDenseV1Model",
+   "config_class": "HunYuanDenseV1Config"
+  },
+  {
+   "model_type": "hunyuan_v1_moe",
+   "base_model_class": "HunYuanMoEV1Model",
+   "config_class": "HunYuanMoEV1Config"
+  },
+  {
+   "model_type": "hunyuan_vl",
+   "base_model_class": "HunYuanVLModel",
+   "config_class": "HunYuanVLConfig"
+  },
+  {
+   "model_type": "hunyuan_vl_text",
+   "base_model_class": "HunYuanVLTextModel",
+   "config_class": "HunYuanVLTextConfig"
+  },
+  {
+   "model_type": "hunyuan_vl_vision",
+   "base_model_class": "HunYuanVLVisionTransformer",
+   "config_class": "HunYuanVLVisionConfig"
+  },
+  {
+   "model_type": "hy_v3",
+   "base_model_class": "HYV3Model",
+   "config_class": "HYV3Config"
+  },
+  {
+   "model_type": "hyperclovax",
+   "base_model_class": "HyperCLOVAXModel",
+   "config_class": "HyperCLOVAXConfig"
+  },
+  {
+   "model_type": "ibert",
+   "base_model_class": "IBertModel",
+   "config_class": "IBertConfig"
+  },
+  {
+   "model_type": "idefics",
+   "base_model_class": "IdeficsModel",
+   "config_class": "IdeficsConfig"
+  },
+  {
+   "model_type": "idefics2",
+   "base_model_class": "Idefics2Model",
+   "config_class": "Idefics2Config"
+  },
+  {
+   "model_type": "idefics3",
+   "base_model_class": "Idefics3Model",
+   "config_class": "Idefics3Config"
+  },
+  {
+   "model_type": "idefics3_vision",
+   "base_model_class": "Idefics3VisionTransformer",
+   "config_class": "Idefics3VisionConfig"
+  },
+  {
+   "model_type": "ijepa",
+   "base_model_class": "IJepaModel",
+   "config_class": "IJepaConfig"
+  },
+  {
+   "model_type": "imagegpt",
+   "base_model_class": "ImageGPTModel",
+   "config_class": "ImageGPTConfig"
+  },
+  {
+   "model_type": "informer",
+   "base_model_class": "InformerModel",
+   "config_class": "InformerConfig"
+  },
+  {
+   "model_type": "inkling_mm_model",
+   "base_model_class": "InklingModel",
+   "config_class": "InklingConfig"
+  },
+  {
+   "model_type": "instructblip",
+   "base_model_class": "InstructBlipModel",
+   "config_class": "InstructBlipConfig"
+  },
+  {
+   "model_type": "instructblipvideo",
+   "base_model_class": "InstructBlipVideoModel",
+   "config_class": "InstructBlipVideoConfig"
+  },
+  {
+   "model_type": "internvl",
+   "base_model_class": "InternVLModel",
+   "config_class": "InternVLConfig"
+  },
+  {
+   "model_type": "internvl_vision",
+   "base_model_class": "InternVLVisionModel",
+   "config_class": "InternVLVisionConfig"
+  },
+  {
+   "model_type": "jais2",
+   "base_model_class": "Jais2Model",
+   "config_class": "Jais2Config"
+  },
+  {
+   "model_type": "jamba",
+   "base_model_class": "JambaModel",
+   "config_class": "JambaConfig"
+  },
+  {
+   "model_type": "janus",
+   "base_model_class": "JanusModel",
+   "config_class": "JanusConfig"
+  },
+  {
+   "model_type": "jetmoe",
+   "base_model_class": "JetMoeModel",
+   "config_class": "JetMoeConfig"
+  },
+  {
+   "model_type": "jina_embeddings_v3",
+   "base_model_class": "JinaEmbeddingsV3Model",
+   "config_class": "JinaEmbeddingsV3Config"
+  },
+  {
+   "model_type": "kimi_k25",
+   "base_model_class": "Kimi_K25Model",
+   "config_class": "Kimi_K25Config"
+  },
+  {
+   "model_type": "kimi_k25_vision",
+   "base_model_class": "Kimi_K25VisionModel",
+   "config_class": "Kimi_K25VisionConfig"
+  },
+  {
+   "model_type": "kosmos-2",
+   "base_model_class": "Kosmos2Model",
+   "config_class": "Kosmos2Config"
+  },
+  {
+   "model_type": "kyutai_speech_to_text",
+   "base_model_class": "KyutaiSpeechToTextModel",
+   "config_class": "KyutaiSpeechToTextConfig"
+  },
+  {
+   "model_type": "laguna",
+   "base_model_class": "LagunaModel",
+   "config_class": "LagunaConfig"
+  },
+  {
+   "model_type": "lasr_ctc",
+   "base_model_class": "LasrForCTC",
+   "config_class": "LasrCTCConfig"
+  },
+  {
+   "model_type": "lasr_encoder",
+   "base_model_class": "LasrEncoder",
+   "config_class": "LasrEncoderConfig"
+  },
+  {
+   "model_type": "layoutlm",
+   "base_model_class": "LayoutLMModel",
+   "config_class": "LayoutLMConfig"
+  },
+  {
+   "model_type": "layoutlmv2",
+   "base_model_class": "LayoutLMv2Model",
+   "config_class": "LayoutLMv2Config"
+  },
+  {
+   "model_type": "layoutlmv3",
+   "base_model_class": "LayoutLMv3Model",
+   "config_class": "LayoutLMv3Config"
+  },
+  {
+   "model_type": "led",
+   "base_model_class": "LEDModel",
+   "config_class": "LEDConfig"
+  },
+  {
+   "model_type": "levit",
+   "base_model_class": "LevitModel",
+   "config_class": "LevitConfig"
+  },
+  {
+   "model_type": "lfm2",
+   "base_model_class": "Lfm2Model",
+   "config_class": "Lfm2Config"
+  },
+  {
+   "model_type": "lfm2_moe",
+   "base_model_class": "Lfm2MoeModel",
+   "config_class": "Lfm2MoeConfig"
+  },
+  {
+   "model_type": "lfm2_vl",
+   "base_model_class": "Lfm2VlModel",
+   "config_class": "Lfm2VlConfig"
+  },
+  {
+   "model_type": "lightglue",
+   "base_model_class": "LightGlueForKeypointMatching",
+   "config_class": "LightGlueConfig"
+  },
+  {
+   "model_type": "lighton_ocr",
+   "base_model_class": "LightOnOcrModel",
+   "config_class": "LightOnOcrConfig"
+  },
+  {
+   "model_type": "lilt",
+   "base_model_class": "LiltModel",
+   "config_class": "LiltConfig"
+  },
+  {
+   "model_type": "llama",
+   "base_model_class": "LlamaModel",
+   "config_class": "LlamaConfig"
+  },
+  {
+   "model_type": "llama4",
+   "base_model_class": "Llama4ForConditionalGeneration",
+   "config_class": "Llama4Config"
+  },
+  {
+   "model_type": "llama4_text",
+   "base_model_class": "Llama4TextModel",
+   "config_class": "Llama4TextConfig"
+  },
+  {
+   "model_type": "llava",
+   "base_model_class": "LlavaModel",
+   "config_class": "LlavaConfig"
+  },
+  {
+   "model_type": "llava_next",
+   "base_model_class": "LlavaNextModel",
+   "config_class": "LlavaNextConfig"
+  },
+  {
+   "model_type": "llava_next_video",
+   "base_model_class": "LlavaNextVideoModel",
+   "config_class": "LlavaNextVideoConfig"
+  },
+  {
+   "model_type": "llava_onevision",
+   "base_model_class": "LlavaOnevisionModel",
+   "config_class": "LlavaOnevisionConfig"
+  },
+  {
+   "model_type": "longcat_flash",
+   "base_model_class": "LongcatFlashModel",
+   "config_class": "LongcatFlashConfig"
+  },
+  {
+   "model_type": "longformer",
+   "base_model_class": "LongformerModel",
+   "config_class": "LongformerConfig"
+  },
+  {
+   "model_type": "longt5",
+   "base_model_class": "LongT5Model",
+   "config_class": "LongT5Config"
+  },
+  {
+   "model_type": "luke",
+   "base_model_class": "LukeModel",
+   "config_class": "LukeConfig"
+  },
+  {
+   "model_type": "lw_detr",
+   "base_model_class": "LwDetrModel",
+   "config_class": "LwDetrConfig"
+  },
+  {
+   "model_type": "lxmert",
+   "base_model_class": "LxmertModel",
+   "config_class": "LxmertConfig"
+  },
+  {
+   "model_type": "m2m_100",
+   "base_model_class": "M2M100Model",
+   "config_class": "M2M100Config"
+  },
+  {
+   "model_type": "mamba",
+   "base_model_class": "MambaModel",
+   "config_class": "MambaConfig"
+  },
+  {
+   "model_type": "mamba2",
+   "base_model_class": "Mamba2Model",
+   "config_class": "Mamba2Config"
+  },
+  {
+   "model_type": "marian",
+   "base_model_class": "MarianModel",
+   "config_class": "MarianConfig"
+  },
+  {
+   "model_type": "markuplm",
+   "base_model_class": "MarkupLMModel",
+   "config_class": "MarkupLMConfig"
+  },
+  {
+   "model_type": "mask2former",
+   "base_model_class": "Mask2FormerModel",
+   "config_class": "Mask2FormerConfig"
+  },
+  {
+   "model_type": "maskformer",
+   "base_model_class": "MaskFormerModel",
+   "config_class": "MaskFormerConfig"
+  },
+  {
+   "model_type": "maskformer-swin",
+   "base_model_class": "MaskFormerSwinModel",
+   "config_class": "MaskFormerSwinConfig"
+  },
+  {
+   "model_type": "mbart",
+   "base_model_class": "MBartModel",
+   "config_class": "MBartConfig"
+  },
+  {
+   "model_type": "megatron-bert",
+   "base_model_class": "MegatronBertModel",
+   "config_class": "MegatronBertConfig"
+  },
+  {
+   "model_type": "mellum",
+   "base_model_class": "MellumModel",
+   "config_class": "MellumConfig"
+  },
+  {
+   "model_type": "metaclip_2",
+   "base_model_class": "MetaClip2Model",
+   "config_class": "MetaClip2Config"
+  },
+  {
+   "model_type": "mgp-str",
+   "base_model_class": "MgpstrForSceneTextRecognition",
+   "config_class": "MgpstrConfig"
+  },
+  {
+   "model_type": "mimi",
+   "base_model_class": "MimiModel",
+   "config_class": "MimiConfig"
+  },
+  {
+   "model_type": "mimo_v2_flash",
+   "base_model_class": "MiMoV2FlashModel",
+   "config_class": "MiMoV2FlashConfig"
+  },
+  {
+   "model_type": "minicpm3",
+   "base_model_class": "MiniCPM3Model",
+   "config_class": "MiniCPM3Config"
+  },
+  {
+   "model_type": "minicpmv4_6",
+   "base_model_class": "MiniCPMV4_6Model",
+   "config_class": "MiniCPMV4_6Config"
+  },
+  {
+   "model_type": "minimax",
+   "base_model_class": "MiniMaxModel",
+   "config_class": "MiniMaxConfig"
+  },
+  {
+   "model_type": "minimax_m2",
+   "base_model_class": "MiniMaxM2Model",
+   "config_class": "MiniMaxM2Config"
+  },
+  {
+   "model_type": "minimax_m3_vl",
+   "base_model_class": "MiniMaxM3VLModel",
+   "config_class": "MiniMaxM3VLConfig"
+  },
+  {
+   "model_type": "minimax_m3_vl_text",
+   "base_model_class": "MiniMaxM3VLTextModel",
+   "config_class": "MiniMaxM3VLTextConfig"
+  },
+  {
+   "model_type": "ministral",
+   "base_model_class": "MinistralModel",
+   "config_class": "MinistralConfig"
+  },
+  {
+   "model_type": "ministral3",
+   "base_model_class": "Ministral3Model",
+   "config_class": "Ministral3Config"
+  },
+  {
+   "model_type": "mistral",
+   "base_model_class": "MistralModel",
+   "config_class": "MistralConfig"
+  },
+  {
+   "model_type": "mistral3",
+   "base_model_class": "Mistral3Model",
+   "config_class": "Mistral3Config"
+  },
+  {
+   "model_type": "mistral4",
+   "base_model_class": "Mistral4Model",
+   "config_class": "Mistral4Config"
+  },
+  {
+   "model_type": "mixtral",
+   "base_model_class": "MixtralModel",
+   "config_class": "MixtralConfig"
+  },
+  {
+   "model_type": "mlcd",
+   "base_model_class": "MLCDVisionModel",
+   "config_class": "MLCDVisionConfig"
+  },
+  {
+   "model_type": "mlcd_vision_model",
+   "base_model_class": "MLCDVisionModel",
+   "config_class": "MLCDVisionConfig"
+  },
+  {
+   "model_type": "mllama",
+   "base_model_class": "MllamaModel",
+   "config_class": "MllamaConfig"
+  },
+  {
+   "model_type": "mm-grounding-dino",
+   "base_model_class": "MMGroundingDinoModel",
+   "config_class": "MMGroundingDinoConfig"
+  },
+  {
+   "model_type": "mobilebert",
+   "base_model_class": "MobileBertModel",
+   "config_class": "MobileBertConfig"
+  },
+  {
+   "model_type": "mobilenet_v1",
+   "base_model_class": "MobileNetV1Model",
+   "config_class": "MobileNetV1Config"
+  },
+  {
+   "model_type": "mobilenet_v2",
+   "base_model_class": "MobileNetV2Model",
+   "config_class": "MobileNetV2Config"
+  },
+  {
+   "model_type": "mobilevit",
+   "base_model_class": "MobileViTModel",
+   "config_class": "MobileViTConfig"
+  },
+  {
+   "model_type": "mobilevitv2",
+   "base_model_class": "MobileViTV2Model",
+   "config_class": "MobileViTV2Config"
+  },
+  {
+   "model_type": "modernbert",
+   "base_model_class": "ModernBertModel",
+   "config_class": "ModernBertConfig"
+  },
+  {
+   "model_type": "modernbert-decoder",
+   "base_model_class": "ModernBertDecoderModel",
+   "config_class": "ModernBertDecoderConfig"
+  },
+  {
+   "model_type": "modernvbert",
+   "base_model_class": "ModernVBertModel",
+   "config_class": "ModernVBertConfig"
+  },
+  {
+   "model_type": "moonshine",
+   "base_model_class": "MoonshineModel",
+   "config_class": "MoonshineConfig"
+  },
+  {
+   "model_type": "moonshine_streaming",
+   "base_model_class": "MoonshineStreamingModel",
+   "config_class": "MoonshineStreamingConfig"
+  },
+  {
+   "model_type": "moshi",
+   "base_model_class": "MoshiModel",
+   "config_class": "MoshiConfig"
+  },
+  {
+   "model_type": "mpnet",
+   "base_model_class": "MPNetModel",
+   "config_class": "MPNetConfig"
+  },
+  {
+   "model_type": "mpt",
+   "base_model_class": "MptModel",
+   "config_class": "MptConfig"
+  },
+  {
+   "model_type": "mra",
+   "base_model_class": "MraModel",
+   "config_class": "MraConfig"
+  },
+  {
+   "model_type": "mt5",
+   "base_model_class": "MT5Model",
+   "config_class": "MT5Config"
+  },
+  {
+   "model_type": "muse_glimmer",
+   "base_model_class": "MuseGlimmerModel",
+   "config_class": "MuseGlimmerConfig"
+  },
+  {
+   "model_type": "muse_glimmer_assistant",
+   "base_model_class": "MuseGlimmerAssistantModel",
+   "config_class": "MuseGlimmerAssistantConfig"
+  },
+  {
+   "model_type": "muse_glimmer_text",
+   "base_model_class": "MuseGlimmerTextModel",
+   "config_class": "MuseGlimmerTextConfig"
+  },
+  {
+   "model_type": "muse_glimmer_vision",
+   "base_model_class": "MuseGlimmerVisionModel",
+   "config_class": "MuseGlimmerVisionConfig"
+  },
+  {
+   "model_type": "musicflamingo",
+   "base_model_class": "MusicFlamingoModel",
+   "config_class": "MusicFlamingoConfig"
+  },
+  {
+   "model_type": "musicgen",
+   "base_model_class": "MusicgenModel",
+   "config_class": "MusicgenConfig"
+  },
+  {
+   "model_type": "musicgen_melody",
+   "base_model_class": "MusicgenMelodyModel",
+   "config_class": "MusicgenMelodyConfig"
+  },
+  {
+   "model_type": "mvp",
+   "base_model_class": "MvpModel",
+   "config_class": "MvpConfig"
+  },
+  {
+   "model_type": "nanochat",
+   "base_model_class": "NanoChatModel",
+   "config_class": "NanoChatConfig"
+  },
+  {
+   "model_type": "nemotron",
+   "base_model_class": "NemotronModel",
+   "config_class": "NemotronConfig"
+  },
+  {
+   "model_type": "nemotron3_5_asr",
+   "base_model_class": "Nemotron3_5AsrForRNNT",
+   "config_class": "Nemotron3_5AsrConfig"
+  },
+  {
+   "model_type": "nemotron_asr_streaming",
+   "base_model_class": "NemotronAsrStreamingForRNNT",
+   "config_class": "NemotronAsrStreamingConfig"
+  },
+  {
+   "model_type": "nemotron_asr_streaming_encoder",
+   "base_model_class": "NemotronAsrStreamingEncoder",
+   "config_class": "NemotronAsrStreamingEncoderConfig"
+  },
+  {
+   "model_type": "nemotron_h",
+   "base_model_class": "NemotronHModel",
+   "config_class": "NemotronHConfig"
+  },
+  {
+   "model_type": "nllb-moe",
+   "base_model_class": "NllbMoeModel",
+   "config_class": "NllbMoeConfig"
+  },
+  {
+   "model_type": "nomic_bert",
+   "base_model_class": "NomicBertModel",
+   "config_class": "NomicBertConfig"
+  },
+  {
+   "model_type": "nystromformer",
+   "base_model_class": "NystromformerModel",
+   "config_class": "NystromformerConfig"
+  },
+  {
+   "model_type": "olmo",
+   "base_model_class": "OlmoModel",
+   "config_class": "OlmoConfig"
+  },
+  {
+   "model_type": "olmo2",
+   "base_model_class": "Olmo2Model",
+   "config_class": "Olmo2Config"
+  },
+  {
+   "model_type": "olmo3",
+   "base_model_class": "Olmo3Model",
+   "config_class": "Olmo3Config"
+  },
+  {
+   "model_type": "olmo_hybrid",
+   "base_model_class": "OlmoHybridModel",
+   "config_class": "OlmoHybridConfig"
+  },
+  {
+   "model_type": "olmoe",
+   "base_model_class": "OlmoeModel",
+   "config_class": "OlmoeConfig"
+  },
+  {
+   "model_type": "omdet-turbo",
+   "base_model_class": "OmDetTurboForObjectDetection",
+   "config_class": "OmDetTurboConfig"
+  },
+  {
+   "model_type": "oneformer",
+   "base_model_class": "OneFormerModel",
+   "config_class": "OneFormerConfig"
+  },
+  {
+   "model_type": "openai-gpt",
+   "base_model_class": "OpenAIGPTModel",
+   "config_class": "OpenAIGPTConfig"
+  },
+  {
+   "model_type": "openai_privacy_filter",
+   "base_model_class": "OpenAIPrivacyFilterModel",
+   "config_class": "OpenAIPrivacyFilterConfig"
+  },
+  {
+   "model_type": "opt",
+   "base_model_class": "OPTModel",
+   "config_class": "OPTConfig"
+  },
+  {
+   "model_type": "ovis2",
+   "base_model_class": "Ovis2Model",
+   "config_class": "Ovis2Config"
+  },
+  {
+   "model_type": "owlv2",
+   "base_model_class": "Owlv2Model",
+   "config_class": "Owlv2Config"
+  },
+  {
+   "model_type": "owlvit",
+   "base_model_class": "OwlViTModel",
+   "config_class": "OwlViTConfig"
+  },
+  {
+   "model_type": "paddleocr_vl",
+   "base_model_class": "PaddleOCRVLModel",
+   "config_class": "PaddleOCRVLConfig"
+  },
+  {
+   "model_type": "paligemma",
+   "base_model_class": "PaliGemmaModel",
+   "config_class": "PaliGemmaConfig"
+  },
+  {
+   "model_type": "parakeet_ctc",
+   "base_model_class": "ParakeetForCTC",
+   "config_class": "ParakeetCTCConfig"
+  },
+  {
+   "model_type": "parakeet_encoder",
+   "base_model_class": "ParakeetEncoder",
+   "config_class": "ParakeetEncoderConfig"
+  },
+  {
+   "model_type": "parakeet_rnnt",
+   "base_model_class": "ParakeetForRNNT",
+   "config_class": "ParakeetRNNTConfig"
+  },
+  {
+   "model_type": "parakeet_tdt",
+   "base_model_class": "ParakeetForTDT",
+   "config_class": "parakeet"
+  },
+  {
+   "model_type": "patchtsmixer",
+   "base_model_class": "PatchTSMixerModel",
+   "config_class": "PatchTSMixerConfig"
+  },
+  {
+   "model_type": "patchtst",
+   "base_model_class": "PatchTSTModel",
+   "config_class": "PatchTSTConfig"
+  },
+  {
+   "model_type": "pe_audio",
+   "base_model_class": "PeAudioModel",
+   "config_class": "PeAudioConfig"
+  },
+  {
+   "model_type": "pe_audio_encoder",
+   "base_model_class": "PeAudioEncoder",
+   "config_class": "PeAudioEncoderConfig"
+  },
+  {
+   "model_type": "pe_audio_video",
+   "base_model_class": "PeAudioVideoModel",
+   "config_class": "PeAudioVideoConfig"
+  },
+  {
+   "model_type": "pe_audio_video_encoder",
+   "base_model_class": "PeAudioVideoEncoder",
+   "config_class": "PeAudioVideoEncoderConfig"
+  },
+  {
+   "model_type": "pe_video",
+   "base_model_class": "PeVideoModel",
+   "config_class": "PeVideoConfig"
+  },
+  {
+   "model_type": "pe_video_encoder",
+   "base_model_class": "PeVideoEncoder",
+   "config_class": "PeVideoEncoderConfig"
+  },
+  {
+   "model_type": "pegasus",
+   "base_model_class": "PegasusModel",
+   "config_class": "PegasusConfig"
+  },
+  {
+   "model_type": "pegasus_x",
+   "base_model_class": "PegasusXModel",
+   "config_class": "PegasusXConfig"
+  },
+  {
+   "model_type": "perceiver",
+   "base_model_class": "PerceiverModel",
+   "config_class": "PerceiverConfig"
+  },
+  {
+   "model_type": "perception_lm",
+   "base_model_class": "PerceptionLMModel",
+   "config_class": "PerceptionLMConfig"
+  },
+  {
+   "model_type": "persimmon",
+   "base_model_class": "PersimmonModel",
+   "config_class": "PersimmonConfig"
+  },
+  {
+   "model_type": "phi",
+   "base_model_class": "PhiModel",
+   "config_class": "PhiConfig"
+  },
+  {
+   "model_type": "phi3",
+   "base_model_class": "Phi3Model",
+   "config_class": "Phi3Config"
+  },
+  {
+   "model_type": "phi4_multimodal",
+   "base_model_class": "Phi4MultimodalModel",
+   "config_class": "Phi4MultimodalConfig"
+  },
+  {
+   "model_type": "phimoe",
+   "base_model_class": "PhimoeModel",
+   "config_class": "PhimoeConfig"
+  },
+  {
+   "model_type": "pi0",
+   "base_model_class": "PI0Model",
+   "config_class": "PI0Config"
+  },
+  {
+   "model_type": "pixio",
+   "base_model_class": "PixioModel",
+   "config_class": "PixioConfig"
+  },
+  {
+   "model_type": "pixtral",
+   "base_model_class": "PixtralVisionModel",
+   "config_class": "PixtralVisionConfig"
+  },
+  {
+   "model_type": "plbart",
+   "base_model_class": "PLBartModel",
+   "config_class": "PLBartConfig"
+  },
+  {
+   "model_type": "poolformer",
+   "base_model_class": "PoolFormerModel",
+   "config_class": "PoolFormerConfig"
+  },
+  {
+   "model_type": "pp_doclayout_v3",
+   "base_model_class": "PPDocLayoutV3Model",
+   "config_class": "PPDocLayoutV3Config"
+  },
+  {
+   "model_type": "pp_ocrv5_mobile_rec",
+   "base_model_class": "PPOCRV5MobileRecModel",
+   "config_class": "PPOCRV5MobileRecConfig"
+  },
+  {
+   "model_type": "pp_ocrv5_server_rec",
+   "base_model_class": "PPOCRV5ServerRecModel",
+   "config_class": "PPOCRV5ServerRecConfig"
+  },
+  {
+   "model_type": "pp_ocrv6_medium_det",
+   "base_model_class": "PPOCRV6MediumDetModel",
+   "config_class": "PPOCRV6MediumDetConfig"
+  },
+  {
+   "model_type": "pp_ocrv6_small_det",
+   "base_model_class": "PPOCRV6SmallDetModel",
+   "config_class": "PPOCRV6SmallDetConfig"
+  },
+  {
+   "model_type": "pp_ocrv6_small_rec",
+   "base_model_class": "PPOCRV6SmallRecModel",
+   "config_class": "PPOCRV6SmallRecConfig"
+  },
+  {
+   "model_type": "pp_ocrv6_tiny_rec",
+   "base_model_class": "PPOCRV6TinyRecModel",
+   "config_class": "PPOCRV6TinyRecConfig"
+  },
+  {
+   "model_type": "prophetnet",
+   "base_model_class": "ProphetNetModel",
+   "config_class": "ProphetNetConfig"
+  },
+  {
+   "model_type": "pvt",
+   "base_model_class": "PvtModel",
+   "config_class": "PvtConfig"
+  },
+  {
+   "model_type": "pvt_v2",
+   "base_model_class": "PvtV2Model",
+   "config_class": "PvtV2Config"
+  },
+  {
+   "model_type": "qianfan_ocr",
+   "base_model_class": "QianfanOCRModel",
+   "config_class": "QianfanOCRConfig"
+  },
+  {
+   "model_type": "qianfan_ocr_vision",
+   "base_model_class": "QianfanOCRVisionModel",
+   "config_class": "QianfanOCRVisionConfig"
+  },
+  {
+   "model_type": "qwen2",
+   "base_model_class": "Qwen2Model",
+   "config_class": "Qwen2Config"
+  },
+  {
+   "model_type": "qwen2_5_vl",
+   "base_model_class": "Qwen2_5_VLModel",
+   "config_class": "Qwen2_5_VLConfig"
+  },
+  {
+   "model_type": "qwen2_5_vl_text",
+   "base_model_class": "Qwen2_5_VLTextModel",
+   "config_class": "Qwen2_5_VLTextConfig"
+  },
+  {
+   "model_type": "qwen2_audio",
+   "base_model_class": "Qwen2AudioModel",
+   "config_class": "Qwen2AudioConfig"
+  },
+  {
+   "model_type": "qwen2_audio_encoder",
+   "base_model_class": "Qwen2AudioEncoder",
+   "config_class": "Qwen2AudioEncoderConfig"
+  },
+  {
+   "model_type": "qwen2_moe",
+   "base_model_class": "Qwen2MoeModel",
+   "config_class": "Qwen2MoeConfig"
+  },
+  {
+   "model_type": "qwen2_vl",
+   "base_model_class": "Qwen2VLModel",
+   "config_class": "Qwen2VLConfig"
+  },
+  {
+   "model_type": "qwen2_vl_text",
+   "base_model_class": "Qwen2VLTextModel",
+   "config_class": "Qwen2VLTextConfig"
+  },
+  {
+   "model_type": "qwen3",
+   "base_model_class": "Qwen3Model",
+   "config_class": "Qwen3Config"
+  },
+  {
+   "model_type": "qwen3_5",
+   "base_model_class": "Qwen3_5Model",
+   "config_class": "Qwen3_5Config"
+  },
+  {
+   "model_type": "qwen3_5_moe",
+   "base_model_class": "Qwen3_5MoeModel",
+   "config_class": "Qwen3_5MoeConfig"
+  },
+  {
+   "model_type": "qwen3_5_moe_text",
+   "base_model_class": "Qwen3_5MoeTextModel",
+   "config_class": "Qwen3_5MoeTextConfig"
+  },
+  {
+   "model_type": "qwen3_5_moe_vision",
+   "base_model_class": "Qwen3_5MoeVisionModel",
+   "config_class": "Qwen3_5MoeVisionConfig"
+  },
+  {
+   "model_type": "qwen3_5_text",
+   "base_model_class": "Qwen3_5TextModel",
+   "config_class": "Qwen3_5TextConfig"
+  },
+  {
+   "model_type": "qwen3_5_vision",
+   "base_model_class": "Qwen3_5VisionModel",
+   "config_class": "Qwen3_5VisionConfig"
+  },
+  {
+   "model_type": "qwen3_asr",
+   "base_model_class": "Qwen3ASRModel",
+   "config_class": "Qwen3ASRConfig"
+  },
+  {
+   "model_type": "qwen3_asr_encoder",
+   "base_model_class": "Qwen3ASREncoder",
+   "config_class": "Qwen3ASREncoderConfig"
+  },
+  {
+   "model_type": "qwen3_moe",
+   "base_model_class": "Qwen3MoeModel",
+   "config_class": "Qwen3MoeConfig"
+  },
+  {
+   "model_type": "qwen3_next",
+   "base_model_class": "Qwen3NextModel",
+   "config_class": "Qwen3NextConfig"
+  },
+  {
+   "model_type": "qwen3_vl",
+   "base_model_class": "Qwen3VLModel",
+   "config_class": "Qwen3VLConfig"
+  },
+  {
+   "model_type": "qwen3_vl_moe",
+   "base_model_class": "Qwen3VLMoeModel",
+   "config_class": "Qwen3VLMoeConfig"
+  },
+  {
+   "model_type": "qwen3_vl_moe_text",
+   "base_model_class": "Qwen3VLMoeTextModel",
+   "config_class": "Qwen3VLMoeTextConfig"
+  },
+  {
+   "model_type": "qwen3_vl_moe_vision",
+   "base_model_class": "Qwen3VLMoeVisionModel",
+   "config_class": "Qwen3VLMoeVisionConfig"
+  },
+  {
+   "model_type": "qwen3_vl_text",
+   "base_model_class": "Qwen3VLTextModel",
+   "config_class": "Qwen3VLTextConfig"
+  },
+  {
+   "model_type": "qwen3_vl_vision",
+   "base_model_class": "Qwen3VLVisionModel",
+   "config_class": "Qwen3VLVisionConfig"
+  },
+  {
+   "model_type": "qwen4_exp",
+   "base_model_class": "Qwen4ExpModel",
+   "config_class": "Qwen4ExpConfig"
+  },
+  {
+   "model_type": "qwen4_exp_text",
+   "base_model_class": "Qwen4ExpTextModel",
+   "config_class": "Qwen4ExpTextConfig"
+  },
+  {
+   "model_type": "qwen4_exp_vision",
+   "base_model_class": "Qwen4ExpVisionModel",
+   "config_class": "Qwen4ExpVisionConfig"
+  },
+  {
+   "model_type": "radio",
+   "base_model_class": "RadioModel",
+   "config_class": "RadioConfig"
+  },
+  {
+   "model_type": "recurrent_gemma",
+   "base_model_class": "RecurrentGemmaModel",
+   "config_class": "RecurrentGemmaConfig"
+  },
+  {
+   "model_type": "reformer",
+   "base_model_class": "ReformerModel",
+   "config_class": "ReformerConfig"
+  },
+  {
+   "model_type": "regnet",
+   "base_model_class": "RegNetModel",
+   "config_class": "RegNetConfig"
+  },
+  {
+   "model_type": "rembert",
+   "base_model_class": "RemBertModel",
+   "config_class": "RemBertConfig"
+  },
+  {
+   "model_type": "resnet",
+   "base_model_class": "ResNetModel",
+   "config_class": "ResNetConfig"
+  },
+  {
+   "model_type": "rf_detr",
+   "base_model_class": "RfDetrModel",
+   "config_class": "RfDetrConfig"
+  },
+  {
+   "model_type": "roberta",
+   "base_model_class": "RobertaModel",
+   "config_class": "RobertaConfig"
+  },
+  {
+   "model_type": "roberta-prelayernorm",
+   "base_model_class": "RobertaPreLayerNormModel",
+   "config_class": "RobertaPreLayerNormConfig"
+  },
+  {
+   "model_type": "roc_bert",
+   "base_model_class": "RoCBertModel",
+   "config_class": "RoCBertConfig"
+  },
+  {
+   "model_type": "roformer",
+   "base_model_class": "RoFormerModel",
+   "config_class": "RoFormerConfig"
+  },
+  {
+   "model_type": "rt_detr",
+   "base_model_class": "RTDetrModel",
+   "config_class": "RTDetrConfig"
+  },
+  {
+   "model_type": "rt_detr_v2",
+   "base_model_class": "RTDetrV2Model",
+   "config_class": "RTDetrV2Config"
+  },
+  {
+   "model_type": "rwkv",
+   "base_model_class": "RwkvModel",
+   "config_class": "RwkvConfig"
+  },
+  {
+   "model_type": "sam",
+   "base_model_class": "SamModel",
+   "config_class": "SamConfig"
+  },
+  {
+   "model_type": "sam2",
+   "base_model_class": "Sam2Model",
+   "config_class": "Sam2Config"
+  },
+  {
+   "model_type": "sam2_hiera_det_model",
+   "base_model_class": "Sam2HieraDetModel",
+   "config_class": "Sam2HieraDetConfig"
+  },
+  {
+   "model_type": "sam2_video",
+   "base_model_class": "Sam2VideoModel",
+   "config_class": "Sam2VideoConfig"
+  },
+  {
+   "model_type": "sam2_vision_model",
+   "base_model_class": "Sam2VisionModel",
+   "config_class": "Sam2VisionConfig"
+  },
+  {
+   "model_type": "sam3",
+   "base_model_class": "Sam3Model",
+   "config_class": "Sam3Config"
+  },
+  {
+   "model_type": "sam3_lite_text",
+   "base_model_class": "Sam3LiteTextModel",
+   "config_class": "Sam3LiteTextConfig"
+  },
+  {
+   "model_type": "sam3_lite_text_text_model",
+   "base_model_class": "Sam3LiteTextTextModel",
+   "config_class": "Sam3LiteTextTextConfig"
+  },
+  {
+   "model_type": "sam3_tracker",
+   "base_model_class": "Sam3TrackerModel",
+   "config_class": "Sam3TrackerConfig"
+  },
+  {
+   "model_type": "sam3_tracker",
+   "base_model_class": "Sam3TrackerModel",
+   "config_class": "Sam3TrackerConfig"
+  },
+  {
+   "model_type": "sam3_tracker_video",
+   "base_model_class": "Sam3TrackerVideoModel",
+   "config_class": "Sam3TrackerVideoConfig"
+  },
+  {
+   "model_type": "sam3_video",
+   "base_model_class": "Sam3VideoModel",
+   "config_class": "Sam3VideoConfig"
+  },
+  {
+   "model_type": "sam3_vision_model",
+   "base_model_class": "Sam3VisionModel",
+   "config_class": "Sam3VisionConfig"
+  },
+  {
+   "model_type": "sam3_vit_model",
+   "base_model_class": "Sam3ViTModel",
+   "config_class": "Sam3ViTConfig"
+  },
+  {
+   "model_type": "sam_hq",
+   "base_model_class": "SamHQModel",
+   "config_class": "SamHQConfig"
+  },
+  {
+   "model_type": "sam_hq_vision_model",
+   "base_model_class": "SamHQVisionModel",
+   "config_class": "SamHQVisionConfig"
+  },
+  {
+   "model_type": "sam_vision_model",
+   "base_model_class": "SamVisionModel",
+   "config_class": "SamVisionConfig"
+  },
+  {
+   "model_type": "sapiens2",
+   "base_model_class": "Sapiens2Model",
+   "config_class": "Sapiens2Config"
+  },
+  {
+   "model_type": "seamless_m4t",
+   "base_model_class": "SeamlessM4TModel",
+   "config_class": "SeamlessM4TConfig"
+  },
+  {
+   "model_type": "seamless_m4t_v2",
+   "base_model_class": "SeamlessM4Tv2Model",
+   "config_class": "SeamlessM4Tv2Config"
+  },
+  {
+   "model_type": "seed_oss",
+   "base_model_class": "SeedOssModel",
+   "config_class": "SeedOssConfig"
+  },
+  {
+   "model_type": "segformer",
+   "base_model_class": "SegformerModel",
+   "config_class": "SegformerConfig"
+  },
+  {
+   "model_type": "seggpt",
+   "base_model_class": "SegGptModel",
+   "config_class": "SegGptConfig"
+  },
+  {
+   "model_type": "sew",
+   "base_model_class": "SEWModel",
+   "config_class": "SEWConfig"
+  },
+  {
+   "model_type": "sew-d",
+   "base_model_class": "SEWDModel",
+   "config_class": "SEWDConfig"
+  },
+  {
+   "model_type": "siglip",
+   "base_model_class": "SiglipModel",
+   "config_class": "SiglipConfig"
+  },
+  {
+   "model_type": "siglip2",
+   "base_model_class": "Siglip2Model",
+   "config_class": "Siglip2Config"
+  },
+  {
+   "model_type": "siglip2_vision_model",
+   "base_model_class": "Siglip2VisionModel",
+   "config_class": "Siglip2VisionConfig"
+  },
+  {
+   "model_type": "siglip_vision_model",
+   "base_model_class": "SiglipVisionModel",
+   "config_class": "SiglipVisionConfig"
+  },
+  {
+   "model_type": "smollm3",
+   "base_model_class": "SmolLM3Model",
+   "config_class": "SmolLM3Config"
+  },
+  {
+   "model_type": "smolvlm",
+   "base_model_class": "SmolVLMModel",
+   "config_class": "SmolVLMConfig"
+  },
+  {
+   "model_type": "smolvlm_vision",
+   "base_model_class": "SmolVLMVisionTransformer",
+   "config_class": "SmolVLMVisionConfig"
+  },
+  {
+   "model_type": "solar_open",
+   "base_model_class": "SolarOpenModel",
+   "config_class": "SolarOpenConfig"
+  },
+  {
+   "model_type": "speech_to_text",
+   "base_model_class": "Speech2TextModel",
+   "config_class": "Speech2TextConfig"
+  },
+  {
+   "model_type": "speecht5",
+   "base_model_class": "SpeechT5Model",
+   "config_class": "SpeechT5Config"
+  },
+  {
+   "model_type": "splinter",
+   "base_model_class": "SplinterModel",
+   "config_class": "SplinterConfig"
+  },
+  {
+   "model_type": "squeezebert",
+   "base_model_class": "SqueezeBertModel",
+   "config_class": "SqueezeBertConfig"
+  },
+  {
+   "model_type": "stablelm",
+   "base_model_class": "StableLmModel",
+   "config_class": "StableLmConfig"
+  },
+  {
+   "model_type": "starcoder2",
+   "base_model_class": "Starcoder2Model",
+   "config_class": "Starcoder2Config"
+  },
+  {
+   "model_type": "step3p7",
+   "base_model_class": "Step3p7Model",
+   "config_class": "Step3p7Config"
+  },
+  {
+   "model_type": "swiftformer",
+   "base_model_class": "SwiftFormerModel",
+   "config_class": "SwiftFormerConfig"
+  },
+  {
+   "model_type": "swin",
+   "base_model_class": "SwinModel",
+   "config_class": "SwinConfig"
+  },
+  {
+   "model_type": "swin2sr",
+   "base_model_class": "Swin2SRModel",
+   "config_class": "Swin2SRConfig"
+  },
+  {
+   "model_type": "swinv2",
+   "base_model_class": "Swinv2Model",
+   "config_class": "Swinv2Config"
+  },
+  {
+   "model_type": "switch_transformers",
+   "base_model_class": "SwitchTransformersModel",
+   "config_class": "SwitchTransformersConfig"
+  },
+  {
+   "model_type": "t5",
+   "base_model_class": "T5Model",
+   "config_class": "T5Config"
+  },
+  {
+   "model_type": "t5gemma",
+   "base_model_class": "T5GemmaModel",
+   "config_class": "T5GemmaConfig"
+  },
+  {
+   "model_type": "t5gemma2",
+   "base_model_class": "T5Gemma2Model",
+   "config_class": "T5Gemma2Config"
+  },
+  {
+   "model_type": "t5gemma2_encoder",
+   "base_model_class": "T5Gemma2Encoder",
+   "config_class": "T5Gemma2EncoderConfig"
+  },
+  {
+   "model_type": "table-transformer",
+   "base_model_class": "TableTransformerModel",
+   "config_class": "TableTransformerConfig"
+  },
+  {
+   "model_type": "tapas",
+   "base_model_class": "TapasModel",
+   "config_class": "TapasConfig"
+  },
+  {
+   "model_type": "textnet",
+   "base_model_class": "TextNetModel",
+   "config_class": "TextNetConfig"
+  },
+  {
+   "model_type": "time_series_transformer",
+   "base_model_class": "TimeSeriesTransformerModel",
+   "config_class": "TimeSeriesTransformerConfig"
+  },
+  {
+   "model_type": "timesfm",
+   "base_model_class": "TimesFmModel",
+   "config_class": "TimesFmConfig"
+  },
+  {
+   "model_type": "timesfm2_5",
+   "base_model_class": "TimesFm2_5Model",
+   "config_class": "TimesFm2_5Config"
+  },
+  {
+   "model_type": "timesformer",
+   "base_model_class": "TimesformerModel",
+   "config_class": "TimesformerConfig"
+  },
+  {
+   "model_type": "timm_backbone",
+   "base_model_class": "TimmBackbone",
+   "config_class": "TimmBackboneConfig"
+  },
+  {
+   "model_type": "timm_wrapper",
+   "base_model_class": "TimmWrapperModel",
+   "config_class": "TimmWrapperConfig"
+  },
+  {
+   "model_type": "tipsv2",
+   "base_model_class": "Tipsv2Model",
+   "config_class": "Tipsv2Config"
+  },
+  {
+   "model_type": "tipsv2_text_model",
+   "base_model_class": "Tipsv2TextModel",
+   "config_class": "Tipsv2TextConfig"
+  },
+  {
+   "model_type": "tipsv2_vision_model",
+   "base_model_class": "Tipsv2VisionModel",
+   "config_class": "Tipsv2VisionConfig"
+  },
+  {
+   "model_type": "tvp",
+   "base_model_class": "TvpModel",
+   "config_class": "TvpConfig"
+  },
+  {
+   "model_type": "udop",
+   "base_model_class": "UdopModel",
+   "config_class": "UdopConfig"
+  },
+  {
+   "model_type": "umt5",
+   "base_model_class": "UMT5Model",
+   "config_class": "UMT5Config"
+  },
+  {
+   "model_type": "unispeech",
+   "base_model_class": "UniSpeechModel",
+   "config_class": "UniSpeechConfig"
+  },
+  {
+   "model_type": "unispeech-sat",
+   "base_model_class": "UniSpeechSatModel",
+   "config_class": "UniSpeechSatConfig"
+  },
+  {
+   "model_type": "univnet",
+   "base_model_class": "UnivNetModel",
+   "config_class": "UnivNetConfig"
+  },
+  {
+   "model_type": "uvdoc",
+   "base_model_class": "UVDocModel",
+   "config_class": "UVDocConfig"
+  },
+  {
+   "model_type": "vaultgemma",
+   "base_model_class": "VaultGemmaModel",
+   "config_class": "VaultGemmaConfig"
+  },
+  {
+   "model_type": "vibevoice_acoustic_tokenizer",
+   "base_model_class": "VibeVoiceAcousticTokenizerModel",
+   "config_class": "VibeVoiceAcousticTokenizerConfig"
+  },
+  {
+   "model_type": "vibevoice_acoustic_tokenizer_decoder",
+   "base_model_class": "VibeVoiceAcousticTokenizerDecoderModel",
+   "config_class": "vibevoice_acoustic_tokenizer"
+  },
+  {
+   "model_type": "vibevoice_acoustic_tokenizer_encoder",
+   "base_model_class": "VibeVoiceAcousticTokenizerEncoderModel",
+   "config_class": "vibevoice_acoustic_tokenizer"
+  },
+  {
+   "model_type": "vibevoice_asr",
+   "base_model_class": "VibeVoiceAsrModel",
+   "config_class": "VibeVoiceAsrConfig"
+  },
+  {
+   "model_type": "video_llama_3",
+   "base_model_class": "VideoLlama3Model",
+   "config_class": "VideoLlama3Config"
+  },
+  {
+   "model_type": "video_llama_3_vision",
+   "base_model_class": "VideoLlama3VisionModel",
+   "config_class": "VideoLlama3VisionConfig"
+  },
+  {
+   "model_type": "video_llava",
+   "base_model_class": "VideoLlavaModel",
+   "config_class": "VideoLlavaConfig"
+  },
+  {
+   "model_type": "videomae",
+   "base_model_class": "VideoMAEModel",
+   "config_class": "VideoMAEConfig"
+  },
+  {
+   "model_type": "videoprism",
+   "base_model_class": "VideoPrismClipModel",
+   "config_class": "VideoPrismConfig"
+  },
+  {
+   "model_type": "videoprism_vision_model",
+   "base_model_class": "VideoPrismVisionModel",
+   "config_class": "VideoPrismVisionConfig"
+  },
+  {
+   "model_type": "vilt",
+   "base_model_class": "ViltModel",
+   "config_class": "ViltConfig"
+  },
+  {
+   "model_type": "vipllava",
+   "base_model_class": "VipLlavaModel",
+   "config_class": "VipLlavaConfig"
+  },
+  {
+   "model_type": "vision-text-dual-encoder",
+   "base_model_class": "VisionTextDualEncoderModel",
+   "config_class": "VisionTextDualEncoderConfig"
+  },
+  {
+   "model_type": "visual_bert",
+   "base_model_class": "VisualBertModel",
+   "config_class": "VisualBertConfig"
+  },
+  {
+   "model_type": "vit",
+   "base_model_class": "ViTModel",
+   "config_class": "ViTConfig"
+  },
+  {
+   "model_type": "vit_mae",
+   "base_model_class": "ViTMAEModel",
+   "config_class": "ViTMAEConfig"
+  },
+  {
+   "model_type": "vit_msn",
+   "base_model_class": "ViTMSNModel",
+   "config_class": "ViTMSNConfig"
+  },
+  {
+   "model_type": "vitdet",
+   "base_model_class": "VitDetModel",
+   "config_class": "VitDetConfig"
+  },
+  {
+   "model_type": "vits",
+   "base_model_class": "VitsModel",
+   "config_class": "VitsConfig"
+  },
+  {
+   "model_type": "vivit",
+   "base_model_class": "VivitModel",
+   "config_class": "VivitConfig"
+  },
+  {
+   "model_type": "vjepa2",
+   "base_model_class": "VJEPA2Model",
+   "config_class": "VJEPA2Config"
+  },
+  {
+   "model_type": "voxtral",
+   "base_model_class": "VoxtralModel",
+   "config_class": "VoxtralConfig"
+  },
+  {
+   "model_type": "voxtral_encoder",
+   "base_model_class": "VoxtralEncoder",
+   "config_class": "VoxtralEncoderConfig"
+  },
+  {
+   "model_type": "voxtral_realtime",
+   "base_model_class": "VoxtralRealtimeModel",
+   "config_class": "VoxtralRealtimeConfig"
+  },
+  {
+   "model_type": "voxtral_realtime_encoder",
+   "base_model_class": "VoxtralRealtimeEncoder",
+   "config_class": "VoxtralRealtimeEncoderConfig"
+  },
+  {
+   "model_type": "voxtral_realtime_text",
+   "base_model_class": "VoxtralRealtimeTextModel",
+   "config_class": "VoxtralRealtimeTextConfig"
+  },
+  {
+   "model_type": "wav2vec2",
+   "base_model_class": "Wav2Vec2Model",
+   "config_class": "Wav2Vec2Config"
+  },
+  {
+   "model_type": "wav2vec2-bert",
+   "base_model_class": "Wav2Vec2BertModel",
+   "config_class": "Wav2Vec2BertConfig"
+  },
+  {
+   "model_type": "wav2vec2-conformer",
+   "base_model_class": "Wav2Vec2ConformerModel",
+   "config_class": "Wav2Vec2ConformerConfig"
+  },
+  {
+   "model_type": "wavlm",
+   "base_model_class": "WavLMModel",
+   "config_class": "WavLMConfig"
+  },
+  {
+   "model_type": "whisper",
+   "base_model_class": "WhisperModel",
+   "config_class": "WhisperConfig"
+  },
+  {
+   "model_type": "xclip",
+   "base_model_class": "XCLIPModel",
+   "config_class": "XCLIPConfig"
+  },
+  {
+   "model_type": "xcodec",
+   "base_model_class": "XcodecModel",
+   "config_class": "XcodecConfig"
+  },
+  {
+   "model_type": "xcodec2",
+   "base_model_class": "Xcodec2Model",
+   "config_class": "Xcodec2Config"
+  },
+  {
+   "model_type": "xglm",
+   "base_model_class": "XGLMModel",
+   "config_class": "XGLMConfig"
+  },
+  {
+   "model_type": "xlm",
+   "base_model_class": "XLMModel",
+   "config_class": "XLMConfig"
+  },
+  {
+   "model_type": "xlm-roberta",
+   "base_model_class": "XLMRobertaModel",
+   "config_class": "XLMRobertaConfig"
+  },
+  {
+   "model_type": "xlm-roberta-xl",
+   "base_model_class": "XLMRobertaXLModel",
+   "config_class": "XLMRobertaXLConfig"
+  },
+  {
+   "model_type": "xlnet",
+   "base_model_class": "XLNetModel",
+   "config_class": "XLNetConfig"
+  },
+  {
+   "model_type": "xlstm",
+   "base_model_class": "xLSTMModel",
+   "config_class": "xLSTMConfig"
+  },
+  {
+   "model_type": "xmod",
+   "base_model_class": "XmodModel",
+   "config_class": "XmodConfig"
+  },
+  {
+   "model_type": "yolos",
+   "base_model_class": "YolosModel",
+   "config_class": "YolosConfig"
+  },
+  {
+   "model_type": "yoso",
+   "base_model_class": "YosoModel",
+   "config_class": "YosoConfig"
+  },
+  {
+   "model_type": "youtu",
+   "base_model_class": "YoutuModel",
+   "config_class": "YoutuConfig"
+  },
+  {
+   "model_type": "zamba",
+   "base_model_class": "ZambaModel",
+   "config_class": "ZambaConfig"
+  },
+  {
+   "model_type": "zamba2",
+   "base_model_class": "Zamba2Model",
+   "config_class": "Zamba2Config"
+  },
+  {
+   "model_type": "zaya",
+   "base_model_class": "ZayaModel",
+   "config_class": "ZayaConfig"
+  }
+ ],
+ "configs": [
+  [
+   "afmoe",
+   "AfmoeConfig"
+  ],
+  [
+   "aimv2",
+   "Aimv2Config"
+  ],
+  [
+   "aimv2_text_model",
+   "Aimv2TextConfig"
+  ],
+  [
+   "aimv2_vision_model",
+   "Aimv2VisionConfig"
+  ],
+  [
+   "albert",
+   "AlbertConfig"
+  ],
+  [
+   "align",
+   "AlignConfig"
+  ],
+  [
+   "align_text_model",
+   "AlignTextConfig"
+  ],
+  [
+   "align_vision_model",
+   "AlignVisionConfig"
+  ],
+  [
+   "altclip",
+   "AltCLIPConfig"
+  ],
+  [
+   "altclip_text_model",
+   "AltCLIPTextConfig"
+  ],
+  [
+   "altclip_vision_model",
+   "AltCLIPVisionConfig"
+  ],
+  [
+   "apertus",
+   "ApertusConfig"
+  ],
+  [
+   "arcee",
+   "ArceeConfig"
+  ],
+  [
+   "aria",
+   "AriaConfig"
+  ],
+  [
+   "aria_text",
+   "AriaTextConfig"
+  ],
+  [
+   "audio-spectrogram-transformer",
+   "ASTConfig"
+  ],
+  [
+   "audioflamingo3",
+   "AudioFlamingo3Config"
+  ],
+  [
+   "audioflamingo3_encoder",
+   "AudioFlamingo3EncoderConfig"
+  ],
+  [
+   "autoformer",
+   "AutoformerConfig"
+  ],
+  [
+   "axk1",
+   "AXK1Config"
+  ],
+  [
+   "axk2",
+   "AXK2Config"
+  ],
+  [
+   "aya_vision",
+   "AyaVisionConfig"
+  ],
+  [
+   "bamba",
+   "BambaConfig"
+  ],
+  [
+   "bark",
+   "BarkConfig"
+  ],
+  [
+   "bart",
+   "BartConfig"
+  ],
+  [
+   "beit",
+   "BeitConfig"
+  ],
+  [
+   "bert",
+   "BertConfig"
+  ],
+  [
+   "bert-generation",
+   "BertGenerationConfig"
+  ],
+  [
+   "big_bird",
+   "BigBirdConfig"
+  ],
+  [
+   "bigbird_pegasus",
+   "BigBirdPegasusConfig"
+  ],
+  [
+   "biogpt",
+   "BioGptConfig"
+  ],
+  [
+   "bit",
+   "BitConfig"
+  ],
+  [
+   "bitnet",
+   "BitNetConfig"
+  ],
+  [
+   "blenderbot",
+   "BlenderbotConfig"
+  ],
+  [
+   "blenderbot-small",
+   "BlenderbotSmallConfig"
+  ],
+  [
+   "blip",
+   "BlipConfig"
+  ],
+  [
+   "blip-2",
+   "Blip2Config"
+  ],
+  [
+   "blip_2_qformer",
+   "Blip2QFormerConfig"
+  ],
+  [
+   "blip_2_vision_model",
+   "Blip2VisionConfig"
+  ],
+  [
+   "blip_text_model",
+   "BlipTextConfig"
+  ],
+  [
+   "blip_vision_model",
+   "BlipVisionConfig"
+  ],
+  [
+   "bloom",
+   "BloomConfig"
+  ],
+  [
+   "blt",
+   "BltConfig"
+  ],
+  [
+   "blt_global_transformer",
+   "BltGlobalTransformerConfig"
+  ],
+  [
+   "blt_local_decoder",
+   "BltLocalDecoderConfig"
+  ],
+  [
+   "blt_local_encoder",
+   "BltLocalEncoderConfig"
+  ],
+  [
+   "blt_patcher",
+   "BltPatcherConfig"
+  ],
+  [
+   "bridgetower",
+   "BridgeTowerConfig"
+  ],
+  [
+   "bridgetower_text_model",
+   "BridgeTowerTextConfig"
+  ],
+  [
+   "bridgetower_vision_model",
+   "BridgeTowerVisionConfig"
+  ],
+  [
+   "bros",
+   "BrosConfig"
+  ],
+  [
+   "camembert",
+   "CamembertConfig"
+  ],
+  [
+   "canine",
+   "CanineConfig"
+  ],
+  [
+   "chameleon",
+   "ChameleonConfig"
+  ],
+  [
+   "chameleon_vqgan",
+   "ChameleonVQVAEConfig"
+  ],
+  [
+   "chinese_clip",
+   "ChineseCLIPConfig"
+  ],
+  [
+   "chinese_clip_text_model",
+   "ChineseCLIPTextConfig"
+  ],
+  [
+   "chinese_clip_vision_model",
+   "ChineseCLIPVisionConfig"
+  ],
+  [
+   "chmv2",
+   "CHMv2Config"
+  ],
+  [
+   "clap",
+   "ClapConfig"
+  ],
+  [
+   "clap_audio_model",
+   "ClapAudioConfig"
+  ],
+  [
+   "clap_text_model",
+   "ClapTextConfig"
+  ],
+  [
+   "clip",
+   "CLIPConfig"
+  ],
+  [
+   "clip_text_model",
+   "CLIPTextConfig"
+  ],
+  [
+   "clip_vision_model",
+   "CLIPVisionConfig"
+  ],
+  [
+   "clipseg",
+   "CLIPSegConfig"
+  ],
+  [
+   "clipseg_text_model",
+   "CLIPSegTextConfig"
+  ],
+  [
+   "clipseg_vision_model",
+   "CLIPSegVisionConfig"
+  ],
+  [
+   "clvp",
+   "ClvpConfig"
+  ],
+  [
+   "clvp_decoder",
+   "ClvpDecoderConfig"
+  ],
+  [
+   "clvp_encoder",
+   "ClvpEncoderConfig"
+  ],
+  [
+   "codegen",
+   "CodeGenConfig"
+  ],
+  [
+   "cohere",
+   "CohereConfig"
+  ],
+  [
+   "cohere2",
+   "Cohere2Config"
+  ],
+  [
+   "cohere2_moe",
+   "Cohere2MoeConfig"
+  ],
+  [
+   "cohere2_vision",
+   "Cohere2VisionConfig"
+  ],
+  [
+   "cohere_asr",
+   "CohereAsrConfig"
+  ],
+  [
+   "cohere_compass",
+   "CohereCompassConfig"
+  ],
+  [
+   "cohere_compass_text",
+   "CohereCompassTextConfig"
+  ],
+  [
+   "cohere_compass_vision",
+   "CohereCompassVisionConfig"
+  ],
+  [
+   "colmodernvbert",
+   "ColModernVBertConfig"
+  ],
+  [
+   "colpali",
+   "ColPaliConfig"
+  ],
+  [
+   "colqwen2",
+   "ColQwen2Config"
+  ],
+  [
+   "conditional_detr",
+   "ConditionalDetrConfig"
+  ],
+  [
+   "convbert",
+   "ConvBertConfig"
+  ],
+  [
+   "convnext",
+   "ConvNextConfig"
+  ],
+  [
+   "convnextv2",
+   "ConvNextV2Config"
+  ],
+  [
+   "cosmos3_edge",
+   "Cosmos3EdgeConfig"
+  ],
+  [
+   "cosmos3_edge_text",
+   "Cosmos3EdgeTextConfig"
+  ],
+  [
+   "cosmos3_edge_vision",
+   "Cosmos3EdgeVisionConfig"
+  ],
+  [
+   "cosmos3_omni",
+   "Cosmos3OmniConfig"
+  ],
+  [
+   "cpmant",
+   "CpmAntConfig"
+  ],
+  [
+   "csm",
+   "CsmConfig"
+  ],
+  [
+   "csm_depth_decoder_model",
+   "CsmDepthDecoderConfig"
+  ],
+  [
+   "ctrl",
+   "CTRLConfig"
+  ],
+  [
+   "cvt",
+   "CvtConfig"
+  ],
+  [
+   "cwm",
+   "CwmConfig"
+  ],
+  [
+   "d_fine",
+   "DFineConfig"
+  ],
+  [
+   "dab-detr",
+   "DabDetrConfig"
+  ],
+  [
+   "dac",
+   "DacConfig"
+  ],
+  [
+   "data2vec-audio",
+   "Data2VecAudioConfig"
+  ],
+  [
+   "data2vec-text",
+   "Data2VecTextConfig"
+  ],
+  [
+   "data2vec-vision",
+   "Data2VecVisionConfig"
+  ],
+  [
+   "dbrx",
+   "DbrxConfig"
+  ],
+  [
+   "deberta",
+   "DebertaConfig"
+  ],
+  [
+   "deberta-v2",
+   "DebertaV2Config"
+  ],
+  [
+   "decision_transformer",
+   "DecisionTransformerConfig"
+  ],
+  [
+   "deepseek_ocr2",
+   "DeepseekOcr2Config"
+  ],
+  [
+   "deepseek_ocr2_encoder",
+   "DeepseekOcr2VisionEncoderConfig"
+  ],
+  [
+   "deepseek_ocr2_sam_vision_model",
+   "DeepseekOcr2SamVisionConfig"
+  ],
+  [
+   "deepseek_ocr2_text",
+   "DeepseekOcr2TextConfig"
+  ],
+  [
+   "deepseek_ocr2_vision",
+   "DeepseekOcr2VisionConfig"
+  ],
+  [
+   "deepseek_v2",
+   "DeepseekV2Config"
+  ],
+  [
+   "deepseek_v3",
+   "DeepseekV3Config"
+  ],
+  [
+   "deepseek_v32",
+   "DeepseekV32Config"
+  ],
+  [
+   "deepseek_v4",
+   "DeepseekV4Config"
+  ],
+  [
+   "deepseek_vl",
+   "DeepseekVLConfig"
+  ],
+  [
+   "deepseek_vl_hybrid",
+   "DeepseekVLHybridConfig"
+  ],
+  [
+   "deformable_detr",
+   "DeformableDetrConfig"
+  ],
+  [
+   "deimv2",
+   "Deimv2Config"
+  ],
+  [
+   "deit",
+   "DeiTConfig"
+  ],
+  [
+   "depth_anything",
+   "DepthAnythingConfig"
+  ],
+  [
+   "depth_pro",
+   "DepthProConfig"
+  ],
+  [
+   "detr",
+   "DetrConfig"
+  ],
+  [
+   "dia",
+   "DiaConfig"
+  ],
+  [
+   "dia_decoder",
+   "DiaDecoderConfig"
+  ],
+  [
+   "dia_encoder",
+   "DiaEncoderConfig"
+  ],
+  [
+   "diffllama",
+   "DiffLlamaConfig"
+  ],
+  [
+   "diffusion_gemma",
+   "DiffusionGemmaConfig"
+  ],
+  [
+   "diffusion_gemma_text",
+   "DiffusionGemmaTextConfig"
+  ],
+  [
+   "dinat",
+   "DinatConfig"
+  ],
+  [
+   "dinov2",
+   "Dinov2Config"
+  ],
+  [
+   "dinov2_with_registers",
+   "Dinov2WithRegistersConfig"
+  ],
+  [
+   "dinov3_convnext",
+   "DINOv3ConvNextConfig"
+  ],
+  [
+   "dinov3_vit",
+   "DINOv3ViTConfig"
+  ],
+  [
+   "distilbert",
+   "DistilBertConfig"
+  ],
+  [
+   "doge",
+   "DogeConfig"
+  ],
+  [
+   "donut-swin",
+   "DonutSwinConfig"
+  ],
+  [
+   "dots1",
+   "Dots1Config"
+  ],
+  [
+   "dpr",
+   "DPRConfig"
+  ],
+  [
+   "dpt",
+   "DPTConfig"
+  ],
+  [
+   "edgetam",
+   "EdgeTamConfig"
+  ],
+  [
+   "edgetam_video",
+   "EdgeTamVideoConfig"
+  ],
+  [
+   "edgetam_vision_model",
+   "EdgeTamVisionConfig"
+  ],
+  [
+   "efficientloftr",
+   "EfficientLoFTRConfig"
+  ],
+  [
+   "efficientnet",
+   "EfficientNetConfig"
+  ],
+  [
+   "electra",
+   "ElectraConfig"
+  ],
+  [
+   "emu3",
+   "Emu3Config"
+  ],
+  [
+   "emu3_text_model",
+   "Emu3TextConfig"
+  ],
+  [
+   "emu3_vqgan",
+   "Emu3VQVAEConfig"
+  ],
+  [
+   "encodec",
+   "EncodecConfig"
+  ],
+  [
+   "encoder-decoder",
+   "EncoderDecoderConfig"
+  ],
+  [
+   "eomt",
+   "EomtConfig"
+  ],
+  [
+   "eomt_dinov3",
+   "EomtDinov3Config"
+  ],
+  [
+   "ernie",
+   "ErnieConfig"
+  ],
+  [
+   "ernie4_5",
+   "Ernie4_5Config"
+  ],
+  [
+   "ernie4_5_moe",
+   "Ernie4_5_MoeConfig"
+  ],
+  [
+   "ernie4_5_vl_moe",
+   "Ernie4_5_VLMoeConfig"
+  ],
+  [
+   "ernie4_5_vl_moe_text",
+   "Ernie4_5_VLMoeTextConfig"
+  ],
+  [
+   "ernie4_5_vl_moe_vision",
+   "Ernie4_5_VLMoeVisionConfig"
+  ],
+  [
+   "esm",
+   "EsmConfig"
+  ],
+  [
+   "esmc",
+   "EsmcConfig"
+  ],
+  [
+   "esmfold2",
+   "EsmFold2Config"
+  ],
+  [
+   "eurobert",
+   "EuroBertConfig"
+  ],
+  [
+   "evolla",
+   "EvollaConfig"
+  ],
+  [
+   "exaone4",
+   "Exaone4Config"
+  ],
+  [
+   "exaone4_5",
+   "Exaone4_5_Config"
+  ],
+  [
+   "exaone4_5_vision",
+   "Exaone4_5_VisionConfig"
+  ],
+  [
+   "exaone_moe",
+   "ExaoneMoeConfig"
+  ],
+  [
+   "falcon",
+   "FalconConfig"
+  ],
+  [
+   "falcon_h1",
+   "FalconH1Config"
+  ],
+  [
+   "falcon_mamba",
+   "FalconMambaConfig"
+  ],
+  [
+   "fast_vlm",
+   "FastVlmConfig"
+  ],
+  [
+   "fastspeech2_conformer",
+   "FastSpeech2ConformerConfig"
+  ],
+  [
+   "fastspeech2_conformer_hifigan",
+   "FastSpeech2ConformerHifiGanConfig"
+  ],
+  [
+   "fastspeech2_conformer_with_hifigan",
+   "FastSpeech2ConformerWithHifiGanConfig"
+  ],
+  [
+   "flaubert",
+   "FlaubertConfig"
+  ],
+  [
+   "flava",
+   "FlavaConfig"
+  ],
+  [
+   "flava_image_model",
+   "FlavaImageConfig"
+  ],
+  [
+   "flava_multimodal_model",
+   "FlavaMultimodalConfig"
+  ],
+  [
+   "flava_text_model",
+   "FlavaTextConfig"
+  ],
+  [
+   "flex_olmo",
+   "FlexOlmoConfig"
+  ],
+  [
+   "florence2",
+   "Florence2Config"
+  ],
+  [
+   "florence_vision",
+   "Florence2VisionConfig"
+  ],
+  [
+   "fnet",
+   "FNetConfig"
+  ],
+  [
+   "focalnet",
+   "FocalNetConfig"
+  ],
+  [
+   "fsmt",
+   "FSMTConfig"
+  ],
+  [
+   "funnel",
+   "FunnelConfig"
+  ],
+  [
+   "fuyu",
+   "FuyuConfig"
+  ],
+  [
+   "gemma",
+   "GemmaConfig"
+  ],
+  [
+   "gemma2",
+   "Gemma2Config"
+  ],
+  [
+   "gemma3",
+   "Gemma3Config"
+  ],
+  [
+   "gemma3_text",
+   "Gemma3TextConfig"
+  ],
+  [
+   "gemma3n",
+   "Gemma3nConfig"
+  ],
+  [
+   "gemma3n_audio",
+   "Gemma3nAudioConfig"
+  ],
+  [
+   "gemma3n_text",
+   "Gemma3nTextConfig"
+  ],
+  [
+   "gemma3n_vision",
+   "Gemma3nVisionConfig"
+  ],
+  [
+   "gemma4",
+   "Gemma4Config"
+  ],
+  [
+   "gemma4_assistant",
+   "Gemma4AssistantConfig"
+  ],
+  [
+   "gemma4_audio",
+   "Gemma4AudioConfig"
+  ],
+  [
+   "gemma4_text",
+   "Gemma4TextConfig"
+  ],
+  [
+   "gemma4_unified",
+   "Gemma4UnifiedConfig"
+  ],
+  [
+   "gemma4_unified_assistant",
+   "Gemma4UnifiedAssistantConfig"
+  ],
+  [
+   "gemma4_unified_audio",
+   "Gemma4UnifiedAudioConfig"
+  ],
+  [
+   "gemma4_unified_text",
+   "Gemma4UnifiedTextConfig"
+  ],
+  [
+   "gemma4_unified_vision",
+   "Gemma4UnifiedVisionConfig"
+  ],
+  [
+   "gemma4_vision",
+   "Gemma4VisionConfig"
+  ],
+  [
+   "git",
+   "GitConfig"
+  ],
+  [
+   "git_vision_model",
+   "GitVisionConfig"
+  ],
+  [
+   "glm",
+   "GlmConfig"
+  ],
+  [
+   "glm4",
+   "Glm4Config"
+  ],
+  [
+   "glm46v",
+   "Glm46VConfig"
+  ],
+  [
+   "glm4_moe",
+   "Glm4MoeConfig"
+  ],
+  [
+   "glm4_moe_lite",
+   "Glm4MoeLiteConfig"
+  ],
+  [
+   "glm4v",
+   "Glm4vConfig"
+  ],
+  [
+   "glm4v_moe",
+   "Glm4vMoeConfig"
+  ],
+  [
+   "glm4v_moe_text",
+   "Glm4vMoeTextConfig"
+  ],
+  [
+   "glm4v_moe_vision",
+   "Glm4vMoeVisionConfig"
+  ],
+  [
+   "glm4v_text",
+   "Glm4vTextConfig"
+  ],
+  [
+   "glm4v_vision",
+   "Glm4vVisionConfig"
+  ],
+  [
+   "glm5_next",
+   "Glm5NextConfig"
+  ],
+  [
+   "glm5_next_text",
+   "Glm5NextTextConfig"
+  ],
+  [
+   "glm5_next_vision",
+   "Glm5NextVisionConfig"
+  ],
+  [
+   "glm_image",
+   "GlmImageConfig"
+  ],
+  [
+   "glm_image_text",
+   "GlmImageTextConfig"
+  ],
+  [
+   "glm_image_vision",
+   "GlmImageVisionConfig"
+  ],
+  [
+   "glm_image_vqmodel",
+   "GlmImageVQVAEConfig"
+  ],
+  [
+   "glm_moe_dsa",
+   "GlmMoeDsaConfig"
+  ],
+  [
+   "glm_ocr",
+   "GlmOcrConfig"
+  ],
+  [
+   "glm_ocr_text",
+   "GlmOcrTextConfig"
+  ],
+  [
+   "glm_ocr_vision",
+   "GlmOcrVisionConfig"
+  ],
+  [
+   "glmasr",
+   "GlmAsrConfig"
+  ],
+  [
+   "glmasr_encoder",
+   "GlmAsrEncoderConfig"
+  ],
+  [
+   "glmga",
+   "GlmgaConfig"
+  ],
+  [
+   "glpn",
+   "GLPNConfig"
+  ],
+  [
+   "got_ocr2",
+   "GotOcr2Config"
+  ],
+  [
+   "gpt-sw3",
+   "GPT2Config"
+  ],
+  [
+   "gpt2",
+   "GPT2Config"
+  ],
+  [
+   "gpt_bigcode",
+   "GPTBigCodeConfig"
+  ],
+  [
+   "gpt_neo",
+   "GPTNeoConfig"
+  ],
+  [
+   "gpt_neox",
+   "GPTNeoXConfig"
+  ],
+  [
+   "gpt_neox_japanese",
+   "GPTNeoXJapaneseConfig"
+  ],
+  [
+   "gpt_oss",
+   "GptOssConfig"
+  ],
+  [
+   "gptj",
+   "GPTJConfig"
+  ],
+  [
+   "granite",
+   "GraniteConfig"
+  ],
+  [
+   "granite4_vision",
+   "Granite4VisionConfig"
+  ],
+  [
+   "granite4_vision_text",
+   "Granite4VisionTextConfig"
+  ],
+  [
+   "granite_speech",
+   "GraniteSpeechConfig"
+  ],
+  [
+   "granite_speech5_ctc",
+   "GraniteSpeech5CTCConfig"
+  ],
+  [
+   "granite_speech5_encoder",
+   "GraniteSpeech5EncoderConfig"
+  ],
+  [
+   "granite_speech_encoder",
+   "GraniteSpeechEncoderConfig"
+  ],
+  [
+   "granite_speech_plus",
+   "GraniteSpeechPlusConfig"
+  ],
+  [
+   "granite_speech_plus_encoder",
+   "GraniteSpeechPlusEncoderConfig"
+  ],
+  [
+   "granite_swa",
+   "GraniteSWAConfig"
+  ],
+  [
+   "granitemoe",
+   "GraniteMoeConfig"
+  ],
+  [
+   "granitemoe_swa",
+   "GraniteMoeSWAConfig"
+  ],
+  [
+   "granitemoehybrid",
+   "GraniteMoeHybridConfig"
+  ],
+  [
+   "granitemoeshared",
+   "GraniteMoeSharedConfig"
+  ],
+  [
+   "grounding-dino",
+   "GroundingDinoConfig"
+  ],
+  [
+   "groupvit",
+   "GroupViTConfig"
+  ],
+  [
+   "groupvit_text_model",
+   "GroupViTTextConfig"
+  ],
+  [
+   "groupvit_vision_model",
+   "GroupViTVisionConfig"
+  ],
+  [
+   "helium",
+   "HeliumConfig"
+  ],
+  [
+   "hgnet_v2",
+   "HGNetV2Config"
+  ],
+  [
+   "hiera",
+   "HieraConfig"
+  ],
+  [
+   "higgs_audio_v2",
+   "HiggsAudioV2Config"
+  ],
+  [
+   "higgs_audio_v2_tokenizer",
+   "HiggsAudioV2TokenizerConfig"
+  ],
+  [
+   "hrm_text",
+   "HrmTextConfig"
+  ],
+  [
+   "hubert",
+   "HubertConfig"
+  ],
+  [
+   "hunyuan_v1_dense",
+   "HunYuanDenseV1Config"
+  ],
+  [
+   "hunyuan_v1_moe",
+   "HunYuanMoEV1Config"
+  ],
+  [
+   "hunyuan_vl",
+   "HunYuanVLConfig"
+  ],
+  [
+   "hunyuan_vl_text",
+   "HunYuanVLTextConfig"
+  ],
+  [
+   "hunyuan_vl_vision",
+   "HunYuanVLVisionConfig"
+  ],
+  [
+   "hy_v3",
+   "HYV3Config"
+  ],
+  [
+   "hyperclovax",
+   "HyperCLOVAXConfig"
+  ],
+  [
+   "ibert",
+   "IBertConfig"
+  ],
+  [
+   "idefics",
+   "IdeficsConfig"
+  ],
+  [
+   "idefics2",
+   "Idefics2Config"
+  ],
+  [
+   "idefics2_perceiver",
+   "Idefics2PerceiverConfig"
+  ],
+  [
+   "idefics2_vision",
+   "Idefics2VisionConfig"
+  ],
+  [
+   "idefics3",
+   "Idefics3Config"
+  ],
+  [
+   "idefics3_vision",
+   "Idefics3VisionConfig"
+  ],
+  [
+   "idefics_perciever",
+   "IdeficsPerceiverConfig"
+  ],
+  [
+   "idefics_vision",
+   "IdeficsVisionConfig"
+  ],
+  [
+   "ijepa",
+   "IJepaConfig"
+  ],
+  [
+   "imagegpt",
+   "ImageGPTConfig"
+  ],
+  [
+   "informer",
+   "InformerConfig"
+  ],
+  [
+   "inkling_audio",
+   "InklingAudioConfig"
+  ],
+  [
+   "inkling_mm_model",
+   "InklingConfig"
+  ],
+  [
+   "inkling_text",
+   "InklingTextConfig"
+  ],
+  [
+   "inkling_vision",
+   "InklingVisionConfig"
+  ],
+  [
+   "instructblip",
+   "InstructBlipConfig"
+  ],
+  [
+   "instructblip_qformer",
+   "InstructBlipQFormerConfig"
+  ],
+  [
+   "instructblip_vision_model",
+   "InstructBlipVisionConfig"
+  ],
+  [
+   "instructblipvideo",
+   "InstructBlipVideoConfig"
+  ],
+  [
+   "instructblipvideo_qformer",
+   "InstructBlipVideoQFormerConfig"
+  ],
+  [
+   "instructblipvideo_vision_model",
+   "InstructBlipVideoVisionConfig"
+  ],
+  [
+   "internvl",
+   "InternVLConfig"
+  ],
+  [
+   "internvl_vision",
+   "InternVLVisionConfig"
+  ],
+  [
+   "jais2",
+   "Jais2Config"
+  ],
+  [
+   "jamba",
+   "JambaConfig"
+  ],
+  [
+   "janus",
+   "JanusConfig"
+  ],
+  [
+   "janus_vision_model",
+   "JanusVisionConfig"
+  ],
+  [
+   "janus_vqgan",
+   "JanusVQVAEConfig"
+  ],
+  [
+   "jetmoe",
+   "JetMoeConfig"
+  ],
+  [
+   "jina_embeddings_v3",
+   "JinaEmbeddingsV3Config"
+  ],
+  [
+   "kimi_k25",
+   "Kimi_K25Config"
+  ],
+  [
+   "kimi_k25_vision",
+   "Kimi_K25VisionConfig"
+  ],
+  [
+   "kosmos-2",
+   "Kosmos2Config"
+  ],
+  [
+   "kosmos_2_5_text_model",
+   "Kosmos2_5TextConfig"
+  ],
+  [
+   "kosmos_2_5_vision_model",
+   "Kosmos2_5VisionConfig"
+  ],
+  [
+   "kosmos_2_text_model",
+   "Kosmos2TextConfig"
+  ],
+  [
+   "kosmos_2_vision_model",
+   "Kosmos2VisionConfig"
+  ],
+  [
+   "kyutai_speech_to_text",
+   "KyutaiSpeechToTextConfig"
+  ],
+  [
+   "laguna",
+   "LagunaConfig"
+  ],
+  [
+   "lasr_ctc",
+   "LasrCTCConfig"
+  ],
+  [
+   "lasr_encoder",
+   "LasrEncoderConfig"
+  ],
+  [
+   "layoutlm",
+   "LayoutLMConfig"
+  ],
+  [
+   "layoutlmv2",
+   "LayoutLMv2Config"
+  ],
+  [
+   "layoutlmv3",
+   "LayoutLMv3Config"
+  ],
+  [
+   "layoutxlm",
+   "LayoutXLMConfig"
+  ],
+  [
+   "led",
+   "LEDConfig"
+  ],
+  [
+   "levit",
+   "LevitConfig"
+  ],
+  [
+   "lfm2",
+   "Lfm2Config"
+  ],
+  [
+   "lfm2_moe",
+   "Lfm2MoeConfig"
+  ],
+  [
+   "lfm2_vl",
+   "Lfm2VlConfig"
+  ],
+  [
+   "lightglue",
+   "LightGlueConfig"
+  ],
+  [
+   "lighton_ocr",
+   "LightOnOcrConfig"
+  ],
+  [
+   "lilt",
+   "LiltConfig"
+  ],
+  [
+   "llama",
+   "LlamaConfig"
+  ],
+  [
+   "llama4",
+   "Llama4Config"
+  ],
+  [
+   "llama4_text",
+   "Llama4TextConfig"
+  ],
+  [
+   "llama4_vision_model",
+   "Llama4VisionConfig"
+  ],
+  [
+   "llava",
+   "LlavaConfig"
+  ],
+  [
+   "llava_next",
+   "LlavaNextConfig"
+  ],
+  [
+   "llava_next_video",
+   "LlavaNextVideoConfig"
+  ],
+  [
+   "llava_onevision",
+   "LlavaOnevisionConfig"
+  ],
+  [
+   "longcat_flash",
+   "LongcatFlashConfig"
+  ],
+  [
+   "longformer",
+   "LongformerConfig"
+  ],
+  [
+   "longt5",
+   "LongT5Config"
+  ],
+  [
+   "luke",
+   "LukeConfig"
+  ],
+  [
+   "lw_detr",
+   "LwDetrConfig"
+  ],
+  [
+   "lw_detr_vit",
+   "LwDetrViTConfig"
+  ],
+  [
+   "lxmert",
+   "LxmertConfig"
+  ],
+  [
+   "m2m_100",
+   "M2M100Config"
+  ],
+  [
+   "mamba",
+   "MambaConfig"
+  ],
+  [
+   "mamba2",
+   "Mamba2Config"
+  ],
+  [
+   "marian",
+   "MarianConfig"
+  ],
+  [
+   "markuplm",
+   "MarkupLMConfig"
+  ],
+  [
+   "mask2former",
+   "Mask2FormerConfig"
+  ],
+  [
+   "maskformer",
+   "MaskFormerConfig"
+  ],
+  [
+   "maskformer-swin",
+   "MaskFormerSwinConfig"
+  ],
+  [
+   "mbart",
+   "MBartConfig"
+  ],
+  [
+   "megatron-bert",
+   "MegatronBertConfig"
+  ],
+  [
+   "mellum",
+   "MellumConfig"
+  ],
+  [
+   "metaclip_2",
+   "MetaClip2Config"
+  ],
+  [
+   "metaclip_2_text_model",
+   "MetaClip2TextConfig"
+  ],
+  [
+   "metaclip_2_vision_model",
+   "MetaClip2VisionConfig"
+  ],
+  [
+   "mgp-str",
+   "MgpstrConfig"
+  ],
+  [
+   "mimi",
+   "MimiConfig"
+  ],
+  [
+   "mimo_v2_flash",
+   "MiMoV2FlashConfig"
+  ],
+  [
+   "minicpm3",
+   "MiniCPM3Config"
+  ],
+  [
+   "minicpmv4_6",
+   "MiniCPMV4_6Config"
+  ],
+  [
+   "minicpmv4_6_vision",
+   "MiniCPMV4_6VisionConfig"
+  ],
+  [
+   "minimax",
+   "MiniMaxConfig"
+  ],
+  [
+   "minimax_m2",
+   "MiniMaxM2Config"
+  ],
+  [
+   "minimax_m3_vl",
+   "MiniMaxM3VLConfig"
+  ],
+  [
+   "minimax_m3_vl_text",
+   "MiniMaxM3VLTextConfig"
+  ],
+  [
+   "minimax_m3_vl_vision",
+   "MiniMaxM3VLVisionConfig"
+  ],
+  [
+   "ministral",
+   "MinistralConfig"
+  ],
+  [
+   "ministral3",
+   "Ministral3Config"
+  ],
+  [
+   "mistral",
+   "MistralConfig"
+  ],
+  [
+   "mistral3",
+   "Mistral3Config"
+  ],
+  [
+   "mistral4",
+   "Mistral4Config"
+  ],
+  [
+   "mixtral",
+   "MixtralConfig"
+  ],
+  [
+   "mlcd",
+   "MLCDVisionConfig"
+  ],
+  [
+   "mlcd_vision_model",
+   "MLCDVisionConfig"
+  ],
+  [
+   "mllama",
+   "MllamaConfig"
+  ],
+  [
+   "mllama_text_model",
+   "MllamaTextConfig"
+  ],
+  [
+   "mllama_vision_model",
+   "MllamaVisionConfig"
+  ],
+  [
+   "mm-grounding-dino",
+   "MMGroundingDinoConfig"
+  ],
+  [
+   "mobilebert",
+   "MobileBertConfig"
+  ],
+  [
+   "mobilenet_v1",
+   "MobileNetV1Config"
+  ],
+  [
+   "mobilenet_v2",
+   "MobileNetV2Config"
+  ],
+  [
+   "mobilevit",
+   "MobileViTConfig"
+  ],
+  [
+   "mobilevitv2",
+   "MobileViTV2Config"
+  ],
+  [
+   "modernbert",
+   "ModernBertConfig"
+  ],
+  [
+   "modernbert-decoder",
+   "ModernBertDecoderConfig"
+  ],
+  [
+   "modernvbert",
+   "ModernVBertConfig"
+  ],
+  [
+   "moonshine",
+   "MoonshineConfig"
+  ],
+  [
+   "moonshine_streaming",
+   "MoonshineStreamingConfig"
+  ],
+  [
+   "moonshine_streaming_encoder",
+   "MoonshineStreamingEncoderConfig"
+  ],
+  [
+   "moshi",
+   "MoshiConfig"
+  ],
+  [
+   "moshi_depth",
+   "MoshiDepthConfig"
+  ],
+  [
+   "mpnet",
+   "MPNetConfig"
+  ],
+  [
+   "mpt",
+   "MptConfig"
+  ],
+  [
+   "mra",
+   "MraConfig"
+  ],
+  [
+   "mt5",
+   "MT5Config"
+  ],
+  [
+   "muse_glimmer",
+   "MuseGlimmerConfig"
+  ],
+  [
+   "muse_glimmer_assistant",
+   "MuseGlimmerAssistantConfig"
+  ],
+  [
+   "muse_glimmer_text",
+   "MuseGlimmerTextConfig"
+  ],
+  [
+   "muse_glimmer_vision",
+   "MuseGlimmerVisionConfig"
+  ],
+  [
+   "musicflamingo",
+   "MusicFlamingoConfig"
+  ],
+  [
+   "musicgen",
+   "MusicgenConfig"
+  ],
+  [
+   "musicgen_decoder",
+   "MusicgenDecoderConfig"
+  ],
+  [
+   "musicgen_melody",
+   "MusicgenMelodyConfig"
+  ],
+  [
+   "musicgen_melody_decoder",
+   "MusicgenMelodyDecoderConfig"
+  ],
+  [
+   "mvp",
+   "MvpConfig"
+  ],
+  [
+   "nanochat",
+   "NanoChatConfig"
+  ],
+  [
+   "nemotron",
+   "NemotronConfig"
+  ],
+  [
+   "nemotron3_5_asr",
+   "Nemotron3_5AsrConfig"
+  ],
+  [
+   "nemotron_asr_streaming",
+   "NemotronAsrStreamingConfig"
+  ],
+  [
+   "nemotron_asr_streaming_encoder",
+   "NemotronAsrStreamingEncoderConfig"
+  ],
+  [
+   "nemotron_h",
+   "NemotronHConfig"
+  ],
+  [
+   "nllb-moe",
+   "NllbMoeConfig"
+  ],
+  [
+   "nomic_bert",
+   "NomicBertConfig"
+  ],
+  [
+   "nougat",
+   "NougatConfig"
+  ],
+  [
+   "nystromformer",
+   "NystromformerConfig"
+  ],
+  [
+   "olmo",
+   "OlmoConfig"
+  ],
+  [
+   "olmo2",
+   "Olmo2Config"
+  ],
+  [
+   "olmo3",
+   "Olmo3Config"
+  ],
+  [
+   "olmo_hybrid",
+   "OlmoHybridConfig"
+  ],
+  [
+   "olmoe",
+   "OlmoeConfig"
+  ],
+  [
+   "omdet-turbo",
+   "OmDetTurboConfig"
+  ],
+  [
+   "oneformer",
+   "OneFormerConfig"
+  ],
+  [
+   "openai-gpt",
+   "OpenAIGPTConfig"
+  ],
+  [
+   "openai_privacy_filter",
+   "OpenAIPrivacyFilterConfig"
+  ],
+  [
+   "opt",
+   "OPTConfig"
+  ],
+  [
+   "ovis2",
+   "Ovis2Config"
+  ],
+  [
+   "owlv2",
+   "Owlv2Config"
+  ],
+  [
+   "owlv2_text_model",
+   "Owlv2TextConfig"
+  ],
+  [
+   "owlv2_vision_model",
+   "Owlv2VisionConfig"
+  ],
+  [
+   "owlvit",
+   "OwlViTConfig"
+  ],
+  [
+   "owlvit_text_model",
+   "OwlViTTextConfig"
+  ],
+  [
+   "owlvit_vision_model",
+   "OwlViTVisionConfig"
+  ],
+  [
+   "paddleocr_vl",
+   "PaddleOCRVLConfig"
+  ],
+  [
+   "paddleocr_vl_text",
+   "PaddleOCRTextConfig"
+  ],
+  [
+   "paddleocr_vl_vision",
+   "PaddleOCRVisionConfig"
+  ],
+  [
+   "paligemma",
+   "PaliGemmaConfig"
+  ],
+  [
+   "parakeet_ctc",
+   "ParakeetCTCConfig"
+  ],
+  [
+   "parakeet_encoder",
+   "ParakeetEncoderConfig"
+  ],
+  [
+   "parakeet_rnnt",
+   "ParakeetRNNTConfig"
+  ],
+  [
+   "parakeet_tdt",
+   "parakeet"
+  ],
+  [
+   "patchtsmixer",
+   "PatchTSMixerConfig"
+  ],
+  [
+   "patchtst",
+   "PatchTSTConfig"
+  ],
+  [
+   "pe_audio",
+   "PeAudioConfig"
+  ],
+  [
+   "pe_audio_encoder",
+   "PeAudioEncoderConfig"
+  ],
+  [
+   "pe_audio_video",
+   "PeAudioVideoConfig"
+  ],
+  [
+   "pe_audio_video_encoder",
+   "PeAudioVideoEncoderConfig"
+  ],
+  [
+   "pe_video",
+   "PeVideoConfig"
+  ],
+  [
+   "pe_video_encoder",
+   "PeVideoEncoderConfig"
+  ],
+  [
+   "pegasus",
+   "PegasusConfig"
+  ],
+  [
+   "pegasus_x",
+   "PegasusXConfig"
+  ],
+  [
+   "perceiver",
+   "PerceiverConfig"
+  ],
+  [
+   "perception_lm",
+   "PerceptionLMConfig"
+  ],
+  [
+   "persimmon",
+   "PersimmonConfig"
+  ],
+  [
+   "phi",
+   "PhiConfig"
+  ],
+  [
+   "phi3",
+   "Phi3Config"
+  ],
+  [
+   "phi4_multimodal",
+   "Phi4MultimodalConfig"
+  ],
+  [
+   "phi4_multimodal_audio",
+   "Phi4MultimodalAudioConfig"
+  ],
+  [
+   "phi4_multimodal_vision",
+   "Phi4MultimodalVisionConfig"
+  ],
+  [
+   "phimoe",
+   "PhimoeConfig"
+  ],
+  [
+   "pi0",
+   "PI0Config"
+  ],
+  [
+   "pix2struct",
+   "Pix2StructConfig"
+  ],
+  [
+   "pix2struct_text_model",
+   "Pix2StructTextConfig"
+  ],
+  [
+   "pix2struct_vision_model",
+   "Pix2StructVisionConfig"
+  ],
+  [
+   "pixio",
+   "PixioConfig"
+  ],
+  [
+   "pixtral",
+   "PixtralVisionConfig"
+  ],
+  [
+   "plbart",
+   "PLBartConfig"
+  ],
+  [
+   "poolformer",
+   "PoolFormerConfig"
+  ],
+  [
+   "pop2piano",
+   "Pop2PianoConfig"
+  ],
+  [
+   "pp_chart2table",
+   "PPChart2TableConfig"
+  ],
+  [
+   "pp_doclayout_v2",
+   "PPDocLayoutV2Config"
+  ],
+  [
+   "pp_doclayout_v3",
+   "PPDocLayoutV3Config"
+  ],
+  [
+   "pp_formulanet",
+   "PPFormulaNetConfig"
+  ],
+  [
+   "pp_lcnet",
+   "PPLCNetConfig"
+  ],
+  [
+   "pp_lcnet_v3",
+   "PPLCNetV3Config"
+  ],
+  [
+   "pp_lcnet_v4",
+   "PPLCNetV4Config"
+  ],
+  [
+   "pp_ocrv5_mobile_det",
+   "PPOCRV5MobileDetConfig"
+  ],
+  [
+   "pp_ocrv5_mobile_rec",
+   "PPOCRV5MobileRecConfig"
+  ],
+  [
+   "pp_ocrv5_server_det",
+   "PPOCRV5ServerDetConfig"
+  ],
+  [
+   "pp_ocrv5_server_rec",
+   "PPOCRV5ServerRecConfig"
+  ],
+  [
+   "pp_ocrv6_medium_det",
+   "PPOCRV6MediumDetConfig"
+  ],
+  [
+   "pp_ocrv6_small_det",
+   "PPOCRV6SmallDetConfig"
+  ],
+  [
+   "pp_ocrv6_small_rec",
+   "PPOCRV6SmallRecConfig"
+  ],
+  [
+   "pp_ocrv6_tiny_rec",
+   "PPOCRV6TinyRecConfig"
+  ],
+  [
+   "prompt_depth_anything",
+   "PromptDepthAnythingConfig"
+  ],
+  [
+   "prophetnet",
+   "ProphetNetConfig"
+  ],
+  [
+   "pvt",
+   "PvtConfig"
+  ],
+  [
+   "pvt_v2",
+   "PvtV2Config"
+  ],
+  [
+   "qianfan_ocr",
+   "QianfanOCRConfig"
+  ],
+  [
+   "qianfan_ocr_vision",
+   "QianfanOCRVisionConfig"
+  ],
+  [
+   "qwen2",
+   "Qwen2Config"
+  ],
+  [
+   "qwen2_5_omni",
+   "Qwen2_5OmniConfig"
+  ],
+  [
+   "qwen2_5_omni_audio_encoder",
+   "Qwen2_5OmniAudioEncoderConfig"
+  ],
+  [
+   "qwen2_5_omni_bigvgan",
+   "Qwen2_5OmniBigVGANConfig"
+  ],
+  [
+   "qwen2_5_omni_dit",
+   "Qwen2_5OmniDiTConfig"
+  ],
+  [
+   "qwen2_5_omni_talker",
+   "Qwen2_5OmniTalkerConfig"
+  ],
+  [
+   "qwen2_5_omni_text",
+   "Qwen2_5OmniTextConfig"
+  ],
+  [
+   "qwen2_5_omni_thinker",
+   "Qwen2_5OmniThinkerConfig"
+  ],
+  [
+   "qwen2_5_omni_token2wav",
+   "Qwen2_5OmniToken2WavConfig"
+  ],
+  [
+   "qwen2_5_omni_vision_encoder",
+   "Qwen2_5OmniVisionEncoderConfig"
+  ],
+  [
+   "qwen2_5_vl",
+   "Qwen2_5_VLConfig"
+  ],
+  [
+   "qwen2_5_vl_text",
+   "Qwen2_5_VLTextConfig"
+  ],
+  [
+   "qwen2_5_vl_vision",
+   "Qwen2_5_VLVisionConfig"
+  ],
+  [
+   "qwen2_audio",
+   "Qwen2AudioConfig"
+  ],
+  [
+   "qwen2_audio_encoder",
+   "Qwen2AudioEncoderConfig"
+  ],
+  [
+   "qwen2_moe",
+   "Qwen2MoeConfig"
+  ],
+  [
+   "qwen2_vl",
+   "Qwen2VLConfig"
+  ],
+  [
+   "qwen2_vl_text",
+   "Qwen2VLTextConfig"
+  ],
+  [
+   "qwen2_vl_vision",
+   "Qwen2VLVisionConfig"
+  ],
+  [
+   "qwen3",
+   "Qwen3Config"
+  ],
+  [
+   "qwen3_5",
+   "Qwen3_5Config"
+  ],
+  [
+   "qwen3_5_moe",
+   "Qwen3_5MoeConfig"
+  ],
+  [
+   "qwen3_5_moe_text",
+   "Qwen3_5MoeTextConfig"
+  ],
+  [
+   "qwen3_5_moe_vision",
+   "Qwen3_5MoeVisionConfig"
+  ],
+  [
+   "qwen3_5_text",
+   "Qwen3_5TextConfig"
+  ],
+  [
+   "qwen3_5_vision",
+   "Qwen3_5VisionConfig"
+  ],
+  [
+   "qwen3_asr",
+   "Qwen3ASRConfig"
+  ],
+  [
+   "qwen3_asr_encoder",
+   "Qwen3ASREncoderConfig"
+  ],
+  [
+   "qwen3_moe",
+   "Qwen3MoeConfig"
+  ],
+  [
+   "qwen3_next",
+   "Qwen3NextConfig"
+  ],
+  [
+   "qwen3_omni_moe",
+   "Qwen3OmniMoeConfig"
+  ],
+  [
+   "qwen3_omni_moe_audio_encoder",
+   "Qwen3OmniMoeAudioEncoderConfig"
+  ],
+  [
+   "qwen3_omni_moe_talker_code_predictor",
+   "Qwen3OmniMoeTalkerCodePredictorConfig"
+  ],
+  [
+   "qwen3_omni_moe_talker_text",
+   "Qwen3OmniMoeTalkerTextConfig"
+  ],
+  [
+   "qwen3_omni_moe_text",
+   "Qwen3OmniMoeTextConfig"
+  ],
+  [
+   "qwen3_omni_moe_thinker",
+   "Qwen3OmniMoeThinkerConfig"
+  ],
+  [
+   "qwen3_omni_moe_vision_encoder",
+   "Qwen3OmniMoeVisionEncoderConfig"
+  ],
+  [
+   "qwen3_vl",
+   "Qwen3VLConfig"
+  ],
+  [
+   "qwen3_vl_moe",
+   "Qwen3VLMoeConfig"
+  ],
+  [
+   "qwen3_vl_moe_text",
+   "Qwen3VLMoeTextConfig"
+  ],
+  [
+   "qwen3_vl_moe_vision",
+   "Qwen3VLMoeVisionConfig"
+  ],
+  [
+   "qwen3_vl_text",
+   "Qwen3VLTextConfig"
+  ],
+  [
+   "qwen3_vl_vision",
+   "Qwen3VLVisionConfig"
+  ],
+  [
+   "qwen4_exp",
+   "Qwen4ExpConfig"
+  ],
+  [
+   "qwen4_exp_text",
+   "Qwen4ExpTextConfig"
+  ],
+  [
+   "qwen4_exp_vision",
+   "Qwen4ExpVisionConfig"
+  ],
+  [
+   "radio",
+   "RadioConfig"
+  ],
+  [
+   "rag",
+   "RagConfig"
+  ],
+  [
+   "recurrent_gemma",
+   "RecurrentGemmaConfig"
+  ],
+  [
+   "reformer",
+   "ReformerConfig"
+  ],
+  [
+   "regnet",
+   "RegNetConfig"
+  ],
+  [
+   "rembert",
+   "RemBertConfig"
+  ],
+  [
+   "resnet",
+   "ResNetConfig"
+  ],
+  [
+   "rf_detr",
+   "RfDetrConfig"
+  ],
+  [
+   "rf_detr_dinov2",
+   "RfDetrDinov2Config"
+  ],
+  [
+   "roberta",
+   "RobertaConfig"
+  ],
+  [
+   "roberta-prelayernorm",
+   "RobertaPreLayerNormConfig"
+  ],
+  [
+   "roc_bert",
+   "RoCBertConfig"
+  ],
+  [
+   "roformer",
+   "RoFormerConfig"
+  ],
+  [
+   "rt_detr",
+   "RTDetrConfig"
+  ],
+  [
+   "rt_detr_resnet",
+   "RTDetrResNetConfig"
+  ],
+  [
+   "rt_detr_v2",
+   "RTDetrV2Config"
+  ],
+  [
+   "rwkv",
+   "RwkvConfig"
+  ],
+  [
+   "sam",
+   "SamConfig"
+  ],
+  [
+   "sam2",
+   "Sam2Config"
+  ],
+  [
+   "sam2_hiera_det_model",
+   "Sam2HieraDetConfig"
+  ],
+  [
+   "sam2_video",
+   "Sam2VideoConfig"
+  ],
+  [
+   "sam2_vision_model",
+   "Sam2VisionConfig"
+  ],
+  [
+   "sam3",
+   "Sam3Config"
+  ],
+  [
+   "sam3_detr_decoder",
+   "Sam3DETRDecoderConfig"
+  ],
+  [
+   "sam3_detr_encoder",
+   "Sam3DETREncoderConfig"
+  ],
+  [
+   "sam3_geometry_encoder",
+   "Sam3GeometryEncoderConfig"
+  ],
+  [
+   "sam3_lite_text",
+   "Sam3LiteTextConfig"
+  ],
+  [
+   "sam3_lite_text_detr_decoder",
+   "Sam3LiteTextDETRDecoderConfig"
+  ],
+  [
+   "sam3_lite_text_detr_encoder",
+   "Sam3LiteTextDETREncoderConfig"
+  ],
+  [
+   "sam3_lite_text_geometry_encoder",
+   "Sam3LiteTextGeometryEncoderConfig"
+  ],
+  [
+   "sam3_lite_text_mask_decoder",
+   "Sam3LiteTextMaskDecoderConfig"
+  ],
+  [
+   "sam3_lite_text_text_model",
+   "Sam3LiteTextTextConfig"
+  ],
+  [
+   "sam3_mask_decoder",
+   "Sam3MaskDecoderConfig"
+  ],
+  [
+   "sam3_tracker",
+   "Sam3TrackerConfig"
+  ],
+  [
+   "sam3_tracker_video",
+   "Sam3TrackerVideoConfig"
+  ],
+  [
+   "sam3_video",
+   "Sam3VideoConfig"
+  ],
+  [
+   "sam3_vision_model",
+   "Sam3VisionConfig"
+  ],
+  [
+   "sam3_vit_model",
+   "Sam3ViTConfig"
+  ],
+  [
+   "sam_hq",
+   "SamHQConfig"
+  ],
+  [
+   "sam_hq_vision_model",
+   "SamHQVisionConfig"
+  ],
+  [
+   "sam_vision_model",
+   "SamVisionConfig"
+  ],
+  [
+   "sapiens2",
+   "Sapiens2Config"
+  ],
+  [
+   "sapiens2_head",
+   "Sapiens2HeadConfig"
+  ],
+  [
+   "seamless_m4t",
+   "SeamlessM4TConfig"
+  ],
+  [
+   "seamless_m4t_v2",
+   "SeamlessM4Tv2Config"
+  ],
+  [
+   "seed_oss",
+   "SeedOssConfig"
+  ],
+  [
+   "segformer",
+   "SegformerConfig"
+  ],
+  [
+   "seggpt",
+   "SegGptConfig"
+  ],
+  [
+   "sew",
+   "SEWConfig"
+  ],
+  [
+   "sew-d",
+   "SEWDConfig"
+  ],
+  [
+   "shieldgemma2",
+   "ShieldGemma2Config"
+  ],
+  [
+   "siglip",
+   "SiglipConfig"
+  ],
+  [
+   "siglip2",
+   "Siglip2Config"
+  ],
+  [
+   "siglip2_text_model",
+   "Siglip2TextConfig"
+  ],
+  [
+   "siglip2_vision_model",
+   "Siglip2VisionConfig"
+  ],
+  [
+   "siglip_text_model",
+   "SiglipTextConfig"
+  ],
+  [
+   "siglip_vision_model",
+   "SiglipVisionConfig"
+  ],
+  [
+   "slanet",
+   "SLANetConfig"
+  ],
+  [
+   "slanext",
+   "SLANeXtConfig"
+  ],
+  [
+   "smollm3",
+   "SmolLM3Config"
+  ],
+  [
+   "smolvlm",
+   "SmolVLMConfig"
+  ],
+  [
+   "smolvlm_vision",
+   "SmolVLMVisionConfig"
+  ],
+  [
+   "solar_open",
+   "SolarOpenConfig"
+  ],
+  [
+   "speech-encoder-decoder",
+   "SpeechEncoderDecoderConfig"
+  ],
+  [
+   "speech_to_text",
+   "Speech2TextConfig"
+  ],
+  [
+   "speecht5",
+   "SpeechT5Config"
+  ],
+  [
+   "speecht5_hifigan",
+   "SpeechT5HifiGanConfig"
+  ],
+  [
+   "splinter",
+   "SplinterConfig"
+  ],
+  [
+   "squeezebert",
+   "SqueezeBertConfig"
+  ],
+  [
+   "stablelm",
+   "StableLmConfig"
+  ],
+  [
+   "starcoder2",
+   "Starcoder2Config"
+  ],
+  [
+   "step3p5",
+   "Step3p7TextConfig"
+  ],
+  [
+   "step3p5_vision",
+   "Step3p7VisionConfig"
+  ],
+  [
+   "step3p7",
+   "Step3p7Config"
+  ],
+  [
+   "superglue",
+   "SuperGlueConfig"
+  ],
+  [
+   "superpoint",
+   "SuperPointConfig"
+  ],
+  [
+   "swiftformer",
+   "SwiftFormerConfig"
+  ],
+  [
+   "swin",
+   "SwinConfig"
+  ],
+  [
+   "swin2sr",
+   "Swin2SRConfig"
+  ],
+  [
+   "swinv2",
+   "Swinv2Config"
+  ],
+  [
+   "switch_transformers",
+   "SwitchTransformersConfig"
+  ],
+  [
+   "t5",
+   "T5Config"
+  ],
+  [
+   "t5_gemma_module",
+   "T5GemmaModuleConfig"
+  ],
+  [
+   "t5gemma",
+   "T5GemmaConfig"
+  ],
+  [
+   "t5gemma2",
+   "T5Gemma2Config"
+  ],
+  [
+   "t5gemma2_decoder",
+   "T5Gemma2DecoderConfig"
+  ],
+  [
+   "t5gemma2_encoder",
+   "T5Gemma2EncoderConfig"
+  ],
+  [
+   "t5gemma2_text",
+   "T5Gemma2TextConfig"
+  ],
+  [
+   "table-transformer",
+   "TableTransformerConfig"
+  ],
+  [
+   "tapas",
+   "TapasConfig"
+  ],
+  [
+   "textnet",
+   "TextNetConfig"
+  ],
+  [
+   "time_series_transformer",
+   "TimeSeriesTransformerConfig"
+  ],
+  [
+   "timesfm",
+   "TimesFmConfig"
+  ],
+  [
+   "timesfm2_5",
+   "TimesFm2_5Config"
+  ],
+  [
+   "timesformer",
+   "TimesformerConfig"
+  ],
+  [
+   "timm_backbone",
+   "TimmBackboneConfig"
+  ],
+  [
+   "timm_wrapper",
+   "TimmWrapperConfig"
+  ],
+  [
+   "tipsv2",
+   "Tipsv2Config"
+  ],
+  [
+   "tipsv2_dpt",
+   "Tipsv2DptConfig"
+  ],
+  [
+   "tipsv2_text_model",
+   "Tipsv2TextConfig"
+  ],
+  [
+   "tipsv2_vision_model",
+   "Tipsv2VisionConfig"
+  ],
+  [
+   "trocr",
+   "TrOCRConfig"
+  ],
+  [
+   "tvp",
+   "TvpConfig"
+  ],
+  [
+   "udop",
+   "UdopConfig"
+  ],
+  [
+   "umt5",
+   "UMT5Config"
+  ],
+  [
+   "unispeech",
+   "UniSpeechConfig"
+  ],
+  [
+   "unispeech-sat",
+   "UniSpeechSatConfig"
+  ],
+  [
+   "univnet",
+   "UnivNetConfig"
+  ],
+  [
+   "upernet",
+   "UperNetConfig"
+  ],
+  [
+   "uvdoc",
+   "UVDocConfig"
+  ],
+  [
+   "uvdoc_backbone",
+   "UVDocBackboneConfig"
+  ],
+  [
+   "vaultgemma",
+   "VaultGemmaConfig"
+  ],
+  [
+   "vibevoice_acoustic_tokenizer",
+   "VibeVoiceAcousticTokenizerConfig"
+  ],
+  [
+   "vibevoice_acoustic_tokenizer_decoder",
+   "vibevoice_acoustic_tokenizer"
+  ],
+  [
+   "vibevoice_acoustic_tokenizer_encoder",
+   "vibevoice_acoustic_tokenizer"
+  ],
+  [
+   "vibevoice_asr",
+   "VibeVoiceAsrConfig"
+  ],
+  [
+   "video_llama_3",
+   "VideoLlama3Config"
+  ],
+  [
+   "video_llama_3_vision",
+   "VideoLlama3VisionConfig"
+  ],
+  [
+   "video_llava",
+   "VideoLlavaConfig"
+  ],
+  [
+   "videomae",
+   "VideoMAEConfig"
+  ],
+  [
+   "videomt",
+   "VideomtConfig"
+  ],
+  [
+   "videoprism",
+   "VideoPrismConfig"
+  ],
+  [
+   "videoprism_text_model",
+   "VideoPrismTextConfig"
+  ],
+  [
+   "videoprism_vision_model",
+   "VideoPrismVisionConfig"
+  ],
+  [
+   "vilt",
+   "ViltConfig"
+  ],
+  [
+   "vipllava",
+   "VipLlavaConfig"
+  ],
+  [
+   "vision-encoder-decoder",
+   "VisionEncoderDecoderConfig"
+  ],
+  [
+   "vision-text-dual-encoder",
+   "VisionTextDualEncoderConfig"
+  ],
+  [
+   "visual_bert",
+   "VisualBertConfig"
+  ],
+  [
+   "vit",
+   "ViTConfig"
+  ],
+  [
+   "vit_mae",
+   "ViTMAEConfig"
+  ],
+  [
+   "vit_msn",
+   "ViTMSNConfig"
+  ],
+  [
+   "vitdet",
+   "VitDetConfig"
+  ],
+  [
+   "vitmatte",
+   "VitMatteConfig"
+  ],
+  [
+   "vitpose",
+   "VitPoseConfig"
+  ],
+  [
+   "vitpose_backbone",
+   "VitPoseBackboneConfig"
+  ],
+  [
+   "vits",
+   "VitsConfig"
+  ],
+  [
+   "vivit",
+   "VivitConfig"
+  ],
+  [
+   "vjepa2",
+   "VJEPA2Config"
+  ],
+  [
+   "voxtral",
+   "VoxtralConfig"
+  ],
+  [
+   "voxtral_encoder",
+   "VoxtralEncoderConfig"
+  ],
+  [
+   "voxtral_realtime",
+   "VoxtralRealtimeConfig"
+  ],
+  [
+   "voxtral_realtime_encoder",
+   "VoxtralRealtimeEncoderConfig"
+  ],
+  [
+   "voxtral_realtime_text",
+   "VoxtralRealtimeTextConfig"
+  ],
+  [
+   "wav2vec2",
+   "Wav2Vec2Config"
+  ],
+  [
+   "wav2vec2-bert",
+   "Wav2Vec2BertConfig"
+  ],
+  [
+   "wav2vec2-conformer",
+   "Wav2Vec2ConformerConfig"
+  ],
+  [
+   "wavlm",
+   "WavLMConfig"
+  ],
+  [
+   "whisper",
+   "WhisperConfig"
+  ],
+  [
+   "xclip",
+   "XCLIPConfig"
+  ],
+  [
+   "xclip_text_model",
+   "XCLIPTextConfig"
+  ],
+  [
+   "xclip_vision_model",
+   "XCLIPVisionConfig"
+  ],
+  [
+   "xcodec",
+   "XcodecConfig"
+  ],
+  [
+   "xcodec2",
+   "Xcodec2Config"
+  ],
+  [
+   "xglm",
+   "XGLMConfig"
+  ],
+  [
+   "xlm",
+   "XLMConfig"
+  ],
+  [
+   "xlm-roberta",
+   "XLMRobertaConfig"
+  ],
+  [
+   "xlm-roberta-xl",
+   "XLMRobertaXLConfig"
+  ],
+  [
+   "xlnet",
+   "XLNetConfig"
+  ],
+  [
+   "xlstm",
+   "xLSTMConfig"
+  ],
+  [
+   "xmod",
+   "XmodConfig"
+  ],
+  [
+   "yolos",
+   "YolosConfig"
+  ],
+  [
+   "yoso",
+   "YosoConfig"
+  ],
+  [
+   "youtu",
+   "YoutuConfig"
+  ],
+  [
+   "zamba",
+   "ZambaConfig"
+  ],
+  [
+   "zamba2",
+   "Zamba2Config"
+  ],
+  [
+   "zaya",
+   "ZayaConfig"
+  ],
+  [
+   "zoedepth",
+   "ZoeDepthConfig"
+  ]
+ ],
+ "tasks": {
+  "MODEL_FOR_PRETRAINING_MAPPING_NAMES": {
+   "albert": "AlbertForPreTraining",
+   "audioflamingo3": "AudioFlamingo3ForConditionalGeneration",
+   "bart": "BartForConditionalGeneration",
+   "bert": "BertForPreTraining",
+   "big_bird": "BigBirdForPreTraining",
+   "bloom": "BloomForCausalLM",
+   "camembert": "CamembertForMaskedLM",
+   "colmodernvbert": "ColModernVBertForRetrieval",
+   "colpali": "ColPaliForRetrieval",
+   "colqwen2": "ColQwen2ForRetrieval",
+   "ctrl": "CTRLLMHeadModel",
+   "data2vec-text": "Data2VecTextForMaskedLM",
+   "deberta": "DebertaForMaskedLM",
+   "deberta-v2": "DebertaV2ForMaskedLM",
+   "distilbert": "DistilBertForMaskedLM",
+   "electra": "ElectraForPreTraining",
+   "ernie": "ErnieForPreTraining",
+   "evolla": "EvollaForProteinText2Text",
+   "exaone4": "Exaone4ForCausalLM",
+   "exaone_moe": "ExaoneMoeForCausalLM",
+   "falcon_mamba": "FalconMambaForCausalLM",
+   "flaubert": "FlaubertWithLMHeadModel",
+   "flava": "FlavaForPreTraining",
+   "florence2": "Florence2ForConditionalGeneration",
+   "fnet": "FNetForPreTraining",
+   "fsmt": "FSMTForConditionalGeneration",
+   "funnel": "FunnelForPreTraining",
+   "gemma3": "Gemma3ForConditionalGeneration",
+   "gemma4": "Gemma4ForConditionalGeneration",
+   "gemma4_unified": "Gemma4UnifiedForConditionalGeneration",
+   "glmasr": "GlmAsrForConditionalGeneration",
+   "gpt-sw3": "GPT2LMHeadModel",
+   "gpt2": "GPT2LMHeadModel",
+   "gpt_bigcode": "GPTBigCodeForCausalLM",
+   "hiera": "HieraForPreTraining",
+   "ibert": "IBertForMaskedLM",
+   "idefics": "IdeficsForVisionText2Text",
+   "idefics2": "Idefics2ForConditionalGeneration",
+   "idefics3": "Idefics3ForConditionalGeneration",
+   "inkling_mm_model": "InklingForConditionalGeneration",
+   "janus": "JanusForConditionalGeneration",
+   "layoutlm": "LayoutLMForMaskedLM",
+   "llava": "LlavaForConditionalGeneration",
+   "llava_next": "LlavaNextForConditionalGeneration",
+   "llava_next_video": "LlavaNextVideoForConditionalGeneration",
+   "llava_onevision": "LlavaOnevisionForConditionalGeneration",
+   "longformer": "LongformerForMaskedLM",
+   "luke": "LukeForMaskedLM",
+   "lxmert": "LxmertForPreTraining",
+   "mamba": "MambaForCausalLM",
+   "mamba2": "Mamba2ForCausalLM",
+   "megatron-bert": "MegatronBertForPreTraining",
+   "mistral3": "Mistral3ForConditionalGeneration",
+   "mistral4": "Mistral4ForCausalLM",
+   "mllama": "MllamaForConditionalGeneration",
+   "mobilebert": "MobileBertForPreTraining",
+   "mpnet": "MPNetForMaskedLM",
+   "mpt": "MptForCausalLM",
+   "mra": "MraForMaskedLM",
+   "musicflamingo": "MusicFlamingoForConditionalGeneration",
+   "mvp": "MvpForConditionalGeneration",
+   "nanochat": "NanoChatForCausalLM",
+   "nllb-moe": "NllbMoeForConditionalGeneration",
+   "openai-gpt": "OpenAIGPTLMHeadModel",
+   "paligemma": "PaliGemmaForConditionalGeneration",
+   "qwen2_audio": "Qwen2AudioForConditionalGeneration",
+   "qwen3_asr": "Qwen3ASRForConditionalGeneration",
+   "roberta": "RobertaForMaskedLM",
+   "roberta-prelayernorm": "RobertaPreLayerNormForMaskedLM",
+   "roc_bert": "RoCBertForPreTraining",
+   "rwkv": "RwkvForCausalLM",
+   "splinter": "SplinterForPreTraining",
+   "squeezebert": "SqueezeBertForMaskedLM",
+   "switch_transformers": "SwitchTransformersForConditionalGeneration",
+   "t5": "T5ForConditionalGeneration",
+   "t5gemma": "T5GemmaForConditionalGeneration",
+   "t5gemma2": "T5Gemma2ForConditionalGeneration",
+   "tapas": "TapasForMaskedLM",
+   "unispeech": "UniSpeechForPreTraining",
+   "unispeech-sat": "UniSpeechSatForPreTraining",
+   "vibevoice_asr": "VibeVoiceAsrForConditionalGeneration",
+   "video_llava": "VideoLlavaForConditionalGeneration",
+   "videomae": "VideoMAEForPreTraining",
+   "vipllava": "VipLlavaForConditionalGeneration",
+   "visual_bert": "VisualBertForPreTraining",
+   "vit_mae": "ViTMAEForPreTraining",
+   "voxtral": "VoxtralForConditionalGeneration",
+   "voxtral_realtime": "VoxtralRealtimeForConditionalGeneration",
+   "wav2vec2": "Wav2Vec2ForPreTraining",
+   "wav2vec2-conformer": "Wav2Vec2ConformerForPreTraining",
+   "xlm": "XLMWithLMHeadModel",
+   "xlm-roberta": "XLMRobertaForMaskedLM",
+   "xlm-roberta-xl": "XLMRobertaXLForMaskedLM",
+   "xlnet": "XLNetLMHeadModel",
+   "xlstm": "xLSTMForCausalLM",
+   "xmod": "XmodForMaskedLM"
+  },
+  "MODEL_FOR_CAUSAL_LM_MAPPING_NAMES": {
+   "afmoe": "AfmoeForCausalLM",
+   "apertus": "ApertusForCausalLM",
+   "arcee": "ArceeForCausalLM",
+   "aria_text": "AriaTextForCausalLM",
+   "axk1": "AXK1ForCausalLM",
+   "axk2": "AXK2ForCausalLM",
+   "bamba": "BambaForCausalLM",
+   "bart": "BartForCausalLM",
+   "bert": "BertLMHeadModel",
+   "bert-generation": "BertGenerationDecoder",
+   "big_bird": "BigBirdForCausalLM",
+   "bigbird_pegasus": "BigBirdPegasusForCausalLM",
+   "biogpt": "BioGptForCausalLM",
+   "bitnet": "BitNetForCausalLM",
+   "blenderbot": "BlenderbotForCausalLM",
+   "blenderbot-small": "BlenderbotSmallForCausalLM",
+   "bloom": "BloomForCausalLM",
+   "blt": "BltForCausalLM",
+   "camembert": "CamembertForCausalLM",
+   "codegen": "CodeGenForCausalLM",
+   "cohere": "CohereForCausalLM",
+   "cohere2": "Cohere2ForCausalLM",
+   "cohere2_moe": "Cohere2MoeForCausalLM",
+   "cohere_compass_text": "CohereCompassForCausalLM",
+   "cpmant": "CpmAntForCausalLM",
+   "ctrl": "CTRLLMHeadModel",
+   "cwm": "CwmForCausalLM",
+   "data2vec-text": "Data2VecTextForCausalLM",
+   "dbrx": "DbrxForCausalLM",
+   "deepseek_v2": "DeepseekV2ForCausalLM",
+   "deepseek_v3": "DeepseekV3ForCausalLM",
+   "deepseek_v32": "DeepseekV32ForCausalLM",
+   "deepseek_v4": "DeepseekV4ForCausalLM",
+   "diffllama": "DiffLlamaForCausalLM",
+   "doge": "DogeForCausalLM",
+   "dots1": "Dots1ForCausalLM",
+   "electra": "ElectraForCausalLM",
+   "emu3": "Emu3ForCausalLM",
+   "ernie": "ErnieForCausalLM",
+   "ernie4_5": "Ernie4_5ForCausalLM",
+   "ernie4_5_moe": "Ernie4_5_MoeForCausalLM",
+   "exaone4": "Exaone4ForCausalLM",
+   "exaone_moe": "ExaoneMoeForCausalLM",
+   "falcon": "FalconForCausalLM",
+   "falcon_h1": "FalconH1ForCausalLM",
+   "falcon_mamba": "FalconMambaForCausalLM",
+   "flex_olmo": "FlexOlmoForCausalLM",
+   "fuyu": "FuyuForCausalLM",
+   "gemma": "GemmaForCausalLM",
+   "gemma2": "Gemma2ForCausalLM",
+   "gemma3": "Gemma3ForConditionalGeneration",
+   "gemma3_text": "Gemma3ForCausalLM",
+   "gemma3n": "Gemma3nForConditionalGeneration",
+   "gemma3n_text": "Gemma3nForCausalLM",
+   "gemma4": "Gemma4ForConditionalGeneration",
+   "gemma4_assistant": "Gemma4AssistantForCausalLM",
+   "gemma4_text": "Gemma4ForCausalLM",
+   "gemma4_unified": "Gemma4UnifiedForConditionalGeneration",
+   "gemma4_unified_assistant": "Gemma4UnifiedAssistantForCausalLM",
+   "gemma4_unified_text": "Gemma4UnifiedForCausalLM",
+   "git": "GitForCausalLM",
+   "glm": "GlmForCausalLM",
+   "glm4": "Glm4ForCausalLM",
+   "glm4_moe": "Glm4MoeForCausalLM",
+   "glm4_moe_lite": "Glm4MoeLiteForCausalLM",
+   "glm_moe_dsa": "GlmMoeDsaForCausalLM",
+   "got_ocr2": "GotOcr2ForConditionalGeneration",
+   "gpt-sw3": "GPT2LMHeadModel",
+   "gpt2": "GPT2LMHeadModel",
+   "gpt_bigcode": "GPTBigCodeForCausalLM",
+   "gpt_neo": "GPTNeoForCausalLM",
+   "gpt_neox": "GPTNeoXForCausalLM",
+   "gpt_neox_japanese": "GPTNeoXJapaneseForCausalLM",
+   "gpt_oss": "GptOssForCausalLM",
+   "gptj": "GPTJForCausalLM",
+   "granite": "GraniteForCausalLM",
+   "granite_swa": "GraniteSWAForCausalLM",
+   "granitemoe": "GraniteMoeForCausalLM",
+   "granitemoe_swa": "GraniteMoeSWAForCausalLM",
+   "granitemoehybrid": "GraniteMoeHybridForCausalLM",
+   "granitemoeshared": "GraniteMoeSharedForCausalLM",
+   "helium": "HeliumForCausalLM",
+   "hrm_text": "HrmTextForCausalLM",
+   "hunyuan_v1_dense": "HunYuanDenseV1ForCausalLM",
+   "hunyuan_v1_moe": "HunYuanMoEV1ForCausalLM",
+   "hy_v3": "HYV3ForCausalLM",
+   "hyperclovax": "HyperCLOVAXForCausalLM",
+   "inkling_text": "InklingForCausalLM",
+   "jais2": "Jais2ForCausalLM",
+   "jamba": "JambaForCausalLM",
+   "jetmoe": "JetMoeForCausalLM",
+   "laguna": "LagunaForCausalLM",
+   "lfm2": "Lfm2ForCausalLM",
+   "lfm2_moe": "Lfm2MoeForCausalLM",
+   "llama": "LlamaForCausalLM",
+   "llama4": "Llama4ForCausalLM",
+   "llama4_text": "Llama4ForCausalLM",
+   "longcat_flash": "LongcatFlashForCausalLM",
+   "mamba": "MambaForCausalLM",
+   "mamba2": "Mamba2ForCausalLM",
+   "marian": "MarianForCausalLM",
+   "mbart": "MBartForCausalLM",
+   "megatron-bert": "MegatronBertForCausalLM",
+   "mellum": "MellumForCausalLM",
+   "mimo_v2_flash": "MiMoV2FlashForCausalLM",
+   "minicpm3": "MiniCPM3ForCausalLM",
+   "minimax": "MiniMaxForCausalLM",
+   "minimax_m2": "MiniMaxM2ForCausalLM",
+   "minimax_m3_vl_text": "MiniMaxM3VLForCausalLM",
+   "ministral": "MinistralForCausalLM",
+   "ministral3": "Ministral3ForCausalLM",
+   "mistral": "MistralForCausalLM",
+   "mixtral": "MixtralForCausalLM",
+   "mllama": "MllamaForCausalLM",
+   "modernbert-decoder": "ModernBertDecoderForCausalLM",
+   "moshi": "MoshiForCausalLM",
+   "mpt": "MptForCausalLM",
+   "musicgen": "MusicgenForCausalLM",
+   "musicgen_melody": "MusicgenMelodyForCausalLM",
+   "mvp": "MvpForCausalLM",
+   "nanochat": "NanoChatForCausalLM",
+   "nemotron": "NemotronForCausalLM",
+   "nemotron_h": "NemotronHForCausalLM",
+   "olmo": "OlmoForCausalLM",
+   "olmo2": "Olmo2ForCausalLM",
+   "olmo3": "Olmo3ForCausalLM",
+   "olmo_hybrid": "OlmoHybridForCausalLM",
+   "olmoe": "OlmoeForCausalLM",
+   "openai-gpt": "OpenAIGPTLMHeadModel",
+   "opt": "OPTForCausalLM",
+   "pegasus": "PegasusForCausalLM",
+   "persimmon": "PersimmonForCausalLM",
+   "phi": "PhiForCausalLM",
+   "phi3": "Phi3ForCausalLM",
+   "phi4_multimodal": "Phi4MultimodalForCausalLM",
+   "phimoe": "PhimoeForCausalLM",
+   "plbart": "PLBartForCausalLM",
+   "prophetnet": "ProphetNetForCausalLM",
+   "qwen2": "Qwen2ForCausalLM",
+   "qwen2_moe": "Qwen2MoeForCausalLM",
+   "qwen3": "Qwen3ForCausalLM",
+   "qwen3_5": "Qwen3_5ForCausalLM",
+   "qwen3_5_moe": "Qwen3_5MoeForCausalLM",
+   "qwen3_5_moe_text": "Qwen3_5MoeForCausalLM",
+   "qwen3_5_text": "Qwen3_5ForCausalLM",
+   "qwen3_moe": "Qwen3MoeForCausalLM",
+   "qwen3_next": "Qwen3NextForCausalLM",
+   "qwen4_exp": "Qwen4ExpForCausalLM",
+   "qwen4_exp_text": "Qwen4ExpForCausalLM",
+   "recurrent_gemma": "RecurrentGemmaForCausalLM",
+   "reformer": "ReformerModelWithLMHead",
+   "rembert": "RemBertForCausalLM",
+   "roberta": "RobertaForCausalLM",
+   "roberta-prelayernorm": "RobertaPreLayerNormForCausalLM",
+   "roc_bert": "RoCBertForCausalLM",
+   "roformer": "RoFormerForCausalLM",
+   "rwkv": "RwkvForCausalLM",
+   "seed_oss": "SeedOssForCausalLM",
+   "smollm3": "SmolLM3ForCausalLM",
+   "solar_open": "SolarOpenForCausalLM",
+   "stablelm": "StableLmForCausalLM",
+   "starcoder2": "Starcoder2ForCausalLM",
+   "trocr": "TrOCRForCausalLM",
+   "vaultgemma": "VaultGemmaForCausalLM",
+   "whisper": "WhisperForCausalLM",
+   "xglm": "XGLMForCausalLM",
+   "xlm": "XLMWithLMHeadModel",
+   "xlm-roberta": "XLMRobertaForCausalLM",
+   "xlm-roberta-xl": "XLMRobertaXLForCausalLM",
+   "xlnet": "XLNetLMHeadModel",
+   "xlstm": "xLSTMForCausalLM",
+   "xmod": "XmodForCausalLM",
+   "youtu": "YoutuForCausalLM",
+   "zamba": "ZambaForCausalLM",
+   "zamba2": "Zamba2ForCausalLM",
+   "zaya": "ZayaForCausalLM"
+  },
+  "MODEL_FOR_IMAGE_MAPPING_NAMES": {
+   "aimv2_vision_model": "Aimv2VisionModel",
+   "beit": "BeitModel",
+   "bit": "BitModel",
+   "cohere2_vision": "Cohere2VisionModel",
+   "conditional_detr": "ConditionalDetrModel",
+   "convnext": "ConvNextModel",
+   "convnextv2": "ConvNextV2Model",
+   "dab-detr": "DabDetrModel",
+   "data2vec-vision": "Data2VecVisionModel",
+   "deformable_detr": "DeformableDetrModel",
+   "deit": "DeiTModel",
+   "depth_pro": "DepthProModel",
+   "detr": "DetrModel",
+   "dinat": "DinatModel",
+   "dinov2": "Dinov2Model",
+   "dinov2_with_registers": "Dinov2WithRegistersModel",
+   "dinov3_convnext": "DINOv3ConvNextModel",
+   "dinov3_vit": "DINOv3ViTModel",
+   "dpt": "DPTModel",
+   "efficientnet": "EfficientNetModel",
+   "focalnet": "FocalNetModel",
+   "glpn": "GLPNModel",
+   "hiera": "HieraModel",
+   "ijepa": "IJepaModel",
+   "imagegpt": "ImageGPTModel",
+   "levit": "LevitModel",
+   "llama4": "Llama4VisionModel",
+   "mlcd": "MLCDVisionModel",
+   "mlcd_vision_model": "MLCDVisionModel",
+   "mllama": "MllamaVisionModel",
+   "mobilenet_v1": "MobileNetV1Model",
+   "mobilenet_v2": "MobileNetV2Model",
+   "mobilevit": "MobileViTModel",
+   "mobilevitv2": "MobileViTV2Model",
+   "pixio": "PixioModel",
+   "poolformer": "PoolFormerModel",
+   "pvt": "PvtModel",
+   "regnet": "RegNetModel",
+   "resnet": "ResNetModel",
+   "segformer": "SegformerModel",
+   "siglip_vision_model": "SiglipVisionModel",
+   "swiftformer": "SwiftFormerModel",
+   "swin": "SwinModel",
+   "swin2sr": "Swin2SRModel",
+   "swinv2": "Swinv2Model",
+   "table-transformer": "TableTransformerModel",
+   "timesformer": "TimesformerModel",
+   "timm_backbone": "TimmBackbone",
+   "timm_wrapper": "TimmWrapperModel",
+   "tipsv2_vision_model": "Tipsv2VisionModel",
+   "videomae": "VideoMAEModel",
+   "videoprism_vision_model": "VideoPrismVisionModel",
+   "vit": "ViTModel",
+   "vit_mae": "ViTMAEModel",
+   "vit_msn": "ViTMSNModel",
+   "vitdet": "VitDetModel",
+   "vivit": "VivitModel",
+   "yolos": "YolosModel"
+  },
+  "MODEL_FOR_MASKED_IMAGE_MODELING_MAPPING_NAMES": {
+   "deit": "DeiTForMaskedImageModeling",
+   "focalnet": "FocalNetForMaskedImageModeling",
+   "swin": "SwinForMaskedImageModeling",
+   "swinv2": "Swinv2ForMaskedImageModeling",
+   "vit": "ViTForMaskedImageModeling"
+  },
+  "MODEL_FOR_IMAGE_CLASSIFICATION_MAPPING_NAMES": {
+   "beit": "BeitForImageClassification",
+   "bit": "BitForImageClassification",
+   "clip": "CLIPForImageClassification",
+   "convnext": "ConvNextForImageClassification",
+   "convnextv2": "ConvNextV2ForImageClassification",
+   "cvt": "CvtForImageClassification",
+   "data2vec-vision": "Data2VecVisionForImageClassification",
+   "dinat": "DinatForImageClassification",
+   "dinov2": "Dinov2ForImageClassification",
+   "dinov2_with_registers": "Dinov2WithRegistersForImageClassification",
+   "donut-swin": "DonutSwinForImageClassification",
+   "efficientnet": "EfficientNetForImageClassification",
+   "focalnet": "FocalNetForImageClassification",
+   "hgnet_v2": "HGNetV2ForImageClassification",
+   "hiera": "HieraForImageClassification",
+   "ijepa": "IJepaForImageClassification",
+   "imagegpt": "ImageGPTForImageClassification",
+   "metaclip_2": "MetaClip2ForImageClassification",
+   "mobilenet_v1": "MobileNetV1ForImageClassification",
+   "mobilenet_v2": "MobileNetV2ForImageClassification",
+   "mobilevit": "MobileViTForImageClassification",
+   "mobilevitv2": "MobileViTV2ForImageClassification",
+   "poolformer": "PoolFormerForImageClassification",
+   "pp_lcnet": "PPLCNetForImageClassification",
+   "pvt": "PvtForImageClassification",
+   "pvt_v2": "PvtV2ForImageClassification",
+   "regnet": "RegNetForImageClassification",
+   "resnet": "ResNetForImageClassification",
+   "segformer": "SegformerForImageClassification",
+   "shieldgemma2": "ShieldGemma2ForImageClassification",
+   "siglip": "SiglipForImageClassification",
+   "siglip2": "Siglip2ForImageClassification",
+   "swiftformer": "SwiftFormerForImageClassification",
+   "swin": "SwinForImageClassification",
+   "swinv2": "Swinv2ForImageClassification",
+   "textnet": "TextNetForImageClassification",
+   "timm_wrapper": "TimmWrapperForImageClassification",
+   "vit": "ViTForImageClassification",
+   "vit_msn": "ViTMSNForImageClassification"
+  },
+  "MODEL_FOR_IMAGE_SEGMENTATION_MAPPING_NAMES": {
+   "detr": "DetrForSegmentation"
+  },
+  "MODEL_FOR_SEMANTIC_SEGMENTATION_MAPPING_NAMES": {
+   "beit": "BeitForSemanticSegmentation",
+   "data2vec-vision": "Data2VecVisionForSemanticSegmentation",
+   "dpt": "DPTForSemanticSegmentation",
+   "mobilenet_v2": "MobileNetV2ForSemanticSegmentation",
+   "mobilevit": "MobileViTForSemanticSegmentation",
+   "mobilevitv2": "MobileViTV2ForSemanticSegmentation",
+   "sapiens2": "Sapiens2ForSemanticSegmentation",
+   "segformer": "SegformerForSemanticSegmentation",
+   "tipsv2_dpt": "Tipsv2DptForSemanticSegmentation",
+   "upernet": "UperNetForSemanticSegmentation"
+  },
+  "MODEL_FOR_INSTANCE_SEGMENTATION_MAPPING_NAMES": {
+   "maskformer": "MaskFormerForInstanceSegmentation",
+   "rf_detr": "RfDetrForInstanceSegmentation"
+  },
+  "MODEL_FOR_UNIVERSAL_SEGMENTATION_MAPPING_NAMES": {
+   "detr": "DetrForSegmentation",
+   "eomt": "EomtForUniversalSegmentation",
+   "eomt_dinov3": "EomtDinov3ForUniversalSegmentation",
+   "mask2former": "Mask2FormerForUniversalSegmentation",
+   "maskformer": "MaskFormerForInstanceSegmentation",
+   "oneformer": "OneFormerForUniversalSegmentation",
+   "videomt": "VideomtForUniversalSegmentation"
+  },
+  "MODEL_FOR_VIDEO_CLASSIFICATION_MAPPING_NAMES": {
+   "timesformer": "TimesformerForVideoClassification",
+   "videomae": "VideoMAEForVideoClassification",
+   "videoprism_vision_model": "VideoPrismForVideoClassification",
+   "vivit": "VivitForVideoClassification",
+   "vjepa2": "VJEPA2ForVideoClassification"
+  },
+  "MODEL_FOR_RETRIEVAL_MAPPING_NAMES": {
+   "colmodernvbert": "ColModernVBertForRetrieval",
+   "colpali": "ColPaliForRetrieval"
+  },
+  "MODEL_FOR_IMAGE_TEXT_TO_TEXT_MAPPING_NAMES": {
+   "aria": "AriaForConditionalGeneration",
+   "aya_vision": "AyaVisionForConditionalGeneration",
+   "blip": "BlipForConditionalGeneration",
+   "blip-2": "Blip2ForConditionalGeneration",
+   "chameleon": "ChameleonForConditionalGeneration",
+   "cohere2_vision": "Cohere2VisionForConditionalGeneration",
+   "cohere_compass": "CohereCompassForConditionalGeneration",
+   "cosmos3_edge": "Cosmos3EdgeForConditionalGeneration",
+   "cosmos3_omni": "Cosmos3OmniForConditionalGeneration",
+   "deepseek_ocr2": "DeepseekOcr2ForConditionalGeneration",
+   "deepseek_vl": "DeepseekVLForConditionalGeneration",
+   "deepseek_vl_hybrid": "DeepseekVLHybridForConditionalGeneration",
+   "diffusion_gemma": "DiffusionGemmaForBlockDiffusion",
+   "emu3": "Emu3ForConditionalGeneration",
+   "ernie4_5_vl_moe": "Ernie4_5_VLMoeForConditionalGeneration",
+   "evolla": "EvollaForProteinText2Text",
+   "exaone4_5": "Exaone4_5_ForConditionalGeneration",
+   "fast_vlm": "FastVlmForConditionalGeneration",
+   "florence2": "Florence2ForConditionalGeneration",
+   "fuyu": "FuyuForCausalLM",
+   "gemma3": "Gemma3ForConditionalGeneration",
+   "gemma3n": "Gemma3nForConditionalGeneration",
+   "gemma4": "Gemma4ForConditionalGeneration",
+   "gemma4_unified": "Gemma4UnifiedForConditionalGeneration",
+   "git": "GitForCausalLM",
+   "glm46v": "Glm46VForConditionalGeneration",
+   "glm4v": "Glm4vForConditionalGeneration",
+   "glm4v_moe": "Glm4vMoeForConditionalGeneration",
+   "glm5_next": "Glm5NextForConditionalGeneration",
+   "glm_ocr": "GlmOcrForConditionalGeneration",
+   "glmga": "Glm46VForConditionalGeneration",
+   "got_ocr2": "GotOcr2ForConditionalGeneration",
+   "granite4_vision": "Granite4VisionForConditionalGeneration",
+   "hunyuan_vl": "HunYuanVLForConditionalGeneration",
+   "idefics": "IdeficsForVisionText2Text",
+   "idefics2": "Idefics2ForConditionalGeneration",
+   "idefics3": "Idefics3ForConditionalGeneration",
+   "inkling_mm_model": "InklingForConditionalGeneration",
+   "instructblip": "InstructBlipForConditionalGeneration",
+   "instructblipvideo": "InstructBlipVideoForConditionalGeneration",
+   "internvl": "InternVLForConditionalGeneration",
+   "janus": "JanusForConditionalGeneration",
+   "kimi_k25": "Kimi_K25ForConditionalGeneration",
+   "kosmos-2": "Kosmos2ForConditionalGeneration",
+   "lfm2_vl": "Lfm2VlForConditionalGeneration",
+   "lighton_ocr": "LightOnOcrForConditionalGeneration",
+   "llama4": "Llama4ForConditionalGeneration",
+   "llava": "LlavaForConditionalGeneration",
+   "llava_next": "LlavaNextForConditionalGeneration",
+   "llava_next_video": "LlavaNextVideoForConditionalGeneration",
+   "llava_onevision": "LlavaOnevisionForConditionalGeneration",
+   "minicpmv4_6": "MiniCPMV4_6ForConditionalGeneration",
+   "minimax_m3_vl": "MiniMaxM3SparseForConditionalGeneration",
+   "mistral3": "Mistral3ForConditionalGeneration",
+   "mistral4": "Mistral4ForCausalLM",
+   "mllama": "MllamaForConditionalGeneration",
+   "muse_glimmer": "MuseGlimmerForConditionalGeneration",
+   "ovis2": "Ovis2ForConditionalGeneration",
+   "paddleocr_vl": "PaddleOCRVLForConditionalGeneration",
+   "paligemma": "PaliGemmaForConditionalGeneration",
+   "perception_lm": "PerceptionLMForConditionalGeneration",
+   "pi0": "PI0ForConditionalGeneration",
+   "pix2struct": "Pix2StructForConditionalGeneration",
+   "pp_chart2table": "GotOcr2ForConditionalGeneration",
+   "pp_formulanet": "PPFormulaNetForConditionalGeneration",
+   "qianfan_ocr": "QianfanOCRForConditionalGeneration",
+   "qwen2_5_omni_thinker": "Qwen2_5OmniThinkerForConditionalGeneration",
+   "qwen2_5_vl": "Qwen2_5_VLForConditionalGeneration",
+   "qwen2_vl": "Qwen2VLForConditionalGeneration",
+   "qwen3_5": "Qwen3_5ForConditionalGeneration",
+   "qwen3_5_moe": "Qwen3_5MoeForConditionalGeneration",
+   "qwen3_omni_moe_thinker": "Qwen3OmniMoeThinkerForConditionalGeneration",
+   "qwen3_vl": "Qwen3VLForConditionalGeneration",
+   "qwen3_vl_moe": "Qwen3VLMoeForConditionalGeneration",
+   "qwen4_exp": "Qwen4ExpForConditionalGeneration",
+   "shieldgemma2": "Gemma3ForConditionalGeneration",
+   "smolvlm": "SmolVLMForConditionalGeneration",
+   "step3p7": "Step3p7ForConditionalGeneration",
+   "t5gemma2": "T5Gemma2ForConditionalGeneration",
+   "udop": "UdopForConditionalGeneration",
+   "video_llama_3": "VideoLlama3ForConditionalGeneration",
+   "video_llava": "VideoLlavaForConditionalGeneration",
+   "vipllava": "VipLlavaForConditionalGeneration",
+   "vision-encoder-decoder": "VisionEncoderDecoderModel"
+  },
+  "MODEL_FOR_MULTIMODAL_LM_MAPPING_NAMES": {
+   "glmasr": "GlmAsrForConditionalGeneration",
+   "granite_speech": "GraniteSpeechForConditionalGeneration",
+   "granite_speech_plus": "GraniteSpeechPlusForConditionalGeneration",
+   "kyutai_speech_to_text": "KyutaiSpeechToTextForConditionalGeneration",
+   "phi4_multimodal": "Phi4MultimodalForCausalLM",
+   "qwen2_5_omni": "Qwen2_5OmniForConditionalGeneration",
+   "qwen2_audio": "Qwen2AudioForConditionalGeneration",
+   "qwen3_asr": "Qwen3ASRForConditionalGeneration",
+   "qwen3_omni_moe": "Qwen3OmniMoeForConditionalGeneration",
+   "vibevoice_asr": "VibeVoiceAsrForConditionalGeneration",
+   "voxtral": "VoxtralForConditionalGeneration",
+   "voxtral_realtime": "VoxtralRealtimeForConditionalGeneration"
+  },
+  "MODEL_FOR_MASKED_LM_MAPPING_NAMES": {
+   "albert": "AlbertForMaskedLM",
+   "bart": "BartForConditionalGeneration",
+   "bert": "BertForMaskedLM",
+   "big_bird": "BigBirdForMaskedLM",
+   "camembert": "CamembertForMaskedLM",
+   "convbert": "ConvBertForMaskedLM",
+   "data2vec-text": "Data2VecTextForMaskedLM",
+   "deberta": "DebertaForMaskedLM",
+   "deberta-v2": "DebertaV2ForMaskedLM",
+   "distilbert": "DistilBertForMaskedLM",
+   "electra": "ElectraForMaskedLM",
+   "ernie": "ErnieForMaskedLM",
+   "esm": "EsmForMaskedLM",
+   "esmc": "EsmcForMaskedLM",
+   "eurobert": "EuroBertForMaskedLM",
+   "flaubert": "FlaubertWithLMHeadModel",
+   "fnet": "FNetForMaskedLM",
+   "funnel": "FunnelForMaskedLM",
+   "ibert": "IBertForMaskedLM",
+   "jina_embeddings_v3": "JinaEmbeddingsV3ForMaskedLM",
+   "layoutlm": "LayoutLMForMaskedLM",
+   "longformer": "LongformerForMaskedLM",
+   "luke": "LukeForMaskedLM",
+   "mbart": "MBartForConditionalGeneration",
+   "megatron-bert": "MegatronBertForMaskedLM",
+   "mobilebert": "MobileBertForMaskedLM",
+   "modernbert": "ModernBertForMaskedLM",
+   "modernvbert": "ModernVBertForMaskedLM",
+   "mpnet": "MPNetForMaskedLM",
+   "mra": "MraForMaskedLM",
+   "mvp": "MvpForConditionalGeneration",
+   "nomic_bert": "NomicBertForMaskedLM",
+   "nystromformer": "NystromformerForMaskedLM",
+   "perceiver": "PerceiverForMaskedLM",
+   "reformer": "ReformerForMaskedLM",
+   "rembert": "RemBertForMaskedLM",
+   "roberta": "RobertaForMaskedLM",
+   "roberta-prelayernorm": "RobertaPreLayerNormForMaskedLM",
+   "roc_bert": "RoCBertForMaskedLM",
+   "roformer": "RoFormerForMaskedLM",
+   "squeezebert": "SqueezeBertForMaskedLM",
+   "tapas": "TapasForMaskedLM",
+   "xlm": "XLMWithLMHeadModel",
+   "xlm-roberta": "XLMRobertaForMaskedLM",
+   "xlm-roberta-xl": "XLMRobertaXLForMaskedLM",
+   "xmod": "XmodForMaskedLM",
+   "yoso": "YosoForMaskedLM"
+  },
+  "MODEL_FOR_OBJECT_DETECTION_MAPPING_NAMES": {
+   "conditional_detr": "ConditionalDetrForObjectDetection",
+   "d_fine": "DFineForObjectDetection",
+   "dab-detr": "DabDetrForObjectDetection",
+   "deformable_detr": "DeformableDetrForObjectDetection",
+   "deimv2": "Deimv2ForObjectDetection",
+   "detr": "DetrForObjectDetection",
+   "lw_detr": "LwDetrForObjectDetection",
+   "pp_doclayout_v2": "PPDocLayoutV2ForObjectDetection",
+   "pp_doclayout_v3": "PPDocLayoutV3ForObjectDetection",
+   "pp_ocrv5_mobile_det": "PPOCRV5MobileDetForObjectDetection",
+   "pp_ocrv5_server_det": "PPOCRV5ServerDetForObjectDetection",
+   "pp_ocrv6_medium_det": "PPOCRV6MediumDetForObjectDetection",
+   "pp_ocrv6_small_det": "PPOCRV6SmallDetForObjectDetection",
+   "rf_detr": "RfDetrForObjectDetection",
+   "rt_detr": "RTDetrForObjectDetection",
+   "rt_detr_v2": "RTDetrV2ForObjectDetection",
+   "table-transformer": "TableTransformerForObjectDetection",
+   "yolos": "YolosForObjectDetection"
+  },
+  "MODEL_FOR_ZERO_SHOT_OBJECT_DETECTION_MAPPING_NAMES": {
+   "grounding-dino": "GroundingDinoForObjectDetection",
+   "mm-grounding-dino": "MMGroundingDinoForObjectDetection",
+   "omdet-turbo": "OmDetTurboForObjectDetection",
+   "owlv2": "Owlv2ForObjectDetection",
+   "owlvit": "OwlViTForObjectDetection"
+  },
+  "MODEL_FOR_DEPTH_ESTIMATION_MAPPING_NAMES": {
+   "chmv2": "CHMv2ForDepthEstimation",
+   "depth_anything": "DepthAnythingForDepthEstimation",
+   "depth_pro": "DepthProForDepthEstimation",
+   "dpt": "DPTForDepthEstimation",
+   "glpn": "GLPNForDepthEstimation",
+   "prompt_depth_anything": "PromptDepthAnythingForDepthEstimation",
+   "tipsv2_dpt": "Tipsv2DptForDepthEstimation",
+   "zoedepth": "ZoeDepthForDepthEstimation"
+  },
+  "MODEL_FOR_TEXT_RECOGNITION_MAPPING_NAMES": {
+   "pp_ocrv5_mobile_rec": "PPOCRV5MobileRecForTextRecognition",
+   "pp_ocrv5_server_rec": "PPOCRV5ServerRecForTextRecognition",
+   "pp_ocrv6_small_rec": "PPOCRV6SmallRecForTextRecognition",
+   "pp_ocrv6_tiny_rec": "PPOCRV6TinyRecForTextRecognition"
+  },
+  "MODEL_FOR_TABLE_RECOGNITION_MAPPING_NAMES": {
+   "slanet": "SLANetForTableRecognition",
+   "slanext": "SLANeXtForTableRecognition"
+  },
+  "MODEL_FOR_SEQ_TO_SEQ_CAUSAL_LM_MAPPING_NAMES": {
+   "audioflamingo3": "AudioFlamingo3ForConditionalGeneration",
+   "bart": "BartForConditionalGeneration",
+   "bigbird_pegasus": "BigBirdPegasusForConditionalGeneration",
+   "blenderbot": "BlenderbotForConditionalGeneration",
+   "blenderbot-small": "BlenderbotSmallForConditionalGeneration",
+   "encoder-decoder": "EncoderDecoderModel",
+   "fsmt": "FSMTForConditionalGeneration",
+   "glmasr": "GlmAsrForConditionalGeneration",
+   "granite_speech": "GraniteSpeechForConditionalGeneration",
+   "granite_speech_plus": "GraniteSpeechPlusForConditionalGeneration",
+   "led": "LEDForConditionalGeneration",
+   "longt5": "LongT5ForConditionalGeneration",
+   "m2m_100": "M2M100ForConditionalGeneration",
+   "marian": "MarianMTModel",
+   "mbart": "MBartForConditionalGeneration",
+   "mt5": "MT5ForConditionalGeneration",
+   "musicflamingo": "MusicFlamingoForConditionalGeneration",
+   "mvp": "MvpForConditionalGeneration",
+   "nllb-moe": "NllbMoeForConditionalGeneration",
+   "pegasus": "PegasusForConditionalGeneration",
+   "pegasus_x": "PegasusXForConditionalGeneration",
+   "plbart": "PLBartForConditionalGeneration",
+   "prophetnet": "ProphetNetForConditionalGeneration",
+   "qwen2_audio": "Qwen2AudioForConditionalGeneration",
+   "qwen3_asr": "Qwen3ASRForConditionalGeneration",
+   "seamless_m4t": "SeamlessM4TForTextToText",
+   "seamless_m4t_v2": "SeamlessM4Tv2ForTextToText",
+   "switch_transformers": "SwitchTransformersForConditionalGeneration",
+   "t5": "T5ForConditionalGeneration",
+   "t5gemma": "T5GemmaForConditionalGeneration",
+   "t5gemma2": "T5Gemma2ForConditionalGeneration",
+   "umt5": "UMT5ForConditionalGeneration",
+   "vibevoice_asr": "VibeVoiceAsrForConditionalGeneration",
+   "voxtral": "VoxtralForConditionalGeneration",
+   "voxtral_realtime": "VoxtralRealtimeForConditionalGeneration"
+  },
+  "MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING_NAMES": {
+   "albert": "AlbertForSequenceClassification",
+   "arcee": "ArceeForSequenceClassification",
+   "axk1": "AXK1ForSequenceClassification",
+   "axk2": "AXK2ForSequenceClassification",
+   "bart": "BartForSequenceClassification",
+   "bert": "BertForSequenceClassification",
+   "big_bird": "BigBirdForSequenceClassification",
+   "bigbird_pegasus": "BigBirdPegasusForSequenceClassification",
+   "biogpt": "BioGptForSequenceClassification",
+   "bloom": "BloomForSequenceClassification",
+   "camembert": "CamembertForSequenceClassification",
+   "canine": "CanineForSequenceClassification",
+   "cohere_compass_text": "CohereCompassTextForSequenceClassification",
+   "convbert": "ConvBertForSequenceClassification",
+   "ctrl": "CTRLForSequenceClassification",
+   "data2vec-text": "Data2VecTextForSequenceClassification",
+   "deberta": "DebertaForSequenceClassification",
+   "deberta-v2": "DebertaV2ForSequenceClassification",
+   "deepseek_v2": "DeepseekV2ForSequenceClassification",
+   "deepseek_v3": "DeepseekV3ForSequenceClassification",
+   "diffllama": "DiffLlamaForSequenceClassification",
+   "distilbert": "DistilBertForSequenceClassification",
+   "doge": "DogeForSequenceClassification",
+   "electra": "ElectraForSequenceClassification",
+   "ernie": "ErnieForSequenceClassification",
+   "esm": "EsmForSequenceClassification",
+   "esmc": "EsmcForSequenceClassification",
+   "eurobert": "EuroBertForSequenceClassification",
+   "exaone4": "Exaone4ForSequenceClassification",
+   "falcon": "FalconForSequenceClassification",
+   "flaubert": "FlaubertForSequenceClassification",
+   "fnet": "FNetForSequenceClassification",
+   "funnel": "FunnelForSequenceClassification",
+   "gemma": "GemmaForSequenceClassification",
+   "gemma2": "Gemma2ForSequenceClassification",
+   "gemma3": "Gemma3ForSequenceClassification",
+   "gemma3_text": "Gemma3TextForSequenceClassification",
+   "glm": "GlmForSequenceClassification",
+   "glm4": "Glm4ForSequenceClassification",
+   "gpt-sw3": "GPT2ForSequenceClassification",
+   "gpt2": "GPT2ForSequenceClassification",
+   "gpt_bigcode": "GPTBigCodeForSequenceClassification",
+   "gpt_neo": "GPTNeoForSequenceClassification",
+   "gpt_neox": "GPTNeoXForSequenceClassification",
+   "gpt_oss": "GptOssForSequenceClassification",
+   "gptj": "GPTJForSequenceClassification",
+   "helium": "HeliumForSequenceClassification",
+   "hunyuan_v1_dense": "HunYuanDenseV1ForSequenceClassification",
+   "hunyuan_v1_moe": "HunYuanMoEV1ForSequenceClassification",
+   "ibert": "IBertForSequenceClassification",
+   "jamba": "JambaForSequenceClassification",
+   "jetmoe": "JetMoeForSequenceClassification",
+   "jina_embeddings_v3": "JinaEmbeddingsV3ForSequenceClassification",
+   "layoutlm": "LayoutLMForSequenceClassification",
+   "layoutlmv2": "LayoutLMv2ForSequenceClassification",
+   "layoutlmv3": "LayoutLMv3ForSequenceClassification",
+   "lilt": "LiltForSequenceClassification",
+   "llama": "LlamaForSequenceClassification",
+   "longformer": "LongformerForSequenceClassification",
+   "luke": "LukeForSequenceClassification",
+   "markuplm": "MarkupLMForSequenceClassification",
+   "mbart": "MBartForSequenceClassification",
+   "megatron-bert": "MegatronBertForSequenceClassification",
+   "minicpm3": "MiniCPM3ForSequenceClassification",
+   "minimax": "MiniMaxForSequenceClassification",
+   "ministral": "MinistralForSequenceClassification",
+   "ministral3": "Ministral3ForSequenceClassification",
+   "mistral": "MistralForSequenceClassification",
+   "mistral4": "Mistral4ForSequenceClassification",
+   "mixtral": "MixtralForSequenceClassification",
+   "mobilebert": "MobileBertForSequenceClassification",
+   "modernbert": "ModernBertForSequenceClassification",
+   "modernbert-decoder": "ModernBertDecoderForSequenceClassification",
+   "modernvbert": "ModernVBertForSequenceClassification",
+   "mpnet": "MPNetForSequenceClassification",
+   "mpt": "MptForSequenceClassification",
+   "mra": "MraForSequenceClassification",
+   "mt5": "MT5ForSequenceClassification",
+   "mvp": "MvpForSequenceClassification",
+   "nemotron": "NemotronForSequenceClassification",
+   "nomic_bert": "NomicBertForSequenceClassification",
+   "nystromformer": "NystromformerForSequenceClassification",
+   "olmo": "OlmoForSequenceClassification",
+   "olmo2": "Olmo2ForSequenceClassification",
+   "olmo3": "Olmo3ForSequenceClassification",
+   "openai-gpt": "OpenAIGPTForSequenceClassification",
+   "opt": "OPTForSequenceClassification",
+   "perceiver": "PerceiverForSequenceClassification",
+   "persimmon": "PersimmonForSequenceClassification",
+   "phi": "PhiForSequenceClassification",
+   "phi3": "Phi3ForSequenceClassification",
+   "phimoe": "PhimoeForSequenceClassification",
+   "plbart": "PLBartForSequenceClassification",
+   "qwen2": "Qwen2ForSequenceClassification",
+   "qwen2_moe": "Qwen2MoeForSequenceClassification",
+   "qwen3": "Qwen3ForSequenceClassification",
+   "qwen3_5": "Qwen3_5ForSequenceClassification",
+   "qwen3_5_text": "Qwen3_5TextForSequenceClassification",
+   "qwen3_moe": "Qwen3MoeForSequenceClassification",
+   "qwen3_next": "Qwen3NextForSequenceClassification",
+   "reformer": "ReformerForSequenceClassification",
+   "rembert": "RemBertForSequenceClassification",
+   "roberta": "RobertaForSequenceClassification",
+   "roberta-prelayernorm": "RobertaPreLayerNormForSequenceClassification",
+   "roc_bert": "RoCBertForSequenceClassification",
+   "roformer": "RoFormerForSequenceClassification",
+   "seed_oss": "SeedOssForSequenceClassification",
+   "smollm3": "SmolLM3ForSequenceClassification",
+   "squeezebert": "SqueezeBertForSequenceClassification",
+   "stablelm": "StableLmForSequenceClassification",
+   "starcoder2": "Starcoder2ForSequenceClassification",
+   "t5": "T5ForSequenceClassification",
+   "t5gemma": "T5GemmaForSequenceClassification",
+   "t5gemma2": "T5Gemma2ForSequenceClassification",
+   "tapas": "TapasForSequenceClassification",
+   "umt5": "UMT5ForSequenceClassification",
+   "xlm": "XLMForSequenceClassification",
+   "xlm-roberta": "XLMRobertaForSequenceClassification",
+   "xlm-roberta-xl": "XLMRobertaXLForSequenceClassification",
+   "xlnet": "XLNetForSequenceClassification",
+   "xmod": "XmodForSequenceClassification",
+   "yoso": "YosoForSequenceClassification",
+   "zamba": "ZambaForSequenceClassification",
+   "zamba2": "Zamba2ForSequenceClassification"
+  },
+  "MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES": {
+   "albert": "AlbertForQuestionAnswering",
+   "arcee": "ArceeForQuestionAnswering",
+   "bart": "BartForQuestionAnswering",
+   "bert": "BertForQuestionAnswering",
+   "big_bird": "BigBirdForQuestionAnswering",
+   "bigbird_pegasus": "BigBirdPegasusForQuestionAnswering",
+   "bloom": "BloomForQuestionAnswering",
+   "camembert": "CamembertForQuestionAnswering",
+   "canine": "CanineForQuestionAnswering",
+   "convbert": "ConvBertForQuestionAnswering",
+   "data2vec-text": "Data2VecTextForQuestionAnswering",
+   "deberta": "DebertaForQuestionAnswering",
+   "deberta-v2": "DebertaV2ForQuestionAnswering",
+   "diffllama": "DiffLlamaForQuestionAnswering",
+   "distilbert": "DistilBertForQuestionAnswering",
+   "electra": "ElectraForQuestionAnswering",
+   "ernie": "ErnieForQuestionAnswering",
+   "exaone4": "Exaone4ForQuestionAnswering",
+   "falcon": "FalconForQuestionAnswering",
+   "flaubert": "FlaubertForQuestionAnsweringSimple",
+   "fnet": "FNetForQuestionAnswering",
+   "funnel": "FunnelForQuestionAnswering",
+   "gpt2": "GPT2ForQuestionAnswering",
+   "gpt_neo": "GPTNeoForQuestionAnswering",
+   "gpt_neox": "GPTNeoXForQuestionAnswering",
+   "gptj": "GPTJForQuestionAnswering",
+   "ibert": "IBertForQuestionAnswering",
+   "jina_embeddings_v3": "JinaEmbeddingsV3ForQuestionAnswering",
+   "layoutlmv2": "LayoutLMv2ForQuestionAnswering",
+   "layoutlmv3": "LayoutLMv3ForQuestionAnswering",
+   "led": "LEDForQuestionAnswering",
+   "lilt": "LiltForQuestionAnswering",
+   "llama": "LlamaForQuestionAnswering",
+   "longformer": "LongformerForQuestionAnswering",
+   "luke": "LukeForQuestionAnswering",
+   "lxmert": "LxmertForQuestionAnswering",
+   "markuplm": "MarkupLMForQuestionAnswering",
+   "mbart": "MBartForQuestionAnswering",
+   "megatron-bert": "MegatronBertForQuestionAnswering",
+   "minimax": "MiniMaxForQuestionAnswering",
+   "ministral": "MinistralForQuestionAnswering",
+   "ministral3": "Ministral3ForQuestionAnswering",
+   "mistral": "MistralForQuestionAnswering",
+   "mixtral": "MixtralForQuestionAnswering",
+   "mobilebert": "MobileBertForQuestionAnswering",
+   "modernbert": "ModernBertForQuestionAnswering",
+   "mpnet": "MPNetForQuestionAnswering",
+   "mpt": "MptForQuestionAnswering",
+   "mra": "MraForQuestionAnswering",
+   "mt5": "MT5ForQuestionAnswering",
+   "mvp": "MvpForQuestionAnswering",
+   "nemotron": "NemotronForQuestionAnswering",
+   "nystromformer": "NystromformerForQuestionAnswering",
+   "opt": "OPTForQuestionAnswering",
+   "qwen2": "Qwen2ForQuestionAnswering",
+   "qwen2_moe": "Qwen2MoeForQuestionAnswering",
+   "qwen3": "Qwen3ForQuestionAnswering",
+   "qwen3_moe": "Qwen3MoeForQuestionAnswering",
+   "qwen3_next": "Qwen3NextForQuestionAnswering",
+   "reformer": "ReformerForQuestionAnswering",
+   "rembert": "RemBertForQuestionAnswering",
+   "roberta": "RobertaForQuestionAnswering",
+   "roberta-prelayernorm": "RobertaPreLayerNormForQuestionAnswering",
+   "roc_bert": "RoCBertForQuestionAnswering",
+   "roformer": "RoFormerForQuestionAnswering",
+   "seed_oss": "SeedOssForQuestionAnswering",
+   "smollm3": "SmolLM3ForQuestionAnswering",
+   "splinter": "SplinterForQuestionAnswering",
+   "squeezebert": "SqueezeBertForQuestionAnswering",
+   "t5": "T5ForQuestionAnswering",
+   "umt5": "UMT5ForQuestionAnswering",
+   "xlm": "XLMForQuestionAnsweringSimple",
+   "xlm-roberta": "XLMRobertaForQuestionAnswering",
+   "xlm-roberta-xl": "XLMRobertaXLForQuestionAnswering",
+   "xlnet": "XLNetForQuestionAnsweringSimple",
+   "xmod": "XmodForQuestionAnswering",
+   "yoso": "YosoForQuestionAnswering"
+  },
+  "MODEL_FOR_TABLE_QUESTION_ANSWERING_MAPPING_NAMES": {
+   "tapas": "TapasForQuestionAnswering"
+  },
+  "MODEL_FOR_VISUAL_QUESTION_ANSWERING_MAPPING_NAMES": {
+   "blip": "BlipForQuestionAnswering",
+   "blip-2": "Blip2ForConditionalGeneration",
+   "vilt": "ViltForQuestionAnswering"
+  },
+  "MODEL_FOR_DOCUMENT_QUESTION_ANSWERING_MAPPING_NAMES": {
+   "layoutlm": "LayoutLMForQuestionAnswering",
+   "layoutlmv2": "LayoutLMv2ForQuestionAnswering",
+   "layoutlmv3": "LayoutLMv3ForQuestionAnswering"
+  },
+  "MODEL_FOR_TOKEN_CLASSIFICATION_MAPPING_NAMES": {
+   "albert": "AlbertForTokenClassification",
+   "apertus": "ApertusForTokenClassification",
+   "arcee": "ArceeForTokenClassification",
+   "axk1": "AXK1ForTokenClassification",
+   "axk2": "AXK2ForTokenClassification",
+   "bert": "BertForTokenClassification",
+   "big_bird": "BigBirdForTokenClassification",
+   "biogpt": "BioGptForTokenClassification",
+   "bloom": "BloomForTokenClassification",
+   "bros": "BrosForTokenClassification",
+   "camembert": "CamembertForTokenClassification",
+   "canine": "CanineForTokenClassification",
+   "convbert": "ConvBertForTokenClassification",
+   "data2vec-text": "Data2VecTextForTokenClassification",
+   "deberta": "DebertaForTokenClassification",
+   "deberta-v2": "DebertaV2ForTokenClassification",
+   "deepseek_v3": "DeepseekV3ForTokenClassification",
+   "diffllama": "DiffLlamaForTokenClassification",
+   "distilbert": "DistilBertForTokenClassification",
+   "electra": "ElectraForTokenClassification",
+   "ernie": "ErnieForTokenClassification",
+   "esm": "EsmForTokenClassification",
+   "esmc": "EsmcForTokenClassification",
+   "eurobert": "EuroBertForTokenClassification",
+   "exaone4": "Exaone4ForTokenClassification",
+   "falcon": "FalconForTokenClassification",
+   "flaubert": "FlaubertForTokenClassification",
+   "fnet": "FNetForTokenClassification",
+   "funnel": "FunnelForTokenClassification",
+   "gemma": "GemmaForTokenClassification",
+   "gemma2": "Gemma2ForTokenClassification",
+   "glm": "GlmForTokenClassification",
+   "glm4": "Glm4ForTokenClassification",
+   "gpt-sw3": "GPT2ForTokenClassification",
+   "gpt2": "GPT2ForTokenClassification",
+   "gpt_bigcode": "GPTBigCodeForTokenClassification",
+   "gpt_neo": "GPTNeoForTokenClassification",
+   "gpt_neox": "GPTNeoXForTokenClassification",
+   "gpt_oss": "GptOssForTokenClassification",
+   "helium": "HeliumForTokenClassification",
+   "ibert": "IBertForTokenClassification",
+   "jina_embeddings_v3": "JinaEmbeddingsV3ForTokenClassification",
+   "layoutlm": "LayoutLMForTokenClassification",
+   "layoutlmv2": "LayoutLMv2ForTokenClassification",
+   "layoutlmv3": "LayoutLMv3ForTokenClassification",
+   "lilt": "LiltForTokenClassification",
+   "llama": "LlamaForTokenClassification",
+   "longformer": "LongformerForTokenClassification",
+   "luke": "LukeForTokenClassification",
+   "markuplm": "MarkupLMForTokenClassification",
+   "megatron-bert": "MegatronBertForTokenClassification",
+   "minimax": "MiniMaxForTokenClassification",
+   "ministral": "MinistralForTokenClassification",
+   "ministral3": "Ministral3ForTokenClassification",
+   "mistral": "MistralForTokenClassification",
+   "mistral4": "Mistral4ForTokenClassification",
+   "mixtral": "MixtralForTokenClassification",
+   "mobilebert": "MobileBertForTokenClassification",
+   "modernbert": "ModernBertForTokenClassification",
+   "modernvbert": "ModernVBertForTokenClassification",
+   "mpnet": "MPNetForTokenClassification",
+   "mpt": "MptForTokenClassification",
+   "mra": "MraForTokenClassification",
+   "mt5": "MT5ForTokenClassification",
+   "nemotron": "NemotronForTokenClassification",
+   "nomic_bert": "NomicBertForTokenClassification",
+   "nystromformer": "NystromformerForTokenClassification",
+   "openai_privacy_filter": "OpenAIPrivacyFilterForTokenClassification",
+   "persimmon": "PersimmonForTokenClassification",
+   "phi": "PhiForTokenClassification",
+   "phi3": "Phi3ForTokenClassification",
+   "qwen2": "Qwen2ForTokenClassification",
+   "qwen2_moe": "Qwen2MoeForTokenClassification",
+   "qwen3": "Qwen3ForTokenClassification",
+   "qwen3_5": "Qwen3_5ForTokenClassification",
+   "qwen3_asr": "Qwen3ASRForTokenClassification",
+   "qwen3_moe": "Qwen3MoeForTokenClassification",
+   "qwen3_next": "Qwen3NextForTokenClassification",
+   "rembert": "RemBertForTokenClassification",
+   "roberta": "RobertaForTokenClassification",
+   "roberta-prelayernorm": "RobertaPreLayerNormForTokenClassification",
+   "roc_bert": "RoCBertForTokenClassification",
+   "roformer": "RoFormerForTokenClassification",
+   "seed_oss": "SeedOssForTokenClassification",
+   "smollm3": "SmolLM3ForTokenClassification",
+   "squeezebert": "SqueezeBertForTokenClassification",
+   "stablelm": "StableLmForTokenClassification",
+   "starcoder2": "Starcoder2ForTokenClassification",
+   "t5": "T5ForTokenClassification",
+   "t5gemma": "T5GemmaForTokenClassification",
+   "t5gemma2": "T5Gemma2ForTokenClassification",
+   "umt5": "UMT5ForTokenClassification",
+   "xlm": "XLMForTokenClassification",
+   "xlm-roberta": "XLMRobertaForTokenClassification",
+   "xlm-roberta-xl": "XLMRobertaXLForTokenClassification",
+   "xlnet": "XLNetForTokenClassification",
+   "xmod": "XmodForTokenClassification",
+   "yoso": "YosoForTokenClassification"
+  },
+  "MODEL_FOR_MULTIPLE_CHOICE_MAPPING_NAMES": {
+   "albert": "AlbertForMultipleChoice",
+   "bert": "BertForMultipleChoice",
+   "big_bird": "BigBirdForMultipleChoice",
+   "camembert": "CamembertForMultipleChoice",
+   "canine": "CanineForMultipleChoice",
+   "convbert": "ConvBertForMultipleChoice",
+   "data2vec-text": "Data2VecTextForMultipleChoice",
+   "deberta-v2": "DebertaV2ForMultipleChoice",
+   "distilbert": "DistilBertForMultipleChoice",
+   "electra": "ElectraForMultipleChoice",
+   "ernie": "ErnieForMultipleChoice",
+   "flaubert": "FlaubertForMultipleChoice",
+   "fnet": "FNetForMultipleChoice",
+   "funnel": "FunnelForMultipleChoice",
+   "ibert": "IBertForMultipleChoice",
+   "longformer": "LongformerForMultipleChoice",
+   "luke": "LukeForMultipleChoice",
+   "megatron-bert": "MegatronBertForMultipleChoice",
+   "mobilebert": "MobileBertForMultipleChoice",
+   "modernbert": "ModernBertForMultipleChoice",
+   "mpnet": "MPNetForMultipleChoice",
+   "mra": "MraForMultipleChoice",
+   "nystromformer": "NystromformerForMultipleChoice",
+   "rembert": "RemBertForMultipleChoice",
+   "roberta": "RobertaForMultipleChoice",
+   "roberta-prelayernorm": "RobertaPreLayerNormForMultipleChoice",
+   "roc_bert": "RoCBertForMultipleChoice",
+   "roformer": "RoFormerForMultipleChoice",
+   "squeezebert": "SqueezeBertForMultipleChoice",
+   "xlm": "XLMForMultipleChoice",
+   "xlm-roberta": "XLMRobertaForMultipleChoice",
+   "xlm-roberta-xl": "XLMRobertaXLForMultipleChoice",
+   "xlnet": "XLNetForMultipleChoice",
+   "xmod": "XmodForMultipleChoice",
+   "yoso": "YosoForMultipleChoice"
+  },
+  "MODEL_FOR_NEXT_SENTENCE_PREDICTION_MAPPING_NAMES": {
+   "bert": "BertForNextSentencePrediction",
+   "ernie": "ErnieForNextSentencePrediction",
+   "fnet": "FNetForNextSentencePrediction",
+   "megatron-bert": "MegatronBertForNextSentencePrediction",
+   "mobilebert": "MobileBertForNextSentencePrediction"
+  },
+  "MODEL_FOR_AUDIO_CLASSIFICATION_MAPPING_NAMES": {
+   "audio-spectrogram-transformer": "ASTForAudioClassification",
+   "data2vec-audio": "Data2VecAudioForSequenceClassification",
+   "hubert": "HubertForSequenceClassification",
+   "sew": "SEWForSequenceClassification",
+   "sew-d": "SEWDForSequenceClassification",
+   "unispeech": "UniSpeechForSequenceClassification",
+   "unispeech-sat": "UniSpeechSatForSequenceClassification",
+   "wav2vec2": "Wav2Vec2ForSequenceClassification",
+   "wav2vec2-bert": "Wav2Vec2BertForSequenceClassification",
+   "wav2vec2-conformer": "Wav2Vec2ConformerForSequenceClassification",
+   "wavlm": "WavLMForSequenceClassification",
+   "whisper": "WhisperForAudioClassification"
+  },
+  "MODEL_FOR_CTC_MAPPING_NAMES": {
+   "data2vec-audio": "Data2VecAudioForCTC",
+   "granite_speech5_ctc": "GraniteSpeech5ForCTC",
+   "hubert": "HubertForCTC",
+   "lasr_ctc": "LasrForCTC",
+   "parakeet_ctc": "ParakeetForCTC",
+   "sew": "SEWForCTC",
+   "sew-d": "SEWDForCTC",
+   "unispeech": "UniSpeechForCTC",
+   "unispeech-sat": "UniSpeechSatForCTC",
+   "wav2vec2": "Wav2Vec2ForCTC",
+   "wav2vec2-bert": "Wav2Vec2BertForCTC",
+   "wav2vec2-conformer": "Wav2Vec2ConformerForCTC",
+   "wavlm": "WavLMForCTC"
+  },
+  "MODEL_FOR_RNNT_MAPPING_NAMES": {
+   "nemotron3_5_asr": "Nemotron3_5AsrForRNNT",
+   "nemotron_asr_streaming": "NemotronAsrStreamingForRNNT",
+   "parakeet_rnnt": "ParakeetForRNNT"
+  },
+  "MODEL_FOR_TDT_MAPPING_NAMES": {
+   "parakeet_tdt": "ParakeetForTDT"
+  },
+  "MODEL_FOR_AUDIO_FRAME_CLASSIFICATION_MAPPING_NAMES": {
+   "data2vec-audio": "Data2VecAudioForAudioFrameClassification",
+   "unispeech-sat": "UniSpeechSatForAudioFrameClassification",
+   "wav2vec2": "Wav2Vec2ForAudioFrameClassification",
+   "wav2vec2-bert": "Wav2Vec2BertForAudioFrameClassification",
+   "wav2vec2-conformer": "Wav2Vec2ConformerForAudioFrameClassification",
+   "wavlm": "WavLMForAudioFrameClassification"
+  },
+  "MODEL_FOR_AUDIO_XVECTOR_MAPPING_NAMES": {
+   "data2vec-audio": "Data2VecAudioForXVector",
+   "unispeech-sat": "UniSpeechSatForXVector",
+   "wav2vec2": "Wav2Vec2ForXVector",
+   "wav2vec2-bert": "Wav2Vec2BertForXVector",
+   "wav2vec2-conformer": "Wav2Vec2ConformerForXVector",
+   "wavlm": "WavLMForXVector"
+  },
+  "MODEL_FOR_TEXT_TO_SPECTROGRAM_MAPPING_NAMES": {
+   "fastspeech2_conformer": "FastSpeech2ConformerModel",
+   "speecht5": "SpeechT5ForTextToSpeech"
+  },
+  "MODEL_FOR_TEXT_TO_WAVEFORM_MAPPING_NAMES": {
+   "bark": "BarkModel",
+   "csm": "CsmForConditionalGeneration",
+   "fastspeech2_conformer_with_hifigan": "FastSpeech2ConformerWithHifiGan",
+   "higgs_audio_v2": "HiggsAudioV2ForConditionalGeneration",
+   "musicgen": "MusicgenForConditionalGeneration",
+   "musicgen_melody": "MusicgenMelodyForConditionalGeneration",
+   "qwen2_5_omni": "Qwen2_5OmniForConditionalGeneration",
+   "qwen3_omni_moe": "Qwen3OmniMoeForConditionalGeneration",
+   "seamless_m4t": "SeamlessM4TForTextToSpeech",
+   "seamless_m4t_v2": "SeamlessM4Tv2ForTextToSpeech",
+   "vits": "VitsModel"
+  },
+  "MODEL_FOR_ZERO_SHOT_IMAGE_CLASSIFICATION_MAPPING_NAMES": {
+   "align": "AlignModel",
+   "altclip": "AltCLIPModel",
+   "blip": "BlipModel",
+   "blip-2": "Blip2ForImageTextRetrieval",
+   "chinese_clip": "ChineseCLIPModel",
+   "clip": "CLIPModel",
+   "clipseg": "CLIPSegModel",
+   "metaclip_2": "MetaClip2Model",
+   "siglip": "SiglipModel",
+   "siglip2": "Siglip2Model",
+   "tipsv2": "Tipsv2Model",
+   "videoprism": "VideoPrismClipModel"
+  },
+  "MODEL_FOR_BACKBONE_MAPPING_NAMES": {
+   "beit": "BeitBackbone",
+   "bit": "BitBackbone",
+   "convnext": "ConvNextBackbone",
+   "convnextv2": "ConvNextV2Backbone",
+   "dinat": "DinatBackbone",
+   "dinov2": "Dinov2Backbone",
+   "dinov2_with_registers": "Dinov2WithRegistersBackbone",
+   "dinov3_convnext": "DINOv3ConvNextBackbone",
+   "dinov3_vit": "DINOv3ViTBackbone",
+   "focalnet": "FocalNetBackbone",
+   "hgnet_v2": "HGNetV2Backbone",
+   "hiera": "HieraBackbone",
+   "lw_detr_vit": "LwDetrViTBackbone",
+   "maskformer-swin": "MaskFormerSwinBackbone",
+   "pixio": "PixioBackbone",
+   "pp_lcnet": "PPLCNetBackbone",
+   "pp_lcnet_v3": "PPLCNetV3Backbone",
+   "pp_lcnet_v4": "PPLCNetV4Backbone",
+   "pvt_v2": "PvtV2Backbone",
+   "resnet": "ResNetBackbone",
+   "rf_detr_dinov2": "RfDetrDinov2Backbone",
+   "rt_detr_resnet": "RTDetrResNetBackbone",
+   "sapiens2": "Sapiens2Backbone",
+   "swin": "SwinBackbone",
+   "swinv2": "Swinv2Backbone",
+   "textnet": "TextNetBackbone",
+   "timm_backbone": "TimmBackbone",
+   "tipsv2": "Tipsv2VisionBackbone",
+   "tipsv2_vision_model": "Tipsv2VisionBackbone",
+   "uvdoc_backbone": "UVDocBackbone",
+   "vitdet": "VitDetBackbone",
+   "vitpose_backbone": "VitPoseBackbone"
+  },
+  "MODEL_FOR_MASK_GENERATION_MAPPING_NAMES": {
+   "edgetam": "EdgeTamModel",
+   "edgetam_video": "EdgeTamModel",
+   "sam": "SamModel",
+   "sam2": "Sam2Model",
+   "sam2_video": "Sam2Model",
+   "sam3_tracker": "Sam3TrackerModel",
+   "sam3_video": "Sam3TrackerModel",
+   "sam_hq": "SamHQModel"
+  },
+  "MODEL_FOR_KEYPOINT_DETECTION_MAPPING_NAMES": {
+   "superpoint": "SuperPointForKeypointDetection"
+  },
+  "MODEL_FOR_KEYPOINT_MATCHING_MAPPING_NAMES": {
+   "efficientloftr": "EfficientLoFTRForKeypointMatching",
+   "lightglue": "LightGlueForKeypointMatching",
+   "superglue": "SuperGlueForKeypointMatching"
+  },
+  "MODEL_FOR_TEXT_ENCODING_MAPPING_NAMES": {
+   "albert": "AlbertModel",
+   "bert": "BertModel",
+   "big_bird": "BigBirdModel",
+   "clip_text_model": "CLIPTextModel",
+   "data2vec-text": "Data2VecTextModel",
+   "deberta": "DebertaModel",
+   "deberta-v2": "DebertaV2Model",
+   "distilbert": "DistilBertModel",
+   "electra": "ElectraModel",
+   "emu3": "Emu3TextModel",
+   "flaubert": "FlaubertModel",
+   "ibert": "IBertModel",
+   "llama4": "Llama4TextModel",
+   "longformer": "LongformerModel",
+   "mllama": "MllamaTextModel",
+   "mobilebert": "MobileBertModel",
+   "mt5": "MT5EncoderModel",
+   "nystromformer": "NystromformerModel",
+   "reformer": "ReformerModel",
+   "rembert": "RemBertModel",
+   "roberta": "RobertaModel",
+   "roberta-prelayernorm": "RobertaPreLayerNormModel",
+   "roc_bert": "RoCBertModel",
+   "roformer": "RoFormerModel",
+   "squeezebert": "SqueezeBertModel",
+   "t5": "T5EncoderModel",
+   "t5gemma": "T5GemmaEncoderModel",
+   "tipsv2_text_model": "Tipsv2TextModel",
+   "umt5": "UMT5EncoderModel",
+   "xlm": "XLMModel",
+   "xlm-roberta": "XLMRobertaModel",
+   "xlm-roberta-xl": "XLMRobertaXLModel"
+  },
+  "MODEL_FOR_TIME_SERIES_CLASSIFICATION_MAPPING_NAMES": {
+   "patchtsmixer": "PatchTSMixerForTimeSeriesClassification",
+   "patchtst": "PatchTSTForClassification"
+  },
+  "MODEL_FOR_TIME_SERIES_REGRESSION_MAPPING_NAMES": {
+   "patchtsmixer": "PatchTSMixerForRegression",
+   "patchtst": "PatchTSTForRegression"
+  },
+  "MODEL_FOR_TIME_SERIES_PREDICTION_MAPPING_NAMES": {
+   "timesfm": "TimesFmModelForPrediction",
+   "timesfm2_5": "TimesFm2_5ModelForPrediction"
+  },
+  "MODEL_FOR_IMAGE_TO_IMAGE_MAPPING_NAMES": {
+   "swin2sr": "Swin2SRForImageSuperResolution"
+  },
+  "MODEL_FOR_IMAGE_MATTING_MAPPING_NAMES": {
+   "sapiens2": "Sapiens2ForImageMatting",
+   "vitmatte": "VitMatteForImageMatting"
+  },
+  "MODEL_FOR_NORMAL_ESTIMATION_MAPPING_NAMES": {
+   "sapiens2": "Sapiens2ForNormalEstimation",
+   "tipsv2_dpt": "Tipsv2DptForNormalEstimation"
+  },
+  "MODEL_FOR_POINTMAP_ESTIMATION_MAPPING_NAMES": {
+   "sapiens2": "Sapiens2ForPointmapEstimation"
+  },
+  "MODEL_FOR_POSE_ESTIMATION_MAPPING_NAMES": {
+   "sapiens2": "Sapiens2ForPoseEstimation",
+   "vitpose": "VitPoseForPoseEstimation"
+  }
+ }
+}

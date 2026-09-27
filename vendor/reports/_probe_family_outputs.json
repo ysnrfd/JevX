@@ -1,0 +1,336 @@
+{
+  "bert": {
+    "cls": "BaseModelOutputWithPoolingAndCrossAttentions",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "roberta": {
+    "cls": "BaseModelOutputWithPoolingAndCrossAttentions",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "deberta_v2": {
+    "cls": "BaseModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "albert": {
+    "cls": "BaseModelOutputWithPooling",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "distilbert": {
+    "cls": "BaseModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "llama": {
+    "cls": "BaseModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "use_cache_true_has_pkv": true,
+    "pooler_attr": false
+  },
+  "qwen2": {
+    "cls": "BaseModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "use_cache_true_has_pkv": true,
+    "pooler_attr": false
+  },
+  "mistral": {
+    "cls": "BaseModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "use_cache_true_has_pkv": true,
+    "pooler_attr": false
+  },
+  "gemma": {
+    "cls": "BaseModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "use_cache_true_has_pkv": true,
+    "pooler_attr": false
+  },
+  "gpt2": {
+    "cls": "BaseModelOutputWithPastAndCrossAttentions",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "use_cache_true_has_pkv": true,
+    "pooler_attr": false
+  },
+  "phi3": {
+    "cls": "BaseModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3,
+    "pooler_attr": false
+  },
+  "t5": {
+    "cls": "Seq2SeqModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        5,
+        32
+      ],
+      "past_key_values": "EncoderDecoderCache",
+      "decoder_hidden_states": "tuple[2]",
+      "encoder_last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "encoder_hidden_states": "tuple[3]"
+    },
+    "enc_hs_len": 3,
+    "encoder_direct_equals_field": true,
+    "direct_encoder_cls": "BaseModelOutputWithPastAndCrossAttentions"
+  },
+  "bart": {
+    "cls": "Seq2SeqModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "past_key_values": "EncoderDecoderCache",
+      "decoder_hidden_states": "tuple[2]",
+      "encoder_last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "encoder_hidden_states": "tuple[3]"
+    },
+    "enc_hs_len": 3,
+    "encoder_direct_equals_field": true,
+    "direct_encoder_cls": "BaseModelOutput"
+  },
+  "whisper": {
+    "cls": "Seq2SeqModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        5,
+        32
+      ],
+      "past_key_values": "EncoderDecoderCache",
+      "decoder_hidden_states": "tuple",
+      "encoder_last_hidden_state": [
+        2,
+        1500,
+        32
+      ],
+      "encoder_hidden_states": "tuple"
+    },
+    "encoder_direct_equals_field": false,
+    "direct_encoder_cls": "BaseModelOutput",
+    "fixed": "pad mel to 3000, explicit decoder_input_ids"
+  },
+  "vit": {
+    "cls": "BaseModelOutputWithPooling",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        17,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "hs_len": 3
+  },
+  "clip": {
+    "text_cls": "BaseModelOutputWithPooling",
+    "text_fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "vision_cls": "BaseModelOutputWithPooling",
+    "vision_fields": {
+      "last_hidden_state": [
+        2,
+        17,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    }
+  },
+  "siglip": {
+    "text_cls": "BaseModelOutputWithPooling",
+    "text_fields": {
+      "last_hidden_state": [
+        2,
+        7,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    },
+    "vision_cls": "BaseModelOutputWithPooling",
+    "vision_fields": {
+      "last_hidden_state": [
+        2,
+        16,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple[3]"
+    }
+  },
+  "llava_next": {
+    "cls": "LlavaNextModelOutputWithPast",
+    "fields": {
+      "last_hidden_state": [
+        1,
+        6,
+        32
+      ]
+    },
+    "with_image_error": "RuntimeError: split_with_sizes expects split_sizes to sum exactly to 1 (input tensor's size at dimension 0), but got split_sizes=[2]"
+  },
+  "wav2vec2": {
+    "cls": "Wav2Vec2BaseModelOutput",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        10,
+        32
+      ],
+      "extract_features": [
+        2,
+        10,
+        32
+      ],
+      "hidden_states": "tuple[2]"
+    },
+    "hs_len": 2
+  },
+  "ast": {
+    "cls": "BaseModelOutputWithPooling",
+    "layout": "batch, frames, mel (per docstring: batch, max_length, num_mel_bins)",
+    "fields": {
+      "last_hidden_state": [
+        2,
+        5,
+        32
+      ],
+      "pooler_output": [
+        2,
+        32
+      ],
+      "hidden_states": "tuple"
+    }
+  }
+}

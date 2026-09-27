@@ -1,0 +1,256 @@
+{
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "stanfordnlp/sst2",
+    "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "question": "Is the sentiment of this review positive or negative?",
+    "options": [
+      "negative",
+      "positive"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "ablation_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 872,
+      "train_label_counts": {
+        "0": 1327,
+        "1": 1673
+      },
+      "cal_label_counts": {
+        "1": 558,
+        "0": 442
+      },
+      "test_label_counts": {
+        "1": 444,
+        "0": 428
+      },
+      "test_source": "official validation split (capped)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0
+    }
+  },
+  "experiment": "exp1",
+  "description": "JevX heads over frozen bert backbone (Mode A), 3 training seeds",
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "seed": 0,
+      "train_loss_first": 0.6509383111558062,
+      "train_loss_last": 0.5318359624832234,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.7121559381484985,
+        "macro_f1": 0.7112441835766765,
+        "nll": 0.5682681908503368,
+        "brier": 0.3866207808324665,
+        "ece": 0.03711711902410613,
+        "mce": 0.07187176796427952
+      },
+      "temperature": {
+        "accuracy": 0.7121559381484985,
+        "macro_f1": 0.7112441835766765,
+        "nll": 0.5653871950401941,
+        "brier": 0.38470753562654003,
+        "ece": 0.023263988213254767,
+        "mce": 0.047771120071411155
+      },
+      "isotonic": {
+        "accuracy": 0.7144495248794556,
+        "macro_f1": 0.7134694233045608,
+        "nll": 0.5716476881507532,
+        "brier": 0.3887898137920728,
+        "ece": 0.039724465630470045,
+        "mce": 0.6666666269302368
+      }
+    },
+    {
+      "seed": 1,
+      "train_loss_first": 0.693420982107203,
+      "train_loss_last": 0.524980919792297,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.6995412707328796,
+        "macro_f1": 0.6979140221714479,
+        "nll": 0.5784931825428551,
+        "brier": 0.39662419900528867,
+        "ece": 0.034609113332875314,
+        "mce": 0.07080116295656624
+      },
+      "temperature": {
+        "accuracy": 0.6995412707328796,
+        "macro_f1": 0.6979140221714479,
+        "nll": 0.5761093458505033,
+        "brier": 0.3946278861556436,
+        "ece": 0.02370673431715832,
+        "mce": 0.040800284147262555
+      },
+      "isotonic": {
+        "accuracy": 0.6788991093635559,
+        "macro_f1": 0.6771600236946771,
+        "nll": 0.5872220235751978,
+        "brier": 0.40250008123903913,
+        "ece": 0.04176711284239359,
+        "mce": 0.1203443706035614
+      }
+    },
+    {
+      "seed": 2,
+      "train_loss_first": 0.6388875987935574,
+      "train_loss_last": 0.5301833222521112,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.6915137767791748,
+        "macro_f1": 0.6901899925376584,
+        "nll": 0.5809657959433044,
+        "brier": 0.3986423210811332,
+        "ece": 0.024327174375910292,
+        "mce": 0.07233547882453817
+      },
+      "temperature": {
+        "accuracy": 0.6915137767791748,
+        "macro_f1": 0.6901899925376584,
+        "nll": 0.5809540402852537,
+        "brier": 0.39860468196432436,
+        "ece": 0.02322757866131059,
+        "mce": 0.0664335200989169
+      },
+      "isotonic": {
+        "accuracy": 0.6915137767791748,
+        "macro_f1": 0.6901899925376584,
+        "nll": 0.5832361815398238,
+        "brier": 0.3998872444183239,
+        "ece": 0.02746040127966379,
+        "mce": 0.09348523191043312
+      }
+    }
+  ],
+  "aggregate": {
+    "uncalibrated": {
+      "accuracy": {
+        "mean": 0.7010703285535177,
+        "std": 0.010405682095059456
+      },
+      "macro_f1": {
+        "mean": 0.6997827327619276,
+        "std": 0.01065076520866437
+      },
+      "nll": {
+        "mean": 0.5759090564454987,
+        "std": 0.006731684376106644
+      },
+      "brier": {
+        "mean": 0.39396243363962946,
+        "std": 0.0064376318342963335
+      },
+      "ece": {
+        "mean": 0.03201780224429725,
+        "std": 0.006777303364489381
+      },
+      "mce": {
+        "mean": 0.07166946991512797,
+        "std": 0.000786908299101935
+      }
+    },
+    "temperature": {
+      "accuracy": {
+        "mean": 0.7010703285535177,
+        "std": 0.010405682095059456
+      },
+      "macro_f1": {
+        "mean": 0.6997827327619276,
+        "std": 0.01065076520866437
+      },
+      "nll": {
+        "mean": 0.5741501937253171,
+        "std": 0.007966202075526644
+      },
+      "brier": {
+        "mean": 0.392646701248836,
+        "std": 0.007157268285433329
+      },
+      "ece": {
+        "mean": 0.02339943373057456,
+        "std": 0.0002667520417058453
+      },
+      "mce": {
+        "mean": 0.051668308105863536,
+        "std": 0.013253556212209812
+      }
+    },
+    "isotonic": {
+      "accuracy": {
+        "mean": 0.6949541370073954,
+        "std": 0.018023181453706266
+      },
+      "macro_f1": {
+        "mean": 0.6936064798456321,
+        "std": 0.018394222303530904
+      },
+      "nll": {
+        "mean": 0.5807019644219249,
+        "std": 0.008090529851546596
+      },
+      "brier": {
+        "mean": 0.3970590464831452,
+        "std": 0.007279552598700543
+      },
+      "ece": {
+        "mean": 0.03631732658417581,
+        "std": 0.007738019533147594
+      },
+      "mce": {
+        "mean": 0.2934987431480771,
+        "std": 0.32345178226078114
+      }
+    }
+  },
+  "featurized_vs_full_model": [
+    {
+      "n": 16,
+      "max_abs_diff": 2.384185791015625e-06,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    },
+    {
+      "n": 16,
+      "max_abs_diff": 2.6226043701171875e-06,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    },
+    {
+      "n": 16,
+      "max_abs_diff": 9.5367431640625e-07,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    }
+  ],
+  "wall_time_s": 37.63
+}

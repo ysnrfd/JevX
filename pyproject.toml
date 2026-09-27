@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jevx"
+# Single literal (NOT dynamic): tests/unit/test_version_consistency.py reads this
+# with tomllib and enforces it against jevx.__version__,
+# jevx.modeling_jevx.__version__ and JevXConfig().version.
+version = "0.1.0"
+description = "Typed probabilistic decision layer over Hugging Face Transformers"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+# Only interpreter this tree has been executed on is CPython 3.14.3.
+# Syntax floor is >=3.11 (from typing import Self in jevx/calibration/*);
+# no 3.12+ exclusive syntax was found, but nothing below 3.14 is tested.
+requires-python = ">=3.14"
+authors = [{ name = "ysnrfd" }]
+keywords = ["decision models", "transformers", "calibration"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Direct imports of the jevx/ package (verified by scanning all 53 .py files):
+#   torch (adapters, decoder, base, ...), transformers (modeling_jevx, auto,
+#   capabilities/detector, conversion, configuration_jevx),
+#   huggingface_hub (configuration_jevx: from huggingface_hub.dataclasses import
+#   strict), numpy (imported by tests/benchmarks/examples; pulled in by
+#   transformers anyway). tokenizers/safetensors are NOT imported directly by
+#   jevx/ (safetensors only appears in comments), so they come via transformers
+#   and are not double-declared.
+dependencies = [
+    "torch",
+    "transformers",
+    "numpy",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+# Flat layout: the jevx/ package lives at the repository root. The include
+# filter excludes tests/, vendor/, examples/ and benchmarks/ from the wheel.
+# jevx/ ships no non-.py files, so no [tool.setuptools.package-data] is needed.
+[tool.setuptools.packages.find]
+include = ["jevx*"]

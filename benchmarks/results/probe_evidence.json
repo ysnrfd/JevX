@@ -1,0 +1,25 @@
+{
+  "b3_distilgpt2_probe": {
+    "started": 1790248948.4685977,
+    "tokenizer": "ok",
+    "cand_tokens": {
+      " positive": [
+        3967
+      ],
+      " negative": [
+        4633
+      ]
+    },
+    "model": "ok",
+    "load_s": 13.9,
+    "params": 81912576,
+    "batch4_ms": 1660.5,
+    "status": "ok"
+  },
+  "head_init_seed_probe": {
+    "same_seed_identical": true,
+    "diff_seed_different": true,
+    "n_head_tensors": 31,
+    "status": "ok"
+  }
+}

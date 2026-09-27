@@ -1,0 +1,279 @@
+{
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "stanfordnlp/sst2",
+    "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "question": "Is the sentiment of this review positive or negative?",
+    "options": [
+      "negative",
+      "positive"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "ablation_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 872,
+      "train_label_counts": {
+        "0": 1327,
+        "1": 1673
+      },
+      "cal_label_counts": {
+        "1": 558,
+        "0": 442
+      },
+      "test_label_counts": {
+        "1": 444,
+        "0": 428
+      },
+      "test_source": "official validation split (capped)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0
+    }
+  },
+  "experiment": "exp2",
+  "description": "baselines: B1 linear probe, B2 MLP, B4=B1+temperature, B3 generative; latency",
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "seed": 0,
+      "b1_linear": {
+        "accuracy": 0.7075688242912292,
+        "macro_f1": 0.7074822504239244,
+        "nll": 0.5764478381532016,
+        "brier": 0.39252782392322316,
+        "ece": 0.01913719063778536,
+        "mce": 0.06030511374425407
+      },
+      "b1_temperature": {
+        "accuracy": 0.7075688242912292,
+        "macro_f1": 0.7074822504239244,
+        "nll": 0.5766613166845854,
+        "brier": 0.39250525632283273,
+        "ece": 0.0254666402662566,
+        "mce": 0.04908970894852305
+      },
+      "b2_mlp": {
+        "accuracy": 0.7064220309257507,
+        "macro_f1": 0.7064204739735396,
+        "nll": 0.5802996191235229,
+        "brier": 0.39540928089047617,
+        "ece": 0.040956219606990106,
+        "mce": 0.10645090490579612
+      }
+    },
+    {
+      "seed": 1,
+      "b1_linear": {
+        "accuracy": 0.6972476840019226,
+        "macro_f1": 0.6972333720875179,
+        "nll": 0.5805514700416518,
+        "brier": 0.39511109672699607,
+        "ece": 0.03654221465828219,
+        "mce": 0.052832672993342045
+      },
+      "b1_temperature": {
+        "accuracy": 0.6972476840019226,
+        "macro_f1": 0.6972333720875179,
+        "nll": 0.5814910673153473,
+        "brier": 0.39515532115563257,
+        "ece": 0.03809287460572128,
+        "mce": 0.0814200096270617
+      },
+      "b2_mlp": {
+        "accuracy": 0.7144495248794556,
+        "macro_f1": 0.7142838344454782,
+        "nll": 0.576647392416753,
+        "brier": 0.3919587248700258,
+        "ece": 0.051082572874126084,
+        "mce": 0.10641008400702257
+      }
+    },
+    {
+      "seed": 2,
+      "b1_linear": {
+        "accuracy": 0.6961008906364441,
+        "macro_f1": 0.695610537449994,
+        "nll": 0.5749550929696016,
+        "brier": 0.39194260878442777,
+        "ece": 0.03008580433392742,
+        "mce": 0.0903793673415284
+      },
+      "b1_temperature": {
+        "accuracy": 0.6961008906364441,
+        "macro_f1": 0.695610537449994,
+        "nll": 0.5749515871100611,
+        "brier": 0.3919554806594853,
+        "ece": 0.02368051770630232,
+        "mce": 0.07071117394500315
+      },
+      "b2_mlp": {
+        "accuracy": 0.7064220309257507,
+        "macro_f1": 0.7058634411152397,
+        "nll": 0.5847496376925406,
+        "brier": 0.39625184541940717,
+        "ece": 0.041469015044356704,
+        "mce": 0.07258415952020769
+      }
+    }
+  ],
+  "aggregate": {
+    "b1_linear": {
+      "accuracy": {
+        "mean": 0.7003057996431986,
+        "std": 0.006316045363532579
+      },
+      "macro_f1": {
+        "mean": 0.7001087199871455,
+        "std": 0.006437011060404227
+      },
+      "nll": {
+        "mean": 0.577318133721485,
+        "std": 0.0028979164696851683
+      },
+      "brier": {
+        "mean": 0.3931938431448823,
+        "std": 0.0016859760268950416
+      },
+      "ece": {
+        "mean": 0.028588403209998323,
+        "std": 0.008798600620722366
+      },
+      "mce": {
+        "mean": 0.06783905135970818,
+        "std": 0.01987482644236669
+      }
+    },
+    "b1_temperature": {
+      "accuracy": {
+        "mean": 0.7003057996431986,
+        "std": 0.006316045363532579
+      },
+      "macro_f1": {
+        "mean": 0.7001087199871455,
+        "std": 0.006437011060404227
+      },
+      "nll": {
+        "mean": 0.5777013237033312,
+        "std": 0.0033915204979644248
+      },
+      "brier": {
+        "mean": 0.3932053527126502,
+        "std": 0.0017109488643651972
+      },
+      "ece": {
+        "mean": 0.02908001085942673,
+        "std": 0.007856293218289864
+      },
+      "mce": {
+        "mean": 0.06707363084019596,
+        "std": 0.01646924027909839
+      }
+    },
+    "b2_mlp": {
+      "accuracy": {
+        "mean": 0.7090978622436523,
+        "std": 0.004634675795089579
+      },
+      "macro_f1": {
+        "mean": 0.7088559165114191,
+        "std": 0.004708958613692213
+      },
+      "nll": {
+        "mean": 0.5805655497442722,
+        "std": 0.004057663607119839
+      },
+      "brier": {
+        "mean": 0.394539950393303,
+        "std": 0.0022747577119039664
+      },
+      "ece": {
+        "mean": 0.04450260250849097,
+        "std": 0.0057041868219425695
+      },
+      "mce": {
+        "mean": 0.09514838281100879,
+        "std": 0.019541201245683242
+      }
+    }
+  },
+  "b3_generative": {
+    "status": "run",
+    "model_id": "distilgpt2",
+    "template": "Review: {text}\\nSentiment: + next-token logit of ' negative'/' positive'",
+    "zero_shot": {
+      "accuracy": 0.6169725060462952,
+      "macro_f1": 0.5978814939995913,
+      "nll": 0.6537347829996132,
+      "brier": 0.46190465947326426,
+      "ece": 0.023504202997465765,
+      "mce": 0.8778912425041199
+    },
+    "temperature_calibrated": {
+      "accuracy": 0.6169725060462952,
+      "macro_f1": 0.5978814939995913,
+      "nll": 0.6803845650611958,
+      "brier": 0.47967825455593144,
+      "ece": 0.09330521667495782,
+      "mce": 0.17528441734611988
+    },
+    "wall_time_s": 304.19,
+    "note": "B3 is a DIFFERENT (generative, 82M) backbone used zero-shot - reported for reference, not a same-backbone comparison"
+  },
+  "latency": {
+    "status": "run",
+    "protocol": "batch=1, warmup 10, mean over timed iters; noisy host (concurrent agents) -> std reported",
+    "jevx_choice_single_text_repeated": {
+      "mean_ms": 12.256070999719668,
+      "std_ms": 2.2350114718774683,
+      "min_ms": 8.104299995466135,
+      "max_ms": 21.01720000791829,
+      "warmup": 10,
+      "iters": 100
+    },
+    "jevx_choice_over_test_texts": {
+      "mean_ms": 14.27192000031937,
+      "std_ms": 3.682034374119887,
+      "n_texts": 100
+    },
+    "b1_linear_head_only": {
+      "mean_ms": 0.10821099873282947,
+      "std_ms": 0.09256679044755965,
+      "min_ms": 0.06429999484680593,
+      "max_ms": 0.7511000003432855,
+      "warmup": 10,
+      "iters": 100
+    },
+    "note": "JevX number includes tokenization + backbone + heads; B1 head-only number is heads alone on cached features (the backbone cost is shared and already paid in featurize)"
+  },
+  "wall_time_s": 317.27
+}

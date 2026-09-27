@@ -1,0 +1,292 @@
+{
+  "experiment": "exp6b",
+  "description": "learned confidence (MEASURED) on the SST-2 EXP-6 setup; all five methods computed on the same test logits (SINGLE SEED)",
+  "n_seeds": 1,
+  "seed": 0,
+  "protocol": {
+    "head_training": "identical to run_quality.run_exp6: HeadTrainer + choice_loss, 4 epochs, lr 0.001, batch 64, seed 0, featurize-once features",
+    "learned_fit_split": "CALIBRATION split only (n=1000)",
+    "learned_targets": "1[argmax(cal_logits) == cal_label] (cal correctness)",
+    "learned_inputs": "[fused(128) ; max_prob ; 1-H/logK ; margin]",
+    "learned_module": "ConfidenceEngine(\"learned\", fused_dim=128, hidden_size=32) -> MLP 131->32(tanh)->1->sigmoid",
+    "learned_loss": "BCE(sigmoid_output, correctness)",
+    "learned_optimizer": "Adam lr=0.001",
+    "learned_epochs": 100,
+    "learned_batch_size": 64,
+    "learned_seed": 0,
+    "learned_shuffle": "torch.Generator().manual_seed(seed) per epoch permutation",
+    "test_usage": "final metrics only; never fit, never tuned, no early stopping"
+  },
+  "learned_training": {
+    "bce_first_epoch": 0.6416374402046203,
+    "bce_last_epoch": 0.5158527250289917,
+    "bce_by_epoch": [
+      0.6416374402046203,
+      0.5983443169593811,
+      0.5919469494819641,
+      0.5869012637138367,
+      0.5817171602249146,
+      0.5769229097366333,
+      0.5725016312599183,
+      0.5691888313293457,
+      0.564192063331604,
+      0.5634016027450561,
+      0.556666651725769,
+      0.553806821346283,
+      0.5505253369808197,
+      0.5495499043464661,
+      0.5455280575752258,
+      0.5445410871505737,
+      0.5426581239700318,
+      0.5404078631401062,
+      0.5382285020351409,
+      0.5381821179389954,
+      0.5375426859855652,
+      0.5375231313705444,
+      0.5381570754051208,
+      0.5347659225463868,
+      0.5321227033138275,
+      0.5314398546218873,
+      0.5325760812759399,
+      0.5300302157402038,
+      0.5290208625793457,
+      0.5299087681770325,
+      0.5279521446228027,
+      0.5313740022182465,
+      0.5270029146671296,
+      0.5269288034439087,
+      0.5287238411903381,
+      0.5272725884914398,
+      0.5248699131011962,
+      0.5249236631393432,
+      0.5251896476745606,
+      0.5226041741371155,
+      0.5229387435913085,
+      0.5233127732276917,
+      0.5215702810287476,
+      0.5220315060615539,
+      0.5220024709701538,
+      0.5261129159927368,
+      0.5198164224624634,
+      0.5204968338012695,
+      0.5209775407314301,
+      0.5205912630558014,
+      0.5210795288085938,
+      0.5184081616401672,
+      0.5211913220882416,
+      0.5197120184898376,
+      0.5200162334442139,
+      0.5188263559341431,
+      0.5189255714416504,
+      0.5185914816856384,
+      0.5177942581176758,
+      0.5171921639442444,
+      0.5211162962913514,
+      0.5156747517585755,
+      0.5185501894950867,
+      0.5173583974838257,
+      0.5149428191184997,
+      0.5135073447227478,
+      0.5147956638336182,
+      0.5138246560096741,
+      0.5142992539405823,
+      0.5134551634788513,
+      0.5123467726707458,
+      0.5134416155815125,
+      0.5147561259269714,
+      0.5117306880950928,
+      0.5148093810081482,
+      0.5118709645271301,
+      0.5166517968177795,
+      0.5120408034324646,
+      0.5126697187423706,
+      0.5117391953468323,
+      0.5149569520950318,
+      0.5111505794525146,
+      0.5092141528129578,
+      0.5100213875770568,
+      0.5097161936759949,
+      0.5087053098678589,
+      0.5178442628383636,
+      0.5070587320327758,
+      0.5107654824256896,
+      0.5113233015537262,
+      0.5064809098243713,
+      0.5080711498260498,
+      0.5093897275924683,
+      0.5068979249000549,
+      0.5055919437408447,
+      0.5066060900688172,
+      0.5067228126525879,
+      0.5049361248016357,
+      0.5037429356575012,
+      0.5158527250289917
+    ],
+    "learned_params": 4257,
+    "fused_dim": 128
+  },
+  "head_training": {
+    "train_loss_first": 0.6509383111558062,
+    "train_loss_last": 0.5318359624832234,
+    "test_accuracy": 0.7121559633027523,
+    "equivalence_check": {
+      "n": 16,
+      "max_abs_diff": 2.384185791015625e-06,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    }
+  },
+  "cal_split_diagnostic": {
+    "note": "in-sample for `learned` (it was fit on cal); recorded for transparency only - the reported comparison is test-side",
+    "learned": {
+      "ece_of_confidence": 0.04781308320164681,
+      "aurc": 0.14587067067623138,
+      "coverage_at_risk_0.1": 0.23199999332427979,
+      "coverage_at_risk_0.2": 0.8059999942779541,
+      "conf_mean": 0.7062361644804478,
+      "conf_std": 0.1916139394774124
+    }
+  },
+  "results": {
+    "max_probability": {
+      "ece_of_confidence": 0.03711711902410613,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.73830182679476,
+      "conf_std": 0.1240332274425131
+    },
+    "margin": {
+      "ece_of_confidence": 0.2355523106018338,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.47660365270091853,
+      "conf_std": 0.2480664529182931
+    },
+    "entropy": {
+      "ece_of_confidence": 0.47944600660357256,
+      "aurc": 0.18370488286018372,
+      "coverage_at_risk_0.1": 0.16743119060993195,
+      "coverage_at_risk_0.2": 0.4931192696094513,
+      "conf_mean": 0.23270995669917985,
+      "conf_std": 0.2117375793867645
+    },
+    "energy": {
+      "ece_of_confidence": 0.343289704457216,
+      "aurc": 0.2897665500640869,
+      "coverage_at_risk_0.1": 0.0,
+      "coverage_at_risk_0.2": 0.06995412707328796,
+      "conf_mean": 0.37800874216524766,
+      "conf_std": 0.1502303638346958
+    },
+    "learned": {
+      "ece_of_confidence": 0.0910185244139455,
+      "aurc": 0.19826775789260864,
+      "coverage_at_risk_0.1": 0.1571100950241089,
+      "coverage_at_risk_0.2": 0.4483945071697235,
+      "conf_mean": 0.6553581959029676,
+      "conf_std": 0.19639870001323578
+    }
+  },
+  "rank_by_ece_of_confidence": [
+    "max_probability",
+    "learned",
+    "margin",
+    "energy",
+    "entropy"
+  ],
+  "rank_by_aurc": [
+    "max_probability",
+    "margin",
+    "entropy",
+    "learned",
+    "energy"
+  ],
+  "rank_by_coverage_at_risk_0.1": [
+    "max_probability",
+    "margin",
+    "entropy",
+    "learned",
+    "energy"
+  ],
+  "pairing_check_vs_exp6": {
+    "source_json": "exp6_confidence.json",
+    "status": "run",
+    "max_abs_diff_by_method": {
+      "max_probability": 0.0,
+      "margin": 0.0,
+      "entropy": 0.0,
+      "energy": 0.0
+    },
+    "all_baselines_reproduced_exactly": true,
+    "note": "each method's 6 fields compared against exp6_confidence.json; 0.0 means this re-run reproduced the published EXP-6 row bit-for-bit (same seeds, same recipe)"
+  },
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "stanfordnlp/sst2",
+    "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "question": "Is the sentiment of this review positive or negative?",
+    "options": [
+      "negative",
+      "positive"
+    ],
+    "seeds": [
+      0
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "ablation_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 872,
+      "train_label_counts": {
+        "0": 1327,
+        "1": 1673
+      },
+      "cal_label_counts": {
+        "1": 558,
+        "0": 442
+      },
+      "test_label_counts": {
+        "1": 444,
+        "0": 428
+      },
+      "test_source": "official validation split (capped)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0
+    },
+    "context_timings_s": {
+      "load_dataset_s": 12.01,
+      "load_backbone_s": 4.54,
+      "featurize_all_splits_s": 6.63,
+      "train_and_collect_s": 11.58,
+      "train_learned_s": 5.31
+    },
+    "platform": "Windows-11-10.0.26100-SP0"
+  },
+  "wall_time_s": 40.31
+}

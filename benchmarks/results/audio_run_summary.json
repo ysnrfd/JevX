@@ -1,0 +1,18 @@
+{
+  "modality": "audio",
+  "failures": {},
+  "context_timings_s": {
+    "load_dataset_s": 3.99,
+    "load_backbone_s": 23.0,
+    "featurize_all_splits_s": 2594.68
+  },
+  "total_wall_s": 3111.21,
+  "invariants": {
+    "n_batches_checked": 108,
+    "max_prob_sum_abs_dev": 2.384185791015625e-07,
+    "min_prob": 1.033811827255704e-06,
+    "max_prob": 0.6182277202606201,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "smoke": false
+}

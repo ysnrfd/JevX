@@ -1,0 +1,322 @@
+{
+  "provenance": {
+    "modality": "vision",
+    "backbone_id": "facebook/deit-tiny-patch16-224",
+    "backbone_revision_api": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_revision_loaded": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_params": 5561472,
+    "dataset": {
+      "dataset_id": "frgfm/imagenette",
+      "dataset_revision": "a8a496123b40fa739da2acf9b0dae339d30c7bae",
+      "config": "imagenette2-160",
+      "archive": {
+        "url": "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz",
+        "cached": true,
+        "bytes": 99003388,
+        "sha256": "64d0c4859f35a461889e0147755a999a48b49bf38a7e0f9bd27003f10db02fe5",
+        "etag": null
+      },
+      "metadata_train": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/train.txt",
+        "bytes": 499691,
+        "sha256": "971de5a44d69360ebb362bc104887995be67e4cdefdec3d2c51762073b549967"
+      },
+      "metadata_val": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/val.txt",
+        "bytes": 199182,
+        "sha256": "fb0f7c7d9eb125e0fb69d30fc3a2da29d836b080c0a3f61f9e59a09f65ce0221"
+      },
+      "archive_members_indexed": {
+        "train": 9469,
+        "val": 3925,
+        "unmatched": 0
+      }
+    },
+    "question": "Which category does this image belong to?",
+    "options": [
+      "tench",
+      "English springer",
+      "cassette player",
+      "chain saw",
+      "church",
+      "French horn",
+      "garbage truck",
+      "gas pump",
+      "golf ball",
+      "parachute"
+    ],
+    "pooling": "pooling_method='cls' (adapter default = masked_mean); vision: 'cls' because the deit checkpoint has no trained pooler (load report: pooler.dense.* MISSING)",
+    "decision_hidden_size": 192,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 8,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": null
+    },
+    "splits": {
+      "train_n": 800,
+      "cal_n": 300,
+      "test_n": 500,
+      "train_label_counts": {
+        "6": 81,
+        "9": 81,
+        "4": 80,
+        "2": 84,
+        "5": 81,
+        "8": 80,
+        "3": 72,
+        "1": 81,
+        "0": 81,
+        "7": 79
+      },
+      "cal_label_counts": {
+        "0": 31,
+        "2": 32,
+        "8": 30,
+        "9": 30,
+        "1": 30,
+        "4": 30,
+        "7": 30,
+        "6": 30,
+        "5": 30,
+        "3": 27
+      },
+      "test_label_counts": {
+        "2": 46,
+        "1": 50,
+        "6": 50,
+        "4": 52,
+        "9": 50,
+        "3": 49,
+        "0": 49,
+        "7": 53,
+        "5": 50,
+        "8": 51
+      },
+      "train_source": "stratified carve from official train split (disjoint, seed=0)",
+      "test_source": "official validation split, stratified subsample (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "train_loss_first": 0.725466388080699,
+      "train_loss_last": 0.19396947850383675,
+      "trainable_params": 2018497,
+      "uncalibrated": {
+        "accuracy": 0.8899999856948853,
+        "macro_f1": 0.8914378667248608,
+        "nll": 0.7376308080171816,
+        "brier": 0.18264840804618562,
+        "ece": 0.08982899713516238,
+        "mce": 0.5196987390518188
+      },
+      "temperature": {
+        "accuracy": 0.8899999856948853,
+        "macro_f1": 0.8914378667248608,
+        "nll": 0.3568816069271426,
+        "brier": 0.1561791288492361,
+        "ece": 0.028483477234840408,
+        "mce": 0.386655330657959
+      },
+      "isotonic": {
+        "accuracy": 0.8899999856948853,
+        "macro_f1": 0.8922111987138379,
+        "nll": 0.6680945458289214,
+        "brier": 0.16284863171546196,
+        "ece": 0.03427541315555567,
+        "mce": 0.2579757708769578
+      }
+    },
+    {
+      "seed": 1,
+      "train_loss_first": 0.6894511511692634,
+      "train_loss_last": 0.04213436979681809,
+      "trainable_params": 2018497,
+      "uncalibrated": {
+        "accuracy": 0.9380000233650208,
+        "macro_f1": 0.9385882399035388,
+        "nll": 0.500700401208689,
+        "brier": 0.11029020844861319,
+        "ece": 0.05180213934183122,
+        "mce": 0.5218460410833359
+      },
+      "temperature": {
+        "accuracy": 0.9380000233650208,
+        "macro_f1": 0.9385882399035388,
+        "nll": 0.23196969839484563,
+        "brier": 0.09579468641213065,
+        "ece": 0.014161796391010327,
+        "mce": 0.6167015582323074
+      },
+      "isotonic": {
+        "accuracy": 0.9419999718666077,
+        "macro_f1": 0.9421951174173117,
+        "nll": 0.4499162230600828,
+        "brier": 0.10152904065883972,
+        "ece": 0.024397661149501777,
+        "mce": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "train_loss_first": 0.7305047821540099,
+      "train_loss_last": 0.1146207571728155,
+      "trainable_params": 2018497,
+      "uncalibrated": {
+        "accuracy": 0.8980000019073486,
+        "macro_f1": 0.9022001637074698,
+        "nll": 0.659366211921035,
+        "brier": 0.1693842054226201,
+        "ece": 0.079034386575222,
+        "mce": 0.6284773349761963
+      },
+      "temperature": {
+        "accuracy": 0.8980000019073486,
+        "macro_f1": 0.9022001637074698,
+        "nll": 0.3085345267759442,
+        "brier": 0.14020902408060607,
+        "ece": 0.01958838790655134,
+        "mce": 0.43748877942562103
+      },
+      "isotonic": {
+        "accuracy": 0.9039999842643738,
+        "macro_f1": 0.9082231416731338,
+        "nll": 0.6489348548469411,
+        "brier": 0.15206568833877163,
+        "ece": 0.029055902481079143,
+        "mce": 0.6456642150878906
+      }
+    }
+  ],
+  "aggregate": {
+    "uncalibrated": {
+      "accuracy": {
+        "mean": 0.9086666703224182,
+        "std": 0.025716420151167794
+      },
+      "macro_f1": {
+        "mean": 0.9107420901119565,
+        "std": 0.024708557277730702
+      },
+      "nll": {
+        "mean": 0.6325658070489685,
+        "std": 0.12071744154673535
+      },
+      "brier": {
+        "mean": 0.1541076073058063,
+        "std": 0.038522176726757174
+      },
+      "ece": {
+        "mean": 0.07355517435073854,
+        "std": 0.01959660183193133
+      },
+      "mce": {
+        "mean": 0.5566740383704504,
+        "std": 0.062192746997485046
+      }
+    },
+    "temperature": {
+      "accuracy": {
+        "mean": 0.9086666703224182,
+        "std": 0.025716420151167794
+      },
+      "macro_f1": {
+        "mean": 0.9107420901119565,
+        "std": 0.024708557277730702
+      },
+      "nll": {
+        "mean": 0.2991286106993108,
+        "std": 0.06298491618019138
+      },
+      "brier": {
+        "mean": 0.13072761311399095,
+        "std": 0.03128886523267363
+      },
+      "ece": {
+        "mean": 0.020744553844134025,
+        "std": 0.00723050311558969
+      },
+      "mce": {
+        "mean": 0.48028188943862915,
+        "std": 0.12084599457051232
+      }
+    },
+    "isotonic": {
+      "accuracy": {
+        "mean": 0.9119999806086222,
+        "std": 0.026907240597947274
+      },
+      "macro_f1": {
+        "mean": 0.9142098192680944,
+        "std": 0.02552407223991444
+      },
+      "nll": {
+        "mean": 0.5889818745786485,
+        "std": 0.12081479633655638
+      },
+      "brier": {
+        "mean": 0.13881445357102443,
+        "std": 0.03273712692021569
+      },
+      "ece": {
+        "mean": 0.02924299226204553,
+        "std": 0.004941532971951312
+      },
+      "mce": {
+        "mean": 0.46787999532161617,
+        "std": 0.19582990953651067
+      }
+    }
+  },
+  "equivalence": [
+    {
+      "seed": 0,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 1,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 2,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    }
+  ],
+  "invariants": {
+    "n_batches_checked": 39,
+    "max_prob_sum_abs_dev": 2.384185791015625e-07,
+    "min_prob": 2.930815738135355e-40,
+    "max_prob": 1.0,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "wall_s": 214.91
+}

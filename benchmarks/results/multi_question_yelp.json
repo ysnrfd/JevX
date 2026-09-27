@@ -1,0 +1,3928 @@
+{
+  "dataset": "yelp",
+  "phase": "grid",
+  "status": "OK",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 1,
+    "cuda_available": false,
+    "dtype": "float32",
+    "torch_threads_set_to": 1,
+    "loadavg": null
+  },
+  "protocol": {
+    "epochs": 2,
+    "lr": 0.001,
+    "batch_size": 64,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "arms": [
+      "full",
+      "off",
+      "state_only",
+      "p1_linear",
+      "p2_mlp"
+    ],
+    "split_seed": 0,
+    "n_bins": 15,
+    "backbone": "google/bert_uncased_L-2_H-128_A-2",
+    "featurize": {
+      "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+      "backbone_revision": null,
+      "pooling": "cls",
+      "fusion": "concat",
+      "max_length": 128,
+      "feature_dim": 128,
+      "featurize_wall_s": 51.14,
+      "featurize_once": true,
+      "pool": {
+        "pool_size": 6000,
+        "n_rows_loaded": 650000
+      },
+      "pool_cap": 6000,
+      "pool_rule": "bc.stratified_indices(labels, 6000, seed=0)"
+    },
+    "one_question_per_batch": true,
+    "one_question_per_batch_justification": "JevXForDecision.forward shares one question across the state batch, so a batch is a set of states asking the SAME question; the option count is therefore uniform and no padded option column is produced. --phase shared-state shows the m-question call agrees with the per-question calls to float32 re-association with identical argmax, so this protocol is the same computation as the genuine multi-question forward.",
+    "head_init": "every arm starts from bitwise-identical head weights (torch.manual_seed(1234) before the wrapper is built)",
+    "split_sizes_used": {
+      "train": 1500,
+      "cal": 500,
+      "test": 1000
+    },
+    "split_caps_contract": {
+      "train": 3000,
+      "cal": 1000,
+      "test": 1500
+    },
+    "split_sizes_within_contract": true,
+    "head_hidden": 128,
+    "head_hidden_is_feature_width": true,
+    "head_hidden_deviation": null
+  },
+  "counts": {
+    "n_states": 6000,
+    "feature_dim": 128,
+    "modality": "text",
+    "n_question_groups": 2,
+    "questions": [
+      {
+        "name": "yelp_stars",
+        "text": "How many stars did this reviewer give?",
+        "options": [
+          "1 star",
+          "2 stars",
+          "3 stars",
+          "4 stars",
+          "5 stars"
+        ],
+        "num_options": 5,
+        "label_provenance": "REAL",
+        "provenance_reason": "the 5-way star rating is Yelp's own label field.",
+        "n_distinct_question_strings": 1,
+        "n_labeled_pairs": {
+          "train": 0,
+          "cal": 0,
+          "test": 0
+        }
+      },
+      {
+        "name": "yelp_detractor",
+        "text": "Is this a 1-star detractor review?",
+        "options": [
+          "no",
+          "yes"
+        ],
+        "num_options": 2,
+        "label_provenance": "DERIVED",
+        "provenance_reason": "deterministic rule: stars == 1. The brief calls this real; it is a threshold on a REAL dataset label, so it is recorded here as DERIVED-from-a-real-label, which is the distinction that matters.",
+        "n_distinct_question_strings": 1,
+        "n_labeled_pairs": {
+          "train": 0,
+          "cal": 0,
+          "test": 0
+        }
+      }
+    ],
+    "questions_per_state_min_max": [
+      6000,
+      6000
+    ]
+  },
+  "dataset_ids": {
+    "dataset_id": "Yelp/yelp_review_full",
+    "dataset_revision": "c1f9ee939b7d05667af864ee1cb066393154bf85",
+    "resolved_sha_verified": true,
+    "n_rows": 650000,
+    "label_counts": {
+      "1 star": 1200,
+      "2 star": 1200,
+      "3 star": 1200,
+      "4 star": 1200,
+      "5 star": 1200
+    },
+    "pool": {
+      "n_rows_loaded": 650000,
+      "n_rows_used": 6000,
+      "rule": "bc.stratified_indices(labels, 6000, seed=0)"
+    }
+  },
+  "extra": {
+    "omitted_questions": "No aspect-level questions on Yelp. Yelp/yelp_review_full ships exactly one label field (the star rating), carries no aspect annotation, and no aspect-labelled source is reachable from it. Hand-writing aspect labels would be annotating a benchmark by hand and calling it real, so they are OMITTED. The only further obtainable 'questions' are restatements of the same star label, which add no information and would inflate the multi-question appearance without content."
+  },
+  "split_sizes": {
+    "train": 1500,
+    "cal": 500,
+    "test": 1000
+  },
+  "questions": [
+    {
+      "name": "yelp_stars",
+      "text": "How many stars did this reviewer give?",
+      "options": [
+        "1 star",
+        "2 stars",
+        "3 stars",
+        "4 stars",
+        "5 stars"
+      ],
+      "num_options": 5,
+      "label_provenance": "REAL",
+      "provenance_reason": "the 5-way star rating is Yelp's own label field."
+    },
+    {
+      "name": "yelp_detractor",
+      "text": "Is this a 1-star detractor review?",
+      "options": [
+        "no",
+        "yes"
+      ],
+      "num_options": 2,
+      "label_provenance": "DERIVED",
+      "provenance_reason": "deterministic rule: stars == 1. The brief calls this real; it is a threshold on a REAL dataset label, so it is recorded here as DERIVED-from-a-real-label, which is the distinction that matters."
+    }
+  ],
+  "question_groups": [
+    {
+      "name": "yelp_stars",
+      "question": "How many stars did this reviewer give?",
+      "options": [
+        "1 star",
+        "2 stars",
+        "3 stars",
+        "4 stars",
+        "5 stars"
+      ],
+      "n_states": 6000
+    },
+    {
+      "name": "yelp_detractor",
+      "question": "Is this a 1-star detractor review?",
+      "options": [
+        "no",
+        "yes"
+      ],
+      "n_states": 6000
+    }
+  ],
+  "cells": [
+    {
+      "question": "yelp_stars",
+      "arm": "full",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.3687999963760376,
+          "std": 0.007694149656786948,
+          "min": 0.35899999737739563,
+          "max": 0.3779999911785126
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.3687999963760376,
+              "std": 0.007694149656786948,
+              "min": 0.35899999737739563,
+              "max": 0.3779999911785126
+            },
+            "per_seed": [
+              0.3779999911785126,
+              0.35899999737739563,
+              0.3630000054836273,
+              0.3709999918937683,
+              0.37299999594688416
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.33742065094724294,
+              "std": 0.014278515571518302,
+              "min": 0.32134711262410265,
+              "max": 0.3570665055698625
+            },
+            "per_seed": [
+              0.33011818078701616,
+              0.33183916171352557,
+              0.32134711262410265,
+              0.34673229404170774,
+              0.3570665055698625
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 1.423684022514945,
+              "std": 0.01591763367274107,
+              "min": 1.3975179982639574,
+              "max": 1.4397376669981807
+            },
+            "per_seed": [
+              1.4245484978968903,
+              1.4397376669981807,
+              1.4320224555067234,
+              1.4245934939089744,
+              1.3975179982639574
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.7270153647942246,
+              "std": 0.009156894861277387,
+              "min": 0.7129177074948828,
+              "max": 0.7350454390476721
+            },
+            "per_seed": [
+              0.7331803735012152,
+              0.7310992529557512,
+              0.7350454390476721,
+              0.7228340509716012,
+              0.7129177074948828
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.05881802990138531,
+              "std": 0.022147523077557997,
+              "min": 0.03360252411663532,
+              "max": 0.07918933972716331
+            },
+            "per_seed": [
+              0.07918933972716331,
+              0.03360252411663532,
+              0.0783700702637434,
+              0.06596921873092651,
+              0.03695899666845798
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.26361115243728217,
+              "std": 0.08566587247615724,
+              "min": 0.17727839946746826,
+              "max": 0.389607492515019
+            },
+            "per_seed": [
+              0.26796313432546764,
+              0.19141113758087158,
+              0.389607492515019,
+              0.29179559829758434,
+              0.17727839946746826
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_stars",
+          "arm": "full",
+          "seed": 0,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3779999911785126,
+            "macro_f1": 0.33011818078701616,
+            "nll": 1.4245484978968903,
+            "brier": 0.7331803735012152,
+            "ece": 0.07918933972716331,
+            "mce": 0.26796313432546764
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.48043026526769,
+          "wall_s": 57.71,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "full",
+          "seed": 1,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.35899999737739563,
+            "macro_f1": 0.33183916171352557,
+            "nll": 1.4397376669981807,
+            "brier": 0.7310992529557512,
+            "ece": 0.03360252411663532,
+            "mce": 0.19141113758087158
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.3939995567003887,
+          "wall_s": 46.94,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "full",
+          "seed": 2,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3630000054836273,
+            "macro_f1": 0.32134711262410265,
+            "nll": 1.4320224555067234,
+            "brier": 0.7350454390476721,
+            "ece": 0.0783700702637434,
+            "mce": 0.389607492515019
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.407632480065028,
+          "wall_s": 54.63,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "full",
+          "seed": 3,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3709999918937683,
+            "macro_f1": 0.34673229404170774,
+            "nll": 1.4245934939089744,
+            "brier": 0.7228340509716012,
+            "ece": 0.06596921873092651,
+            "mce": 0.29179559829758434
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4703609198331833,
+          "wall_s": 69.24,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "full",
+          "seed": 4,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.37299999594688416,
+            "macro_f1": 0.3570665055698625,
+            "nll": 1.3975179982639574,
+            "brier": 0.7129177074948828,
+            "ece": 0.03695899666845798,
+            "mce": 0.17727839946746826
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4138725250959396,
+          "wall_s": 75.96,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_stars",
+      "arm": "off",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.38359999656677246,
+          "std": 0.014587664736791543,
+          "min": 0.3630000054836273,
+          "max": 0.39899998903274536
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.38359999656677246,
+              "std": 0.014587664736791543,
+              "min": 0.3630000054836273,
+              "max": 0.39899998903274536
+            },
+            "per_seed": [
+              0.39899998903274536,
+              0.3630000054836273,
+              0.38499999046325684,
+              0.37599998712539673,
+              0.39500001072883606
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.3639538929725461,
+              "std": 0.02435512536925104,
+              "min": 0.32950045470786593,
+              "max": 0.38583200885560254
+            },
+            "per_seed": [
+              0.38583200885560254,
+              0.34808333038904954,
+              0.32950045470786593,
+              0.3731499964027762,
+              0.38320367450743625
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 1.3992571160436729,
+              "std": 0.018855859946726783,
+              "min": 1.3812525806603806,
+              "max": 1.4215241539526187
+            },
+            "per_seed": [
+              1.3914574536629565,
+              1.4215241539526187,
+              1.4173826373500555,
+              1.3812525806603806,
+              1.384668754592353
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.7142815841174515,
+              "std": 0.008436028344994552,
+              "min": 0.7053313443743552,
+              "max": 0.7239858572850388
+            },
+            "per_seed": [
+              0.7122228873182553,
+              0.7221898541317358,
+              0.7239858572850388,
+              0.7053313443743552,
+              0.7076779774778718
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.0442207394003868,
+              "std": 0.03170848365060835,
+              "min": 0.021108122989535343,
+              "max": 0.09685731540620325
+            },
+            "per_seed": [
+              0.02934496735036373,
+              0.021108122989535343,
+              0.09685731540620325,
+              0.05083106842637062,
+              0.022962222829461098
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.21399634582796395,
+              "std": 0.07456083594764766,
+              "min": 0.14038964876761806,
+              "max": 0.3296356201171875
+            },
+            "per_seed": [
+              0.3296356201171875,
+              0.14038964876761806,
+              0.23904624328774926,
+              0.19732755422592163,
+              0.16358266274134325
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_stars",
+          "arm": "off",
+          "seed": 0,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.39899998903274536,
+            "macro_f1": 0.38583200885560254,
+            "nll": 1.3914574536629565,
+            "brier": 0.7122228873182553,
+            "ece": 0.02934496735036373,
+            "mce": 0.3296356201171875
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4575358082850773,
+          "wall_s": 25.32,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "off",
+          "seed": 1,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3630000054836273,
+            "macro_f1": 0.34808333038904954,
+            "nll": 1.4215241539526187,
+            "brier": 0.7221898541317358,
+            "ece": 0.021108122989535343,
+            "mce": 0.14038964876761806
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.3944920500119526,
+          "wall_s": 14.57,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "off",
+          "seed": 2,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.38499999046325684,
+            "macro_f1": 0.32950045470786593,
+            "nll": 1.4173826373500555,
+            "brier": 0.7239858572850388,
+            "ece": 0.09685731540620325,
+            "mce": 0.23904624328774926
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4015574703613918,
+          "wall_s": 11.59,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "off",
+          "seed": 3,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.37599998712539673,
+            "macro_f1": 0.3731499964027762,
+            "nll": 1.3812525806603806,
+            "brier": 0.7053313443743552,
+            "ece": 0.05083106842637062,
+            "mce": 0.19732755422592163
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4175988137722015,
+          "wall_s": 19.27,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "off",
+          "seed": 4,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.39500001072883606,
+            "macro_f1": 0.38320367450743625,
+            "nll": 1.384668754592353,
+            "brier": 0.7076779774778718,
+            "ece": 0.022962222829461098,
+            "mce": 0.16358266274134325
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.407233198483785,
+          "wall_s": 14.35,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_stars",
+      "arm": "state_only",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.38159999847412107,
+          "std": 0.008734978381020546,
+          "min": 0.367000013589859,
+          "max": 0.38999998569488525
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.38159999847412107,
+              "std": 0.008734978381020546,
+              "min": 0.367000013589859,
+              "max": 0.38999998569488525
+            },
+            "per_seed": [
+              0.382999986410141,
+              0.367000013589859,
+              0.38600000739097595,
+              0.38999998569488525,
+              0.38199999928474426
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.3577690029443519,
+              "std": 0.021300005996412897,
+              "min": 0.3236963129410816,
+              "max": 0.37334023361836915
+            },
+            "per_seed": [
+              0.3688825262935505,
+              0.350049198710206,
+              0.3236963129410816,
+              0.37287674315855235,
+              0.37334023361836915
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 1.3965349084537684,
+              "std": 0.0190061450043907,
+              "min": 1.3758047936477842,
+              "max": 1.4260724449851485
+            },
+            "per_seed": [
+              1.3943438697384367,
+              1.4260724449851485,
+              1.4008438540349313,
+              1.3758047936477842,
+              1.3856095798625407
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.7128917682208871,
+              "std": 0.008189270370606851,
+              "min": 0.7027084663275234,
+              "max": 0.7244646012119742
+            },
+            "per_seed": [
+              0.7143595200091392,
+              0.7244646012119742,
+              0.7149552728131803,
+              0.7027084663275234,
+              0.7079709807426184
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.03963640330731869,
+              "std": 0.025388662032084567,
+              "min": 0.022815073043108015,
+              "max": 0.08435455030202865
+            },
+            "per_seed": [
+              0.025450725868344314,
+              0.03231408861279488,
+              0.08435455030202865,
+              0.03324757871031761,
+              0.022815073043108015
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.18241275657377493,
+              "std": 0.03411637733564055,
+              "min": 0.13401455695812514,
+              "max": 0.22034059677805218
+            },
+            "per_seed": [
+              0.19937457279725512,
+              0.22034059677805218,
+              0.19599006751949866,
+              0.13401455695812514,
+              0.16234398881594347
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_stars",
+          "arm": "state_only",
+          "seed": 0,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.382999986410141,
+            "macro_f1": 0.3688825262935505,
+            "nll": 1.3943438697384367,
+            "brier": 0.7143595200091392,
+            "ece": 0.025450725868344314,
+            "mce": 0.19937457279725512
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4511051177978516,
+          "wall_s": 17.91,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "state_only",
+          "seed": 1,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.367000013589859,
+            "macro_f1": 0.350049198710206,
+            "nll": 1.4260724449851485,
+            "brier": 0.7244646012119742,
+            "ece": 0.03231408861279488,
+            "mce": 0.22034059677805218
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.3969887395699818,
+          "wall_s": 10.16,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "state_only",
+          "seed": 2,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.38600000739097595,
+            "macro_f1": 0.3236963129410816,
+            "nll": 1.4008438540349313,
+            "brier": 0.7149552728131803,
+            "ece": 0.08435455030202865,
+            "mce": 0.19599006751949866
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4053405225276947,
+          "wall_s": 20.83,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "state_only",
+          "seed": 3,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.38999998569488525,
+            "macro_f1": 0.37287674315855235,
+            "nll": 1.3758047936477842,
+            "brier": 0.7027084663275234,
+            "ece": 0.03324757871031761,
+            "mce": 0.13401455695812514
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.4190102964639664,
+          "wall_s": 15.38,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "state_only",
+          "seed": 4,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.38199999928474426,
+            "macro_f1": 0.37334023361836915,
+            "nll": 1.3856095798625407,
+            "brier": 0.7079709807426184,
+            "ece": 0.022815073043108015,
+            "mce": 0.16234398881594347
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 1.3996322999397914,
+          "wall_s": 10.86,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_stars",
+      "arm": "p1_linear",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.3185999929904938,
+          "std": 0.027664057276417995,
+          "min": 0.27399998903274536,
+          "max": 0.34299999475479126
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.3185999929904938,
+              "std": 0.027664057276417995,
+              "min": 0.27399998903274536,
+              "max": 0.34299999475479126
+            },
+            "per_seed": [
+              0.3240000009536743,
+              0.31299999356269836,
+              0.33899998664855957,
+              0.27399998903274536,
+              0.34299999475479126
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.30720578519404157,
+              "std": 0.025218250871861872,
+              "min": 0.2706943347525221,
+              "max": 0.33006354789210746
+            },
+            "per_seed": [
+              0.31387973562632276,
+              0.29309767955709914,
+              0.33006354789210746,
+              0.2706943347525221,
+              0.32829362814215624
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 1.5231547942167112,
+              "std": 0.014493408260714276,
+              "min": 1.504922606483687,
+              "max": 1.5441234892307676
+            },
+            "per_seed": [
+              1.504922606483687,
+              1.5283361449991926,
+              1.521425669866324,
+              1.5441234892307676,
+              1.5169660605035848
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.7646951659592304,
+              "std": 0.0069681455490092185,
+              "min": 0.7573301761577939,
+              "max": 0.7752960698068083
+            },
+            "per_seed": [
+              0.7573301761577939,
+              0.7670133241411516,
+              0.7637620734308567,
+              0.7752960698068083,
+              0.7600741862595416
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.033579741799831385,
+              "std": 0.0114885756189061,
+              "min": 0.0229700359851122,
+              "max": 0.04624157774448395
+            },
+            "per_seed": [
+              0.02436421066522597,
+              0.0229700359851122,
+              0.045660805836319915,
+              0.0286620787680149,
+              0.04624157774448395
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.38485725098186074,
+              "std": 0.15928281388966528,
+              "min": 0.12161326573954695,
+              "max": 0.5117290019989014
+            },
+            "per_seed": [
+              0.12161326573954695,
+              0.37763823568820953,
+              0.5101733605066936,
+              0.5117290019989014,
+              0.40313239097595216
+            ]
+          }
+        },
+        "trainable_params": 645,
+        "trainable_params_by_module": {
+          "probe": 645
+        },
+        "grad_norms_per_seed": [
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          }
+        ],
+        "n_train_pairs": 1500,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_stars",
+          "arm": "p1_linear",
+          "seed": 0,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3240000009536743,
+            "macro_f1": 0.31387973562632276,
+            "nll": 1.504922606483687,
+            "brier": 0.7573301761577939,
+            "ece": 0.02436421066522597,
+            "mce": 0.12161326573954695
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 645,
+          "trainable_params_by_module": {
+            "probe": 645
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.5187325576941173,
+          "wall_s": 0.22,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p1_linear",
+          "seed": 1,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.31299999356269836,
+            "macro_f1": 0.29309767955709914,
+            "nll": 1.5283361449991926,
+            "brier": 0.7670133241411516,
+            "ece": 0.0229700359851122,
+            "mce": 0.37763823568820953
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 645,
+          "trainable_params_by_module": {
+            "probe": 645
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.5628620435794194,
+          "wall_s": 0.24,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p1_linear",
+          "seed": 2,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.33899998664855957,
+            "macro_f1": 0.33006354789210746,
+            "nll": 1.521425669866324,
+            "brier": 0.7637620734308567,
+            "ece": 0.045660805836319915,
+            "mce": 0.5101733605066936
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 645,
+          "trainable_params_by_module": {
+            "probe": 645
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.54044442375501,
+          "wall_s": 0.25,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p1_linear",
+          "seed": 3,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.27399998903274536,
+            "macro_f1": 0.2706943347525221,
+            "nll": 1.5441234892307676,
+            "brier": 0.7752960698068083,
+            "ece": 0.0286620787680149,
+            "mce": 0.5117290019989014
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 645,
+          "trainable_params_by_module": {
+            "probe": 645
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.535980651775996,
+          "wall_s": 0.25,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p1_linear",
+          "seed": 4,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.34299999475479126,
+            "macro_f1": 0.32829362814215624,
+            "nll": 1.5169660605035848,
+            "brier": 0.7600741862595416,
+            "ece": 0.04624157774448395,
+            "mce": 0.40313239097595216
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 645,
+          "trainable_params_by_module": {
+            "probe": 645
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.526064361135165,
+          "wall_s": 0.23,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_stars",
+      "arm": "p2_mlp",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.3567999958992004,
+          "std": 0.007155417034866098,
+          "min": 0.3449999988079071,
+          "max": 0.3619999885559082
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.3567999958992004,
+              "std": 0.007155417034866098,
+              "min": 0.3449999988079071,
+              "max": 0.3619999885559082
+            },
+            "per_seed": [
+              0.3610000014305115,
+              0.35499998927116394,
+              0.3610000014305115,
+              0.3449999988079071,
+              0.3619999885559082
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.3368822237648047,
+              "std": 0.011536174473243684,
+              "min": 0.3213069534849401,
+              "max": 0.351775721937321
+            },
+            "per_seed": [
+              0.351775721937321,
+              0.3213069534849401,
+              0.3431442282222949,
+              0.33152834498016115,
+              0.3366558701993064
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 1.4460573280844293,
+              "std": 0.011533520938177335,
+              "min": 1.4345891761589535,
+              "max": 1.4617502725942604
+            },
+            "per_seed": [
+              1.445061870625994,
+              1.4617502725942604,
+              1.4358375409196928,
+              1.4530477801232464,
+              1.4345891761589535
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.7310798072831836,
+              "std": 0.005028624768765733,
+              "min": 0.7260472717736669,
+              "max": 0.7364628253311754
+            },
+            "per_seed": [
+              0.7310568990543173,
+              0.7364628253311754,
+              0.7260791412768098,
+              0.7357528989799486,
+              0.7260472717736669
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.032863483878970146,
+              "std": 0.009113415363754289,
+              "min": 0.023475662276148803,
+              "max": 0.046861987158656124
+            },
+            "per_seed": [
+              0.046861987158656124,
+              0.023475662276148803,
+              0.03227792732417586,
+              0.0353053784817457,
+              0.026396464154124263
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.3253588384141525,
+              "std": 0.04997400046750025,
+              "min": 0.2453960943967104,
+              "max": 0.37470489740371704
+            },
+            "per_seed": [
+              0.37470489740371704,
+              0.2453960943967104,
+              0.32671892642974854,
+              0.35910133123397825,
+              0.32087294260660804
+            ]
+          }
+        },
+        "trainable_params": 17157,
+        "trainable_params_by_module": {
+          "probe": 17157
+        },
+        "grad_norms_per_seed": [
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          }
+        ],
+        "n_train_pairs": 1500,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_stars",
+          "arm": "p2_mlp",
+          "seed": 0,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3610000014305115,
+            "macro_f1": 0.351775721937321,
+            "nll": 1.445061870625994,
+            "brier": 0.7310568990543173,
+            "ece": 0.046861987158656124,
+            "mce": 0.37470489740371704
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 17157,
+          "trainable_params_by_module": {
+            "probe": 17157
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.4652818441390991,
+          "wall_s": 0.24,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p2_mlp",
+          "seed": 1,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.35499998927116394,
+            "macro_f1": 0.3213069534849401,
+            "nll": 1.4617502725942604,
+            "brier": 0.7364628253311754,
+            "ece": 0.023475662276148803,
+            "mce": 0.2453960943967104
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 17157,
+          "trainable_params_by_module": {
+            "probe": 17157
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.4789729565382004,
+          "wall_s": 0.19,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p2_mlp",
+          "seed": 2,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3610000014305115,
+            "macro_f1": 0.3431442282222949,
+            "nll": 1.4358375409196928,
+            "brier": 0.7260791412768098,
+            "ece": 0.03227792732417586,
+            "mce": 0.32671892642974854
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 17157,
+          "trainable_params_by_module": {
+            "probe": 17157
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.4468395958344142,
+          "wall_s": 0.33,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p2_mlp",
+          "seed": 3,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3449999988079071,
+            "macro_f1": 0.33152834498016115,
+            "nll": 1.4530477801232464,
+            "brier": 0.7357528989799486,
+            "ece": 0.0353053784817457,
+            "mce": 0.35910133123397825
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 17157,
+          "trainable_params_by_module": {
+            "probe": 17157
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.4690523395935695,
+          "wall_s": 0.53,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_stars",
+          "arm": "p2_mlp",
+          "seed": 4,
+          "label_provenance": "REAL",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.3619999885559082,
+            "macro_f1": 0.3366558701993064,
+            "nll": 1.4345891761589535,
+            "brier": 0.7260472717736669,
+            "ece": 0.026396464154124263,
+            "mce": 0.32087294260660804
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 17157,
+          "trainable_params_by_module": {
+            "probe": 17157
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 1.4484951347112656,
+          "wall_s": 0.51,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_detractor",
+      "arm": "full",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.8127999901771545,
+          "std": 0.0077588455142760405,
+          "min": 0.7990000247955322,
+          "max": 0.8169999718666077
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.8127999901771545,
+              "std": 0.0077588455142760405,
+              "min": 0.7990000247955322,
+              "max": 0.8169999718666077
+            },
+            "per_seed": [
+              0.7990000247955322,
+              0.8169999718666077,
+              0.8169999718666077,
+              0.8149999976158142,
+              0.8159999847412109
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.6567751831792189,
+              "std": 0.04781299144993436,
+              "min": 0.5713793854564108,
+              "max": 0.6813852813852814
+            },
+            "per_seed": [
+              0.6741451172834402,
+              0.5713793854564108,
+              0.6794955996322081,
+              0.677470532138754,
+              0.6813852813852814
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 0.40188764985535064,
+              "std": 0.016429274677794373,
+              "min": 0.3891815465948824,
+              "max": 0.4287603616518317
+            },
+            "per_seed": [
+              0.4287603616518317,
+              0.3929801062771795,
+              0.4064317967558987,
+              0.392084437996961,
+              0.3891815465948824
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.2570865953908541,
+              "std": 0.0083399943229197,
+              "min": 0.25172288457397873,
+              "max": 0.2713307469910458
+            },
+            "per_seed": [
+              0.2713307469910458,
+              0.25172288457397873,
+              0.25780048648423837,
+              0.25239318424919505,
+              0.2521856746558127
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.04321649048328399,
+              "std": 0.021433143777461867,
+              "min": 0.022918902039527865,
+              "max": 0.0736064112782478
+            },
+            "per_seed": [
+              0.0736064112782478,
+              0.04066839826107028,
+              0.05472554630041121,
+              0.022918902039527865,
+              0.024163194537162817
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.09656175299406447,
+              "std": 0.040813842846740375,
+              "min": 0.052418689902235804,
+              "max": 0.16369729169777458
+            },
+            "per_seed": [
+              0.16369729169777458,
+              0.09313902097779347,
+              0.08534755113413517,
+              0.052418689902235804,
+              0.08820621125838335
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_detractor",
+          "arm": "full",
+          "seed": 0,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.7990000247955322,
+            "macro_f1": 0.6741451172834402,
+            "nll": 0.4287603616518317,
+            "brier": 0.2713307469910458,
+            "ece": 0.0736064112782478,
+            "mce": 0.16369729169777458
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.405815980086724,
+          "wall_s": 23.77,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "full",
+          "seed": 1,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8169999718666077,
+            "macro_f1": 0.5713793854564108,
+            "nll": 0.3929801062771795,
+            "brier": 0.25172288457397873,
+            "ece": 0.04066839826107028,
+            "mce": 0.09313902097779347
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4062687611828248,
+          "wall_s": 18.73,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "full",
+          "seed": 2,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8169999718666077,
+            "macro_f1": 0.6794955996322081,
+            "nll": 0.4064317967558987,
+            "brier": 0.25780048648423837,
+            "ece": 0.05472554630041121,
+            "mce": 0.08534755113413517
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4025452019025882,
+          "wall_s": 17.58,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "full",
+          "seed": 3,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8149999976158142,
+            "macro_f1": 0.677470532138754,
+            "nll": 0.392084437996961,
+            "brier": 0.25239318424919505,
+            "ece": 0.022918902039527865,
+            "mce": 0.052418689902235804
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4261794661482175,
+          "wall_s": 18.65,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "full",
+          "seed": 4,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8159999847412109,
+            "macro_f1": 0.6813852813852814,
+            "nll": 0.3891815465948824,
+            "brier": 0.2521856746558127,
+            "ece": 0.024163194537162817,
+            "mce": 0.08820621125838335
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4097625818103552,
+          "wall_s": 18.74,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_detractor",
+      "arm": "off",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.8062000036239624,
+          "std": 0.01742698663007407,
+          "min": 0.7770000100135803,
+          "max": 0.8199999928474426
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.8062000036239624,
+              "std": 0.01742698663007407,
+              "min": 0.7770000100135803,
+              "max": 0.8199999928474426
+            },
+            "per_seed": [
+              0.8090000152587891,
+              0.8059999942779541,
+              0.7770000100135803,
+              0.8199999928474426,
+              0.8190000057220459
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.6117224421311589,
+              "std": 0.09000566608481947,
+              "min": 0.4839052939611598,
+              "max": 0.689706531332745
+            },
+            "per_seed": [
+              0.6456131171387806,
+              0.4839052939611598,
+              0.6856848476135304,
+              0.689706531332745,
+              0.5537024206095784
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 0.41642694809504643,
+              "std": 0.011507005280704833,
+              "min": 0.4022248946639431,
+              "max": 0.4315443796843816
+            },
+            "per_seed": [
+              0.4081180183100297,
+              0.42135640505156347,
+              0.4315443796843816,
+              0.4022248946639431,
+              0.4188910427653141
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.26809105131542654,
+              "std": 0.010703026062131372,
+              "min": 0.25767962313706394,
+              "max": 0.28373961027749606
+            },
+            "per_seed": [
+              0.2589815067683986,
+              0.2727163321280732,
+              0.28373961027749606,
+              0.25767962313706394,
+              0.26733818426610084
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.05367509164810179,
+              "std": 0.017345795998752748,
+              "min": 0.038924619555473335,
+              "max": 0.08193409317731859
+            },
+            "per_seed": [
+              0.0499258787631988,
+              0.08193409317731859,
+              0.038924619555473335,
+              0.040868257522582996,
+              0.05672260922193524
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.15349032418133746,
+              "std": 0.04793300523643593,
+              "min": 0.09057964644300831,
+              "max": 0.2156596382459004
+            },
+            "per_seed": [
+              0.16717939547130034,
+              0.2156596382459004,
+              0.09057964644300831,
+              0.12360383767002026,
+              0.17042910307645798
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_detractor",
+          "arm": "off",
+          "seed": 0,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8090000152587891,
+            "macro_f1": 0.6456131171387806,
+            "nll": 0.4081180183100297,
+            "brier": 0.2589815067683986,
+            "ece": 0.0499258787631988,
+            "mce": 0.16717939547130034
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4379849396646023,
+          "wall_s": 10.72,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "off",
+          "seed": 1,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8059999942779541,
+            "macro_f1": 0.4839052939611598,
+            "nll": 0.42135640505156347,
+            "brier": 0.2727163321280732,
+            "ece": 0.08193409317731859,
+            "mce": 0.2156596382459004
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.40637142459551495,
+          "wall_s": 16.94,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "off",
+          "seed": 2,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.7770000100135803,
+            "macro_f1": 0.6856848476135304,
+            "nll": 0.4315443796843816,
+            "brier": 0.28373961027749606,
+            "ece": 0.038924619555473335,
+            "mce": 0.09057964644300831
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.40361518288652104,
+          "wall_s": 8.83,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "off",
+          "seed": 3,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8199999928474426,
+            "macro_f1": 0.689706531332745,
+            "nll": 0.4022248946639431,
+            "brier": 0.25767962313706394,
+            "ece": 0.040868257522582996,
+            "mce": 0.12360383767002026
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4167279042303562,
+          "wall_s": 10.55,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "off",
+          "seed": 4,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8190000057220459,
+            "macro_f1": 0.5537024206095784,
+            "nll": 0.4188910427653141,
+            "brier": 0.26733818426610084,
+            "ece": 0.05672260922193524,
+            "mce": 0.17042910307645798
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.42534175515174866,
+          "wall_s": 24.69,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_detractor",
+      "arm": "state_only",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.807800006866455,
+          "std": 0.011256113597383927,
+          "min": 0.7960000038146973,
+          "max": 0.8190000057220459
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.807800006866455,
+              "std": 0.011256113597383927,
+              "min": 0.7960000038146973,
+              "max": 0.8190000057220459
+            },
+            "per_seed": [
+              0.796999990940094,
+              0.8080000281333923,
+              0.7960000038146973,
+              0.8190000057220459,
+              0.8190000057220459
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.6160713755511292,
+              "std": 0.09168063978842683,
+              "min": 0.48489010989010983,
+              "max": 0.6844441422546728
+            },
+            "per_seed": [
+              0.6760702050012846,
+              0.48489010989010983,
+              0.68125,
+              0.6844441422546728,
+              0.5537024206095784
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 0.41171132954127393,
+              "std": 0.007849146340600636,
+              "min": 0.4020186137489341,
+              "max": 0.42155558767105333
+            },
+            "per_seed": [
+              0.40894635398835505,
+              0.42155558767105333,
+              0.4083000948376003,
+              0.4020186137489341,
+              0.4177359974604268
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.26511424806565076,
+              "std": 0.005506648571390122,
+              "min": 0.25716303490912734,
+              "max": 0.2725181755956127
+            },
+            "per_seed": [
+              0.2654707507526529,
+              0.2725181755956127,
+              0.26396314701741863,
+              0.25716303490912734,
+              0.26645613205344226
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.050104803824424726,
+              "std": 0.018404965322973026,
+              "min": 0.031227932333946225,
+              "max": 0.0792696778178215
+            },
+            "per_seed": [
+              0.040778450846672025,
+              0.0792696778178215,
+              0.044119362950324974,
+              0.031227932333946225,
+              0.05512859517335893
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.16191994440231464,
+              "std": 0.05585776950685817,
+              "min": 0.08055414539752626,
+              "max": 0.23193779729661484
+            },
+            "per_seed": [
+              0.18580350478490198,
+              0.23193779729661484,
+              0.16807134449481964,
+              0.08055414539752626,
+              0.14323293003771043
+            ]
+          }
+        },
+        "trainable_params": 1280385,
+        "trainable_params_by_module": {
+          "state_proj": 16768,
+          "question_encoder": 557312,
+          "question_proj": 16768,
+          "schema_encoder": 557312,
+          "schema_proj": 16768,
+          "fusion": 65920,
+          "heads": 49537
+        },
+        "grad_norms_per_seed": [
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          }
+        ],
+        "n_train_pairs": 3000,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_detractor",
+          "arm": "state_only",
+          "seed": 0,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.796999990940094,
+            "macro_f1": 0.6760702050012846,
+            "nll": 0.40894635398835505,
+            "brier": 0.2654707507526529,
+            "ece": 0.040778450846672025,
+            "mce": 0.18580350478490198
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4165348286430041,
+          "wall_s": 10.95,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "state_only",
+          "seed": 1,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8080000281333923,
+            "macro_f1": 0.48489010989010983,
+            "nll": 0.42155558767105333,
+            "brier": 0.2725181755956127,
+            "ece": 0.0792696778178215,
+            "mce": 0.23193779729661484
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.4118485903988282,
+          "wall_s": 6.69,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "state_only",
+          "seed": 2,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.7960000038146973,
+            "macro_f1": 0.68125,
+            "nll": 0.4083000948376003,
+            "brier": 0.26396314701741863,
+            "ece": 0.044119362950324974,
+            "mce": 0.16807134449481964
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.40777309238910675,
+          "wall_s": 4.79,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "state_only",
+          "seed": 3,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8190000057220459,
+            "macro_f1": 0.6844441422546728,
+            "nll": 0.4020186137489341,
+            "brier": 0.25716303490912734,
+            "ece": 0.031227932333946225,
+            "mce": 0.08055414539752626
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.41738223284482956,
+          "wall_s": 3.96,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "state_only",
+          "seed": 4,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8190000057220459,
+            "macro_f1": 0.5537024206095784,
+            "nll": 0.4177359974604268,
+            "brier": 0.26645613205344226,
+            "ece": 0.05512859517335893,
+            "mce": 0.14323293003771043
+          },
+          "n_train_pairs": 3000,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_steps": 49,
+            "expected_steps": 48,
+            "at_step": {},
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step."
+          },
+          "final_epoch_loss": 0.42504217475652695,
+          "wall_s": 5.03,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_detractor",
+      "arm": "p1_linear",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.8037999987602233,
+          "std": 0.001483246721963911,
+          "min": 0.8019999861717224,
+          "max": 0.8059999942779541
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.8037999987602233,
+              "std": 0.001483246721963911,
+              "min": 0.8019999861717224,
+              "max": 0.8059999942779541
+            },
+            "per_seed": [
+              0.8040000200271606,
+              0.8029999732971191,
+              0.8019999861717224,
+              0.8059999942779541,
+              0.8040000200271606
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.48208291653093466,
+              "std": 0.019277004434659534,
+              "min": 0.46504214157823487,
+              "max": 0.5142507008844582
+            },
+            "per_seed": [
+              0.46964531177279173,
+              0.5142507008844582,
+              0.48195204655105645,
+              0.47952438186813184,
+              0.46504214157823487
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 0.45156689928316085,
+              "std": 0.013682975840524268,
+              "min": 0.4358259652045341,
+              "max": 0.47246589817853907
+            },
+            "per_seed": [
+              0.4555530876780835,
+              0.47246589817853907,
+              0.44517107182557075,
+              0.4358259652045341,
+              0.4488184735290771
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.2880988140248248,
+              "std": 0.00865688380116096,
+              "min": 0.2788457487145037,
+              "max": 0.3018485751780979
+            },
+            "per_seed": [
+              0.28999868164422327,
+              0.3018485751780979,
+              0.2841850289243674,
+              0.2788457487145037,
+              0.2856160356629315
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.03532078011035919,
+              "std": 0.009701611109160813,
+              "min": 0.022550740182399748,
+              "max": 0.04524542123079296
+            },
+            "per_seed": [
+              0.04524542123079296,
+              0.03387788981199268,
+              0.030266453742980967,
+              0.044663395583629605,
+              0.022550740182399748
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.17048791077418965,
+              "std": 0.08921317091005392,
+              "min": 0.11143729823534598,
+              "max": 0.3159981667995453
+            },
+            "per_seed": [
+              0.11403820663690573,
+              0.11341821312904365,
+              0.11143729823534598,
+              0.3159981667995453,
+              0.19754766907010757
+            ]
+          }
+        },
+        "trainable_params": 258,
+        "trainable_params_by_module": {
+          "probe": 258
+        },
+        "grad_norms_per_seed": [
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          }
+        ],
+        "n_train_pairs": 1500,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_detractor",
+          "arm": "p1_linear",
+          "seed": 0,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8040000200271606,
+            "macro_f1": 0.46964531177279173,
+            "nll": 0.4555530876780835,
+            "brier": 0.28999868164422327,
+            "ece": 0.04524542123079296,
+            "mce": 0.11403820663690573
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 258,
+          "trainable_params_by_module": {
+            "probe": 258
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.46458688626686734,
+          "wall_s": 0.87,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p1_linear",
+          "seed": 1,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8029999732971191,
+            "macro_f1": 0.5142507008844582,
+            "nll": 0.47246589817853907,
+            "brier": 0.3018485751780979,
+            "ece": 0.03387788981199268,
+            "mce": 0.11341821312904365
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 258,
+          "trainable_params_by_module": {
+            "probe": 258
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.4717990383505821,
+          "wall_s": 0.27,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p1_linear",
+          "seed": 2,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8019999861717224,
+            "macro_f1": 0.48195204655105645,
+            "nll": 0.44517107182557075,
+            "brier": 0.2841850289243674,
+            "ece": 0.030266453742980967,
+            "mce": 0.11143729823534598
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 258,
+          "trainable_params_by_module": {
+            "probe": 258
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.4444052961965402,
+          "wall_s": 0.24,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p1_linear",
+          "seed": 3,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8059999942779541,
+            "macro_f1": 0.47952438186813184,
+            "nll": 0.4358259652045341,
+            "brier": 0.2788457487145037,
+            "ece": 0.044663395583629605,
+            "mce": 0.3159981667995453
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 258,
+          "trainable_params_by_module": {
+            "probe": 258
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.43989921485384303,
+          "wall_s": 0.19,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p1_linear",
+          "seed": 4,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8040000200271606,
+            "macro_f1": 0.46504214157823487,
+            "nll": 0.4488184735290771,
+            "brier": 0.2856160356629315,
+            "ece": 0.022550740182399748,
+            "mce": 0.19754766907010757
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 258,
+          "trainable_params_by_module": {
+            "probe": 258
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.45509611318508786,
+          "wall_s": 0.22,
+          "absa_breakdown": null
+        }
+      ]
+    },
+    {
+      "question": "yelp_detractor",
+      "arm": "p2_mlp",
+      "aggregate": {
+        "status": "OK",
+        "n_seeds": 5,
+        "n_seeds_requested": 5,
+        "accuracy": {
+          "mean": 0.8188000082969665,
+          "std": 0.0032710843316075145,
+          "min": 0.8140000104904175,
+          "max": 0.8230000138282776
+        },
+        "per_metric": {
+          "accuracy": {
+            "mean_std": {
+              "mean": 0.8188000082969665,
+              "std": 0.0032710843316075145,
+              "min": 0.8140000104904175,
+              "max": 0.8230000138282776
+            },
+            "per_seed": [
+              0.8190000057220459,
+              0.8180000185966492,
+              0.8199999928474426,
+              0.8140000104904175,
+              0.8230000138282776
+            ]
+          },
+          "macro_f1": {
+            "mean_std": {
+              "mean": 0.5884011543173201,
+              "std": 0.0416336040879568,
+              "min": 0.5360716744320619,
+              "max": 0.6329905222827182
+            },
+            "per_seed": [
+              0.5730316404784876,
+              0.6329905222827182,
+              0.5707704194049924,
+              0.5360716744320619,
+              0.62914151498834
+            ]
+          },
+          "nll": {
+            "mean_std": {
+              "mean": 0.4090344665340167,
+              "std": 0.004163493724309965,
+              "min": 0.40279703467911476,
+              "max": 0.41351087377788415
+            },
+            "per_seed": [
+              0.41351087377788415,
+              0.40712365830647596,
+              0.41083449610110007,
+              0.4109062698055086,
+              0.40279703467911476
+            ]
+          },
+          "brier": {
+            "mean_std": {
+              "mean": 0.2600491332686952,
+              "std": 0.003127495094086172,
+              "min": 0.25516916878598034,
+              "max": 0.2626868843873351
+            },
+            "per_seed": [
+              0.2626868843873351,
+              0.25872899333977045,
+              0.2614661890467512,
+              0.2621944307836391,
+              0.25516916878598034
+            ]
+          },
+          "ece": {
+            "mean_std": {
+              "mean": 0.02600815373659134,
+              "std": 0.004549150329985707,
+              "min": 0.019221903681755085,
+              "max": 0.031222967147827123
+            },
+            "per_seed": [
+              0.025390393316745752,
+              0.028940371155738852,
+              0.02526513338088987,
+              0.031222967147827123,
+              0.019221903681755085
+            ]
+          },
+          "mce": {
+            "mean_std": {
+              "mean": 0.07505630509157477,
+              "std": 0.0328180763543521,
+              "min": 0.0407556286756543,
+              "max": 0.12928198774655658
+            },
+            "per_seed": [
+              0.07103155460208654,
+              0.07203242312306946,
+              0.06217993131050692,
+              0.12928198774655658,
+              0.0407556286756543
+            ]
+          }
+        },
+        "trainable_params": 16770,
+        "trainable_params_by_module": {
+          "probe": 16770
+        },
+        "grad_norms_per_seed": [
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          }
+        ],
+        "n_train_pairs": 1500,
+        "n_test_pairs": 1000
+      },
+      "per_seed": [
+        {
+          "question": "yelp_detractor",
+          "arm": "p2_mlp",
+          "seed": 0,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8190000057220459,
+            "macro_f1": 0.5730316404784876,
+            "nll": 0.41351087377788415,
+            "brier": 0.2626868843873351,
+            "ece": 0.025390393316745752,
+            "mce": 0.07103155460208654
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 16770,
+          "trainable_params_by_module": {
+            "probe": 16770
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.42002490783731145,
+          "wall_s": 0.54,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p2_mlp",
+          "seed": 1,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8180000185966492,
+            "macro_f1": 0.6329905222827182,
+            "nll": 0.40712365830647596,
+            "brier": 0.25872899333977045,
+            "ece": 0.028940371155738852,
+            "mce": 0.07203242312306946
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 16770,
+          "trainable_params_by_module": {
+            "probe": 16770
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.41032612323760986,
+          "wall_s": 0.39,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p2_mlp",
+          "seed": 2,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8199999928474426,
+            "macro_f1": 0.5707704194049924,
+            "nll": 0.41083449610110007,
+            "brier": 0.2614661890467512,
+            "ece": 0.02526513338088987,
+            "mce": 0.06217993131050692
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 16770,
+          "trainable_params_by_module": {
+            "probe": 16770
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.41285730463763076,
+          "wall_s": 0.69,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p2_mlp",
+          "seed": 3,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8140000104904175,
+            "macro_f1": 0.5360716744320619,
+            "nll": 0.4109062698055086,
+            "brier": 0.2621944307836391,
+            "ece": 0.031222967147827123,
+            "mce": 0.12928198774655658
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 16770,
+          "trainable_params_by_module": {
+            "probe": 16770
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.4159512283901374,
+          "wall_s": 0.58,
+          "absa_breakdown": null
+        },
+        {
+          "question": "yelp_detractor",
+          "arm": "p2_mlp",
+          "seed": 4,
+          "label_provenance": "DERIVED",
+          "status": "OK",
+          "metrics": {
+            "accuracy": 0.8230000138282776,
+            "macro_f1": 0.62914151498834,
+            "nll": 0.40279703467911476,
+            "brier": 0.25516916878598034,
+            "ece": 0.019221903681755085,
+            "mce": 0.0407556286756543
+          },
+          "n_train_pairs": 1500,
+          "n_test_pairs": 1000,
+          "n_question_groups": 1,
+          "trainable_params": 16770,
+          "trainable_params_by_module": {
+            "probe": 16770
+          },
+          "grad_norms": {
+            "at_step": {},
+            "note": "P1/P2 are a single Linear (or a two-layer MLP); their gradient is inside the arm's total and is not broken down per module."
+          },
+          "final_epoch_loss": 0.4087678926686446,
+          "wall_s": 0.44,
+          "absa_breakdown": null
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "decisive_question": "Does at least one question on at least one dataset show a conditioning mode beating the state-only arm with NON-OVERLAPPING 5-seed accuracy ranges?",
+    "answer": "NO",
+    "n_wins": 0,
+    "wins": [],
+    "all_comparisons": [
+      {
+        "question": "yelp_detractor",
+        "conditioned_arm": "full",
+        "baseline_arm": "off",
+        "conditioned_mean": 0.8127999901771545,
+        "conditioned_std": 0.0077588455142760405,
+        "conditioned_range": [
+          0.7990000247955322,
+          0.8169999718666077
+        ],
+        "baseline_mean": 0.8062000036239624,
+        "baseline_std": 0.01742698663007407,
+        "baseline_range": [
+          0.7770000100135803,
+          0.8199999928474426
+        ],
+        "delta_pp": 0.6599986553192161,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": 0.489291071874816,
+        "verdict": "TIE"
+      },
+      {
+        "question": "yelp_detractor",
+        "conditioned_arm": "full",
+        "baseline_arm": "state_only",
+        "conditioned_mean": 0.8127999901771545,
+        "conditioned_std": 0.0077588455142760405,
+        "conditioned_range": [
+          0.7990000247955322,
+          0.8169999718666077
+        ],
+        "baseline_mean": 0.807800006866455,
+        "baseline_std": 0.011256113597383927,
+        "baseline_range": [
+          0.7960000038146973,
+          0.8190000057220459
+        ],
+        "delta_pp": 0.49999833106995073,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": 0.5172245863036812,
+        "verdict": "TIE"
+      },
+      {
+        "question": "yelp_detractor",
+        "conditioned_arm": "off",
+        "baseline_arm": "state_only",
+        "conditioned_mean": 0.8062000036239624,
+        "conditioned_std": 0.01742698663007407,
+        "conditioned_range": [
+          0.7770000100135803,
+          0.8199999928474426
+        ],
+        "baseline_mean": 0.807800006866455,
+        "baseline_std": 0.011256113597383927,
+        "baseline_range": [
+          0.7960000038146973,
+          0.8190000057220459
+        ],
+        "delta_pp": -0.16000032424926536,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": -0.10906860319749342,
+        "verdict": "LOSS"
+      },
+      {
+        "question": "yelp_stars",
+        "conditioned_arm": "full",
+        "baseline_arm": "off",
+        "conditioned_mean": 0.3687999963760376,
+        "conditioned_std": 0.007694149656786948,
+        "conditioned_range": [
+          0.35899999737739563,
+          0.3779999911785126
+        ],
+        "baseline_mean": 0.38359999656677246,
+        "baseline_std": 0.014587664736791543,
+        "baseline_range": [
+          0.3630000054836273,
+          0.39899998903274536
+        ],
+        "delta_pp": -1.4800000190734852,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": -1.269089776399672,
+        "verdict": "LOSS"
+      },
+      {
+        "question": "yelp_stars",
+        "conditioned_arm": "full",
+        "baseline_arm": "state_only",
+        "conditioned_mean": 0.3687999963760376,
+        "conditioned_std": 0.007694149656786948,
+        "conditioned_range": [
+          0.35899999737739563,
+          0.3779999911785126
+        ],
+        "baseline_mean": 0.38159999847412107,
+        "baseline_std": 0.008734978381020546,
+        "baseline_range": [
+          0.367000013589859,
+          0.38999998569488525
+        ],
+        "delta_pp": -1.2800002098083463,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": -1.5550907338554187,
+        "verdict": "LOSS"
+      },
+      {
+        "question": "yelp_stars",
+        "conditioned_arm": "off",
+        "baseline_arm": "state_only",
+        "conditioned_mean": 0.38359999656677246,
+        "conditioned_std": 0.014587664736791543,
+        "conditioned_range": [
+          0.3630000054836273,
+          0.39899998903274536
+        ],
+        "baseline_mean": 0.38159999847412107,
+        "baseline_std": 0.008734978381020546,
+        "baseline_range": [
+          0.367000013589859,
+          0.38999998569488525
+        ],
+        "delta_pp": 0.19999980926513894,
+        "ranges_disjoint": false,
+        "delta_in_pooled_stds": 0.1663491845777717,
+        "verdict": "TIE"
+      }
+    ],
+    "aggregate_over_questions_per_arm": {
+      "full": {
+        "mean_over_questions": 0.590799993276596,
+        "std_over_questions": 0.31395540646355485,
+        "mean_of_per_question_stds": 0.007726497585531494,
+        "n_questions": 2,
+        "per_question_mean": {
+          "yelp_detractor": 0.8127999901771545,
+          "yelp_stars": 0.3687999963760376
+        },
+        "per_question_range": {
+          "yelp_detractor": [
+            0.7990000247955322,
+            0.8169999718666077
+          ],
+          "yelp_stars": [
+            0.35899999737739563,
+            0.3779999911785126
+          ]
+        },
+        "per_question_per_seed": {
+          "yelp_detractor": [
+            0.7990000247955322,
+            0.8169999718666077,
+            0.8169999718666077,
+            0.8149999976158142,
+            0.8159999847412109
+          ],
+          "yelp_stars": [
+            0.3779999911785126,
+            0.35899999737739563,
+            0.3630000054836273,
+            0.3709999918937683,
+            0.37299999594688416
+          ]
+        }
+      },
+      "off": {
+        "mean_over_questions": 0.5949000000953675,
+        "std_over_questions": 0.2988233307196218,
+        "mean_of_per_question_stds": 0.016007325683432806,
+        "n_questions": 2,
+        "per_question_mean": {
+          "yelp_detractor": 0.8062000036239624,
+          "yelp_stars": 0.38359999656677246
+        },
+        "per_question_range": {
+          "yelp_detractor": [
+            0.7770000100135803,
+            0.8199999928474426
+          ],
+          "yelp_stars": [
+            0.3630000054836273,
+            0.39899998903274536
+          ]
+        },
+        "per_question_per_seed": {
+          "yelp_detractor": [
+            0.8090000152587891,
+            0.8059999942779541,
+            0.7770000100135803,
+            0.8199999928474426,
+            0.8190000057220459
+          ],
+          "yelp_stars": [
+            0.39899998903274536,
+            0.3630000054836273,
+            0.38499999046325684,
+            0.37599998712539673,
+            0.39500001072883606
+          ]
+        }
+      },
+      "p1_linear": {
+        "mean_over_questions": 0.5611999958753586,
+        "std_over_questions": 0.34308821431152775,
+        "mean_of_per_question_stds": 0.014573651999190952,
+        "n_questions": 2,
+        "per_question_mean": {
+          "yelp_detractor": 0.8037999987602233,
+          "yelp_stars": 0.3185999929904938
+        },
+        "per_question_range": {
+          "yelp_detractor": [
+            0.8019999861717224,
+            0.8059999942779541
+          ],
+          "yelp_stars": [
+            0.27399998903274536,
+            0.34299999475479126
+          ]
+        },
+        "per_question_per_seed": {
+          "yelp_detractor": [
+            0.8040000200271606,
+            0.8029999732971191,
+            0.8019999861717224,
+            0.8059999942779541,
+            0.8040000200271606
+          ],
+          "yelp_stars": [
+            0.3240000009536743,
+            0.31299999356269836,
+            0.33899998664855957,
+            0.27399998903274536,
+            0.34299999475479126
+          ]
+        }
+      },
+      "p2_mlp": {
+        "mean_over_questions": 0.5878000020980835,
+        "std_over_questions": 0.32668334167472945,
+        "mean_of_per_question_stds": 0.0052132506832368065,
+        "n_questions": 2,
+        "per_question_mean": {
+          "yelp_detractor": 0.8188000082969665,
+          "yelp_stars": 0.3567999958992004
+        },
+        "per_question_range": {
+          "yelp_detractor": [
+            0.8140000104904175,
+            0.8230000138282776
+          ],
+          "yelp_stars": [
+            0.3449999988079071,
+            0.3619999885559082
+          ]
+        },
+        "per_question_per_seed": {
+          "yelp_detractor": [
+            0.8190000057220459,
+            0.8180000185966492,
+            0.8199999928474426,
+            0.8140000104904175,
+            0.8230000138282776
+          ],
+          "yelp_stars": [
+            0.3610000014305115,
+            0.35499998927116394,
+            0.3610000014305115,
+            0.3449999988079071,
+            0.3619999885559082
+          ]
+        }
+      },
+      "state_only": {
+        "mean_over_questions": 0.594700002670288,
+        "std_over_questions": 0.3013689160759828,
+        "mean_of_per_question_stds": 0.009995545989202236,
+        "n_questions": 2,
+        "per_question_mean": {
+          "yelp_detractor": 0.807800006866455,
+          "yelp_stars": 0.38159999847412107
+        },
+        "per_question_range": {
+          "yelp_detractor": [
+            0.7960000038146973,
+            0.8190000057220459
+          ],
+          "yelp_stars": [
+            0.367000013589859,
+            0.38999998569488525
+          ]
+        },
+        "per_question_per_seed": {
+          "yelp_detractor": [
+            0.796999990940094,
+            0.8080000281333923,
+            0.7960000038146973,
+            0.8190000057220459,
+            0.8190000057220459
+          ],
+          "yelp_stars": [
+            0.382999986410141,
+            0.367000013589859,
+            0.38600000739097595,
+            0.38999998569488525,
+            0.38199999928474426
+          ]
+        }
+      }
+    }
+  },
+  "wall_s": 1004.12,
+  "arms_run": [
+    "full",
+    "off",
+    "p1_linear",
+    "p2_mlp",
+    "state_only"
+  ],
+  "arms_not_run": [
+    "constant"
+  ],
+  "arms_not_run_reason": "conditioning_mode='constant' is inference-only and bitwise-equal to 'full' (selfcheck, cache-cost and the ABSA 5-seed grid all measure them identical), so it was dropped from this dataset to fit the wave's wall-clock budget. It is LABELLED as not run, never reported as a result.",
+  "cells_complete": true,
+  "status_recomputed_by": "_wave2_finalise.py: recomputed from the cells present (every cell has all 5 seeds OK, 10/10 cells). The three processes that wrote these files were launched before the in-process PARTIAL->OK reset existed, so the in-file flag was stale; no metric was recomputed."
+}

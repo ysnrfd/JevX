@@ -1,0 +1,629 @@
+{
+  "provenance": {
+    "modality": "audio",
+    "backbone_id": "superb/wav2vec2-base-superb-ks",
+    "backbone_revision_api": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_revision_loaded": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+    "backbone_params": 94371712,
+    "dataset": {
+      "dataset_id": "Codec-SUPERB/RAVDESS",
+      "dataset_revision": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "snapshot_component": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+      "n_clips": 1440,
+      "label_counts": {
+        "neutral": 96,
+        "calm": 192,
+        "happy": 192,
+        "sad": 192,
+        "angry": 192,
+        "fearful": 192,
+        "disgusted": 192,
+        "surprised": 192
+      },
+      "download_wall_s": 2.25
+    },
+    "question": "Which emotion is spoken in this audio?",
+    "options": [
+      "neutral",
+      "calm",
+      "happy",
+      "sad",
+      "angry",
+      "fearful",
+      "disgusted",
+      "surprised"
+    ],
+    "pooling": "pooling_method=None (adapter default = masked_mean); audio: native default -> wav2vec2 has no pooler, adapter masked_mean over frames",
+    "decision_hidden_size": 768,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 8,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": 3.0
+    },
+    "splits": {
+      "train_n": 700,
+      "cal_n": 240,
+      "test_n": 500,
+      "train_label_counts": {
+        "7": 93,
+        "5": 93,
+        "3": 93,
+        "1": 94,
+        "4": 93,
+        "6": 93,
+        "2": 94,
+        "0": 47
+      },
+      "cal_label_counts": {
+        "5": 32,
+        "7": 32,
+        "1": 32,
+        "2": 32,
+        "3": 32,
+        "4": 32,
+        "6": 32,
+        "0": 16
+      },
+      "test_label_counts": {
+        "4": 67,
+        "1": 66,
+        "6": 67,
+        "5": 67,
+        "2": 66,
+        "0": 33,
+        "3": 67,
+        "7": 67
+      },
+      "train_source": "stratified carve from the corpus pool (disjoint, seed=0)",
+      "test_source": "disjoint remainder of the pool after train/cal (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "train_loss_first": 7.1379971937699755,
+      "train_loss_last": 2.015803434632041,
+      "trainable_params": 13579265,
+      "uncalibrated": {
+        "accuracy": 0.17399999499320984,
+        "macro_f1": 0.08689441733127008,
+        "nll": 2.010965605799216,
+        "brier": 0.8741043821693079,
+        "ece": 0.12388340947031974,
+        "mce": 0.35079314677338846
+      },
+      "temperature": {
+        "accuracy": 0.17399999499320984,
+        "macro_f1": 0.08689441733127008,
+        "nll": 1.9782729823277312,
+        "brier": 0.8550404850726008,
+        "ece": 0.060260194927454,
+        "mce": 0.5180105865001678
+      },
+      "isotonic": {
+        "accuracy": 0.20399999618530273,
+        "macro_f1": 0.10915753460470028,
+        "nll": 2.4140478766918942,
+        "brier": 0.8557479101216567,
+        "ece": 0.035263973891735086,
+        "mce": 0.13268698751926422
+      }
+    },
+    {
+      "seed": 1,
+      "train_loss_first": 6.557175592942671,
+      "train_loss_last": 2.016786120154641,
+      "trainable_params": 13579265,
+      "uncalibrated": {
+        "accuracy": 0.20600000023841858,
+        "macro_f1": 0.1367137050752975,
+        "nll": 1.956135246620076,
+        "brier": 0.8511745314975633,
+        "ece": 0.06131781378388403,
+        "mce": 0.3396185413002968
+      },
+      "temperature": {
+        "accuracy": 0.20600000023841858,
+        "macro_f1": 0.1367137050752975,
+        "nll": 1.950482767410369,
+        "brier": 0.8478258824119819,
+        "ece": 0.04299040308594705,
+        "mce": 0.1857256316221677
+      },
+      "isotonic": {
+        "accuracy": 0.21199999749660492,
+        "macro_f1": 0.1384872258269552,
+        "nll": 2.0569089294525207,
+        "brier": 0.854670305318092,
+        "ece": 0.06896034851670266,
+        "mce": 0.5082720816135406
+      }
+    },
+    {
+      "seed": 2,
+      "train_loss_first": 6.824714487249201,
+      "train_loss_last": 2.0061021501367744,
+      "trainable_params": 13579265,
+      "uncalibrated": {
+        "accuracy": 0.2460000067949295,
+        "macro_f1": 0.15145903517776294,
+        "nll": 1.9397735879034446,
+        "brier": 0.8407675598793173,
+        "ece": 0.07895720690488814,
+        "mce": 0.41186004877090454
+      },
+      "temperature": {
+        "accuracy": 0.2460000067949295,
+        "macro_f1": 0.15145903517776294,
+        "nll": 1.9414529252913357,
+        "brier": 0.8409169785508611,
+        "ece": 0.06460921263694765,
+        "mce": 0.4230533540248871
+      },
+      "isotonic": {
+        "accuracy": 0.2680000066757202,
+        "macro_f1": 0.1679084154666388,
+        "nll": 2.309669624244632,
+        "brier": 0.864079100755029,
+        "ece": 0.07716180774569513,
+        "mce": 0.8716324037975736
+      }
+    }
+  ],
+  "aggregate": {
+    "uncalibrated": {
+      "accuracy": {
+        "mean": 0.20866666734218597,
+        "std": 0.03607400393557221
+      },
+      "macro_f1": {
+        "mean": 0.1250223858614435,
+        "std": 0.033832863877243526
+      },
+      "nll": {
+        "mean": 1.9689581467742456,
+        "std": 0.037288013211899625
+      },
+      "brier": {
+        "mean": 0.8553488245153962,
+        "std": 0.017055921896738657
+      },
+      "ece": {
+        "mean": 0.08805281005303063,
+        "std": 0.03225927678003663
+      },
+      "mce": {
+        "mean": 0.36742391228152993,
+        "std": 0.038886316635116776
+      }
+    },
+    "temperature": {
+      "accuracy": {
+        "mean": 0.20866666734218597,
+        "std": 0.03607400393557221
+      },
+      "macro_f1": {
+        "mean": 0.1250223858614435,
+        "std": 0.033832863877243526
+      },
+      "nll": {
+        "mean": 1.956736225009812,
+        "std": 0.019190061203703247
+      },
+      "brier": {
+        "mean": 0.8479277820118146,
+        "std": 0.00706230463543879
+      },
+      "ece": {
+        "mean": 0.055953270216782904,
+        "std": 0.011434834146070971
+      },
+      "mce": {
+        "mean": 0.3755965240490742,
+        "std": 0.17115033112174677
+      }
+    },
+    "isotonic": {
+      "accuracy": {
+        "mean": 0.2280000001192093,
+        "std": 0.0348711972641591
+      },
+      "macro_f1": {
+        "mean": 0.1385177252994314,
+        "std": 0.029375452305909933
+      },
+      "nll": {
+        "mean": 2.2602088101296824,
+        "std": 0.18363506203472477
+      },
+      "brier": {
+        "mean": 0.858165772064926,
+        "std": 0.005149359200528156
+      },
+      "ece": {
+        "mean": 0.06046204338471095,
+        "std": 0.02220412153184263
+      },
+      "mce": {
+        "mean": 0.5041971576434595,
+        "std": 0.36948956117013976
+      }
+    }
+  },
+  "equivalence": [
+    {
+      "seed": 0,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 1,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    },
+    {
+      "seed": 2,
+      "n": 16,
+      "max_abs_diff": 0.0,
+      "note": "identical modules; nonzero diff only from float re-association between independently batched backbone passes"
+    }
+  ],
+  "invariants": {
+    "n_batches_checked": 36,
+    "max_prob_sum_abs_dev": 2.384185791015625e-07,
+    "min_prob": 0.0012906516203656793,
+    "max_prob": 0.6370373368263245,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "wall_s": 261.29,
+  "supersession": {
+    "supersedes_file": "benchmarks/results/audio_jevx_quality.json",
+    "supersedes_sha256": "8067270c1bdde6d6bb9033bb7b1a9851e77b77aae19e37a0c6054668a1cc623d",
+    "old_uncalibrated_accuracy_mean": 0.1340000033378601,
+    "old_uncalibrated_accuracy_std": 0.0,
+    "old_nll_mean": 2.628013172241575,
+    "old_trainable_params": 13382401,
+    "new_uncalibrated_accuracy_mean": 0.20866666734218597,
+    "new_uncalibrated_accuracy_std": 0.03607400393557221,
+    "new_nll_mean": 1.9689581467742456,
+    "new_trainable_params": 13579265,
+    "code_changes_between_them": [
+      "Fusion.option_normalize now defaults to True (spec 5.f): the option row enters as a unit DIRECTION before W_o. jevx/representations/fusion.py Fusion.__init__(hidden_size, option_normalize: bool = True).",
+      "The choice head's additive state-only pathway is now the default (ChoiceHead / DecisionHead state_pathway, jevx/decisions/generic.py LinearProbePathway + MLPStatePathway), so the head scores z_k = state_k + lambda * r_k instead of the v1 interaction-only form."
+    ],
+    "protocol_unchanged": "Identical to reports/MODALITY_BENCHMARKS.md 5: benchmarks/run_modality.py --modality audio --seeds 0,1,2, verbatim defaults (epochs 4, lr 1e-3, head batch 64, split seed 0, train 700 / cal 240 / test 500)."
+  },
+  "baselines_same_run": {
+    "note": "B1/B2 probes measured in the SAME run, same features/splits/",
+    "payload": {
+      "provenance": {
+        "modality": "audio",
+        "backbone_id": "superb/wav2vec2-base-superb-ks",
+        "backbone_revision_api": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+        "backbone_revision_loaded": "372e0486cd83e6f0c05c20a27262e9ca09450d24",
+        "backbone_params": 94371712,
+        "dataset": {
+          "dataset_id": "Codec-SUPERB/RAVDESS",
+          "dataset_revision": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+          "snapshot_component": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+          "n_clips": 1440,
+          "label_counts": {
+            "neutral": 96,
+            "calm": 192,
+            "happy": 192,
+            "sad": 192,
+            "angry": 192,
+            "fearful": 192,
+            "disgusted": 192,
+            "surprised": 192
+          },
+          "download_wall_s": 2.25
+        },
+        "question": "Which emotion is spoken in this audio?",
+        "options": [
+          "neutral",
+          "calm",
+          "happy",
+          "sad",
+          "angry",
+          "fearful",
+          "disgusted",
+          "surprised"
+        ],
+        "pooling": "pooling_method=None (adapter default = masked_mean); audio: native default -> wav2vec2 has no pooler, adapter masked_mean over frames",
+        "decision_hidden_size": 768,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "hyperparams": {
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "vision_feat_batch": 32,
+          "audio_feat_batch": 8,
+          "split_seed": 0,
+          "smoke": false,
+          "audio_max_seconds": 3.0
+        },
+        "splits": {
+          "train_n": 700,
+          "cal_n": 240,
+          "test_n": 500,
+          "train_label_counts": {
+            "7": 93,
+            "5": 93,
+            "3": 93,
+            "1": 94,
+            "4": 93,
+            "6": 93,
+            "2": 94,
+            "0": 47
+          },
+          "cal_label_counts": {
+            "5": 32,
+            "7": 32,
+            "1": 32,
+            "2": 32,
+            "3": 32,
+            "4": 32,
+            "6": 32,
+            "0": 16
+          },
+          "test_label_counts": {
+            "4": 67,
+            "1": 66,
+            "6": 67,
+            "5": 67,
+            "2": 66,
+            "0": 33,
+            "3": 67,
+            "7": 67
+          },
+          "train_source": "stratified carve from the corpus pool (disjoint, seed=0)",
+          "test_source": "disjoint remainder of the pool after train/cal (n=500, seed=0)"
+        },
+        "environment": {
+          "python": "3.14.3",
+          "platform": "Windows-11-10.0.26100-SP0",
+          "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+          "cpu_count": 4,
+          "torch": "2.14.0+cpu",
+          "transformers": "5.16.1",
+          "datasets": "4.4.1",
+          "numpy": "2.3.5",
+          "torch_threads": 2,
+          "cuda_available": false,
+          "dtype": "float32"
+        }
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "b1_linear": {
+            "train_loss_first": 2.063044461337003,
+            "train_loss_last": 1.914943738417192,
+            "trainable_params": 6152,
+            "test": {
+              "accuracy": 0.3479999899864197,
+              "macro_f1": 0.2937718978158725,
+              "nll": 1.9148601427993643,
+              "brier": 0.8325818307599276,
+              "ece": 0.1722100070118904,
+              "mce": 0.38803675770759577
+            }
+          },
+          "b4_linear_temperature": {
+            "accuracy": 0.3479999899864197,
+            "macro_f1": 0.2937718978158725,
+            "nll": 1.7909073960867132,
+            "brier": 0.7878445324959287,
+            "ece": 0.04625496655702593,
+            "mce": 0.27748531103134155
+          },
+          "b2_mlp": {
+            "train_loss_first": 2.0468610416759145,
+            "train_loss_last": 1.7371422269127585,
+            "trainable_params": 596744,
+            "test": {
+              "accuracy": 0.37400001287460327,
+              "macro_f1": 0.3234837280971917,
+              "nll": 1.740734208029093,
+              "brier": 0.7772947433995728,
+              "ece": 0.10086324813961982,
+              "mce": 0.26963185270627343
+            }
+          }
+        },
+        {
+          "seed": 1,
+          "b1_linear": {
+            "train_loss_first": 2.0582632801749488,
+            "train_loss_last": 1.9184853922237048,
+            "trainable_params": 6152,
+            "test": {
+              "accuracy": 0.328000009059906,
+              "macro_f1": 0.27316785710559466,
+              "nll": 1.9154099309383825,
+              "brier": 0.8328087948589199,
+              "ece": 0.14474219739437105,
+              "mce": 0.34935099868213426
+            }
+          },
+          "b4_linear_temperature": {
+            "accuracy": 0.328000009059906,
+            "macro_f1": 0.27316785710559466,
+            "nll": 1.8330302375801517,
+            "brier": 0.8029805245995283,
+            "ece": 0.08198580414056778,
+            "mce": 0.16268381444697688
+          },
+          "b2_mlp": {
+            "train_loss_first": 2.0488190976056186,
+            "train_loss_last": 1.7210870872844348,
+            "trainable_params": 596744,
+            "test": {
+              "accuracy": 0.33000001311302185,
+              "macro_f1": 0.24616443138389288,
+              "nll": 1.7397906305369017,
+              "brier": 0.7812382541083451,
+              "ece": 0.04516237369179726,
+              "mce": 0.4479838013648987
+            }
+          }
+        },
+        {
+          "seed": 2,
+          "b1_linear": {
+            "train_loss_first": 2.0627536340193315,
+            "train_loss_last": 1.9155774441632358,
+            "trainable_params": 6152,
+            "test": {
+              "accuracy": 0.3540000021457672,
+              "macro_f1": 0.31993215787861123,
+              "nll": 1.9180746319277304,
+              "brier": 0.8342206446515972,
+              "ece": 0.17941244670748713,
+              "mce": 0.286890826523304
+            }
+          },
+          "b4_linear_temperature": {
+            "accuracy": 0.3540000021457672,
+            "macro_f1": 0.31993215787861123,
+            "nll": 1.8220876740123721,
+            "brier": 0.7975864350299214,
+            "ece": 0.07529231646656992,
+            "mce": 0.5150108635425568
+          },
+          "b2_mlp": {
+            "train_loss_first": 2.0337893746115943,
+            "train_loss_last": 1.7071946859359741,
+            "trainable_params": 596744,
+            "test": {
+              "accuracy": 0.3779999911785126,
+              "macro_f1": 0.34136681542263647,
+              "nll": 1.7204338349878991,
+              "brier": 0.7737795176182369,
+              "ece": 0.09945943024754524,
+              "mce": 0.38658830523490906
+            }
+          }
+        }
+      ],
+      "aggregate": {
+        "b1_linear": {
+          "accuracy": {
+            "mean": 0.34333333373069763,
+            "std": 0.013613712593301281
+          },
+          "macro_f1": {
+            "mean": 0.29562397093335946,
+            "std": 0.023437098536757447
+          },
+          "nll": {
+            "mean": 1.9161149018884924,
+            "std": 0.001719294366730166
+          },
+          "brier": {
+            "mean": 0.833203756756815,
+            "std": 0.0008879323839538006
+          },
+          "ece": {
+            "mean": 0.16545488370458286,
+            "std": 0.01829563650248615
+          },
+          "mce": {
+            "mean": 0.3414261943043447,
+            "std": 0.051036523609117875
+          }
+        },
+        "b2_mlp": {
+          "accuracy": {
+            "mean": 0.3606666723887126,
+            "std": 0.026633305276597134
+          },
+          "macro_f1": {
+            "mean": 0.3036716583012404,
+            "std": 0.05059903224237437
+          },
+          "nll": {
+            "mean": 1.7336528911846312,
+            "std": 0.011457755874088739
+          },
+          "brier": {
+            "mean": 0.7774375050420517,
+            "std": 0.0037314170461287656
+          },
+          "ece": {
+            "mean": 0.08182835069298744,
+            "std": 0.031761424373875025
+          },
+          "mce": {
+            "mean": 0.36806798643536043,
+            "std": 0.09060687641625172
+          }
+        },
+        "b4_linear_temperature": {
+          "accuracy": {
+            "mean": 0.34333333373069763,
+            "std": 0.013613712593301281
+          },
+          "macro_f1": {
+            "mean": 0.29562397093335946,
+            "std": 0.023437098536757447
+          },
+          "nll": {
+            "mean": 1.8153417692264124,
+            "std": 0.0218566664294046
+          },
+          "brier": {
+            "mean": 0.7961371640417928,
+            "std": 0.007671365852169416
+          },
+          "ece": {
+            "mean": 0.06784436238805454,
+            "std": 0.018994136031210185
+          },
+          "mce": {
+            "mean": 0.31839332967362505,
+            "std": 0.1796905308385165
+          }
+        }
+      },
+      "invariants": {
+        "n_batches_checked": 108,
+        "max_prob_sum_abs_dev": 2.384185791015625e-07,
+        "min_prob": 0.0012906516203656793,
+        "max_prob": 0.6370373368263245,
+        "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+      },
+      "wall_s": 6.6
+    }
+  }
+}

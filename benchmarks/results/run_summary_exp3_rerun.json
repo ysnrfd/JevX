@@ -1,0 +1,16 @@
+{
+  "experiments_run": [
+    "exp3"
+  ],
+  "failures": {},
+  "context_timings_s": {
+    "load_dataset_s": 19.47,
+    "load_backbone_s": 6.23,
+    "featurize_all_splits_s": 14.14
+  },
+  "total_wall_time_s": 118.11,
+  "platform": "Windows-11-10.0.26100-SP0",
+  "torch": "2.14.0+cpu",
+  "torch_threads": 2,
+  "dtype": "float32"
+}

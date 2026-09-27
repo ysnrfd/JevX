@@ -1,0 +1,59 @@
+{
+  "phase": "selfcheck",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 1,
+    "cuda_available": false,
+    "dtype": "float32",
+    "torch_threads_set_to": 1,
+    "loadavg": null
+  },
+  "stub_is_not_a_constant_function": {
+    "backbone_forward_calls": 1,
+    "max_abs_diff_vs_real_pass": 0.03306705504655838,
+    "why": "the stubbed feature table is all zeros, so a stub that ignored the features would reproduce the real pass exactly; a NON-zero difference is the evidence that the real pass actually reads the features. This cell FAILS if the difference is zero.",
+    "passed": true
+  },
+  "frozen_replay_is_bitwise": {
+    "max_abs_diff": 0.0,
+    "bitwise_equal": true,
+    "note": "featurize-once, then replay the SAME feature through the frozen path"
+  },
+  "constant_cache_bitwise_tiny": {
+    "cold_equals_full": true,
+    "warm_equals_full": true,
+    "after_content_change_equals_full": true,
+    "content_change_actually_moved_the_logits": true,
+    "cold_max_abs_diff": 0.0,
+    "warm_max_abs_diff": 0.0,
+    "after_content_change_max_abs_diff": 0.0
+  },
+  "constant_cache_bitwise_real": {
+    "cold_equals_full": true,
+    "warm_equals_full": true,
+    "after_content_change_equals_full": true,
+    "content_change_actually_moved_the_logits": true,
+    "cold_max_abs_diff": 0.0,
+    "warm_max_abs_diff": 0.0,
+    "after_content_change_max_abs_diff": 0.0
+  },
+  "stale_memo_probe": {
+    "protocol": "eval (fills the memo) -> one AdamW step -> clear the memo -> eval",
+    "max_abs_diff": 0.0,
+    "bitwise_equal": true
+  },
+  "stale_memo_probe_no_clear": {
+    "protocol": "eval (fills the memo) -> one AdamW step -> eval WITHOUT clearing",
+    "max_abs_diff": 41455.6484375,
+    "bitwise_equal": false,
+    "note": "a non-zero difference is the content-keyed memo serving a STALE H_Q/H_C after an in-place weight change it cannot observe. It is a property of the shipped memo (it is keyed on content, not on weights), not something this benchmark introduced."
+  },
+  "all_passed": true
+}

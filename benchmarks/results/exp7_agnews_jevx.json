@@ -1,0 +1,313 @@
+{
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "fancyzhx/ag_news",
+    "dataset_revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+    "question": "What is the topic of this news article?",
+    "options": [
+      "World",
+      "Sports",
+      "Business",
+      "Sci/Tech"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "split_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "dataset_license": "unknown (HF API tag license:unknown, fetched 2026-09-24)",
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 1500,
+      "train_label_counts": {
+        "2": 750,
+        "1": 750,
+        "0": 750,
+        "3": 750
+      },
+      "cal_label_counts": {
+        "2": 250,
+        "0": 250,
+        "3": 250,
+        "1": 250
+      },
+      "test_label_counts": {
+        "2": 336,
+        "3": 385,
+        "1": 401,
+        "0": 378
+      },
+      "official_train_n": 120000,
+      "official_test_n": 7600,
+      "test_source": "official test split, first 1500 rows (cap applied=True; deterministic [:test_size] slice, mirroring run_quality.py)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0,
+      "disjointness": "asserted at construction by bc.make_splits",
+      "truncation": {
+        "max_length": 128,
+        "note": "featurize() truncates to max_length; model.choice() never truncates (JevX raises instead). Rows over max_length are excluded from the equivalence subset only - the benchmark metrics always use the truncated (featurize-once) features.",
+        "per_split_token_len": {
+          "train": {
+            "n": 3000,
+            "over_max_length": 15,
+            "max_len_observed": 192
+          },
+          "cal": {
+            "n": 1000,
+            "over_max_length": 5,
+            "max_len_observed": 186
+          },
+          "test": {
+            "n": 1500,
+            "over_max_length": 11,
+            "max_len_observed": 217
+          }
+        }
+      }
+    }
+  },
+  "experiment": "exp7",
+  "sub_experiment": "exp7a",
+  "description": "JevX heads over frozen bert backbone (Mode A) on ag_news, 3 training seeds",
+  "dataset": "fancyzhx/ag_news",
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "seed": 0,
+      "train_loss_first": 0.6451474872041256,
+      "train_loss_last": 0.3900349457213219,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.8073333501815796,
+        "macro_f1": 0.8049761058759624,
+        "nll": 0.5398936379077426,
+        "brier": 0.2848963293384521,
+        "ece": 0.04719095563888547,
+        "mce": 0.07954114071930518
+      },
+      "temperature": {
+        "accuracy": 0.8073333501815796,
+        "macro_f1": 0.8049761058759624,
+        "nll": 0.5270674666064052,
+        "brier": 0.2820646139396434,
+        "ece": 0.02474394667148595,
+        "mce": 0.18771180013815564
+      },
+      "isotonic": {
+        "accuracy": 0.8073333501815796,
+        "macro_f1": 0.8050558733876242,
+        "nll": 0.5945608158842314,
+        "brier": 0.28895004888538606,
+        "ece": 0.038439512312412216,
+        "mce": 0.14447171696656036
+      }
+    },
+    {
+      "seed": 1,
+      "train_loss_first": 0.6246937291419252,
+      "train_loss_last": 0.3901136343149429,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.8320000171661377,
+        "macro_f1": 0.8271458325356802,
+        "nll": 0.5107910683718878,
+        "brier": 0.2583913136969219,
+        "ece": 0.06114732547601062,
+        "mce": 0.19922419517270978
+      },
+      "temperature": {
+        "accuracy": 0.8320000171661377,
+        "macro_f1": 0.8271458325356802,
+        "nll": 0.4854371723300002,
+        "brier": 0.2538925832945859,
+        "ece": 0.02937532961368562,
+        "mce": 0.23425822854042055
+      },
+      "isotonic": {
+        "accuracy": 0.8293333053588867,
+        "macro_f1": 0.8241960027614995,
+        "nll": 0.567355239608837,
+        "brier": 0.25745215732411697,
+        "ece": 0.0320304050445557,
+        "mce": 0.2750071883201599
+      }
+    },
+    {
+      "seed": 2,
+      "train_loss_first": 0.654458852524453,
+      "train_loss_last": 0.4043130059825613,
+      "trainable_params": 1247361,
+      "uncalibrated": {
+        "accuracy": 0.8253333568572998,
+        "macro_f1": 0.8225179884158148,
+        "nll": 0.5552957314029445,
+        "brier": 0.2655870146022997,
+        "ece": 0.07847176539897913,
+        "mce": 0.2769441696313711
+      },
+      "temperature": {
+        "accuracy": 0.8253333568572998,
+        "macro_f1": 0.8225179884158148,
+        "nll": 0.49092410971742023,
+        "brier": 0.25650497088057583,
+        "ece": 0.024561968286832218,
+        "mce": 0.07361640057093655
+      },
+      "isotonic": {
+        "accuracy": 0.8240000009536743,
+        "macro_f1": 0.8211981173230589,
+        "nll": 0.5887670013357014,
+        "brier": 0.261616163449228,
+        "ece": 0.03726902457078295,
+        "mce": 0.3045810222625732
+      }
+    }
+  ],
+  "aggregate": {
+    "uncalibrated": {
+      "accuracy": {
+        "mean": 0.8215555747350057,
+        "std": 0.012759891980515194
+      },
+      "macro_f1": {
+        "mean": 0.8182133089424858,
+        "std": 0.01169495164879813
+      },
+      "nll": {
+        "mean": 0.5353268125608582,
+        "std": 0.022601065863995996
+      },
+      "brier": {
+        "mean": 0.26962488587922456,
+        "std": 0.013706103271032253
+      },
+      "ece": {
+        "mean": 0.062270015504625076,
+        "std": 0.01567059633476197
+      },
+      "mce": {
+        "mean": 0.1852365018411287,
+        "std": 0.09944209686781676
+      }
+    },
+    "temperature": {
+      "accuracy": {
+        "mean": 0.8215555747350057,
+        "std": 0.012759891980515194
+      },
+      "macro_f1": {
+        "mean": 0.8182133089424858,
+        "std": 0.01169495164879813
+      },
+      "nll": {
+        "mean": 0.5011429162179418,
+        "std": 0.02261831901592928
+      },
+      "brier": {
+        "mean": 0.2641540560382684,
+        "std": 0.015565898800863976
+      },
+      "ece": {
+        "mean": 0.026227081524001262,
+        "std": 0.0027279806741931285
+      },
+      "mce": {
+        "mean": 0.16519547641650426,
+        "std": 0.0826540250005889
+      }
+    },
+    "isotonic": {
+      "accuracy": {
+        "mean": 0.8202222188313802,
+        "std": 0.0114762029989681
+      },
+      "macro_f1": {
+        "mean": 0.8168166644907275,
+        "std": 0.010294852344916354
+      },
+      "nll": {
+        "mean": 0.5835610189429233,
+        "std": 0.014330475729176314
+      },
+      "brier": {
+        "mean": 0.26933945655291036,
+        "std": 0.017110413071442985
+      },
+      "ece": {
+        "mean": 0.03591298064258363,
+        "std": 0.003412961374543743
+      },
+      "mce": {
+        "mean": 0.24135330918309783,
+        "std": 0.08519498281191182
+      }
+    }
+  },
+  "featurized_vs_full_model": [
+    {
+      "n": 16,
+      "max_abs_diff": 2.384185791015625e-07,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    },
+    {
+      "n": 16,
+      "max_abs_diff": 2.86102294921875e-06,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    },
+    {
+      "n": 16,
+      "max_abs_diff": 2.86102294921875e-06,
+      "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+    }
+  ],
+  "equivalence_subset": {
+    "n": 16,
+    "selection": "first test rows whose UNTRUNCATED token length <= max_length (128); rows over the cap are excluded because the full model.choice() path does not truncate while featurize() does - comparing them would measure truncation, not path drift",
+    "token_lens": [
+      32,
+      77,
+      55,
+      68,
+      54,
+      26,
+      43,
+      93,
+      63,
+      54,
+      29,
+      28,
+      31,
+      62,
+      69,
+      57
+    ]
+  },
+  "wall_time_s": 68.69
+}

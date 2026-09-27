@@ -1,0 +1,184 @@
+{
+  "phase": "cache-cost",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 1,
+    "cuda_available": false,
+    "dtype": "float32",
+    "torch_threads_set_to": 1,
+    "loadavg": null
+  },
+  "arms": [
+    "off",
+    "constant_hit",
+    "constant_miss",
+    "full"
+  ],
+  "bitwise_tiny_bert": {
+    "cold_equals_full": true,
+    "warm_equals_full": true,
+    "after_content_change_equals_full": true,
+    "content_change_actually_moved_the_logits": true,
+    "cold_max_abs_diff": 0.0,
+    "warm_max_abs_diff": 0.0,
+    "after_content_change_max_abs_diff": 0.0
+  },
+  "bitwise_real_backbone": {
+    "cold_equals_full": true,
+    "warm_equals_full": true,
+    "after_content_change_equals_full": true,
+    "content_change_actually_moved_the_logits": true,
+    "cold_max_abs_diff": 0.0,
+    "warm_max_abs_diff": 0.0,
+    "after_content_change_max_abs_diff": 0.0
+  },
+  "measurements": [
+    {
+      "tag": "tiny_in_memory_bert_conftest_tokenizer",
+      "batch_size": 1,
+      "m_questions": 4,
+      "num_options": 3,
+      "warmup": 20,
+      "iters": 120,
+      "per_arm": {
+        "off": {
+          "median": 9.842450002906844,
+          "p10": 6.966200016904622,
+          "mean": 9.9743758328259,
+          "std": 2.270074976880883,
+          "min": 6.547799974214286,
+          "max": 15.356099989730865
+        },
+        "constant_hit": {
+          "median": 7.406999997328967,
+          "p10": 4.580580012407154,
+          "mean": 7.472776668631316,
+          "std": 2.341895127443461,
+          "min": 4.441600001882762,
+          "max": 14.573199965525419
+        },
+        "constant_miss": {
+          "median": 8.518300019204617,
+          "p10": 5.776049999985844,
+          "mean": 8.572715831299623,
+          "std": 1.8570889318109205,
+          "min": 5.538499972317368,
+          "max": 14.23519995296374
+        },
+        "full": {
+          "median": 10.995699994964525,
+          "p10": 7.765329966787249,
+          "mean": 11.01957333351796,
+          "std": 2.314804088495147,
+          "min": 7.352900051046163,
+          "max": 17.553500016219914
+        }
+      },
+      "ratio_constant_hit_over_off": 0.752556527606582,
+      "ratio_constant_hit_over_off_p10": 0.657543567697113,
+      "ratio_constant_miss_over_off": 0.8654654091906836,
+      "ratio_full_over_off": 1.117171028729339,
+      "tolerance": 1.15,
+      "criterion_met": true,
+      "criterion": "median(constant-HIT) <= 1.15 x median(state-only 'off')",
+      "state_only_arm_definition": "conditioning_mode='off' - the option-interaction residual is exactly zero, but the question vector still reaches ConcatFusion. The extra 'state_only' reference in the grid zeroes the question as well.",
+      "interleaving": "round-robin off/hit/full/miss inside one loop (common-mode contention)",
+      "unused_frozen_views": [
+        "FrozenFeatureJevX",
+        "FrozenFeatureJevX",
+        "FrozenFeatureJevX"
+      ]
+    },
+    {
+      "tag": "real_backbone_google/bert_uncased_L-2_H-128_A-2",
+      "batch_size": 1,
+      "m_questions": 4,
+      "num_options": 3,
+      "warmup": 20,
+      "iters": 120,
+      "per_arm": {
+        "off": {
+          "median": 11.079349991632625,
+          "p10": 7.838399976026267,
+          "mean": 10.843850832801158,
+          "std": 2.0007874081428993,
+          "min": 7.194300007540733,
+          "max": 14.711099967826158
+        },
+        "constant_hit": {
+          "median": 7.301600009668618,
+          "p10": 4.794350039446726,
+          "mean": 7.736420832225122,
+          "std": 2.5772470985847327,
+          "min": 4.650500020943582,
+          "max": 15.16730000730604
+        },
+        "constant_miss": {
+          "median": 8.789049985352904,
+          "p10": 6.248139991657808,
+          "mean": 8.974481664093522,
+          "std": 1.9843010877362564,
+          "min": 5.993500002659857,
+          "max": 13.523300003726035
+        },
+        "full": {
+          "median": 12.059750006301329,
+          "p10": 9.170679992530495,
+          "mean": 12.037610829186937,
+          "std": 2.0452775480504672,
+          "min": 8.137300028465688,
+          "max": 17.32270000502467
+        }
+      },
+      "ratio_constant_hit_over_off": 0.6590278324254537,
+      "ratio_constant_hit_over_off_p10": 0.6116490679360888,
+      "ratio_constant_miss_over_off": 0.7932820961510009,
+      "ratio_full_over_off": 1.0884889470419405,
+      "tolerance": 1.15,
+      "criterion_met": true,
+      "criterion": "median(constant-HIT) <= 1.15 x median(state-only 'off')",
+      "state_only_arm_definition": "conditioning_mode='off' - the option-interaction residual is exactly zero, but the question vector still reaches ConcatFusion. The extra 'state_only' reference in the grid zeroes the question as well.",
+      "interleaving": "round-robin off/hit/full/miss inside one loop (common-mode contention)",
+      "unused_frozen_views": [
+        "FrozenFeatureJevX",
+        "FrozenFeatureJevX",
+        "FrozenFeatureJevX"
+      ]
+    }
+  ],
+  "headline": [
+    {
+      "tag": "tiny_in_memory_bert_conftest_tokenizer",
+      "median_ms": {
+        "off": 9.8425,
+        "constant_hit": 7.407,
+        "constant_miss": 8.5183,
+        "full": 10.9957
+      },
+      "hit_over_off": 0.7526,
+      "miss_over_off": 0.8655,
+      "full_over_off": 1.1172,
+      "criterion_met": true
+    },
+    {
+      "tag": "real_backbone_google/bert_uncased_L-2_H-128_A-2",
+      "median_ms": {
+        "off": 11.0793,
+        "constant_hit": 7.3016,
+        "constant_miss": 8.789,
+        "full": 12.0598
+      },
+      "hit_over_off": 0.659,
+      "miss_over_off": 0.7933,
+      "full_over_off": 1.0885,
+      "criterion_met": true
+    }
+  ]
+}

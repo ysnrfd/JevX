@@ -1,0 +1,67 @@
+{
+  "model_id": "hf-internal-testing/tiny-random-ViTModel",
+  "seed": 0,
+  "decision_type": "choice",
+  "state": "tests/golden/fixtures/input_image_224.png",
+  "state_kind": "vision",
+  "questions": [
+    "Is this content safe to deploy?",
+    "Which disposition fits this item?"
+  ],
+  "options": [
+    [
+      "safe",
+      "unsafe"
+    ],
+    [
+      "approve",
+      "review",
+      "reject"
+    ]
+  ],
+  "tolerance": 1e-06,
+  "adapter": "vision",
+  "representation_field": "pooler_output",
+  "jevx_conversion": "supported",
+  "probs": [
+    [
+      0.4974456,
+      0.5025544,
+      0.0
+    ],
+    [
+      0.3342509,
+      0.3346008,
+      0.3311483
+    ]
+  ],
+  "predicted_indices": [
+    1,
+    1
+  ],
+  "state_representation": {
+    "sum": 2e-07,
+    "mean": 0.0,
+    "std": 0.9770712
+  },
+  "config": {
+    "model_type": "jevx",
+    "base_model_name_or_path": "hf-internal-testing/tiny-random-ViTModel",
+    "base_model_type": "vit",
+    "representation_strategy": "native",
+    "pooling_method": null,
+    "fusion_type": "concat",
+    "decision_hidden_size": 32,
+    "question_hidden_size": 32,
+    "schema_hidden_size": 32,
+    "decision_primitives": [
+      "choice",
+      "score",
+      "noul"
+    ],
+    "calibration_method": "none",
+    "confidence_method": "max_probability",
+    "freeze_base_model": true,
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "note": "Per-invocation summaries are written as run_summary_<label>.json to avoid clobbering (a later exp3-only rerun overwrote the original run_summary.json; its verbatim contents are preserved in run_summary_exp3_rerun.json).",
+  "full_run": "run_summary_full_run.json (exp1..exp6, 646.54 s)",
+  "exp3_rerun": "run_summary_exp3_rerun.json (exp3 four-pooling rerun, 118.11 s)"
+}

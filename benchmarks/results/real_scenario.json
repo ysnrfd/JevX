@@ -1,0 +1,2092 @@
+{
+  "experiment": "real_scenario",
+  "description": "one coherent real scenario: 3 decision types (choice/score/noul) over ONE state batch and ONE backbone forward on Yelp/yelp_review_full",
+  "phases": {
+    "1_load_splits_featurize": {
+      "dataset": {
+        "id": "Yelp/yelp_review_full",
+        "revision": "c1f9ee939b7d05667af864ee1cb066393154bf85",
+        "license": "other (HF API tag license:other)",
+        "official_train_n": 650000,
+        "official_test_n": 50000,
+        "class_label_names": [
+          "1 star",
+          "2 star",
+          "3 stars",
+          "4 stars",
+          "5 stars"
+        ],
+        "label_semantics": "class index y in 0..4 == (y+1) stars; Q1 choice label = y, Q2 score label = y (levels 0..4), Q3 noul label = 1[y == 0]"
+      },
+      "backbone": {
+        "id": "google/bert_uncased_L-2_H-128_A-2",
+        "sha_expected": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+        "commit_hash_observed": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+        "frozen": true,
+        "mode": "A (featurize-once, heads only)",
+        "pooling_method": "cls",
+        "fusion_type": "concat"
+      },
+      "splits": {
+        "split_seed": 0,
+        "train_n": 4000,
+        "cal_n": 1200,
+        "test_n": 1500,
+        "test_source": "official test split, first 1500 rows (cap applied=True)",
+        "train_cal_source": "disjoint stratified carve from the official train split (bc.make_splits)",
+        "train_label_counts": {
+          "1": 800,
+          "4": 800,
+          "0": 800,
+          "2": 800,
+          "3": 800
+        },
+        "cal_label_counts": {
+          "4": 240,
+          "1": 240,
+          "0": 240,
+          "3": 240,
+          "2": 240
+        },
+        "test_label_counts": {
+          "0": 278,
+          "2": 333,
+          "1": 302,
+          "3": 345,
+          "4": 242
+        },
+        "train_noul_positive_rate": 0.2,
+        "test_noul_positive_rate": 0.18533333333333332
+      },
+      "features": {
+        "max_length": 128,
+        "shapes": {
+          "train": [
+            4000,
+            128
+          ],
+          "cal": [
+            1200,
+            128
+          ],
+          "test": [
+            1500,
+            128
+          ]
+        },
+        "dtypes": {
+          "train": "float32",
+          "cal": "float32",
+          "test": "float32"
+        },
+        "token_length_stats": {
+          "train": {
+            "n": 4000,
+            "over_max_length": 2012,
+            "max_len_observed": 1245
+          },
+          "cal": {
+            "n": 1200,
+            "over_max_length": 631,
+            "max_len_observed": 1329
+          },
+          "test": {
+            "n": 1500,
+            "over_max_length": 741,
+            "max_len_observed": 1263
+          }
+        }
+      },
+      "questions": {
+        "choice": "What star rating will this reviewer give?",
+        "score": "On a 0-to-4 scale, how many stars does this review earn?",
+        "noul": "Is this a 1-star (detractor) review?"
+      },
+      "option_sets": {
+        "choice": [
+          "1 star",
+          "2 star",
+          "3 stars",
+          "4 stars",
+          "5 stars"
+        ],
+        "score": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "noul": null
+      },
+      "wall_time_s": {
+        "load_dataset": 23.16,
+        "load_backbone": 0.32,
+        "featurize": 22.33
+      }
+    },
+    "2_train_three_heads": {
+      "protocol": {
+        "trainer": "jevx.training.HeadTrainer (AdamW, grad_clip=1.0)",
+        "loss_dispatch": "jevx.training.make_supervised_step_fn (choice=CE, score=CE, noul=BCE)",
+        "epochs": 4,
+        "lr": 0.001,
+        "batch_size": 64,
+        "joint": "one loader interleaves all three decision types inside every epoch, so state_proj / E_Q / E_C / fusion are updated by all three losses; each type's head sees only its own loss",
+        "shared_features": "the same precomputed [N, 128] matrices for all three questions"
+      },
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "per_seed": [
+        {
+          "seed": 0,
+          "trainable_params": 1247361,
+          "steps_per_epoch": 186,
+          "loss_first": 1.194213334911613,
+          "loss_last": 1.0200262099344244,
+          "loss_curves": [
+            {
+              "epoch": 1,
+              "loss": 1.194213334911613,
+              "loss_by_type": {
+                "choice": 1.548602,
+                "score": 1.603456,
+                "noul": 0.430582
+              },
+              "steps_by_type": {
+                "choice": 62,
+                "score": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 2,
+              "loss": 1.0489013420958673,
+              "loss_by_type": {
+                "score": 1.387115,
+                "choice": 1.383851,
+                "noul": 0.375738
+              },
+              "steps_by_type": {
+                "score": 62,
+                "choice": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 3,
+              "loss": 1.0296916379242815,
+              "loss_by_type": {
+                "choice": 1.365479,
+                "score": 1.350414,
+                "noul": 0.373182
+              },
+              "steps_by_type": {
+                "choice": 62,
+                "score": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 4,
+              "loss": 1.0200262099344244,
+              "loss_by_type": {
+                "noul": 0.368551,
+                "choice": 1.335871,
+                "score": 1.355657
+              },
+              "steps_by_type": {
+                "noul": 62,
+                "choice": 62,
+                "score": 62
+              }
+            }
+          ],
+          "wall_time_s": 22.64
+        },
+        {
+          "seed": 1,
+          "trainable_params": 1247361,
+          "steps_per_epoch": 186,
+          "loss_first": 1.180570673077337,
+          "loss_last": 1.0095177818370122,
+          "loss_curves": [
+            {
+              "epoch": 1,
+              "loss": 1.180570673077337,
+              "loss_by_type": {
+                "score": 1.535393,
+                "choice": 1.577206,
+                "noul": 0.429114
+              },
+              "steps_by_type": {
+                "score": 62,
+                "choice": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 2,
+              "loss": 1.051527875405486,
+              "loss_by_type": {
+                "choice": 1.398599,
+                "score": 1.375229,
+                "noul": 0.380756
+              },
+              "steps_by_type": {
+                "choice": 62,
+                "score": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 3,
+              "loss": 1.0344486774135662,
+              "loss_by_type": {
+                "noul": 0.375712,
+                "choice": 1.355313,
+                "score": 1.372321
+              },
+              "steps_by_type": {
+                "noul": 62,
+                "choice": 62,
+                "score": 62
+              }
+            },
+            {
+              "epoch": 4,
+              "loss": 1.0095177818370122,
+              "loss_by_type": {
+                "noul": 0.359966,
+                "score": 1.332388,
+                "choice": 1.336199
+              },
+              "steps_by_type": {
+                "noul": 62,
+                "score": 62,
+                "choice": 62
+              }
+            }
+          ],
+          "wall_time_s": 23.57
+        },
+        {
+          "seed": 2,
+          "trainable_params": 1247361,
+          "steps_per_epoch": 186,
+          "loss_first": 1.1585120136539142,
+          "loss_last": 1.0130581584188245,
+          "loss_curves": [
+            {
+              "epoch": 1,
+              "loss": 1.1585120136539142,
+              "loss_by_type": {
+                "choice": 1.534166,
+                "score": 1.515105,
+                "noul": 0.426266
+              },
+              "steps_by_type": {
+                "choice": 62,
+                "score": 62,
+                "noul": 62
+              }
+            },
+            {
+              "epoch": 2,
+              "loss": 1.0524467103263384,
+              "loss_by_type": {
+                "noul": 0.382225,
+                "choice": 1.375061,
+                "score": 1.400054
+              },
+              "steps_by_type": {
+                "noul": 62,
+                "choice": 62,
+                "score": 62
+              }
+            },
+            {
+              "epoch": 3,
+              "loss": 1.0283764622384501,
+              "loss_by_type": {
+                "noul": 0.365798,
+                "score": 1.357461,
+                "choice": 1.36187
+              },
+              "steps_by_type": {
+                "noul": 62,
+                "score": 62,
+                "choice": 62
+              }
+            },
+            {
+              "epoch": 4,
+              "loss": 1.0130581584188245,
+              "loss_by_type": {
+                "score": 1.349015,
+                "choice": 1.329355,
+                "noul": 0.360805
+              },
+              "steps_by_type": {
+                "score": 62,
+                "choice": 62,
+                "noul": 62
+              }
+            }
+          ],
+          "wall_time_s": 37.3
+        }
+      ],
+      "wall_time_s": 84.02
+    },
+    "3_calibration": {
+      "fit_split": "calibration split ONLY (never train, never test)",
+      "engines": "jevx.CalibrationEngine (temperature, isotonic) per question type",
+      "note": "JevXForDecision holds ONE calibration engine per model, so a mixed decide() call applies a single calibrator to all three types. The scenario therefore fits one engine PER QUESTION TYPE and reports the per-type temperatures; the live decide() call in phase 4 runs the raw (uncalibrated) model.",
+      "per_type": {
+        "choice": {
+          "n_cal": 1200,
+          "logit_shape": [
+            1200,
+            5
+          ],
+          "cal_label_mean": 2.0,
+          "temperature_T": 1.0315046211218317,
+          "isotonic_state_keys": [
+            "_fitted",
+            "x_points",
+            "y_points"
+          ]
+        },
+        "score": {
+          "n_cal": 1200,
+          "logit_shape": [
+            1200,
+            5
+          ],
+          "cal_label_mean": 2.0,
+          "temperature_T": 1.177635422505132,
+          "isotonic_state_keys": [
+            "_fitted",
+            "x_points",
+            "y_points"
+          ]
+        },
+        "noul": {
+          "n_cal": 1200,
+          "logit_shape": [
+            1200,
+            1
+          ],
+          "cal_label_mean": 0.20000000298023224,
+          "temperature_T": 1.0711895629178412,
+          "isotonic_state_keys": [
+            "_fitted",
+            "x_points",
+            "y_points"
+          ]
+        }
+      },
+      "wall_time_s": 5.53
+    },
+    "4_live_decide_invariants": {
+      "call": "JevXForDecision.decide(input_ids=<tokenized test batch, truncation=True, max_length=128>, questions=3, decision_type=['choice','score','noul'], options=[K=5, levels 0..4, None])",
+      "why_pre_tokenized": "the live path never truncates a state and raises above the backbone's learned position table; the same tokenizer call bc.featurize() makes (max_length=128) is used so the live call and the featurize-once training features see identical tokens",
+      "featurized_vs_live": {
+        "n": 64,
+        "max_abs_logit_delta": 1.52587890625e-05,
+        "note": "identical modules; the residual is float re-association between two independently batched runs of the same arithmetic, plus the padding-width difference between the two batches"
+      },
+      "batch_size": 1500,
+      "questions": [
+        "choice",
+        "score",
+        "noul"
+      ],
+      "decisions_returned": 4500,
+      "backbone_forward_hook_count": 1,
+      "wall_time_s": 35.276,
+      "invariants": {
+        "choice_simplex_max_abs_error": 1.4901161193847656e-07,
+        "score_simplex_max_abs_error": 1.4901161193847656e-07,
+        "expected_score_range": [
+          0.11792868375778198,
+          3.849942922592163
+        ],
+        "noul_p_range": [
+          0.002300950698554516,
+          0.8984747529029846
+        ],
+        "confidence_range": [
+          0.20503832399845123,
+          0.9976990222930908
+        ],
+        "choice_predicted_values": [
+          "1 star",
+          "2 star",
+          "3 stars",
+          "4 stars",
+          "5 stars"
+        ],
+        "score_predicted_values": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "checks_total": 16,
+      "checks_failed": [],
+      "all_passed": true
+    },
+    "5_correctness_battery": {
+      "batch_size_for_full_call": 1500,
+      "checks": [
+        {
+          "check": "a_question_independence",
+          "passed": true,
+          "q2_options_before": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "q2_options_after": [
+            "worst",
+            "bad",
+            "so-so",
+            "good",
+            "best"
+          ],
+          "q1_max_abs_prob_delta": 0.0,
+          "q3_max_abs_prob_delta": 0.0,
+          "q2_max_abs_prob_delta (sanity: must be > 0)": 0.7529647201299667
+        },
+        {
+          "check": "b_batched_equals_solo_calls",
+          "passed": false,
+          "states_walked": 128,
+          "max_abs_prob_delta_choice": 2.9802322387695312e-06,
+          "max_abs_prob_delta_score": 1.0967254638671875e-05,
+          "max_abs_prob_delta_noul": 7.748603820800781e-07,
+          "worst": 1.0967254638671875e-05,
+          "tolerance": 1e-05,
+          "within_tolerance": false,
+          "matched_padding_walk": {
+            "scheme": "every solo call padded to max_length so both calls share one tensor width",
+            "max_abs_prob_delta_choice": 2.7418136596679688e-06,
+            "max_abs_prob_delta_score": 8.612871170043945e-06,
+            "max_abs_prob_delta_noul": 7.748603820800781e-07,
+            "worst": 8.612871170043945e-06,
+            "within_tolerance": true
+          },
+          "note": "the batched call pads to the longest state in the batch, a 1-row call pads to that row's own length, so the two passes reduce the same arithmetic over different tensor shapes; the comparison is a numerical bound, not a bitwise identity"
+        },
+        {
+          "check": "c_runtime_validation_on_off_bitwise_identical",
+          "passed": true,
+          "states": 64,
+          "bitwise_equal_probabilities": true,
+          "max_abs_prob_delta": 0.0
+        },
+        {
+          "check": "d_save_load_same_call",
+          "passed": true,
+          "states": 64,
+          "max_abs_prob_delta": 0.0,
+          "bitwise_equal": true,
+          "saved_to": "C:\\Users\\ysnrfd\\AppData\\Local\\Temp\\jevx_real_scenario_2n5mbcfx"
+        },
+        {
+          "check": "e_repeat_call_bitwise_identical",
+          "passed": true,
+          "states": 64,
+          "bitwise_equal": true,
+          "max_abs_prob_delta": 0.0
+        },
+        {
+          "check": "f_confidence_threshold_abstention",
+          "passed": true,
+          "threshold": 0.9,
+          "states": 1500,
+          "abstained_choice": 1496,
+          "abstained_score": 1498,
+          "abstained_noul": 729,
+          "abstained_count_equals_conf_below_threshold": true,
+          "predicted_fields_cleared_on_abstained": true,
+          "probabilities_max_abs_delta_vs_unthresholded": 0.0
+        }
+      ],
+      "passed": 5,
+      "total": 6,
+      "all_passed": false
+    },
+    "6_quality_test": {
+      "split": "test (first 1500 rows of the official test split)",
+      "n_test": 1500,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "n_bins_for_ece_mce": 15,
+      "baselines": {
+        "majority_class_from_train": 1,
+        "majority_accuracy_on_test": 0.20133333333333334,
+        "test_most_frequent_class": 3,
+        "test_most_frequent_class_rate": 0.23,
+        "uniform_accuracy": 0.2,
+        "noul_always_yes_accuracy": 0.18533333333333332,
+        "b1_linear_probe": "single Linear(128 -> 5) on the identical frozen features, same splits/seeds/hyperparams"
+      },
+      "auc_rank_self_check": {
+        "cases": [
+          {
+            "case": "perfectly separated",
+            "got": 1.0,
+            "expected": 1.0
+          },
+          {
+            "case": "fully reversed",
+            "got": 0.0,
+            "expected": 0.0
+          },
+          {
+            "case": "all scores tied",
+            "got": 0.5,
+            "expected": 0.5
+          },
+          {
+            "case": "disjoint blocks (36/36)",
+            "got": 1.0,
+            "expected": 1.0
+          },
+          {
+            "case": "y=[0,0,1,1] on ascending scores (4/4 pairs)",
+            "got": 1.0,
+            "expected": 1.0
+          }
+        ],
+        "all_passed": true
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "b1_linear": {
+            "accuracy": 0.3580000102519989,
+            "macro_f1": 0.35462674970784996,
+            "nll": 1.4447509217753018,
+            "brier": 0.7354689257506367,
+            "ece": 0.018080349812905003,
+            "mce": 0.3518027067184448
+          },
+          "b1_temperature": {
+            "accuracy": 0.3580000102519989,
+            "macro_f1": 0.35462674970784996,
+            "nll": 1.4444549734340641,
+            "brier": 0.7364140191794545,
+            "ece": 0.028024519075949977,
+            "mce": 0.876981794834137
+          },
+          "q1_choice": {
+            "uncalibrated": {
+              "accuracy": 0.39933332800865173,
+              "macro_f1": 0.39616143637495077,
+              "nll": 1.3728458308657234,
+              "brier": 0.7063467756114027,
+              "ece": 0.03540087762475016,
+              "mce": 0.20341817752735036
+            },
+            "temperature": {
+              "accuracy": 0.39933332800865173,
+              "macro_f1": 0.39616143637495077,
+              "nll": 1.3724719399764165,
+              "brier": 0.7058767015445034,
+              "ece": 0.035189577539761874,
+              "mce": 0.16881026774644858
+            },
+            "isotonic": {
+              "accuracy": 0.4013333320617676,
+              "macro_f1": 0.3994874415664369,
+              "nll": 1.3843032171617367,
+              "brier": 0.7035279312778465,
+              "ece": 0.037457250565290444,
+              "mce": 0.4257615804672241
+            },
+            "fitted_T": 1.0315046211218317,
+            "accuracy_majority_baseline": 0.20133333333333334,
+            "accuracy_uniform_baseline": 0.2
+          },
+          "q2_score": {
+            "uncalibrated": {
+              "mae": 0.9048410888370126,
+              "rmse": 1.1352347387061612,
+              "pearson_r": 0.5566237572432635,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.3183587593187263,
+                  "rmse": 1.5248577287289362,
+                  "mean_expected": 1.3183587593187263
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8868794280677935,
+                  "rmse": 1.049474527002967,
+                  "mean_expected": 1.7588106851642396
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.6000664767546317,
+                  "rmse": 0.7202871508030663,
+                  "mean_expected": 2.1744537844529583
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.6283744546868231,
+                  "rmse": 0.8443985660859565,
+                  "mean_expected": 2.5417589118245285
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.265739616785922,
+                  "rmse": 1.4873556738871563,
+                  "mean_expected": 2.734260383214078
+                }
+              ]
+            },
+            "temperature": {
+              "mae": 0.9085702324351296,
+              "rmse": 1.1263112363474679,
+              "pearson_r": 0.55773437891478,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.3886206882633938,
+                  "rmse": 1.5516578944454205,
+                  "mean_expected": 1.3886206882633938
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8703411155571508,
+                  "rmse": 1.018958653090933,
+                  "mean_expected": 1.785615699532263
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5368619613550805,
+                  "rmse": 0.6464970291515975,
+                  "mean_expected": 2.160650056235873
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.614275395616457,
+                  "rmse": 0.8136968464967783,
+                  "mean_expected": 2.4946244126698676
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.3358501479268259,
+                  "rmse": 1.5108093406558063,
+                  "mean_expected": 2.6641498520731743
+                }
+              ]
+            },
+            "isotonic": {
+              "mae": 0.9108451640084386,
+              "rmse": 1.131495573485569,
+              "pearson_r": 0.5528700892940143,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.387999500017345,
+                  "rmse": 1.5605994905080673,
+                  "mean_expected": 1.387999500017345
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8709155474974472,
+                  "rmse": 1.0208549692515363,
+                  "mean_expected": 1.785354031098772
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5457011769097802,
+                  "rmse": 0.6517825008418076,
+                  "mean_expected": 2.16673579034829
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.6101975248424687,
+                  "rmse": 0.8110019894766826,
+                  "mean_expected": 2.503570910572898
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.3435981474462744,
+                  "rmse": 1.5215458973148028,
+                  "mean_expected": 2.6564018525537256
+                }
+              ]
+            },
+            "fitted_T": 1.177635422505132,
+            "argmax_accuracy": 0.382666677236557
+          },
+          "q3_noul": {
+            "uncalibrated": {
+              "accuracy": 0.828000009059906,
+              "auc": 0.8037213437106289,
+              "nll": 0.3900254285798645,
+              "ece": 0.0247562928994497,
+              "mce": 0.06394564112027484,
+              "positive_rate": 0.18975363671779633
+            },
+            "temperature": {
+              "accuracy": 0.828000009059906,
+              "auc": 0.8037213437106289,
+              "nll": 0.3875436937834101,
+              "ece": 0.017931955575942977,
+              "mce": 0.061483575539155455,
+              "positive_rate": 0.1971406787633896
+            },
+            "isotonic": {
+              "accuracy": 0.8253333568572998,
+              "auc": 0.8036639428228285,
+              "nll": 0.4040496559467522,
+              "ece": 0.025229072848955786,
+              "mce": 0.5254623889923096,
+              "positive_rate": 0.19478172063827515
+            },
+            "fitted_T": 1.0711895629178412,
+            "always_yes_accuracy": 0.18533333333333332,
+            "always_no_accuracy": 0.8146666666666667
+          }
+        },
+        {
+          "seed": 1,
+          "b1_linear": {
+            "accuracy": 0.3580000102519989,
+            "macro_f1": 0.3472513988773729,
+            "nll": 1.4278814846733887,
+            "brier": 0.7265074419951443,
+            "ece": 0.023288322508335124,
+            "mce": 0.18094927072525024
+          },
+          "b1_temperature": {
+            "accuracy": 0.3580000102519989,
+            "macro_f1": 0.3472513988773729,
+            "nll": 1.4257670513690652,
+            "brier": 0.7266225608575317,
+            "ece": 0.02978274516264598,
+            "mce": 0.18910982779094154
+          },
+          "q1_choice": {
+            "uncalibrated": {
+              "accuracy": 0.4020000100135803,
+              "macro_f1": 0.3949269820397526,
+              "nll": 1.3620305746195804,
+              "brier": 0.701512586161973,
+              "ece": 0.021217798680067058,
+              "mce": 0.15151179295319772
+            },
+            "temperature": {
+              "accuracy": 0.4020000100135803,
+              "macro_f1": 0.3949269820397526,
+              "nll": 1.3621743793373877,
+              "brier": 0.7014058759709378,
+              "ece": 0.017711328893899918,
+              "mce": 0.1125791072845459
+            },
+            "isotonic": {
+              "accuracy": 0.3853333294391632,
+              "macro_f1": 0.38656407410827454,
+              "nll": 1.387890409712339,
+              "brier": 0.707261304358532,
+              "ece": 0.03870031437277795,
+              "mce": 0.24543490012486774
+            },
+            "fitted_T": 1.041473652186099,
+            "accuracy_majority_baseline": 0.20133333333333334,
+            "accuracy_uniform_baseline": 0.2
+          },
+          "q2_score": {
+            "uncalibrated": {
+              "mae": 0.8862202279370589,
+              "rmse": 1.1049005787135588,
+              "pearson_r": 0.5745770103703485,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.2726795593487674,
+                  "rmse": 1.430066041038199,
+                  "mean_expected": 1.2726795593487674
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.6704351900558647,
+                  "rmse": 0.8516933463223724,
+                  "mean_expected": 1.5620091679468997
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5401481455569533,
+                  "rmse": 0.6543385261636371,
+                  "mean_expected": 1.9365174242675685
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.7415862530584623,
+                  "rmse": 0.941412809057785,
+                  "mean_expected": 2.3330913601908834
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.3939562282401854,
+                  "rmse": 1.5683755369428807,
+                  "mean_expected": 2.606043771759815
+                }
+              ]
+            },
+            "temperature": {
+              "mae": 0.8895459716573048,
+              "rmse": 1.1039419070400251,
+              "pearson_r": 0.5747641897649917,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.3014469351384976,
+                  "rmse": 1.4459375249843403,
+                  "mean_expected": 1.3014469351384976
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.6720226438722222,
+                  "rmse": 0.846296131458979,
+                  "mean_expected": 1.5794224655656577
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5197149690620981,
+                  "rmse": 0.6309992648185808,
+                  "mean_expected": 1.9408852931044929
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.7400794228255425,
+                  "rmse": 0.9316427560193535,
+                  "mean_expected": 2.3255792391108536
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.4098073780807967,
+                  "rmse": 1.5725915758220081,
+                  "mean_expected": 2.5901926219192033
+                }
+              ]
+            },
+            "isotonic": {
+              "mae": 0.8895723528359085,
+              "rmse": 1.1100972496957806,
+              "pearson_r": 0.569340649127169,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.273850218392071,
+                  "rmse": 1.443167621859842,
+                  "mean_expected": 1.273850218392071
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.684361307709077,
+                  "rmse": 0.8539915766680901,
+                  "mean_expected": 1.565871664890341
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5259610984373737,
+                  "rmse": 0.6441854721963982,
+                  "mean_expected": 1.937134879532161
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.7464817714270042,
+                  "rmse": 0.9387462209336386,
+                  "mean_expected": 2.327127133164069
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.4085528788874542,
+                  "rmse": 1.5837619508762646,
+                  "mean_expected": 2.591447121112546
+                }
+              ]
+            },
+            "fitted_T": 1.056862234528742,
+            "argmax_accuracy": 0.4099999964237213
+          },
+          "q3_noul": {
+            "uncalibrated": {
+              "accuracy": 0.8286666870117188,
+              "auc": 0.8087108054963558,
+              "nll": 0.38492106016610667,
+              "ece": 0.028017754912376378,
+              "mce": 0.07851433463212926,
+              "positive_rate": 0.19995586574077606
+            },
+            "temperature": {
+              "accuracy": 0.8286666870117188,
+              "auc": 0.8087108054963558,
+              "nll": 0.3843011235556763,
+              "ece": 0.021952581167221076,
+              "mce": 0.078081769187276,
+              "positive_rate": 0.20258182287216187
+            },
+            "isotonic": {
+              "accuracy": 0.831333339214325,
+              "auc": 0.8030590257744704,
+              "nll": 0.41597118935966576,
+              "ece": 0.02430622422695162,
+              "mce": 0.12278242622103008,
+              "positive_rate": 0.19915375113487244
+            },
+            "fitted_T": 1.0253224923772783,
+            "always_yes_accuracy": 0.18533333333333332,
+            "always_no_accuracy": 0.8146666666666667
+          }
+        },
+        {
+          "seed": 2,
+          "b1_linear": {
+            "accuracy": 0.36133334040641785,
+            "macro_f1": 0.3562846965052861,
+            "nll": 1.4314671920650714,
+            "brier": 0.7281351759059203,
+            "ece": 0.016021905471881218,
+            "mce": 0.1853846311569214
+          },
+          "b1_temperature": {
+            "accuracy": 0.36133334040641785,
+            "macro_f1": 0.3562846965052861,
+            "nll": 1.4293002911983783,
+            "brier": 0.7281271856196803,
+            "ece": 0.03083567294478415,
+            "mce": 0.2542691230773926
+          },
+          "q1_choice": {
+            "uncalibrated": {
+              "accuracy": 0.3986666798591614,
+              "macro_f1": 0.4015936412131441,
+              "nll": 1.366758077775179,
+              "brier": 0.7055502704382905,
+              "ece": 0.034630397568146384,
+              "mce": 0.316808785711016
+            },
+            "temperature": {
+              "accuracy": 0.3986666798591614,
+              "macro_f1": 0.4015936412131441,
+              "nll": 1.3656553558547833,
+              "brier": 0.7048944879343095,
+              "ece": 0.0207652734518051,
+              "mce": 0.3809705227613449
+            },
+            "isotonic": {
+              "accuracy": 0.3893333375453949,
+              "macro_f1": 0.3934172671513842,
+              "nll": 1.4360183944799525,
+              "brier": 0.7077085929634821,
+              "ece": 0.024638114313284554,
+              "mce": 0.4285714285714286
+            },
+            "fitted_T": 1.0709320223369192,
+            "accuracy_majority_baseline": 0.20133333333333334,
+            "accuracy_uniform_baseline": 0.2
+          },
+          "q2_score": {
+            "uncalibrated": {
+              "mae": 0.8964975274438038,
+              "rmse": 1.125673973721434,
+              "pearson_r": 0.5577365506238686,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.259342125007253,
+                  "rmse": 1.4700446001699916,
+                  "mean_expected": 1.259342125007253
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8566241750172925,
+                  "rmse": 1.0033051574333864,
+                  "mean_expected": 1.7260626691473735
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5553465189423423,
+                  "rmse": 0.6800908675388093,
+                  "mean_expected": 2.1130915751412243
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.6441310854196765,
+                  "rmse": 0.8508255258065963,
+                  "mean_expected": 2.464852931898465
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.3586490259540445,
+                  "rmse": 1.5642959952569955,
+                  "mean_expected": 2.6413509740459555
+                }
+              ]
+            },
+            "temperature": {
+              "mae": 0.9077958337515593,
+              "rmse": 1.1201830919109736,
+              "pearson_r": 0.5590375018775415,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.359644345714704,
+                  "rmse": 1.5156430758188708,
+                  "mean_expected": 1.359644345714704
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8493744445477446,
+                  "rmse": 0.9807701150824343,
+                  "mean_expected": 1.7690647631815777
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.49264663356907284,
+                  "rmse": 0.6031568740079941,
+                  "mean_expected": 2.115417678236357
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.6358791929548201,
+                  "rmse": 0.8170904714883478,
+                  "mean_expected": 2.4303636264757835
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.420544998831893,
+                  "rmse": 1.5767218650658013,
+                  "mean_expected": 2.5794550011681068
+                }
+              ]
+            },
+            "isotonic": {
+              "mae": 0.9010588368738536,
+              "rmse": 1.1242905895769946,
+              "pearson_r": 0.5568777513365636,
+              "by_true_level": [
+                {
+                  "true_level": 0,
+                  "n": 278,
+                  "mean_abs_error": 1.2869784760325744,
+                  "rmse": 1.4815730795641413,
+                  "mean_expected": 1.2869784760325744
+                },
+                {
+                  "true_level": 1,
+                  "n": 302,
+                  "mean_abs_error": 0.8576072250640896,
+                  "rmse": 1.0047205347819623,
+                  "mean_expected": 1.7438887769744935
+                },
+                {
+                  "true_level": 2,
+                  "n": 333,
+                  "mean_abs_error": 0.5415738335511348,
+                  "rmse": 0.6583252968418489,
+                  "mean_expected": 2.1159659351191453
+                },
+                {
+                  "true_level": 3,
+                  "n": 345,
+                  "mean_abs_error": 0.6371061397324977,
+                  "rmse": 0.8373034301328701,
+                  "mean_expected": 2.455511737961754
+                },
+                {
+                  "true_level": 4,
+                  "n": 242,
+                  "mean_abs_error": 1.3829138521658264,
+                  "rmse": 1.567712103925073,
+                  "mean_expected": 2.6170861478341734
+                }
+              ]
+            },
+            "fitted_T": 1.2605611255143931,
+            "argmax_accuracy": 0.40400001406669617
+          },
+          "q3_noul": {
+            "uncalibrated": {
+              "accuracy": 0.831333339214325,
+              "auc": 0.8028853512934333,
+              "nll": 0.3995135097426831,
+              "ece": 0.04849493253231049,
+              "mce": 0.24313712390986353,
+              "positive_rate": 0.1603357195854187
+            },
+            "temperature": {
+              "accuracy": 0.831333339214325,
+              "auc": 0.8028853512934333,
+              "nll": 0.385341465620319,
+              "ece": 0.02313530476888022,
+              "mce": 0.16281018334050334,
+              "positive_rate": 0.18490919470787048
+            },
+            "isotonic": {
+              "accuracy": 0.831333339214325,
+              "auc": 0.800612864863592,
+              "nll": 0.38580868625387016,
+              "ece": 0.019893503665924076,
+              "mce": 0.45015275478363037,
+              "positive_rate": 0.18404383957386017
+            },
+            "fitted_T": 1.252704935920787,
+            "always_yes_accuracy": 0.18533333333333332,
+            "always_no_accuracy": 0.8146666666666667
+          }
+        }
+      ],
+      "aggregate_mean_std": {
+        "q1_choice.uncalibrated.accuracy": {
+          "mean": 0.4000000059604645,
+          "std": 0.0017638359045457103,
+          "n_seeds": 3
+        },
+        "q1_choice.uncalibrated.macro_f1": {
+          "mean": 0.39756068654261584,
+          "std": 0.0035467607626289447,
+          "n_seeds": 3
+        },
+        "q1_choice.uncalibrated.nll": {
+          "mean": 1.367211494420161,
+          "std": 0.00542186609092236,
+          "n_seeds": 3
+        },
+        "q1_choice.uncalibrated.brier": {
+          "mean": 0.7044698774038887,
+          "std": 0.002591868773652001,
+          "n_seeds": 3
+        },
+        "q1_choice.uncalibrated.ece": {
+          "mean": 0.030416357957654534,
+          "std": 0.00797549556246344,
+          "n_seeds": 3
+        },
+        "q1_choice.uncalibrated.mce": {
+          "mean": 0.22391291873052135,
+          "std": 0.08453283247610524,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.accuracy": {
+          "mean": 0.4000000059604645,
+          "std": 0.0017638359045457103,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.macro_f1": {
+          "mean": 0.39756068654261584,
+          "std": 0.0035467607626289447,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.nll": {
+          "mean": 1.366767225056196,
+          "std": 0.0052380462597619295,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.brier": {
+          "mean": 0.7040590218165835,
+          "std": 0.002349589975445303,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.ece": {
+          "mean": 0.02455539329515563,
+          "std": 0.009335204885371472,
+          "n_seeds": 3
+        },
+        "q1_choice.temperature.mce": {
+          "mean": 0.22078663259744646,
+          "std": 0.14154379129002082,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.accuracy": {
+          "mean": 0.3919999996821086,
+          "std": 0.008326664169664428,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.macro_f1": {
+          "mean": 0.3931562609420319,
+          "std": 0.006465636070462273,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.nll": {
+          "mean": 1.4027373404513428,
+          "std": 0.028877991715841433,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.brier": {
+          "mean": 0.7061659428666202,
+          "std": 0.0022955055283984203,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.ece": {
+          "mean": 0.03359855975045098,
+          "std": 0.007784824258241083,
+          "n_seeds": 3
+        },
+        "q1_choice.isotonic.mce": {
+          "mean": 0.3665893030545068,
+          "std": 0.10493219631514525,
+          "n_seeds": 3
+        },
+        "q1_choice.accuracy_majority_baseline": {
+          "mean": 0.20133333333333334,
+          "std": 0.0,
+          "n_seeds": 3
+        },
+        "q1_choice.accuracy_uniform_baseline": {
+          "mean": 0.20000000000000004,
+          "std": 3.3993498887762956e-17,
+          "n_seeds": 3
+        },
+        "q2_score.uncalibrated.mae": {
+          "mean": 0.895852948072625,
+          "std": 0.009327149998159586,
+          "n_seeds": 3
+        },
+        "q2_score.uncalibrated.rmse": {
+          "mean": 1.1219364303803847,
+          "std": 0.015508618193890333,
+          "n_seeds": 3
+        },
+        "q2_score.uncalibrated.pearson_r": {
+          "mean": 0.5629791060791601,
+          "std": 0.01005947887505372,
+          "n_seeds": 3
+        },
+        "q2_score.temperature.mae": {
+          "mean": 0.9019706792813311,
+          "std": 0.010767076807898438,
+          "n_seeds": 3
+        },
+        "q2_score.temperature.rmse": {
+          "mean": 1.1168120784328224,
+          "std": 0.01155939108770929,
+          "n_seeds": 3
+        },
+        "q2_score.temperature.pearson_r": {
+          "mean": 0.5638453568524378,
+          "std": 0.009478407909201979,
+          "n_seeds": 3
+        },
+        "q2_score.isotonic.mae": {
+          "mean": 0.900492117906067,
+          "std": 0.010647722835746021,
+          "n_seeds": 3
+        },
+        "q2_score.isotonic.rmse": {
+          "mean": 1.1219611375861147,
+          "std": 0.010887691453495366,
+          "n_seeds": 3
+        },
+        "q2_score.isotonic.pearson_r": {
+          "mean": 0.5596961632525823,
+          "std": 0.008589378301172292,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.accuracy": {
+          "mean": 0.8293333450953165,
+          "std": 0.001763830272421186,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.auc": {
+          "mean": 0.8051058335001393,
+          "std": 0.003149855258663604,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.nll": {
+          "mean": 0.3914866661628848,
+          "std": 0.007405154125118181,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.ece": {
+          "mean": 0.03375632678137886,
+          "std": 0.012867756534318141,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.mce": {
+          "mean": 0.1285323665540892,
+          "std": 0.09951758394420816,
+          "n_seeds": 3
+        },
+        "q3_noul.uncalibrated.positive_rate": {
+          "mean": 0.18334840734799704,
+          "std": 0.020572049431273838,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.accuracy": {
+          "mean": 0.8293333450953165,
+          "std": 0.001763830272421186,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.auc": {
+          "mean": 0.8051058335001393,
+          "std": 0.003149855258663604,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.nll": {
+          "mean": 0.3857287609864685,
+          "std": 0.0016556158056526878,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.ece": {
+          "mean": 0.02100661383734809,
+          "std": 0.0027276090899907984,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.mce": {
+          "mean": 0.10079184268897827,
+          "std": 0.054346857691789166,
+          "n_seeds": 3
+        },
+        "q3_noul.temperature.positive_rate": {
+          "mean": 0.19487723211447397,
+          "std": 0.00905112366547335,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.accuracy": {
+          "mean": 0.8293333450953165,
+          "std": 0.003464091428961474,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.auc": {
+          "mean": 0.802445277820297,
+          "std": 0.001615482618839902,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.nll": {
+          "mean": 0.4019431771867627,
+          "std": 0.015191184548167974,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.ece": {
+          "mean": 0.023142933580610495,
+          "std": 0.0028516676651790932,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.mce": {
+          "mean": 0.3661325233323233,
+          "std": 0.21408488403952802,
+          "n_seeds": 3
+        },
+        "q3_noul.isotonic.positive_rate": {
+          "mean": 0.1926597704490026,
+          "std": 0.007775240272796619,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.accuracy": {
+          "mean": 0.35911112030347186,
+          "std": 0.001924499061951675,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.macro_f1": {
+          "mean": 0.352720948363503,
+          "std": 0.004808760295720894,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.nll": {
+          "mean": 1.434699866171254,
+          "std": 0.008887188162823955,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.brier": {
+          "mean": 0.7300371812172338,
+          "std": 0.004773915157204543,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.ece": {
+          "mean": 0.019130192597707114,
+          "std": 0.003745241186027635,
+          "n_seeds": 3
+        },
+        "B1.b1_linear.mce": {
+          "mean": 0.23937886953353882,
+          "std": 0.09738715254628508,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.accuracy": {
+          "mean": 0.35911112030347186,
+          "std": 0.001924499061951675,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.macro_f1": {
+          "mean": 0.352720948363503,
+          "std": 0.004808760295720894,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.nll": {
+          "mean": 1.4331741053338358,
+          "std": 0.009927962265436024,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.brier": {
+          "mean": 0.7303879218855555,
+          "std": 0.0052726995330068015,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.ece": {
+          "mean": 0.029547645727793368,
+          "std": 0.0014202465725240635,
+          "n_seeds": 3
+        },
+        "B1.b1_temperature.mce": {
+          "mean": 0.4401202485674904,
+          "std": 0.379733381987179,
+          "n_seeds": 3
+        }
+      },
+      "q2_ordinal_error_by_true_level_seed0": [
+        {
+          "true_level": 0,
+          "n": 278,
+          "mean_abs_error": 1.3183587593187263,
+          "rmse": 1.5248577287289362,
+          "mean_expected": 1.3183587593187263
+        },
+        {
+          "true_level": 1,
+          "n": 302,
+          "mean_abs_error": 0.8868794280677935,
+          "rmse": 1.049474527002967,
+          "mean_expected": 1.7588106851642396
+        },
+        {
+          "true_level": 2,
+          "n": 333,
+          "mean_abs_error": 0.6000664767546317,
+          "rmse": 0.7202871508030663,
+          "mean_expected": 2.1744537844529583
+        },
+        {
+          "true_level": 3,
+          "n": 345,
+          "mean_abs_error": 0.6283744546868231,
+          "rmse": 0.8443985660859565,
+          "mean_expected": 2.5417589118245285
+        },
+        {
+          "true_level": 4,
+          "n": 242,
+          "mean_abs_error": 1.265739616785922,
+          "rmse": 1.4873556738871563,
+          "mean_expected": 2.734260383214078
+        }
+      ]
+    },
+    "7_risk_coverage": {
+      "question": "Q1 choice (K=5)",
+      "confidence": "max probability AFTER temperature scaling fit on the cal split",
+      "fitted_T": 1.0315046211218317,
+      "aurc": 0.49126335978507996,
+      "coverage_at_risk_0.1": 0.0013333333190530539,
+      "coverage_at_risk_0.2": 0.014666666276752949,
+      "risk_at_coverage_grid": [
+        {
+          "coverage": 0.1,
+          "risk_at_coverage": 0.34437087178230286,
+          "n_covered": 150
+        },
+        {
+          "coverage": 0.2,
+          "risk_at_coverage": 0.4252491593360901,
+          "n_covered": 300
+        },
+        {
+          "coverage": 0.3,
+          "risk_at_coverage": 0.47893568873405457,
+          "n_covered": 450
+        },
+        {
+          "coverage": 0.5,
+          "risk_at_coverage": 0.5166444778442383,
+          "n_covered": 750
+        },
+        {
+          "coverage": 0.7,
+          "risk_at_coverage": 0.5542857050895691,
+          "n_covered": 1050
+        },
+        {
+          "coverage": 0.9,
+          "risk_at_coverage": 0.5837036967277527,
+          "n_covered": 1350
+        },
+        {
+          "coverage": 1.0,
+          "risk_at_coverage": 0.6006666421890259,
+          "n_covered": 1500
+        }
+      ],
+      "uncalibrated_reference": {
+        "aurc": 0.49118179082870483,
+        "coverage_at_risk_0.1": 0.0013333333190530539,
+        "coverage_at_risk_0.2": 0.014666666276752949
+      },
+      "overall_accuracy": 0.3993333333333333,
+      "selective_prediction": {
+        "rule": "thresholds = quantiles of the CAL-split confidence; the test split is only scored at those thresholds",
+        "rows": [
+          {
+            "cal_conf_quantile": 0.1,
+            "threshold_tau": 0.27252441346645356,
+            "test_coverage": 0.8846666666666667,
+            "test_accuracy_on_answered": 0.42049736247174074,
+            "test_n_answered": 1327,
+            "cal_accuracy_on_answered": 0.41944444444444445
+          },
+          {
+            "cal_conf_quantile": 0.25,
+            "threshold_tau": 0.3107278198003769,
+            "test_coverage": 0.736,
+            "test_accuracy_on_answered": 0.4438405797101449,
+            "test_n_answered": 1104,
+            "cal_accuracy_on_answered": 0.45666666666666667
+          },
+          {
+            "cal_conf_quantile": 0.5,
+            "threshold_tau": 0.36558927595615387,
+            "test_coverage": 0.4726666666666667,
+            "test_accuracy_on_answered": 0.49647390691114246,
+            "test_n_answered": 709,
+            "cal_accuracy_on_answered": 0.515
+          },
+          {
+            "cal_conf_quantile": 0.75,
+            "threshold_tau": 0.4909697100520134,
+            "test_coverage": 0.218,
+            "test_accuracy_on_answered": 0.5718654434250765,
+            "test_n_answered": 327,
+            "cal_accuracy_on_answered": 0.62
+          }
+        ]
+      },
+      "note": "AURC is the mean of the empirical risk over the n coverage points 1/n..1 (bench_common.aurc)."
+    },
+    "8_printed_decisions": {
+      "source": "live JevXForDecision.decide() over the test batch (phase 4 output), plus the same call with confidence_threshold=0.9",
+      "probabilities_shown": "raw (uncalibrated) model probabilities; the per-type temperatures are reported in phase 3 / phase 6",
+      "selection_rule": "3 highest-confidence correct + 3 highest-confidence wrong + 2 rows at the median confidence + the 2 lowest-confidence rows, all taken from the live decide() output; at threshold 0.9 1496/1500 Q1 rows abstained, so the abstained flag is reported per row rather than used to select rows",
+      "n_printed": 10,
+      "buckets": [
+        "highest-confidence CORRECT",
+        "highest-confidence WRONG",
+        "lowest-confidence (would ABSTAIN at the threshold)",
+        "median-confidence"
+      ],
+      "decisions": [
+        {
+          "bucket": "highest-confidence CORRECT",
+          "test_index": 811,
+          "text": "I would love to rate their food, but never got the opportunity. Happened to stop there on a Saturday evening at about 5\u2026",
+          "true_stars": 1,
+          "true_label_index": 0,
+          "true_noul_1star": true,
+          "q1_predicted_value": "1 star",
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.9169,
+            0.061,
+            0.0087,
+            0.0042,
+            0.0093
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.9169
+            },
+            {
+              "option": "2 star",
+              "p": 0.061
+            }
+          ],
+          "q1_confidence": 0.9169,
+          "q1_abstained_at_threshold": false,
+          "q1_correct": true,
+          "q2_expected_score": 0.1179,
+          "q2_predicted_level": "0",
+          "q2_confidence": 0.903,
+          "q3_p_yes": 0.8985,
+          "q3_confidence": 0.8985,
+          "q3_predicted_index": 1
+        },
+        {
+          "bucket": "highest-confidence CORRECT",
+          "test_index": 391,
+          "text": "My mother wanted to take my wife and I out to dinner for my wife's B-day, we were a party of eight, we were assigned tw\u2026",
+          "true_stars": 1,
+          "true_label_index": 0,
+          "true_noul_1star": true,
+          "q1_predicted_value": "1 star",
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.9096,
+            0.0572,
+            0.0096,
+            0.0058,
+            0.0177
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.9096
+            },
+            {
+              "option": "2 star",
+              "p": 0.0572
+            }
+          ],
+          "q1_confidence": 0.9096,
+          "q1_abstained_at_threshold": false,
+          "q1_correct": true,
+          "q2_expected_score": 0.1426,
+          "q2_predicted_level": "0",
+          "q2_confidence": 0.8916,
+          "q3_p_yes": 0.8813,
+          "q3_confidence": 0.8813,
+          "q3_predicted_index": 1
+        },
+        {
+          "bucket": "highest-confidence CORRECT",
+          "test_index": 338,
+          "text": "One of the worst mgmt companies i have ever dealt with. The policies in their building are obviously very outdated but \u2026",
+          "true_stars": 1,
+          "true_label_index": 0,
+          "true_noul_1star": true,
+          "q1_predicted_value": "1 star",
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.9052,
+            0.0533,
+            0.0103,
+            0.0069,
+            0.0243
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.9052
+            },
+            {
+              "option": "2 star",
+              "p": 0.0533
+            }
+          ],
+          "q1_confidence": 0.9052,
+          "q1_abstained_at_threshold": false,
+          "q1_correct": true,
+          "q2_expected_score": 0.147,
+          "q2_predicted_level": "0",
+          "q2_confidence": 0.8972,
+          "q3_p_yes": 0.8782,
+          "q3_confidence": 0.8782,
+          "q3_predicted_index": 1
+        },
+        {
+          "bucket": "highest-confidence WRONG",
+          "test_index": 894,
+          "text": "As much as I love the idea of saving a poor helpless animal from being put to death this place could use some work if t\u2026",
+          "true_stars": 3,
+          "true_label_index": 2,
+          "true_noul_1star": false,
+          "q1_predicted_value": "1 star",
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.908,
+            0.0487,
+            0.0102,
+            0.0077,
+            0.0254
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.908
+            },
+            {
+              "option": "2 star",
+              "p": 0.0487
+            }
+          ],
+          "q1_confidence": 0.908,
+          "q1_abstained_at_threshold": false,
+          "q1_correct": false,
+          "q2_expected_score": 0.183,
+          "q2_predicted_level": "0",
+          "q2_confidence": 0.8742,
+          "q3_p_yes": 0.8745,
+          "q3_confidence": 0.8745,
+          "q3_predicted_index": 1
+        },
+        {
+          "bucket": "highest-confidence WRONG",
+          "test_index": 583,
+          "text": "Had a layover here recently coming in from an international destination. Customs wasn't too bad, basically waved us thr\u2026",
+          "true_stars": 2,
+          "true_label_index": 1,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.8961,
+            0.0589,
+            0.0122,
+            0.0083,
+            0.0245
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.8961
+            },
+            {
+              "option": "2 star",
+              "p": 0.0589
+            }
+          ],
+          "q1_confidence": 0.8961,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 0.1839,
+          "q2_predicted_level": "0",
+          "q2_confidence": 0.8715,
+          "q3_p_yes": 0.8692,
+          "q3_confidence": 0.8692,
+          "q3_predicted_index": 1
+        },
+        {
+          "bucket": "highest-confidence WRONG",
+          "test_index": 1130,
+          "text": "love this place!!! the wait is long and the cashier is slow!!! there is one worker which i think is the owners son he h\u2026",
+          "true_stars": 4,
+          "true_label_index": 3,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 4,
+          "q1_probabilities": [
+            0.0138,
+            0.0047,
+            0.0154,
+            0.0759,
+            0.8902
+          ],
+          "q1_top2": [
+            {
+              "option": "5 stars",
+              "p": 0.8902
+            },
+            {
+              "option": "4 stars",
+              "p": 0.0759
+            }
+          ],
+          "q1_confidence": 0.8902,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 3.7897,
+          "q2_predicted_level": "4",
+          "q2_confidence": 0.8809,
+          "q3_p_yes": 0.0705,
+          "q3_confidence": 0.9295,
+          "q3_predicted_index": 0
+        },
+        {
+          "bucket": "median-confidence",
+          "test_index": 1057,
+          "text": "A little pricey for the lack of amenities but the history of the hotel made it worth one night stay. \\nTiny room.\\nSimp\u2026",
+          "true_stars": 3,
+          "true_label_index": 2,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 1,
+          "q1_probabilities": [
+            0.2136,
+            0.3642,
+            0.2368,
+            0.1267,
+            0.0588
+          ],
+          "q1_top2": [
+            {
+              "option": "2 star",
+              "p": 0.3642
+            },
+            {
+              "option": "3 stars",
+              "p": 0.2368
+            }
+          ],
+          "q1_confidence": 0.3642,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 1.5401,
+          "q2_predicted_level": "1",
+          "q2_confidence": 0.296,
+          "q3_p_yes": 0.1782,
+          "q3_confidence": 0.8218,
+          "q3_predicted_index": 0
+        },
+        {
+          "bucket": "median-confidence",
+          "test_index": 944,
+          "text": "I had a craving for Mexican food tonight... which happens rarely enough that I should I should indulge. I had no idea w\u2026",
+          "true_stars": 4,
+          "true_label_index": 3,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 1,
+          "q1_probabilities": [
+            0.2015,
+            0.3642,
+            0.2442,
+            0.1308,
+            0.0592
+          ],
+          "q1_top2": [
+            {
+              "option": "2 star",
+              "p": 0.3642
+            },
+            {
+              "option": "3 stars",
+              "p": 0.2442
+            }
+          ],
+          "q1_confidence": 0.3642,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 1.6173,
+          "q2_predicted_level": "1",
+          "q2_confidence": 0.2884,
+          "q3_p_yes": 0.1657,
+          "q3_confidence": 0.8343,
+          "q3_predicted_index": 0
+        },
+        {
+          "bucket": "lowest-confidence (would ABSTAIN at the threshold)",
+          "test_index": 1470,
+          "text": "Genny's is a hoot! I'm def Straight but NOT narrow.",
+          "true_stars": 4,
+          "true_label_index": 3,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 4,
+          "q1_probabilities": [
+            0.1914,
+            0.2012,
+            0.1998,
+            0.1989,
+            0.2088
+          ],
+          "q1_top2": [
+            {
+              "option": "5 stars",
+              "p": 0.2088
+            },
+            {
+              "option": "2 star",
+              "p": 0.2012
+            }
+          ],
+          "q1_confidence": 0.2088,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 2.1889,
+          "q2_predicted_level": "4",
+          "q2_confidence": 0.2596,
+          "q3_p_yes": 0.1366,
+          "q3_confidence": 0.8634,
+          "q3_predicted_index": 0
+        },
+        {
+          "bucket": "lowest-confidence (would ABSTAIN at the threshold)",
+          "test_index": 1213,
+          "text": "Expensive and just ok.",
+          "true_stars": 2,
+          "true_label_index": 1,
+          "true_noul_1star": false,
+          "q1_predicted_value": null,
+          "q1_predicted_index": 0,
+          "q1_probabilities": [
+            0.2088,
+            0.2081,
+            0.1972,
+            0.1922,
+            0.1937
+          ],
+          "q1_top2": [
+            {
+              "option": "1 star",
+              "p": 0.2088
+            },
+            {
+              "option": "2 star",
+              "p": 0.2081
+            }
+          ],
+          "q1_confidence": 0.2088,
+          "q1_abstained_at_threshold": true,
+          "q1_correct": false,
+          "q2_expected_score": 2.0841,
+          "q2_predicted_level": "4",
+          "q2_confidence": 0.2286,
+          "q3_p_yes": 0.1624,
+          "q3_confidence": 0.8376,
+          "q3_predicted_index": 0
+        }
+      ],
+      "verbatim_console_block": "\n====================================================================================================\nREAL DECISIONS \u2014 live JevX.decide() over the 1500-row Yelp test batch\n  Q1 choice: What star rating will this reviewer give?  options=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q2 score : On a 0-to-4 scale, how many stars does this review earn?  levels=['0', '1', '2', '3', '4']\n  Q3 noul  : Is this a 1-star (detractor) review?  (P(yes) = 1-star detractor)\n====================================================================================================\n\n[highest-confidence CORRECT] test row 811  true=1 star  abstained_at_0.9=False\n  text           : I would love to rate their food, but never got the opportunity. Happened to stop there on a Saturday evening at about 5\u2026\n  Q1 choice      : pred=1 star  conf=0.9169  CORRECT  argmax_p=1 star\n  Q1 top probs   : 1 star=0.9169, 2 star=0.0610   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.9169, 0.061, 0.0087, 0.0042, 0.0093]\n  Q2 score       : E[score]=0.1179 (argmax level 0)  conf=0.9030\n  Q3 noul        : P(1-star yes)=0.8985  conf=0.8985\n  TRUE           : 1 star (class index 0)  | 1-star detractor=True\n\n[highest-confidence CORRECT] test row 391  true=1 star  abstained_at_0.9=False\n  text           : My mother wanted to take my wife and I out to dinner for my wife's B-day, we were a party of eight, we were assigned tw\u2026\n  Q1 choice      : pred=1 star  conf=0.9096  CORRECT  argmax_p=1 star\n  Q1 top probs   : 1 star=0.9096, 2 star=0.0572   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.9096, 0.0572, 0.0096, 0.0058, 0.0177]\n  Q2 score       : E[score]=0.1426 (argmax level 0)  conf=0.8916\n  Q3 noul        : P(1-star yes)=0.8813  conf=0.8813\n  TRUE           : 1 star (class index 0)  | 1-star detractor=True\n\n[highest-confidence CORRECT] test row 338  true=1 star  abstained_at_0.9=False\n  text           : One of the worst mgmt companies i have ever dealt with. The policies in their building are obviously very outdated but \u2026\n  Q1 choice      : pred=1 star  conf=0.9052  CORRECT  argmax_p=1 star\n  Q1 top probs   : 1 star=0.9052, 2 star=0.0533   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.9052, 0.0533, 0.0103, 0.0069, 0.0243]\n  Q2 score       : E[score]=0.1470 (argmax level 0)  conf=0.8972\n  Q3 noul        : P(1-star yes)=0.8782  conf=0.8782\n  TRUE           : 1 star (class index 0)  | 1-star detractor=True\n\n[highest-confidence WRONG] test row 894  true=3 stars  abstained_at_0.9=False\n  text           : As much as I love the idea of saving a poor helpless animal from being put to death this place could use some work if t\u2026\n  Q1 choice      : pred=1 star  conf=0.9080  WRONG  argmax_p=1 star\n  Q1 top probs   : 1 star=0.9080, 2 star=0.0487   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.908, 0.0487, 0.0102, 0.0077, 0.0254]\n  Q2 score       : E[score]=0.1830 (argmax level 0)  conf=0.8742\n  Q3 noul        : P(1-star yes)=0.8745  conf=0.8745\n  TRUE           : 3 stars (class index 2)  | 1-star detractor=False\n\n[highest-confidence WRONG] test row 583  true=2 stars  abstained_at_0.9=True\n  text           : Had a layover here recently coming in from an international destination. Customs wasn't too bad, basically waved us thr\u2026\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.8961  WRONG  argmax_p=1 star\n  Q1 top probs   : 1 star=0.8961, 2 star=0.0589   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.8961, 0.0589, 0.0122, 0.0083, 0.0245]\n  Q2 score       : E[score]=0.1839 (argmax level 0)  conf=0.8715\n  Q3 noul        : P(1-star yes)=0.8692  conf=0.8692\n  TRUE           : 2 stars (class index 1)  | 1-star detractor=False\n\n[highest-confidence WRONG] test row 1130  true=4 stars  abstained_at_0.9=True\n  text           : love this place!!! the wait is long and the cashier is slow!!! there is one worker which i think is the owners son he h\u2026\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.8902  WRONG  argmax_p=5 stars\n  Q1 top probs   : 5 stars=0.8902, 4 stars=0.0759   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.0138, 0.0047, 0.0154, 0.0759, 0.8902]\n  Q2 score       : E[score]=3.7897 (argmax level 4)  conf=0.8809\n  Q3 noul        : P(1-star yes)=0.0705  conf=0.9295\n  TRUE           : 4 stars (class index 3)  | 1-star detractor=False\n\n[median-confidence] test row 1057  true=3 stars  abstained_at_0.9=True\n  text           : A little pricey for the lack of amenities but the history of the hotel made it worth one night stay. \\nTiny room.\\nSimp\u2026\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.3642  WRONG  argmax_p=2 star\n  Q1 top probs   : 2 star=0.3642, 3 stars=0.2368   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.2136, 0.3642, 0.2368, 0.1267, 0.0588]\n  Q2 score       : E[score]=1.5401 (argmax level 1)  conf=0.2960\n  Q3 noul        : P(1-star yes)=0.1782  conf=0.8218\n  TRUE           : 3 stars (class index 2)  | 1-star detractor=False\n\n[median-confidence] test row 944  true=4 stars  abstained_at_0.9=True\n  text           : I had a craving for Mexican food tonight... which happens rarely enough that I should I should indulge. I had no idea w\u2026\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.3642  WRONG  argmax_p=2 star\n  Q1 top probs   : 2 star=0.3642, 3 stars=0.2442   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.2015, 0.3642, 0.2442, 0.1308, 0.0592]\n  Q2 score       : E[score]=1.6173 (argmax level 1)  conf=0.2884\n  Q3 noul        : P(1-star yes)=0.1657  conf=0.8343\n  TRUE           : 4 stars (class index 3)  | 1-star detractor=False\n\n[lowest-confidence (would ABSTAIN at the threshold)] test row 1470  true=4 stars  abstained_at_0.9=True\n  text           : Genny's is a hoot! I'm def Straight but NOT narrow.\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.2088  WRONG  argmax_p=5 stars\n  Q1 top probs   : 5 stars=0.2088, 2 star=0.2012   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.1914, 0.2012, 0.1998, 0.1989, 0.2088]\n  Q2 score       : E[score]=2.1889 (argmax level 4)  conf=0.2596\n  Q3 noul        : P(1-star yes)=0.1366  conf=0.8634\n  TRUE           : 4 stars (class index 3)  | 1-star detractor=False\n\n[lowest-confidence (would ABSTAIN at the threshold)] test row 1213  true=2 stars  abstained_at_0.9=True\n  text           : Expensive and just ok.\n  Q1 choice      : pred=None  (ABSTAINED)  conf=0.2088  WRONG  argmax_p=1 star\n  Q1 top probs   : 1 star=0.2088, 2 star=0.2081   full=['1 star', '2 star', '3 stars', '4 stars', '5 stars']\n  Q1 probs       : [0.2088, 0.2081, 0.1972, 0.1922, 0.1937]\n  Q2 score       : E[score]=2.0841 (argmax level 4)  conf=0.2286\n  Q3 noul        : P(1-star yes)=0.1624  conf=0.8376\n  TRUE           : 2 stars (class index 1)  | 1-star detractor=False\n\n===================================================================================================="
+    }
+  },
+  "failures": {},
+  "timings_s": {
+    "load_dataset_s": 23.16,
+    "select_texts_s": 0.55,
+    "select_test_texts_s": 0.08,
+    "load_backbone_s": 0.32,
+    "featurize_train_s": 13.3,
+    "featurize_cal_s": 3.94,
+    "featurize_test_s": 5.04,
+    "featurize_splits_s": 22.33,
+    "phase_1_s": 49.99,
+    "train_all_seeds_s": 84.02,
+    "phase_2_s": 84.27,
+    "calibrate_s": 5.53,
+    "phase_3_s": 5.54,
+    "phase_4_s": 35.74,
+    "phase_5_s": 116.7,
+    "phase_6_s": 11.15,
+    "phase_7_s": 1.39,
+    "phase_8_s": 0.09
+  },
+  "protocol": {
+    "dataset_id": "Yelp/yelp_review_full",
+    "dataset_revision": "c1f9ee939b7d05667af864ee1cb066393154bf85",
+    "dataset_license": "other (HF API tag license:other)",
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_sha": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "split_seed": 0,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "train_size": 4000,
+    "cal_size": 1200,
+    "test_size": 1500,
+    "epochs": 4,
+    "lr": 0.001,
+    "batch_size": 64,
+    "max_length": 128,
+    "pooling": "cls",
+    "fusion": "concat",
+    "ece_bins": 15,
+    "confidence_threshold": 0.9,
+    "questions": {
+      "choice": "What star rating will this reviewer give?",
+      "score": "On a 0-to-4 scale, how many stars does this review earn?",
+      "noul": "Is this a 1-star (detractor) review?"
+    },
+    "option_sets": {
+      "choice": [
+        "1 star",
+        "2 star",
+        "3 stars",
+        "4 stars",
+        "5 stars"
+      ],
+      "score": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "noul": null
+    },
+    "label_derivation": "dataset ClassLabel y in 0..4 (== y+1 stars); Q1 label = y, Q2 level = y, Q3 label = 1[y == 0]. All three questions are scored against REAL dataset labels on the same state."
+  },
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 2,
+    "cuda_available": false,
+    "dtype": "float32"
+  },
+  "total_wall_time_s": 306.5,
+  "phases_run": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ]
+}

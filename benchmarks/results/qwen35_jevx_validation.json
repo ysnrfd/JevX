@@ -1,0 +1,311 @@
+{
+  "battery": {
+    "1_load": {
+      "model_id_passed": "C:\\Users\\ysnrfd\\.cache\\huggingface\\hub\\models--Qwen--Qwen3.5-0.8B\\snapshots\\2fc06364715b967f1860aea9cf38778875588b17",
+      "load_kwargs_passed": {
+        "local_files_only": true
+      },
+      "local_files_only_in_backbone_whitelist": true,
+      "load_seconds": 6.3,
+      "backbone_class": "Qwen3_5Model",
+      "adapter_class": "MultimodalAdapter",
+      "adapter_name": "multimodal",
+      "adapter_default_pooling": "masked_mean",
+      "tokenizer_class": "Qwen2Tokenizer",
+      "tokenizer_padding_side": "right",
+      "processor_class": "Qwen3VLProcessor",
+      "pad_token_id": 248044,
+      "capability_mentions_layer_types": true,
+      "decision_hidden_size": 1024,
+      "pooling_method_config": null,
+      "base_model_type": "qwen3_5",
+      "backbone_config_architectures": [
+        "Qwen3_5Model"
+      ],
+      "wrapper_dtype": "torch.bfloat16",
+      "params_total": 874237249,
+      "params_backbone": 852985920,
+      "text_config_hidden_size": 1024,
+      "text_config_layer_types": [
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention",
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention",
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention",
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention",
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention",
+        "linear_attention",
+        "linear_attention",
+        "linear_attention",
+        "full_attention"
+      ],
+      "full_attention_interval": 4,
+      "rss_after_wrap_load": {
+        "rss_mb": 619.0,
+        "peak_wset_mb": 1354.3
+      },
+      "checkpoint_sha": "2fc06364715b967f1860aea9cf38778875588b17",
+      "capability": {
+        "text": true,
+        "vision": true,
+        "audio": false,
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false,
+        "hidden_states": true,
+        "pooler": false,
+        "generation": false,
+        "native_representation": false,
+        "fallback_representation": true,
+        "jevx_conversion": "experimental",
+        "representation_field": "last_hidden_state",
+        "output_class": "Qwen3_5ModelOutputWithPast",
+        "model_type": "qwen3_5",
+        "architecture": "Qwen3_5ForConditionalGeneration",
+        "input_fields": [
+          "input_ids",
+          "attention_mask",
+          "position_ids",
+          "inputs_embeds",
+          "pixel_values",
+          "pixel_values_videos",
+          "image_grid_thw",
+          "video_grid_thw",
+          "mm_token_type_ids"
+        ],
+        "processor_required": true,
+        "attention_layout": "hybrid:18xlinear_attention+6xfull_attention",
+        "reasons": [
+          "modalities from forward signature: text=True, vision=True, audio=False",
+          "output class from forward annotation: Qwen3_5ModelOutputWithPast",
+          "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+          "hidden_states support=True, pooler present=False, generation=False",
+          "multimodal interleaved states pool lossily \u2192 experimental (pin a token-selection convention)",
+          "vision/audio inputs require a processor or feature extractor",
+          "architecture from config.architectures: Qwen3_5ForConditionalGeneration",
+          "hybrid attention layout: 18 linear_attention + 6 full_attention layers (config.layer_types)"
+        ]
+      },
+      "raw_load_seconds": 1.207,
+      "measured": "backbone=Qwen3_5Model, adapter=MultimodalAdapter, load=6.3s (raw 1.207s), jevx_conversion=experimental, representation_field=last_hidden_state, decision_hidden_size=1024, layer_types_in_reasons=True"
+    },
+    "2_extraction": {
+      "field": "last_hidden_state",
+      "strategy_effective": "masked_mean",
+      "pooling_method_config": null,
+      "adapter_default_pooling": "masked_mean",
+      "pooled_shape": [
+        1,
+        1024
+      ],
+      "pooled_dtype": "torch.bfloat16",
+      "decision_hidden_size": 1024,
+      "pooler_present": false,
+      "extract_vs_manual_fp32_max_abs_error": 0.050594329833984375,
+      "extract_vs_direct_default_pool_max_abs_error": 0.050594329833984375,
+      "extract_seq_vs_direct_default_max_abs_error": 0.0,
+      "cache_vs_nocache_seq_max_abs_error": 0.0,
+      "bf16_ulp_at_pooled_max": 0.125,
+      "bound_2ulp": 0.25,
+      "manual_reference": "direct backbone forward use_cache=False + independent fp32 masked_mean",
+      "first3": [
+        -0.78906,
+        4.90625,
+        8.875
+      ]
+    },
+    "3_base_preservation": {
+      "max_abs_error": 0.0,
+      "bitwise_equal": true,
+      "tolerance": 0.01,
+      "reference": "directly-loaded AutoModel.from_pretrained(snapshot, local_files_only=True)",
+      "measured": "max_abs_error=0.000e+00, bitwise_equal=True"
+    },
+    "4_decisions": {
+      "choice_states": 2,
+      "choice_questions": 2,
+      "K_by_question": [
+        2,
+        5
+      ],
+      "n_decisions": 4,
+      "row_sum_abs_devs": [
+        0.0,
+        0.0009765625,
+        0.0,
+        0.0009765625
+      ],
+      "row_sum_max_abs_dev": 0.0009765625,
+      "bf16_sum_atol": 0.004,
+      "bf16_sum_atol_rationale": "probabilities stored bf16; measured max |sum-1| 1.953e-3; bf16 eps at 1.0 = 7.8125e-3 -> atol 4e-3 = 2x measured",
+      "first_probs_question1_state1": [
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "predicted_values": [
+        "safe",
+        "approve",
+        "safe",
+        "approve"
+      ],
+      "confidence_range": [
+        0.2001953125,
+        0.5
+      ],
+      "score_expected_score": 2.0,
+      "score_in_bounds": true,
+      "noul_p_yes": 0.341796875,
+      "noul_confidence": 0.65625,
+      "mixed_types": [
+        "choice",
+        "score",
+        "noul"
+      ],
+      "prob_dtype": "torch.bfloat16"
+    },
+    "5_shared_state": {
+      "m": 4,
+      "backbone_forward_calls": 1,
+      "expected": 1
+    },
+    "6a_cache": {
+      "use_cache_declared_in_forward_signature": false,
+      "jevx_injects_use_cache_false_for_kwargs_forwards": true,
+      "extraction_output_past_key_values": null,
+      "raw_default_call_built_cache": true,
+      "raw_default_cache_type": "DynamicCache",
+      "two_sequential_forwards_bitwise_equal": true,
+      "two_sequential_forwards_max_abs_error": 0.0,
+      "cache_vs_use_cacheFalse_seq_max_abs_error": 0.0,
+      "finding": "Qwen3_5Model.forward declares use_cache only via **kwargs (TransformersKwargs), which the original explicit-parameter gate missed: the config default (use_cache=true) built a DynamicCache per extraction (bug found by this battery, fixed in jevx/adapters/base.py). Raw default-mode wrapper calls still build a DynamicCache (model default) and are drift-free: identical sequential forwards are bitwise equal and cache/no-cache sequences agree exactly (0.0)."
+    },
+    "6bc_padding": {
+      "jevx_right_batch_vs_alone": {
+        "row0_short": 0.125,
+        "row1_long": 0.03125
+      },
+      "backbone_right_batch_vs_alone": {
+        "row0_short": 0.023809432983398438,
+        "row1_long": 0.010000228881835938
+      },
+      "jevx_left_vs_right_batch": 0.0625,
+      "backbone_left_vs_right_batch": 0.046502113342285156,
+      "jevx_left_batch_vs_alone": {
+        "row0_short": 0.125,
+        "row1_long": 0.03125
+      },
+      "backbone_left_batch_vs_alone": {
+        "row0_short": 0.04464244842529297,
+        "row1_long": 0.010000228881835938
+      },
+      "bf16_ulp_at_batch_max": 0.125,
+      "noise_floor_2ulp": 0.25,
+      "interpretation": "GDN path zeroes padded tokens pre-recurrence (conv bias=False, so pad steps inject exact zeros); full-attention layers use RoPE whose attention scores depend only on RELATIVE positions, and a uniform padding shift preserves all intra-row offsets \u2014 measured left/right and batch/alone differences therefore sit at bf16 kernel-rounding scale. JevX bar: not worse than backbone-alone."
+    },
+    "7_save_load": {
+      "max_abs_error": 0.0,
+      "tolerance": 0.01,
+      "save_seconds": 53.827,
+      "reload_seconds": 20.721,
+      "jevx_metadata_sidecar": true,
+      "calibration_sidecar": false,
+      "calibration_method": "none",
+      "saved_architectures": [
+        "Qwen3_5Model"
+      ],
+      "reloaded_backbone_class": "Qwen3_5Model",
+      "reloaded_backbone_config_architectures": [
+        "Qwen3_5Model"
+      ],
+      "original_backbone_class": "Qwen3_5Model",
+      "reloaded_adapter_class": "MultimodalAdapter",
+      "measured": "max_abs_error=0.000e+00, backbone=Qwen3_5Model"
+    },
+    "8a_sst2_smoke": {
+      "n": 40,
+      "dataset_source": "stanfordnlp/sst2",
+      "question": "Does this sentence express positive sentiment?",
+      "schema": [
+        "positive",
+        "negative"
+      ],
+      "label_mapping": {
+        "1": "positive",
+        "0": "negative"
+      },
+      "accuracy": 0.550000011920929,
+      "macro_f1": 0.3548387096774194,
+      "nll": 0.6931472420692444,
+      "ece_10bin": 0.050000011920928955,
+      "row_sum_max_abs_dev": 0.0,
+      "wall_seconds": 512.77,
+      "chunk_size": 8,
+      "disclaimer": "UNTRAINED HEAD \u2014 pipeline verification only, NOT a quality claim."
+    },
+    "9_failure_transparency": {
+      "errors": {
+        "pixel_values_only_state": "ValueError: You must specify exactly one of input_ids or inputs_embeds",
+        "input_ids_plus_pixel_values": "ValueError: JevX could not call the backbone Qwen3_5Model with the prepared inputs (keys: ['attention_mask', 'input_ids', 'pixel_values', 'use_cache']). Upstream AttributeError: 'NoneType' object has no attribute 'device'\nThis is an INPUT/MODALITY mismatch, not a model bug: text inputs (input_ids/attention_mask) combined with vision pixel_values, or pixel_values / input_features passed without the companion metadata their processor emits (e.g. image_grid_thw for a vision-language backbone), or a modality routed under the wrong key. Pass the FULL processor output for this modality \u2014 processor(text=..., images=..., return_tensors='pt') \u2014 or a text-only state; JevX forwards declared backbone kwargs unchanged and never invents vision/audio metadata.",
+        "garbage_state_int": "TypeError: prepare_inputs: state must be str, list[str], dict/BatchFeature or torch.Tensor, got int.",
+        "garbage_state_int_list": "TypeError: prepare_inputs: state must be str, list[str], dict/BatchFeature or torch.Tensor, got list.",
+        "blank_text_state": "ValueError: tokenize_texts: texts[0] is not a non-empty string \u2014 every state in the batch must carry content.",
+        "garbage_questions_int": "TypeError: questions: expected a str, list of str/dict or torch.Tensor, got int.",
+        "noul_with_options": "ValueError: decision_type 'noul' is binary and takes no options \u2014 pair 0 received 2 option(s). Drop options= for noul questions or use decision_type 'choice'."
+      },
+      "quality_notes": {
+        "pixel_values_only": "upstream ValueError naming input_ids/inputs_embeds \u2014 actionable but does not mention pixel_values",
+        "input_ids_plus_pixel_values": "wrapped by call_backbone (Q-013): ValueError 'JevX could not call the backbone Qwen3_5Model ...' naming the model class, forwarded keys and the processor/modality fix; the original upstream AttributeError ('NoneType' object has no attribute 'device', image_grid_thw missing) is preserved as __cause__",
+        "garbage_types": "JevX TypeErrors/ValueErrors name the argument and expected types"
+      }
+    },
+    "8b_optional_head_training": {
+      "executed": true,
+      "protocol": {
+        "n_train": 200,
+        "epochs": 1,
+        "batch_size": 10,
+        "lr": 0.001,
+        "optimizer": "AdamW (HeadTrainer default)",
+        "grad_clip": 1.0,
+        "seed": 42,
+        "backbone": "frozen; featurized ONCE via the real adapter (0 backbone forwards during training)",
+        "trainable": "JevX-side parameters (state_proj/question/schema/fusion/choice head)",
+        "train_rows": "glue sst2 validation rows 40..239",
+        "eval": "IN-SAMPLE accuracy on the same 200 featurized rows (pre vs post)",
+        "featurize_seconds": 1669.6,
+        "dataset_source": "nyu-mll/glue/sst2 [offline-cache]"
+      },
+      "epoch1_loss": 0.808984375,
+      "pre_train_in_sample_accuracy": 0.47999998927116394,
+      "post_train_in_sample_accuracy": 0.5950000286102295,
+      "note": "protocol evidence only \u2014 1 epoch, frozen random-init features; NOT a quality claim"
+    }
+  },
+  "format": "qwen35-jevx-validation-v1",
+  "environment": {
+    "python": "3.14.3",
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch_num_threads": 2,
+    "psutil": "7.1.3"
+  }
+}

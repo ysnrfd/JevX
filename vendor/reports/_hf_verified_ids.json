@@ -1,0 +1,287 @@
+{
+  "FacebookAI/roberta-base": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "HuggingFaceM4/tiny-random-MistralForCausalLM": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "MIT/ast-finetuned-audioset-10-10-0.4593": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "audio-classification"
+  },
+  "Qwen/Qwen2-0.5B": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "Qwen/Qwen2.5-0.5B": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "albert-base-v2": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "bumblebee-testing/tiny-random-Phi3ForCausalLM": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "distilbert/distilbert-base-uncased": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "facebook/bart-base": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "facebook/bart-large-cnn": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "summarization"
+  },
+  "facebook/wav2vec2-base": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": null
+  },
+  "facebook/wav2vec2-base-960h": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "automatic-speech-recognition"
+  },
+  "google-bert/bert-base-cased": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "google-bert/bert-base-uncased": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "google-t5/t5-small": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "translation"
+  },
+  "google/gemma-1.1-2b-it": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "google/gemma-2b": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "google/siglip-base-patch16-224": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "zero-shot-image-classification"
+  },
+  "google/siglip-base-patch16-256": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "zero-shot-image-classification"
+  },
+  "google/vit-base-patch16-224": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "image-classification"
+  },
+  "google/vit-base-patch16-224-in21k": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "image-feature-extraction"
+  },
+  "gpt2": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "hf-internal-testing/tiny-random-ASTModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-AlbertModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-BartForConditionalGeneration": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": null
+  },
+  "hf-internal-testing/tiny-random-BertModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-CLIPModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "zero-shot-image-classification"
+  },
+  "hf-internal-testing/tiny-random-DebertaV2Model": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-DistilBertModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-GPT2Model": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-GemmaForCausalLM": {
+    "checked": "GET 401",
+    "exists": false,
+    "http": 401
+  },
+  "hf-internal-testing/tiny-random-LlamaForCausalLM": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "hf-internal-testing/tiny-random-LlavaNextForConditionalGeneration": {
+    "checked": "GET 401",
+    "exists": false,
+    "http": 401
+  },
+  "hf-internal-testing/tiny-random-MistralForCausalLM": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "hf-internal-testing/tiny-random-Phi3ForCausalLM": {
+    "checked": "GET 401",
+    "exists": false,
+    "http": 401
+  },
+  "hf-internal-testing/tiny-random-Qwen2ForCausalLM": {
+    "checked": "GET 401",
+    "exists": false,
+    "http": 401
+  },
+  "hf-internal-testing/tiny-random-RobertaModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-SiglipModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "zero-shot-image-classification"
+  },
+  "hf-internal-testing/tiny-random-T5Model": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-ViTModel": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "image-feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-Wav2Vec2Model": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "feature-extraction"
+  },
+  "hf-internal-testing/tiny-random-WhisperForConditionalGeneration": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "automatic-speech-recognition"
+  },
+  "katuni4ka/tiny-random-llava-next": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": null
+  },
+  "llava-hf/llava-v1.6-mistral-7b-hf": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "image-text-to-text"
+  },
+  "llava-hf/llava-v1.6-vicuna-7b-hf": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "image-text-to-text"
+  },
+  "meta-llama/Llama-3.2-1B": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "microsoft/Phi-3-mini-4k-instruct": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "microsoft/deberta-v3-base": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "microsoft/deberta-v3-small": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "fill-mask"
+  },
+  "mistralai/Mistral-7B-v0.1": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "openai/clip-vit-base-patch32": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "zero-shot-image-classification"
+  },
+  "openai/whisper-small": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "automatic-speech-recognition"
+  },
+  "openai/whisper-tiny": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "automatic-speech-recognition"
+  },
+  "openlm-research/open_llama_3b": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "sentence-transformers/all-MiniLM-L6-v2": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "sentence-similarity"
+  },
+  "yujiepan/gemma-tiny-random": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  },
+  "yujiepan/qwen2-tiny-random": {
+    "checked": "GET 200",
+    "exists": true,
+    "pipeline_tag": "text-generation"
+  }
+}

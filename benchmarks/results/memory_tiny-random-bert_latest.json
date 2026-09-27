@@ -1,0 +1,52 @@
+{
+  "environment": {
+    "timestamp_utc": "2026-09-24T11:16:21+00:00",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.3",
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "cpu_count_logical": 4,
+    "gpu": "none (CPU-only: torch 2.14.0+cpu)",
+    "cuda_available": false,
+    "cuda_memory": "N/A \u2014 no CUDA device; CUDA allocator stats do not exist here",
+    "optimizer_memory": "N/A \u2014 inference-only benchmark; no optimizer is constructed",
+    "units": "MB = 10^6 bytes",
+    "scope_note": "tracemalloc covers the Python allocator (objects, tensor metadata); torch tensor storage lives in torch's native allocator and shows up in RSS but mostly not in tracemalloc \u2014 both are reported.",
+    "ram_total_mb": 8476.4,
+    "rss_source": "ctypes fallback"
+  },
+  "model_id": "hf-internal-testing/tiny-random-bert",
+  "model_load": {
+    "rss_before_mb": 472.65792,
+    "rss_after_mb": 488.5504,
+    "rss_delta_mb": 15.892480000000035,
+    "python_peak_during_load_mb": 3.029156,
+    "param_bytes_mb": 1.451624,
+    "buffer_bytes_mb": 0.008193
+  },
+  "steady_forward_batch1": {
+    "iterations": 50,
+    "python_peak_mb": 0.054223,
+    "rss_before_mb": 493.166592,
+    "rss_after_mb": 493.174784,
+    "rss_delta_mb": 0.008192000000008193,
+    "note": "RSS delta after 50 identical eval calls ~ allocator retention, not per-call growth (a leak would grow linearly)."
+  },
+  "m_questions": {
+    "m": 32,
+    "shared_single_call": {
+      "python_peak_mb": 0.104156,
+      "rss_before_mb": 493.416448,
+      "rss_after_mb": 493.453312,
+      "rss_delta_mb": 0.036863999999980024
+    },
+    "naive_m_separate_calls": {
+      "python_peak_mb": 0.050275,
+      "rss_before_mb": 493.453312,
+      "rss_after_mb": 493.498368,
+      "rss_delta_mb": 0.04505600000004506
+    },
+    "python_peak_ratio_shared_over_naive": 2.0717255096966682
+  },
+  "final_rss_mb": 493.498368
+}

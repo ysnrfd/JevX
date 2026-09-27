@@ -1,0 +1,673 @@
+{
+  "experiment": "level4_wave4",
+  "purpose": "Level-4 quality evidence on a TRANSFORMERS_COMPATIBILITY_MATRIX.md-cited checkpoint: real-dataset quality (Accuracy/F1/NLL/Brier/ECE) for the family's cited checkpoint, as the matrix's level-4 definition requires.",
+  "level4_definition_source": "TRANSFORMERS_COMPATIBILITY_MATRIX.md, section 'Support levels (defined precisely)' + 'Evidence overlay (Phases 92-94)'",
+  "status": "complete",
+  "stages_run": [
+    "features",
+    "jevx",
+    "baselines"
+  ],
+  "stages_skipped": [
+    "probe",
+    "gate"
+  ],
+  "failures": {},
+  "command": "run_level4_continue.py --stage quality --backbone google-bert/bert-base-uncased --seeds 0,1,2",
+  "config": {
+    "family": "bert",
+    "backbone_id": "google-bert/bert-base-uncased",
+    "dataset_id": "stanfordnlp/sst2",
+    "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "split_seed": 0,
+    "requested_train_size": 3000,
+    "cal_size": 1000,
+    "test_size_cap": 1500,
+    "epochs": 4,
+    "lr": 0.001,
+    "batch_size": 64,
+    "max_length": 128,
+    "fusion": "concat",
+    "primary_pooling": "cls",
+    "secondary_pooling": "native (adapter pooled vector)",
+    "ece_mce_bins": 15,
+    "mode": "A (freeze_base_model=True, featurize-once per split)",
+    "probe_n": 128,
+    "max_project_seconds": 7200.0
+  },
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 2,
+    "cuda_available": false,
+    "dtype": "float32",
+    "hf_home": "D:\\jevx_tmp\\hf",
+    "cpu_affinity_size": null
+  },
+  "started_utc": "2026-09-26T16:14:55Z",
+  "elapsed_s": 1445.38,
+  "updated_utc": "2026-09-26T16:39:00Z",
+  "runner": "benchmarks/run_level4_continue.py --stage quality; every numeric step delegated to the functions in benchmarks/run_level4.py",
+  "splits": {
+    "train_n": 3000,
+    "cal_n": 1000,
+    "test_n": 872,
+    "train_label_counts": {
+      "0": 1327,
+      "1": 1673
+    },
+    "cal_label_counts": {
+      "1": 558,
+      "0": 442
+    },
+    "test_label_counts": {
+      "1": 444,
+      "0": 428
+    },
+    "split_seed": 0,
+    "train_source": "stratified carve from the official SST-2 train split (bc.make_splits; disjoint from cal by assertion)",
+    "cal_source": "stratified carve from the remainder of the official train split (disjoint from train)",
+    "test_source": "official SST-2 validation split, capped at test_size",
+    "official_validation_n": null
+  },
+  "features": {
+    "wall_s": 932.9,
+    "per_split_wall_s": {
+      "train": 611.86,
+      "cal": 172.56,
+      "test": 148.48
+    },
+    "keys": [
+      "cls",
+      "native"
+    ],
+    "dims": {
+      "native": 768,
+      "cls": 768
+    },
+    "dtypes": {
+      "native": "float32",
+      "cls": "float32"
+    },
+    "note": "both feature matrices come from the SAME backbone forward passes (bench_common.featurize), so they are bit-compatible with model.choice() for the matching pooling"
+  },
+  "jevx": {
+    "cells": {
+      "cls": {
+        "pooling": "cls",
+        "n_seeds": 3,
+        "per_seed": [
+          {
+            "seed": 0,
+            "train_loss_first": 1.296807622655909,
+            "train_loss_last": 0.34290663137080823,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.8394495248794556,
+              "macro_f1": 0.8394461629105907,
+              "nll": 0.4102054987351751,
+              "brier": 0.23787484172937884,
+              "ece": 0.08162221763658956,
+              "mce": 0.18441334622246885
+            },
+            "temperature": {
+              "accuracy": 0.8394495248794556,
+              "macro_f1": 0.8394461629105907,
+              "nll": 0.3525779883405744,
+              "brier": 0.2219238122218122,
+              "ece": 0.02701398231294177,
+              "mce": 0.0974523746050322
+            },
+            "isotonic": {
+              "accuracy": 0.8394495248794556,
+              "macro_f1": 0.8394461629105907,
+              "nll": 0.3757872022252723,
+              "brier": 0.22089023502455887,
+              "ece": 0.02337152169111672,
+              "mce": 0.6990792155265808
+            }
+          },
+          {
+            "seed": 1,
+            "train_loss_first": 1.3418359591605815,
+            "train_loss_last": 0.3298301728481942,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.8394495248794556,
+              "macro_f1": 0.8392330383480826,
+              "nll": 0.3560572086364419,
+              "brier": 0.22249501531535562,
+              "ece": 0.021271309858068382,
+              "mce": 0.11856033710333014
+            },
+            "temperature": {
+              "accuracy": 0.8394495248794556,
+              "macro_f1": 0.8392330383480826,
+              "nll": 0.3552726264865664,
+              "brier": 0.22210984530241604,
+              "ece": 0.0236950738167544,
+              "mce": 0.1068747359163621
+            },
+            "isotonic": {
+              "accuracy": 0.838302731513977,
+              "macro_f1": 0.8380981350314647,
+              "nll": 0.43829160948336143,
+              "brier": 0.22650395194883194,
+              "ece": 0.033721711725816804,
+              "mce": 0.13960068681266874
+            }
+          },
+          {
+            "seed": 2,
+            "train_loss_first": 1.3471058182259823,
+            "train_loss_last": 0.3142537557064219,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.8463302850723267,
+              "macro_f1": 0.8458632334318277,
+              "nll": 0.3981082006373169,
+              "brier": 0.234183388177798,
+              "ece": 0.06370457542051958,
+              "mce": 0.1410783597014167
+            },
+            "temperature": {
+              "accuracy": 0.8463302850723267,
+              "macro_f1": 0.8458632334318277,
+              "nll": 0.35768957234732424,
+              "brier": 0.22448136459121068,
+              "ece": 0.014829029593992666,
+              "mce": 0.07935662479961625
+            },
+            "isotonic": {
+              "accuracy": 0.8463302850723267,
+              "macro_f1": 0.8458632334318277,
+              "nll": 0.38584127708045834,
+              "brier": 0.22687989674442688,
+              "ece": 0.025611888856515965,
+              "mce": 0.4333333015441895
+            }
+          }
+        ],
+        "aggregate": {
+          "uncalibrated": {
+            "accuracy": {
+              "mean": 0.8417431116104126,
+              "std": 0.003972608749583387
+            },
+            "macro_f1": {
+              "mean": 0.8415141448968336,
+              "std": 0.003767928321199641
+            },
+            "nll": {
+              "mean": 0.388123636002978,
+              "std": 0.028421435191719472
+            },
+            "brier": {
+              "mean": 0.23151774840751083,
+              "std": 0.0080289471084367
+            },
+            "ece": {
+              "mean": 0.055532700971725836,
+              "std": 0.030994236019428318
+            },
+            "mce": {
+              "mean": 0.14801734767573857,
+              "std": 0.03347038792861803
+            }
+          },
+          "temperature": {
+            "accuracy": {
+              "mean": 0.8417431116104126,
+              "std": 0.003972608749583387
+            },
+            "macro_f1": {
+              "mean": 0.8415141448968336,
+              "std": 0.003767928321199641
+            },
+            "nll": {
+              "mean": 0.3551800623914884,
+              "std": 0.0025570488552799225
+            },
+            "brier": {
+              "mean": 0.2228383407051463,
+              "std": 0.0014259374791354958
+            },
+            "ece": {
+              "mean": 0.021846028574562946,
+              "std": 0.006299404291003192
+            },
+            "mce": {
+              "mean": 0.09456124510700352,
+              "std": 0.013985012770432908
+            }
+          },
+          "isotonic": {
+            "accuracy": {
+              "mean": 0.841360847155253,
+              "std": 0.004341689609416217
+            },
+            "macro_f1": {
+              "mean": 0.8411358437912945,
+              "std": 0.004149151045791363
+            },
+            "nll": {
+              "mean": 0.3999733629296974,
+              "std": 0.033563181009984185
+            },
+            "brier": {
+              "mean": 0.22475802790593924,
+              "std": 0.003354877039814746
+            },
+            "ece": {
+              "mean": 0.02756837409114983,
+              "std": 0.005445409469783377
+            },
+            "mce": {
+              "mean": 0.42400440129447964,
+              "std": 0.27985590454352166
+            }
+          }
+        },
+        "featurized_vs_full_model": [
+          {
+            "n": 16,
+            "max_abs_diff": 4.9591064453125e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          },
+          {
+            "n": 16,
+            "max_abs_diff": 1.71661376953125e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          },
+          {
+            "n": 16,
+            "max_abs_diff": 4.1961669921875e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          }
+        ],
+        "wall_s": 210.0
+      },
+      "native": {
+        "pooling": "native",
+        "n_seeds": 3,
+        "per_seed": [
+          {
+            "seed": 0,
+            "train_loss_first": 1.3059581632309771,
+            "train_loss_last": 0.7726939865883361,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.6582568883895874,
+              "macro_f1": 0.6231939538417813,
+              "nll": 0.7682750084145235,
+              "brier": 0.48736299195004534,
+              "ece": 0.18888247607771408,
+              "mce": 0.28153252734078293
+            },
+            "temperature": {
+              "accuracy": 0.6582568883895874,
+              "macro_f1": 0.6231939538417813,
+              "nll": 0.5963383520906389,
+              "brier": 0.4135777464214767,
+              "ece": 0.0605201695216905,
+              "mce": 0.1524229208007455
+            },
+            "isotonic": {
+              "accuracy": 0.6582568883895874,
+              "macro_f1": 0.6231939538417813,
+              "nll": 0.5987551312469063,
+              "brier": 0.4121001548680904,
+              "ece": 0.055693945069925484,
+              "mce": 0.1567639708518982
+            }
+          },
+          {
+            "seed": 1,
+            "train_loss_first": 1.42918494787622,
+            "train_loss_last": 0.7829161787286718,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.6834862232208252,
+              "macro_f1": 0.6551403958250941,
+              "nll": 0.6266441211512713,
+              "brier": 0.4261122235328499,
+              "ece": 0.08808777194230927,
+              "mce": 0.14895555272436978
+            },
+            "temperature": {
+              "accuracy": 0.6834862232208252,
+              "macro_f1": 0.6551403958250941,
+              "nll": 0.5985080101975948,
+              "brier": 0.41181079581330543,
+              "ece": 0.05850698402441972,
+              "mce": 0.10935109149752642
+            },
+            "isotonic": {
+              "accuracy": 0.6915137767791748,
+              "macro_f1": 0.6655407187720561,
+              "nll": 0.6663316481306698,
+              "brier": 0.42039707553818856,
+              "ece": 0.0787871059611303,
+              "mce": 0.4
+            }
+          },
+          {
+            "seed": 2,
+            "train_loss_first": 1.50483349663146,
+            "train_loss_last": 0.7655015873148087,
+            "trainable_params": 13579265,
+            "uncalibrated": {
+              "accuracy": 0.6238532066345215,
+              "macro_f1": 0.5756111747493873,
+              "nll": 0.6159041286173974,
+              "brier": 0.43331315717249463,
+              "ece": 0.09834143464718392,
+              "mce": 0.14355887569619363
+            },
+            "temperature": {
+              "accuracy": 0.6238532066345215,
+              "macro_f1": 0.5756111747493873,
+              "nll": 0.6131820280669849,
+              "brier": 0.4284541614786865,
+              "ece": 0.08779536604607871,
+              "mce": 0.13972073519366912
+            },
+            "isotonic": {
+              "accuracy": 0.6341742873191833,
+              "macro_f1": 0.6219182178365852,
+              "nll": 0.5952136324277839,
+              "brier": 0.4173210180709871,
+              "ece": 0.0578972103945706,
+              "mce": 0.142160309397656
+            }
+          }
+        ],
+        "aggregate": {
+          "uncalibrated": {
+            "accuracy": {
+              "mean": 0.6551987727483114,
+              "std": 0.029933897511887023
+            },
+            "macro_f1": {
+              "mean": 0.6179818414720876,
+              "std": 0.04001998048154069
+            },
+            "nll": {
+              "mean": 0.6702744193943975,
+              "std": 0.08504071640176637
+            },
+            "brier": {
+              "mean": 0.4489294575517966,
+              "std": 0.033478586978495185
+            },
+            "ece": {
+              "mean": 0.12510389422240242,
+              "std": 0.055471299131373795
+            },
+            "mce": {
+              "mean": 0.1913489852537821,
+              "std": 0.07814783732295473
+            }
+          },
+          "temperature": {
+            "accuracy": {
+              "mean": 0.6551987727483114,
+              "std": 0.029933897511887023
+            },
+            "macro_f1": {
+              "mean": 0.6179818414720876,
+              "std": 0.04001998048154069
+            },
+            "nll": {
+              "mean": 0.6026761301184062,
+              "std": 0.009162820136548133
+            },
+            "brier": {
+              "mean": 0.41794756790448956,
+              "std": 0.009141767335310308
+            },
+            "ece": {
+              "mean": 0.06894083986406298,
+              "std": 0.016359495625563856
+            },
+            "mce": {
+              "mean": 0.13383158249731367,
+              "std": 0.02213158849906968
+            }
+          },
+          "isotonic": {
+            "accuracy": {
+              "mean": 0.6613149841626486,
+              "std": 0.028791808300296606
+            },
+            "macro_f1": {
+              "mean": 0.6368842968168075,
+              "std": 0.02482538549643646
+            },
+            "nll": {
+              "mean": 0.6201001372684533,
+              "std": 0.04007680128108893
+            },
+            "brier": {
+              "mean": 0.4166060828257554,
+              "std": 0.004194409667060618
+            },
+            "ece": {
+              "mean": 0.06412608714187547,
+              "std": 0.012744516434004243
+            },
+            "mce": {
+              "mean": 0.23297476008318474,
+              "std": 0.14483228165336556
+            }
+          }
+        },
+        "featurized_vs_full_model": [
+          {
+            "n": 16,
+            "max_abs_diff": 1.52587890625e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          },
+          {
+            "n": 16,
+            "max_abs_diff": 1.1444091796875e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          },
+          {
+            "n": 16,
+            "max_abs_diff": 1.52587890625e-05,
+            "note": "identical modules; nonzero diff only from float re-association between independent batched backbone passes"
+          }
+        ],
+        "wall_s": 196.18
+      }
+    },
+    "primary_cell": "cls",
+    "pooling_definitions": {
+      "cls": "last_hidden_state[:, 0] (the pooling the published protocol uses)",
+      "native": "the adapter's own pooled vector for this checkpoint (pooler_output for roberta - the field the matrix row names)"
+    }
+  },
+  "baselines": {
+    "feature_set": "cls",
+    "in_dim": 768,
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "seed": 0,
+        "b1_linear": {
+          "accuracy": 0.8314220309257507,
+          "macro_f1": 0.831411154293831,
+          "nll": 0.3692694564295865,
+          "brier": 0.23197554282745786,
+          "ece": 0.04732728763184415,
+          "mce": 0.07650676098736842
+        },
+        "b1_temperature": {
+          "accuracy": 0.8314220309257507,
+          "macro_f1": 0.831411154293831,
+          "nll": 0.3589685018871258,
+          "brier": 0.22841264146049126,
+          "ece": 0.019199549946763112,
+          "mce": 0.07985301778234283
+        },
+        "b2_mlp": {
+          "accuracy": 0.8211008906364441,
+          "macro_f1": 0.8195823784059079,
+          "nll": 0.41386785843497575,
+          "brier": 0.25485169376498074,
+          "ece": 0.06750748627776403,
+          "mce": 0.19442199865976972
+        }
+      },
+      {
+        "seed": 1,
+        "b1_linear": {
+          "accuracy": 0.8302752375602722,
+          "macro_f1": 0.8298805726187024,
+          "nll": 0.3806019353244378,
+          "brier": 0.23971641854498196,
+          "ece": 0.03798804568861603,
+          "mce": 0.0716399532003501
+        },
+        "b1_temperature": {
+          "accuracy": 0.8302752375602722,
+          "macro_f1": 0.8298805726187024,
+          "nll": 0.3726088137578374,
+          "brier": 0.2367773275365431,
+          "ece": 0.015722310392681602,
+          "mce": 0.06762579449436124
+        },
+        "b2_mlp": {
+          "accuracy": 0.8497706651687622,
+          "macro_f1": 0.8496660547078061,
+          "nll": 0.3639315722389068,
+          "brier": 0.22402614628943496,
+          "ece": 0.043652415822405324,
+          "mce": 0.13613082586772862
+        }
+      },
+      {
+        "seed": 2,
+        "b1_linear": {
+          "accuracy": 0.8348624110221863,
+          "macro_f1": 0.834831105966537,
+          "nll": 0.3720445471199549,
+          "brier": 0.23328709224226965,
+          "ece": 0.05104223126118333,
+          "mce": 0.0924735363872572
+        },
+        "b1_temperature": {
+          "accuracy": 0.8348624110221863,
+          "macro_f1": 0.834831105966537,
+          "nll": 0.3598547434794261,
+          "brier": 0.2287731902194716,
+          "ece": 0.017688928462496607,
+          "mce": 0.07554706811904904
+        },
+        "b2_mlp": {
+          "accuracy": 0.8474770784378052,
+          "macro_f1": 0.847419072615923,
+          "nll": 0.3712810742928061,
+          "brier": 0.2302378665301901,
+          "ece": 0.05443911862756135,
+          "mce": 0.1744839296196446
+        }
+      }
+    ],
+    "aggregate": {
+      "b1_linear": {
+        "accuracy": {
+          "mean": 0.8321865598360697,
+          "std": 0.0023872407573299645
+        },
+        "macro_f1": {
+          "mean": 0.8320409442930234,
+          "std": 0.0025346442924634835
+        },
+        "nll": {
+          "mean": 0.3739719796246597,
+          "std": 0.00590698878623511
+        },
+        "brier": {
+          "mean": 0.23499301787156981,
+          "std": 0.004142816180820237
+        },
+        "ece": {
+          "mean": 0.0454525215272145,
+          "std": 0.006725994439564847
+        },
+        "mce": {
+          "mean": 0.08020675019165857,
+          "std": 0.010898485545494026
+        }
+      },
+      "b1_temperature": {
+        "accuracy": {
+          "mean": 0.8321865598360697,
+          "std": 0.0023872407573299645
+        },
+        "macro_f1": {
+          "mean": 0.8320409442930234,
+          "std": 0.0025346442924634835
+        },
+        "nll": {
+          "mean": 0.36381068637479647,
+          "std": 0.007632276208716642
+        },
+        "brier": {
+          "mean": 0.23132105307216866,
+          "std": 0.0047287098795378716
+        },
+        "ece": {
+          "mean": 0.017536929600647108,
+          "std": 0.0017435958446899045
+        },
+        "mce": {
+          "mean": 0.0743419601319177,
+          "std": 0.006202052989053355
+        }
+      },
+      "b2_mlp": {
+        "accuracy": {
+          "mean": 0.8394495447476705,
+          "std": 0.01593172827389341
+        },
+        "macro_f1": {
+          "mean": 0.8388891685765456,
+          "std": 0.01675787403431854
+        },
+        "nll": {
+          "mean": 0.38302683498889617,
+          "std": 0.026960718471718957
+        },
+        "brier": {
+          "mean": 0.2363719021948686,
+          "std": 0.01630255775770914
+        },
+        "ece": {
+          "mean": 0.055199673575910234,
+          "std": 0.011945707575511187
+        },
+        "mce": {
+          "mean": 0.16834558471571434,
+          "std": 0.029626418362461625
+        }
+      }
+    },
+    "wall_s": 11.77
+  },
+  "wall_time_s": 1445.38,
+  "finished_utc": "2026-09-26T16:39:00Z"
+}

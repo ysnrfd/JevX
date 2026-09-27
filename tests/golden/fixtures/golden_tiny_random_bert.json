@@ -1,0 +1,67 @@
+{
+  "model_id": "hf-internal-testing/tiny-random-bert",
+  "seed": 0,
+  "decision_type": "choice",
+  "state": "The maintenance crew inspected the bridge deck and confirmed that the support damage had been repaired before the storm arrived.",
+  "state_kind": "text",
+  "questions": [
+    "Is this content safe to deploy?",
+    "Which disposition fits this item?"
+  ],
+  "options": [
+    [
+      "safe",
+      "unsafe"
+    ],
+    [
+      "approve",
+      "review",
+      "reject"
+    ]
+  ],
+  "tolerance": 1e-06,
+  "adapter": "encoder",
+  "representation_field": "pooler_output",
+  "jevx_conversion": "supported",
+  "probs": [
+    [
+      0.502337,
+      0.4976629,
+      0.0
+    ],
+    [
+      0.3353895,
+      0.3315105,
+      0.3330999
+    ]
+  ],
+  "predicted_indices": [
+    0,
+    0
+  ],
+  "state_representation": {
+    "sum": -1.4e-06,
+    "mean": -0.0,
+    "std": 0.9625968
+  },
+  "config": {
+    "model_type": "jevx",
+    "base_model_name_or_path": "hf-internal-testing/tiny-random-bert",
+    "base_model_type": "bert",
+    "representation_strategy": "native",
+    "pooling_method": null,
+    "fusion_type": "concat",
+    "decision_hidden_size": 32,
+    "question_hidden_size": 32,
+    "schema_hidden_size": 32,
+    "decision_primitives": [
+      "choice",
+      "score",
+      "noul"
+    ],
+    "calibration_method": "none",
+    "confidence_method": "max_probability",
+    "freeze_base_model": true,
+    "version": "0.1.0"
+  }
+}

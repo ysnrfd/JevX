@@ -1,0 +1,266 @@
+{
+  "provenance": {
+    "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+    "backbone_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f",
+    "dataset_id": "fancyzhx/ag_news",
+    "dataset_revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+    "question": "What is the topic of this news article?",
+    "options": [
+      "World",
+      "Sports",
+      "Business",
+      "Sci/Tech"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "train_size": 3000,
+      "cal_size": 1000,
+      "test_size": 1500,
+      "epochs": 4,
+      "lr": 0.001,
+      "batch_size": 64,
+      "max_length": 128,
+      "fusion": "concat",
+      "pooling": "cls",
+      "split_seed": 0
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    },
+    "dataset_license": "unknown (HF API tag license:unknown, fetched 2026-09-24)",
+    "splits": {
+      "train_n": 3000,
+      "cal_n": 1000,
+      "test_n": 1500,
+      "train_label_counts": {
+        "2": 750,
+        "1": 750,
+        "0": 750,
+        "3": 750
+      },
+      "cal_label_counts": {
+        "2": 250,
+        "0": 250,
+        "3": 250,
+        "1": 250
+      },
+      "test_label_counts": {
+        "2": 336,
+        "3": 385,
+        "1": 401,
+        "0": 378
+      },
+      "official_train_n": 120000,
+      "official_test_n": 7600,
+      "test_source": "official test split, first 1500 rows (cap applied=True; deterministic [:test_size] slice, mirroring run_quality.py)",
+      "train_cal_source": "stratified carve from official train split",
+      "split_seed": 0,
+      "disjointness": "asserted at construction by bc.make_splits",
+      "truncation": {
+        "max_length": 128,
+        "note": "featurize() truncates to max_length; model.choice() never truncates (JevX raises instead). Rows over max_length are excluded from the equivalence subset only - the benchmark metrics always use the truncated (featurize-once) features.",
+        "per_split_token_len": {
+          "train": {
+            "n": 3000,
+            "over_max_length": 15,
+            "max_len_observed": 192
+          },
+          "cal": {
+            "n": 1000,
+            "over_max_length": 5,
+            "max_len_observed": 186
+          },
+          "test": {
+            "n": 1500,
+            "over_max_length": 11,
+            "max_len_observed": 217
+          }
+        }
+      }
+    }
+  },
+  "experiment": "exp7",
+  "sub_experiment": "exp7b",
+  "description": "baselines on ag_news: B1 linear probe, B2 MLP, B4=B1+temperature (same features/splits/seeds)",
+  "dataset": "fancyzhx/ag_news",
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "seed": 0,
+      "b1_linear": {
+        "accuracy": 0.8273333311080933,
+        "macro_f1": 0.8242087275008823,
+        "nll": 0.5018296296891805,
+        "brier": 0.2662137595073781,
+        "ece": 0.057255054076512685,
+        "mce": 0.13986224358060717
+      },
+      "b1_temperature": {
+        "accuracy": 0.8273333311080933,
+        "macro_f1": 0.8242087275008823,
+        "nll": 0.48887461421345196,
+        "brier": 0.26174664155041083,
+        "ece": 0.026637840131918607,
+        "mce": 0.6863517761230469
+      },
+      "b2_mlp": {
+        "accuracy": 0.8220000267028809,
+        "macro_f1": 0.818901821994628,
+        "nll": 0.48885757091301973,
+        "brier": 0.25745186751564747,
+        "ece": 0.03774891851345698,
+        "mce": 0.10852518355524216
+      }
+    },
+    {
+      "seed": 1,
+      "b1_linear": {
+        "accuracy": 0.8259999752044678,
+        "macro_f1": 0.8222899761675019,
+        "nll": 0.5029976470479985,
+        "brier": 0.2634926301395924,
+        "ece": 0.05297111006577812,
+        "mce": 0.44129833579063416
+      },
+      "b1_temperature": {
+        "accuracy": 0.8259999752044678,
+        "macro_f1": 0.8222899761675019,
+        "nll": 0.4915911211189174,
+        "brier": 0.2583982269604817,
+        "ece": 0.037176776369412724,
+        "mce": 0.6851787865161896
+      },
+      "b2_mlp": {
+        "accuracy": 0.8420000076293945,
+        "macro_f1": 0.8380415591076813,
+        "nll": 0.45811377863503683,
+        "brier": 0.2385372317991664,
+        "ece": 0.040746529996395074,
+        "mce": 0.6692982614040375
+      }
+    },
+    {
+      "seed": 2,
+      "b1_linear": {
+        "accuracy": 0.8253333568572998,
+        "macro_f1": 0.8223120624044036,
+        "nll": 0.4996610348324392,
+        "brier": 0.26145307622770037,
+        "ece": 0.05280592320362723,
+        "mce": 0.13308978798877769
+      },
+      "b1_temperature": {
+        "accuracy": 0.8253333568572998,
+        "macro_f1": 0.8223120624044036,
+        "nll": 0.48761548383540637,
+        "brier": 0.2568858839271508,
+        "ece": 0.023031296233336124,
+        "mce": 0.3268466889858246
+      },
+      "b2_mlp": {
+        "accuracy": 0.840666651725769,
+        "macro_f1": 0.8378282623485136,
+        "nll": 0.45885078261488327,
+        "brier": 0.24184415146142896,
+        "ece": 0.04046773356199266,
+        "mce": 0.10499650239944458
+      }
+    }
+  ],
+  "aggregate": {
+    "b1_linear": {
+      "accuracy": {
+        "mean": 0.8262222210566202,
+        "std": 0.0010183413794295397
+      },
+      "macro_f1": {
+        "mean": 0.8229369220242626,
+        "std": 0.00110147121080625
+      },
+      "nll": {
+        "mean": 0.5014961038565394,
+        "std": 0.0016931257720660356
+      },
+      "brier": {
+        "mean": 0.2637198219582236,
+        "std": 0.0023884594227640663
+      },
+      "ece": {
+        "mean": 0.05434402911530601,
+        "std": 0.0025223741630521525
+      },
+      "mce": {
+        "mean": 0.238083455786673,
+        "std": 0.17602182287987497
+      }
+    },
+    "b1_temperature": {
+      "accuracy": {
+        "mean": 0.8262222210566202,
+        "std": 0.0010183413794295397
+      },
+      "macro_f1": {
+        "mean": 0.8229369220242626,
+        "std": 0.00110147121080625
+      },
+      "nll": {
+        "mean": 0.48936040638925854,
+        "std": 0.0020318509987366008
+      },
+      "brier": {
+        "mean": 0.2590102508126811,
+        "std": 0.0024875029778406122
+      },
+      "ece": {
+        "mean": 0.028948637578222483,
+        "std": 0.007350407519207205
+      },
+      "mce": {
+        "mean": 0.566125750541687,
+        "std": 0.20722257587059645
+      }
+    },
+    "b2_mlp": {
+      "accuracy": {
+        "mean": 0.8348888953526815,
+        "std": 0.011181979287912008
+      },
+      "macro_f1": {
+        "mean": 0.831590547816941,
+        "std": 0.010989276414861967
+      },
+      "nll": {
+        "mean": 0.46860737738764663,
+        "std": 0.01754105319180907
+      },
+      "brier": {
+        "mean": 0.24594441692541427,
+        "std": 0.01010197969351347
+      },
+      "ece": {
+        "mean": 0.039654394023948235,
+        "std": 0.0016560674967435111
+      },
+      "mce": {
+        "mean": 0.2942733157862414,
+        "std": 0.3247859222232361
+      }
+    }
+  },
+  "note": "B3 (distilgpt2 constrained-decoding) is NOT run here: its template is sentiment-specific ('Review: ... Sentiment:'), and the EXP-7 brief specifies B1/B2/B4 only. Latency is not re-measured either - the SST-2 latency rows already cover this host.",
+  "wall_time_s": 11.15
+}

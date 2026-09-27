@@ -1,0 +1,19 @@
+{
+  "jevx_heads_only": {
+    "mean_ms": 5.960169999889331,
+    "std_ms": 3.055439709482171,
+    "min_ms": 2.3747999948682263,
+    "max_ms": 15.473000006750226,
+    "warmup": 10,
+    "iters": 100
+  },
+  "b1_head_only_random_weights": {
+    "mean_ms": 0.1591480006754864,
+    "std_ms": 0.2982375416004046,
+    "min_ms": 0.05800000508315861,
+    "max_ms": 2.2444999922299758,
+    "warmup": 10,
+    "iters": 100
+  },
+  "note": "head-only timings use randomly-initialized head weights - weight VALUES do not affect runtime; batch=1 on a 128-d cached feature row"
+}

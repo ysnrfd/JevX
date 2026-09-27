@@ -1,0 +1,144 @@
+{
+  "provenance": {
+    "modality": "vision",
+    "backbone_id": "facebook/deit-tiny-patch16-224",
+    "backbone_revision_api": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_revision_loaded": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_params": 5561472,
+    "dataset": {
+      "dataset_id": "frgfm/imagenette",
+      "dataset_revision": "a8a496123b40fa739da2acf9b0dae339d30c7bae",
+      "config": "imagenette2-160",
+      "archive": {
+        "url": "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz",
+        "cached": true,
+        "bytes": 99003388,
+        "sha256": "64d0c4859f35a461889e0147755a999a48b49bf38a7e0f9bd27003f10db02fe5",
+        "etag": null
+      },
+      "metadata_train": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/train.txt",
+        "bytes": 499691,
+        "sha256": "971de5a44d69360ebb362bc104887995be67e4cdefdec3d2c51762073b549967"
+      },
+      "metadata_val": {
+        "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/val.txt",
+        "bytes": 199182,
+        "sha256": "fb0f7c7d9eb125e0fb69d30fc3a2da29d836b080c0a3f61f9e59a09f65ce0221"
+      },
+      "archive_members_indexed": {
+        "train": 9469,
+        "val": 3925,
+        "unmatched": 0
+      }
+    },
+    "question": "Which category does this image belong to?",
+    "options": [
+      "tench",
+      "English springer",
+      "cassette player",
+      "chain saw",
+      "church",
+      "French horn",
+      "garbage truck",
+      "gas pump",
+      "golf ball",
+      "parachute"
+    ],
+    "pooling": "pooling_method='cls' (adapter default = masked_mean); vision: 'cls' because the deit checkpoint has no trained pooler (load report: pooler.dense.* MISSING)",
+    "decision_hidden_size": 192,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "hyperparams": {
+      "epochs": 4,
+      "lr": 0.001,
+      "head_batch_size": 64,
+      "vision_feat_batch": 32,
+      "audio_feat_batch": 8,
+      "split_seed": 0,
+      "smoke": false,
+      "audio_max_seconds": null
+    },
+    "splits": {
+      "train_n": 800,
+      "cal_n": 300,
+      "test_n": 500,
+      "train_label_counts": {
+        "6": 81,
+        "9": 81,
+        "4": 80,
+        "2": 84,
+        "5": 81,
+        "8": 80,
+        "3": 72,
+        "1": 81,
+        "0": 81,
+        "7": 79
+      },
+      "cal_label_counts": {
+        "0": 31,
+        "2": 32,
+        "8": 30,
+        "9": 30,
+        "1": 30,
+        "4": 30,
+        "7": 30,
+        "6": 30,
+        "5": 30,
+        "3": 27
+      },
+      "test_label_counts": {
+        "2": 46,
+        "1": 50,
+        "6": 50,
+        "4": 52,
+        "9": 50,
+        "3": 49,
+        "0": 49,
+        "7": 53,
+        "5": 50,
+        "8": 51
+      },
+      "train_source": "stratified carve from official train split (disjoint, seed=0)",
+      "test_source": "official validation split, stratified subsample (n=500, seed=0)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32"
+    }
+  },
+  "latency": {
+    "jevx_choice_e2e_batch1": {
+      "mean_ms": 439.42465499945683,
+      "std_ms": 366.52694108306525,
+      "min_ms": 176.42029997659847,
+      "max_ms": 1883.0123999796342,
+      "warmup": 10,
+      "iters": 100
+    },
+    "linear_probe_head_only_batch1": {
+      "mean_ms": 0.2565799994044937,
+      "std_ms": 0.350792219422376,
+      "min_ms": 0.1109000004362315,
+      "max_ms": 2.6037000061478466,
+      "warmup": 10,
+      "iters": 100
+    },
+    "warmup": 10,
+    "iters": 100,
+    "note": "ms per single-example call on a shared host; e2e = processor + frozen backbone + JevX heads through model.choice (torch.no_grad); head-only = cached feature -> Linear"
+  },
+  "wall_s": 47.7
+}

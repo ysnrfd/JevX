@@ -1,0 +1,3500 @@
+{
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "seed_base": 20260924,
+  "scope": "PIPELINE execution only: models are randomly initialized in memory (no checkpoints, no downloads). A PASS shows the JevX extraction and decision path ran end-to-end with every invariant holding; it makes no statement about a checkpoint's accuracy.",
+  "counts": {
+    "attempted": 70,
+    "passed": 70,
+    "partial": 0,
+    "failed": 0,
+    "excluded": 6
+  },
+  "elapsed_s": 19.25,
+  "exclusions": [
+    {
+      "family": "trocr",
+      "reason": "v5's TrOCRForCausalLM.forward consumes encoder_hidden_states, not pixels (models/trocr/modeling_trocr.py:666-747: the forward forwards input_ids/attention_mask/encoder_hidden_states into self.model.decoder and declares no pixel_values). The vision tower is a SEPARATE model and transformers 5.16.1 ships no TrOCRModel base to wrap, so a single JevX state -> representation call does not exist. Its own docstring example (modeling_trocr.py:716-731) still passes pixel_values and is stale."
+    },
+    {
+      "family": "sam_vision",
+      "reason": "SamVisionConfig(...) construction did not complete within 60 s in this environment for the DEFAULT config (no JevX code involved, measured by benchmarks/_probe_configs3.py), so no tiny instance could be built inside the sweep time budget. Known-but-unexecuted."
+    },
+    {
+      "family": "nezha",
+      "reason": "not a key of transformers 5.16.1 CONFIG_MAPPING and has no record in vendor/reports/architecture_inventory.json (709 records scanned)."
+    },
+    {
+      "family": "unet",
+      "reason": "no `unet` model_type exists in transformers 5.16.1: a scan of all 709 records in vendor/reports/architecture_inventory.json (CONFIG_MAPPING keys + MODEL_* mappings) returns no match, and there is no models/unet/ package under vendor/transformers/src/transformers/models/. The diffusion UNets live under other names (the `mimi`, `xcodec`, `dac` codec stacks), which are waveform decoders with no named pooled output field.other names (e.g. `mimi`, `xcodec`, `dac` codecs) and are not representation backbones with a named pooled output."
+    },
+    {
+      "family": "codegen-audio / musicgen-audio",
+      "reason": "no `codegen-audio` model_type exists in transformers 5.16.1 (scanned all 709 records of vendor/reports/architecture_inventory.json); the audio LM analogue is `musicgen` (MusicgenModel, CAUSAL_LM), whose decoder-only LM contract is already covered by the text decoder-only rows of this sweep."
+    },
+    {
+      "family": "gemma3 / siglip2 / llava_next (composite variants)",
+      "reason": "the sub-model configs (gemma3_text/vision, siglip2_*, llava_next_*) are SECONDARY records in the inventory (nested under the composite's text_config/vision_config); the composite families gemma3, siglip2 and llava_next themselves are covered by their own executed rows."
+    }
+  ],
+  "results": [
+    {
+      "family": "bert",
+      "group": "encoder",
+      "model_class": "BertModel",
+      "config_class": "BertConfig",
+      "source": "models/bert/modeling_bert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3366115093231201,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.241
+    },
+    {
+      "family": "roberta",
+      "group": "encoder",
+      "model_class": "RobertaModel",
+      "config_class": "RobertaConfig",
+      "source": "models/roberta/modeling_roberta.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3337058126926422,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.14
+    },
+    {
+      "family": "albert",
+      "group": "encoder",
+      "model_class": "AlbertModel",
+      "config_class": "AlbertConfig",
+      "source": "models/albert/modeling_albert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        36
+      ],
+      "state_proj_width": 36,
+      "hidden_width": 36,
+      "predicted_index": 2,
+      "confidence": 0.33375346660614014,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.175
+    },
+    {
+      "family": "distilbert",
+      "group": "encoder",
+      "model_class": "DistilBertModel",
+      "config_class": "DistilBertConfig",
+      "source": "models/distilbert/modeling_distilbert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33383071422576904,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.118
+    },
+    {
+      "family": "electra",
+      "group": "encoder",
+      "model_class": "ElectraModel",
+      "config_class": "ElectraConfig",
+      "source": "models/electra/modeling_electra.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3334997594356537,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.137
+    },
+    {
+      "family": "mobilebert",
+      "group": "encoder",
+      "model_class": "MobileBertModel",
+      "config_class": "MobileBertConfig",
+      "source": "models/mobilebert/modeling_mobilebert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33351755142211914,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.195
+    },
+    {
+      "family": "mpnet",
+      "group": "encoder",
+      "model_class": "MPNetModel",
+      "config_class": "MPNetConfig",
+      "source": "models/mpnet/modeling_mpnet.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3339989185333252,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.145
+    },
+    {
+      "family": "deberta",
+      "group": "encoder",
+      "model_class": "DebertaModel",
+      "config_class": "DebertaConfig",
+      "source": "models/deberta/modeling_deberta.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33435049653053284,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.481
+    },
+    {
+      "family": "deberta-v2",
+      "group": "encoder",
+      "model_class": "DebertaV2Model",
+      "config_class": "DebertaV2Config",
+      "source": "models/deberta_v2/modeling_deberta_v2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33371254801750183,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.163
+    },
+    {
+      "family": "longformer",
+      "group": "encoder",
+      "model_class": "LongformerModel",
+      "config_class": "LongformerConfig",
+      "source": "models/longformer/modeling_longformer.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33377569913864136,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: LongformerBaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "LongformerBaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.255
+    },
+    {
+      "family": "big_bird",
+      "group": "encoder",
+      "model_class": "BigBirdModel",
+      "config_class": "BigBirdConfig",
+      "source": "models/big_bird/modeling_big_bird.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3336660861968994,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.218
+    },
+    {
+      "family": "xlnet",
+      "group": "encoder",
+      "model_class": "XLNetModel",
+      "config_class": "XLNetConfig",
+      "source": "models/xlnet/modeling_xlnet.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3339095413684845,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: XLNetModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "XLNetModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.39
+    },
+    {
+      "family": "ernie",
+      "group": "encoder",
+      "model_class": "ErnieModel",
+      "config_class": "ErnieConfig",
+      "source": "models/ernie/modeling_ernie.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.333894819021225,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.18
+    },
+    {
+      "family": "squeezebert",
+      "group": "encoder",
+      "model_class": "SqueezeBertModel",
+      "config_class": "SqueezeBertConfig",
+      "source": "models/squeezebert/modeling_squeezebert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        48
+      ],
+      "state_proj_width": 48,
+      "hidden_width": 48,
+      "predicted_index": 0,
+      "confidence": 0.33487239480018616,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.355
+    },
+    {
+      "family": "nystromformer",
+      "group": "encoder",
+      "model_class": "NystromformerModel",
+      "config_class": "NystromformerConfig",
+      "source": "models/nystromformer/modeling_nystromformer.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33386191725730896,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.144
+    },
+    {
+      "family": "funnel",
+      "group": "encoder",
+      "model_class": "FunnelModel",
+      "config_class": "FunnelConfig",
+      "source": "models/funnel/modeling_funnel.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3340620696544647,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 0.237
+    },
+    {
+      "family": "gpt2",
+      "group": "decoder",
+      "model_class": "GPT2Model",
+      "config_class": "GPT2Config",
+      "source": "models/gpt2/modeling_gpt2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3350687325000763,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.131
+    },
+    {
+      "family": "gpt_neo",
+      "group": "decoder",
+      "model_class": "GPTNeoModel",
+      "config_class": "GPTNeoConfig",
+      "source": "models/gpt_neo/modeling_gpt_neo.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33426764607429504,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.108
+    },
+    {
+      "family": "gptj",
+      "group": "decoder",
+      "model_class": "GPTJModel",
+      "config_class": "GPTJConfig",
+      "source": "models/gptj/modeling_gptj.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33370813727378845,
+      "prob_sum": 0.9999998807907104,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.113
+    },
+    {
+      "family": "bloom",
+      "group": "decoder",
+      "model_class": "BloomModel",
+      "config_class": "BloomConfig",
+      "source": "models/bloom/modeling_bloom.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33579549193382263,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.115
+    },
+    {
+      "family": "opt",
+      "group": "decoder",
+      "model_class": "OPTModel",
+      "config_class": "OPTConfig",
+      "source": "models/opt/modeling_opt.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33416855335235596,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.109
+    },
+    {
+      "family": "llama",
+      "group": "decoder",
+      "model_class": "LlamaModel",
+      "config_class": "LlamaConfig",
+      "source": "models/llama/modeling_llama.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33581116795539856,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.095
+    },
+    {
+      "family": "mistral",
+      "group": "decoder",
+      "model_class": "MistralModel",
+      "config_class": "MistralConfig",
+      "source": "models/mistral/modeling_mistral.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33604010939598083,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.095
+    },
+    {
+      "family": "qwen2",
+      "group": "decoder",
+      "model_class": "Qwen2Model",
+      "config_class": "Qwen2Config",
+      "source": "models/qwen2/modeling_qwen2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33584651350975037,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": "full",
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.096
+    },
+    {
+      "family": "qwen3",
+      "group": "decoder",
+      "model_class": "Qwen3Model",
+      "config_class": "Qwen3Config",
+      "source": "models/qwen3/modeling_qwen3.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3347921371459961,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": "full",
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.101
+    },
+    {
+      "family": "gemma",
+      "group": "decoder",
+      "model_class": "GemmaModel",
+      "config_class": "GemmaConfig",
+      "source": "models/gemma/modeling_gemma.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3368875980377197,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.121
+    },
+    {
+      "family": "gemma2",
+      "group": "decoder",
+      "model_class": "Gemma2Model",
+      "config_class": "Gemma2Config",
+      "source": "models/gemma2/modeling_gemma2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33463138341903687,
+      "prob_sum": 0.9999998807907104,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "hybrid attention layout: 1 sliding_attention + 1 full_attention layers (config.layer_types)"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": "hybrid:1xsliding_attention+1xfull_attention",
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.107
+    },
+    {
+      "family": "phi3",
+      "group": "decoder",
+      "model_class": "Phi3Model",
+      "config_class": "Phi3Config",
+      "source": "models/phi3/modeling_phi3.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33451399207115173,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.107
+    },
+    {
+      "family": "falcon",
+      "group": "decoder",
+      "model_class": "FalconModel",
+      "config_class": "FalconConfig",
+      "source": "models/falcon/modeling_falcon.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33568474650382996,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.118
+    },
+    {
+      "family": "mpt",
+      "group": "decoder",
+      "model_class": "MptModel",
+      "config_class": "MptConfig",
+      "source": "models/mpt/modeling_mpt.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.334953635931015,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPastAndCrossAttentions",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPastAndCrossAttentions",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.134
+    },
+    {
+      "family": "codegen",
+      "group": "decoder",
+      "model_class": "CodeGenModel",
+      "config_class": "CodeGenConfig",
+      "source": "models/codegen/modeling_codegen.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33605363965034485,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.104
+    },
+    {
+      "family": "stablelm",
+      "group": "decoder",
+      "model_class": "StableLmModel",
+      "config_class": "StableLmConfig",
+      "source": "models/stablelm/modeling_stablelm.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33405110239982605,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.11
+    },
+    {
+      "family": "olmo",
+      "group": "decoder",
+      "model_class": "OlmoModel",
+      "config_class": "OlmoConfig",
+      "source": "models/olmo/modeling_olmo.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3346708118915558,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.119
+    },
+    {
+      "family": "gpt_neox",
+      "group": "decoder",
+      "model_class": "GPTNeoXModel",
+      "config_class": "GPTNeoXConfig",
+      "source": "models/gpt_neox/modeling_gpt_neox.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3335796594619751,
+      "prob_sum": 0.9999998807907104,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=False, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.12
+    },
+    {
+      "family": "rwkv",
+      "group": "decoder",
+      "model_class": "RwkvModel",
+      "config_class": "RwkvConfig",
+      "source": "models/rwkv/modeling_rwkv.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3352225720882416,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: RwkvOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=True, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "RwkvOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 2.441
+    },
+    {
+      "family": "mamba",
+      "group": "decoder",
+      "model_class": "MambaModel",
+      "config_class": "MambaConfig",
+      "source": "models/mamba/modeling_mamba.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3367336690425873,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: MambaOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=True, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "MambaOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": "linear",
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.183
+    },
+    {
+      "family": "jamba",
+      "group": "decoder",
+      "model_class": "JambaModel",
+      "config_class": "JambaConfig",
+      "source": "models/jamba/modeling_jamba.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "decoder",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "last_valid",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3338019847869873,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: MoeModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "MoeModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": "linear",
+      "adapter_pooling_default": "last_valid",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "decoder",
+      "elapsed_s": 0.172
+    },
+    {
+      "family": "t5",
+      "group": "encoder_decoder",
+      "model_class": "T5Model",
+      "config_class": "T5Config",
+      "source": "models/t5/modeling_t5.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33510494232177734,
+      "prob_sum": 1.0000001192092896,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.168
+    },
+    {
+      "family": "bart",
+      "group": "encoder_decoder",
+      "model_class": "BartModel",
+      "config_class": "BartConfig",
+      "source": "models/bart/modeling_bart.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33411723375320435,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.175
+    },
+    {
+      "family": "mbart",
+      "group": "encoder_decoder",
+      "model_class": "MBartModel",
+      "config_class": "MBartConfig",
+      "source": "models/mbart/modeling_mbart.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3346303105354309,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.147
+    },
+    {
+      "family": "pegasus",
+      "group": "encoder_decoder",
+      "model_class": "PegasusModel",
+      "config_class": "PegasusConfig",
+      "source": "models/pegasus/modeling_pegasus.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.334654837846756,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.156
+    },
+    {
+      "family": "marian",
+      "group": "encoder_decoder",
+      "model_class": "MarianModel",
+      "config_class": "MarianConfig",
+      "source": "models/marian/modeling_marian.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33430105447769165,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.154
+    },
+    {
+      "family": "blenderbot",
+      "group": "encoder_decoder",
+      "model_class": "BlenderbotSmallModel",
+      "config_class": "BlenderbotConfig",
+      "source": "models/blenderbot/modeling_blenderbot.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33456677198410034,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.159
+    },
+    {
+      "family": "longt5",
+      "group": "encoder_decoder",
+      "model_class": "LongT5Model",
+      "config_class": "LongT5Config",
+      "source": "models/longt5/modeling_longt5.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33533963561058044,
+      "prob_sum": 1.0000001192092896,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=False, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.219
+    },
+    {
+      "family": "speecht5",
+      "group": "encoder_decoder",
+      "model_class": "SpeechT5Model",
+      "config_class": "SpeechT5Config",
+      "source": "models/speecht5/modeling_speecht5.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33412590622901917,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=None, encoder submodule=True, decoder submodule=True, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.222
+    },
+    {
+      "family": "whisper",
+      "group": "encoder_decoder",
+      "model_class": "WhisperModel",
+      "config_class": "WhisperConfig",
+      "source": "models/whisper/modeling_whisper.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder_decoder",
+      "representation_field": "encoder_last_hidden_state",
+      "pooling_strategy": "encoder_pool",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3337901532649994,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Seq2SeqModelOutput",
+        "directions: is_encoder_decoder=True, is_decoder flag=None, encoder submodule=True, decoder submodule=True, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'encoder_last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Seq2SeqModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": true,
+        "encoder_decoder": true
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "encoder_pool",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "encoder_last_hidden_state",
+      "wrapper_adapter": "encoder_decoder",
+      "elapsed_s": 0.191
+    },
+    {
+      "family": "vit",
+      "group": "vision",
+      "model_class": "ViTModel",
+      "config_class": "ViTConfig",
+      "source": "models/vit/modeling_vit.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33444422483444214,
+      "prob_sum": 1.0000001192092896,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.106
+    },
+    {
+      "family": "deit",
+      "group": "vision",
+      "model_class": "DeiTModel",
+      "config_class": "DeiTConfig",
+      "source": "models/deit/modeling_deit.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3384491801261902,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.105
+    },
+    {
+      "family": "convnext",
+      "group": "vision",
+      "model_class": "ConvNextModel",
+      "config_class": "ConvNextConfig",
+      "source": "models/convnext/modeling_convnext.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        64
+      ],
+      "state_proj_width": 64,
+      "hidden_width": 64,
+      "predicted_index": 0,
+      "confidence": 0.33693796396255493,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndNoAttention",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndNoAttention",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.129
+    },
+    {
+      "family": "swin",
+      "group": "vision",
+      "model_class": "SwinModel",
+      "config_class": "SwinConfig",
+      "source": "models/swin/modeling_swin.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        64
+      ],
+      "state_proj_width": 64,
+      "hidden_width": 64,
+      "predicted_index": 2,
+      "confidence": 0.33477306365966797,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: SwinModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "SwinModelOutput",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.139
+    },
+    {
+      "family": "resnet",
+      "group": "vision",
+      "model_class": "ResNetModel",
+      "config_class": "ResNetConfig",
+      "source": "models/resnet/modeling_resnet.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        64
+      ],
+      "state_proj_width": 64,
+      "hidden_width": 64,
+      "predicted_index": 1,
+      "confidence": 0.33395853638648987,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndNoAttention",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor",
+        "hybrid attention layout: 1 basic + 1 bottleneck layers (config.layer_types)"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndNoAttention",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": "hybrid:1xbasic+1xbottleneck",
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.165
+    },
+    {
+      "family": "segformer",
+      "group": "vision",
+      "model_class": "SegformerModel",
+      "config_class": "SegformerConfig",
+      "source": "models/segformer/modeling_segformer.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        16
+      ],
+      "state_proj_width": 16,
+      "hidden_width": 16,
+      "predicted_index": 1,
+      "confidence": 0.3343842327594757,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.12
+    },
+    {
+      "family": "dpt",
+      "group": "vision",
+      "model_class": "DPTModel",
+      "config_class": "DPTConfig",
+      "source": "models/dpt/modeling_dpt.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33570218086242676,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndIntermediateActivations",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndIntermediateActivations",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.162
+    },
+    {
+      "family": "dinov2",
+      "group": "vision",
+      "model_class": "Dinov2Model",
+      "config_class": "Dinov2Config",
+      "source": "models/dinov2/modeling_dinov2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33633872866630554,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.11
+    },
+    {
+      "family": "clip_vision",
+      "group": "vision",
+      "model_class": "CLIPVisionModel",
+      "config_class": "CLIPVisionConfig",
+      "source": "models/clip/modeling_clip.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33533912897109985,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.139
+    },
+    {
+      "family": "siglip_vision",
+      "group": "vision",
+      "model_class": "SiglipVisionModel",
+      "config_class": "SiglipVisionConfig",
+      "source": "models/siglip/modeling_siglip.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3354640007019043,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.18
+    },
+    {
+      "family": "mobilenet_v2",
+      "group": "vision",
+      "model_class": "MobileNetV2Model",
+      "config_class": "MobileNetV2Config",
+      "source": "models/mobilenet_v2/modeling_mobilenet_v2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "vision",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        1280
+      ],
+      "state_proj_width": 1280,
+      "hidden_width": 1280,
+      "predicted_index": 1,
+      "confidence": 0.3336486220359802,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPoolingAndNoAttention",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/True \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=True, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPoolingAndNoAttention",
+      "modality": {
+        "text": false,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "vision",
+      "elapsed_s": 0.802
+    },
+    {
+      "family": "wav2vec2",
+      "group": "audio",
+      "model_class": "Wav2Vec2Model",
+      "config_class": "Wav2Vec2Config",
+      "source": "models/wav2vec2/modeling_wav2vec2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33554428815841675,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Wav2Vec2BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Wav2Vec2BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.214
+    },
+    {
+      "family": "hubert",
+      "group": "audio",
+      "model_class": "HubertModel",
+      "config_class": "HubertConfig",
+      "source": "models/hubert/modeling_hubert.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.33513760566711426,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.159
+    },
+    {
+      "family": "wavlm",
+      "group": "audio",
+      "model_class": "WavLMModel",
+      "config_class": "WavLMConfig",
+      "source": "models/wavlm/modeling_wavlm.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.33409538865089417,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Wav2Vec2BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Wav2Vec2BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.191
+    },
+    {
+      "family": "data2vec-audio",
+      "group": "audio",
+      "model_class": "Data2VecAudioModel",
+      "config_class": "Data2VecAudioConfig",
+      "source": "models/data2vec/modeling_data2vec.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3345257341861725,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Wav2Vec2BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Wav2Vec2BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.238
+    },
+    {
+      "family": "ast",
+      "group": "audio",
+      "model_class": "ASTModel",
+      "config_class": "ASTConfig",
+      "source": "models/audio_spectrogram_transformer/modeling_audio_spectrogram_transformer.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "pooler_output",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3349161148071289,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "native field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.098
+    },
+    {
+      "family": "unispeech",
+      "group": "audio",
+      "model_class": "UniSpeechModel",
+      "config_class": "UniSpeechConfig",
+      "source": "models/unispeech/modeling_unispeech.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "audio",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.33405178785324097,
+      "prob_sum": 1.0000001192092896,
+      "capability_reasons": [
+        "modalities from forward signature: text=False, vision=False, audio=True",
+        "output class from forward annotation: Wav2Vec2BaseModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'last_hidden_state' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Wav2Vec2BaseModelOutput",
+      "modality": {
+        "text": false,
+        "vision": false,
+        "audio": true
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "audio",
+      "elapsed_s": 0.177
+    },
+    {
+      "family": "vits",
+      "group": "audio",
+      "model_class": "VitsModel",
+      "config_class": "VitsConfig",
+      "source": "models/vits/modeling_vits.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "encoder",
+      "representation_field": "hidden_states[-1]",
+      "pooling_strategy": "cls",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        192
+      ],
+      "state_proj_width": 192,
+      "hidden_width": 192,
+      "predicted_index": 2,
+      "confidence": 0.33793705701828003,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=False, audio=False",
+        "output class from forward annotation: VitsModelOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "no pooled/sequence output field; the only route is the opt-in per-layer collection hidden_states[-1] (output_hidden_states=True, audit Q4)",
+        "standard field 'hidden_states[-1]' \u2192 supported"
+      ],
+      "output_class": "VitsModelOutput",
+      "modality": {
+        "text": true,
+        "vision": false,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "cls",
+      "opt_in_hidden_states": true,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "hidden_states[-1]",
+      "wrapper_adapter": "encoder",
+      "elapsed_s": 2.217
+    },
+    {
+      "family": "clip",
+      "group": "multimodal",
+      "model_class": "CLIPModel",
+      "config_class": "CLIPConfig",
+      "source": "models/clip/modeling_clip.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "text_embeds",
+      "pooling_strategy": "native",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        24
+      ],
+      "state_proj_width": 24,
+      "hidden_width": 24,
+      "predicted_index": 2,
+      "confidence": 0.3346407413482666,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: CLIPOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'text_embeds' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "CLIPOutput",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "bd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "text_embeds",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 0.116
+    },
+    {
+      "family": "siglip",
+      "group": "multimodal",
+      "model_class": "SiglipModel",
+      "config_class": "SiglipConfig",
+      "source": "models/siglip/modeling_siglip.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "text_embeds",
+      "pooling_strategy": "native",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3341256380081177,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: SiglipOutput",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=False/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'text_embeds' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "SiglipOutput",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "bd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "text_embeds",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 0.135
+    },
+    {
+      "family": "llava",
+      "group": "multimodal",
+      "model_class": "LlavaModel",
+      "config_class": "LlavaConfig",
+      "source": "models/llava/modeling_llava.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "experimental",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 1,
+      "confidence": 0.3338046967983246,
+      "prob_sum": 0.9999999403953552,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: LlavaModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "multimodal interleaved states pool lossily \u2192 experimental (pin a token-selection convention)",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "LlavaModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "experimental",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 0.155
+    },
+    {
+      "family": "git",
+      "group": "multimodal",
+      "model_class": "GitModel",
+      "config_class": "GitConfig",
+      "source": "models/git/modeling_git.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "supported",
+      "pooled_shape": [
+        2,
+        768
+      ],
+      "state_proj_width": 768,
+      "hidden_width": 768,
+      "predicted_index": 1,
+      "confidence": 0.3348730206489563,
+      "prob_sum": 1.0000001192092896,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: BaseModelOutputWithPooling",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=True, decoder submodule=False, causal attention module=False, output exposes past_key_values=False, recurrent state field=False, pooler field/module=True/False \u2192 encoder=True, decoder=False",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "standard field 'pooler_output' \u2192 supported",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "BaseModelOutputWithPooling",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": true,
+        "decoder": false,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "supported",
+      "wrapper_capability_field": "pooler_output",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 2.912
+    },
+    {
+      "family": "idefics2",
+      "group": "multimodal",
+      "model_class": "Idefics2Model",
+      "config_class": "Idefics2Config",
+      "source": "models/idefics2/modeling_idefics2.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "experimental",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 0,
+      "confidence": 0.3353584408760071,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: Idefics2BaseModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=True, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "multimodal interleaved states pool lossily \u2192 experimental (pin a token-selection convention)",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "Idefics2BaseModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "experimental",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 0.267
+    },
+    {
+      "family": "paligemma",
+      "group": "multimodal",
+      "model_class": "PaliGemmaModel",
+      "config_class": "PaliGemmaConfig",
+      "source": "models/paligemma/modeling_paligemma.py",
+      "status": "PASS",
+      "error": null,
+      "adapter": "multimodal",
+      "representation_field": "last_hidden_state",
+      "pooling_strategy": "masked_mean",
+      "verdict": "experimental",
+      "pooled_shape": [
+        2,
+        32
+      ],
+      "state_proj_width": 32,
+      "hidden_width": 32,
+      "predicted_index": 2,
+      "confidence": 0.3354787826538086,
+      "prob_sum": 1.0,
+      "capability_reasons": [
+        "modalities from forward signature: text=True, vision=True, audio=False",
+        "output class from forward annotation: PaligemmaModelOutputWithPast",
+        "directions: is_encoder_decoder=False, is_decoder flag=None, encoder submodule=False, decoder submodule=False, causal attention module=False, output exposes past_key_values=True, recurrent state field=False, pooler field/module=False/False \u2192 encoder=False, decoder=True",
+        "hidden_states support=True, pooler present=False, generation=False",
+        "multimodal interleaved states pool lossily \u2192 experimental (pin a token-selection convention)",
+        "vision/audio inputs require a processor or feature extractor"
+      ],
+      "output_class": "PaligemmaModelOutputWithPast",
+      "modality": {
+        "text": true,
+        "vision": true,
+        "audio": false
+      },
+      "directions": {
+        "encoder": false,
+        "decoder": true,
+        "encoder_decoder": false
+      },
+      "attention_layout": null,
+      "adapter_pooling_default": "masked_mean",
+      "opt_in_hidden_states": false,
+      "representation_layout": "btd",
+      "pooled_finite": true,
+      "wrapper_capability_verdict": "experimental",
+      "wrapper_capability_field": "last_hidden_state",
+      "wrapper_adapter": "multimodal",
+      "elapsed_s": 0.201
+    }
+  ]
+}

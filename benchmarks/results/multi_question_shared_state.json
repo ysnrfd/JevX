@@ -1,0 +1,77 @@
+{
+  "phase": "shared-state",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 1,
+    "cuda_available": false,
+    "dtype": "float32",
+    "torch_threads_set_to": 1,
+    "loadavg": null
+  },
+  "backbone": "google/bert_uncased_L-2_H-128_A-2",
+  "state": "The food was great but the service was slow and the price was high.",
+  "forward_hook_counts": {
+    "m=1": {
+      "backbone_forward_hooks": 1,
+      "decisions_returned": 1
+    },
+    "m=2": {
+      "backbone_forward_hooks": 1,
+      "decisions_returned": 2
+    },
+    "m=3": {
+      "backbone_forward_hooks": 1,
+      "decisions_returned": 3
+    },
+    "m=4": {
+      "backbone_forward_hooks": 1,
+      "decisions_returned": 4
+    },
+    "m=5": {
+      "backbone_forward_hooks": 1,
+      "decisions_returned": 5
+    }
+  },
+  "exactly_one_backbone_forward_for_every_m": true,
+  "decisions_equal_m": true,
+  "multi_call_vs_single_call": {
+    "What is the sentiment toward the food of this review?": {
+      "bitwise_equal": false,
+      "max_abs_diff": 1.4901161193847656e-07,
+      "argmax_agrees": true
+    },
+    "What is the sentiment toward the service of this review?": {
+      "bitwise_equal": false,
+      "max_abs_diff": 7.450580596923828e-08,
+      "argmax_agrees": true
+    },
+    "What is the sentiment toward the price of this review?": {
+      "bitwise_equal": false,
+      "max_abs_diff": 3.5762786865234375e-07,
+      "argmax_agrees": true
+    },
+    "What is the sentiment toward the ambience of this review?": {
+      "bitwise_equal": false,
+      "max_abs_diff": 1.4901161193847656e-07,
+      "argmax_agrees": true
+    },
+    "What is the sentiment toward the wait of this review?": {
+      "bitwise_equal": false,
+      "max_abs_diff": 1.1920928955078125e-07,
+      "argmax_agrees": true
+    }
+  },
+  "all_bitwise_equal": false,
+  "worst_max_abs_diff": 3.5762786865234375e-07,
+  "argmax_agreement": "5/5",
+  "float_reassociation_threshold": 1e-05,
+  "is_float_reassociation_not_a_semantic_difference": true,
+  "interpretation": "The head stack is row-independent. The m-questions-in-one-call forward and the per-question calls agree to within 3.58e-07 in float32 (threshold 1e-5) with identical argmax on 5/5 questions; the residual is float re-association between two differently-shaped BLAS calls (the multi-call pads to K_max), not a semantic difference. The grid's one-question-per-batch protocol is therefore the same computation as the genuine multi-question forward, and the multi-question regime is a SHARED-PARAMETER regime - which is exactly what makes the question/schema encoders' generalisation testable here."
+}

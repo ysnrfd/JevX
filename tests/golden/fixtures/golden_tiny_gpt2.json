@@ -1,0 +1,67 @@
+{
+  "model_id": "sshleifer/tiny-gpt2",
+  "seed": 0,
+  "decision_type": "choice",
+  "state": "The maintenance crew inspected the bridge deck and confirmed that the support damage had been repaired before the storm arrived.",
+  "state_kind": "text",
+  "questions": [
+    "Is this content safe to deploy?",
+    "Which disposition fits this item?"
+  ],
+  "options": [
+    [
+      "safe",
+      "unsafe"
+    ],
+    [
+      "approve",
+      "review",
+      "reject"
+    ]
+  ],
+  "tolerance": 1e-06,
+  "adapter": "decoder",
+  "representation_field": "last_hidden_state",
+  "jevx_conversion": "supported",
+  "probs": [
+    [
+      0.4998678,
+      0.5001323,
+      0.0
+    ],
+    [
+      0.3333926,
+      0.3332147,
+      0.3333926
+    ]
+  ],
+  "predicted_indices": [
+    1,
+    0
+  ],
+  "state_representation": {
+    "sum": -1e-07,
+    "mean": -0.0,
+    "std": 0.9917736
+  },
+  "config": {
+    "model_type": "jevx",
+    "base_model_name_or_path": "sshleifer/tiny-gpt2",
+    "base_model_type": "gpt2",
+    "representation_strategy": "native",
+    "pooling_method": null,
+    "fusion_type": "concat",
+    "decision_hidden_size": 2,
+    "question_hidden_size": 2,
+    "schema_hidden_size": 2,
+    "decision_primitives": [
+      "choice",
+      "score",
+      "noul"
+    ],
+    "calibration_method": "none",
+    "confidence_method": "max_probability",
+    "freeze_base_model": true,
+    "version": "0.1.0"
+  }
+}

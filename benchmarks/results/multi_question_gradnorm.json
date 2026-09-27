@@ -1,0 +1,598 @@
+{
+  "phase": "gradnorm",
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "cpu_count": 4,
+    "torch": "2.14.0+cpu",
+    "transformers": "5.16.1",
+    "datasets": "4.4.1",
+    "numpy": "2.3.5",
+    "torch_threads": 1,
+    "cuda_available": false,
+    "dtype": "float32",
+    "torch_threads_set_to": 1,
+    "loadavg": null
+  },
+  "seeds": [
+    0
+  ],
+  "epochs": 2,
+  "representative_question_rule": "the FIRST question of each dataset; the gradient wiring is a property of the arm, not of the question text",
+  "note": "L2 norm of the accumulated gradient, read after loss.backward() and BEFORE HeadTrainer's clip_grad_norm_(1.0). A module ABSENT from a record received NO gradient at all on that step - that absence is the measurement, not a gap in it.",
+  "datasets": {
+    "absa": {
+      "question": "absa_aspect_polarity",
+      "seed": 0,
+      "head_hidden": 128,
+      "arms": {
+        "full": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              26
+            ],
+            "observed_optimizer_steps": 26,
+            "expected_optimizer_steps": 26,
+            "at_step": {
+              "1": {
+                "fusion": 0.6430739006657896,
+                "heads": 0.9413154054626003,
+                "question_encoder": 0.7367278822084294,
+                "question_proj": 3.1179437378938126,
+                "schema_encoder": 0.3899757403221367,
+                "schema_proj": 0.48038539058903734,
+                "state_proj": 0.4690028699548482
+              },
+              "26": {
+                "fusion": 1.3792297755549432,
+                "heads": 0.8071895267428867,
+                "question_encoder": 0.7668307616445497,
+                "question_proj": 2.058528235737641,
+                "schema_encoder": 0.3038505761886342,
+                "schema_proj": 0.3160574339184903,
+                "state_proj": 3.0380193679377676
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "off": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              26
+            ],
+            "observed_optimizer_steps": 26,
+            "expected_optimizer_steps": 26,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.930607838165343,
+                "question_encoder": 0.0,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "26": {
+                "fusion": 0.315121887064271,
+                "heads": 1.4534723618648309,
+                "question_encoder": 0.06947283638526819,
+                "question_proj": 0.24905403754124913,
+                "state_proj": 1.034795537912443
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "state_only": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              26
+            ],
+            "observed_optimizer_steps": 26,
+            "expected_optimizer_steps": 26,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.875433957528543,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "26": {
+                "fusion": 0.2154337005769944,
+                "heads": 1.1698616839179314,
+                "question_proj": 0.3828566890334604,
+                "state_proj": 0.6834651470315766
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "question_encoder",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        }
+      }
+    },
+    "ag_news": {
+      "question": "ag_news_topic",
+      "seed": 0,
+      "head_hidden": 128,
+      "arms": {
+        "full": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.26445502885898226,
+                "heads": 0.3899574358157266,
+                "question_encoder": 0.10276226621393769,
+                "question_proj": 0.4687509003029025,
+                "schema_encoder": 0.20565323302392716,
+                "schema_proj": 0.4601037360234957,
+                "state_proj": 0.17822155789933294
+              },
+              "48": {
+                "fusion": 1.1579499031632063,
+                "heads": 0.8170450591816193,
+                "question_encoder": 0.2057541871883469,
+                "question_proj": 0.8512860073562165,
+                "schema_encoder": 1.345965338365891,
+                "schema_proj": 1.8600021492138001,
+                "state_proj": 2.991460536514841
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "off": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.39037959913502546,
+                "question_encoder": 0.0,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "48": {
+                "fusion": 0.36861297990279474,
+                "heads": 1.541170435823345,
+                "question_encoder": 0.09337643756997097,
+                "question_proj": 0.4410030162289006,
+                "state_proj": 1.6025636287306746
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "state_only": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.38879238326550136,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "48": {
+                "fusion": 0.3213634135566525,
+                "heads": 1.4749793915919034,
+                "question_proj": 1.246375370641305,
+                "state_proj": 1.592871990974973
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "question_encoder",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        }
+      }
+    },
+    "ravdess": {
+      "question": "ravdess_emotion",
+      "seed": 0,
+      "head_hidden": 256,
+      "arms": {
+        "full": {
+          "trainable_params": 3084801,
+          "trainable_params_by_module": {
+            "state_proj": 197376,
+            "question_encoder": 1180160,
+            "question_proj": 66304,
+            "schema_encoder": 1180160,
+            "schema_proj": 66304,
+            "fusion": 262912,
+            "heads": 131585
+          },
+          "conditioning_half_params": 2492928,
+          "grad_norms": {
+            "targets": [
+              1,
+              22
+            ],
+            "observed_optimizer_steps": 22,
+            "expected_optimizer_steps": 22,
+            "at_step": {
+              "1": {
+                "fusion": 0.6553035573375183,
+                "heads": 0.8769561736464679,
+                "question_encoder": 0.6340330867709529,
+                "question_proj": 1.899990094215398,
+                "schema_encoder": 0.46559263742007884,
+                "schema_proj": 0.46635236260960133,
+                "state_proj": 0.3593332301266239
+              },
+              "22": {
+                "fusion": 3.8499936334167644,
+                "heads": 3.1925616816122018,
+                "question_encoder": 0.7997349698311024,
+                "question_proj": 3.0332586410054807,
+                "schema_encoder": 1.8413771403524541,
+                "schema_proj": 1.8840794868109567,
+                "state_proj": 3.298899382178055
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "off": {
+          "trainable_params": 3084801,
+          "trainable_params_by_module": {
+            "state_proj": 197376,
+            "question_encoder": 1180160,
+            "question_proj": 66304,
+            "schema_encoder": 1180160,
+            "schema_proj": 66304,
+            "fusion": 262912,
+            "heads": 131585
+          },
+          "conditioning_half_params": 2492928,
+          "grad_norms": {
+            "targets": [
+              1,
+              22
+            ],
+            "observed_optimizer_steps": 22,
+            "expected_optimizer_steps": 22,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.8461270846722062,
+                "question_encoder": 0.0,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "22": {
+                "fusion": 0.8465306573046918,
+                "heads": 3.1665314349713545,
+                "question_encoder": 0.20516402360883348,
+                "question_proj": 0.7113853662639419,
+                "state_proj": 3.328069363367709
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "state_only": {
+          "trainable_params": 3084801,
+          "trainable_params_by_module": {
+            "state_proj": 197376,
+            "question_encoder": 1180160,
+            "question_proj": 66304,
+            "schema_encoder": 1180160,
+            "schema_proj": 66304,
+            "fusion": 262912,
+            "heads": 131585
+          },
+          "conditioning_half_params": 2492928,
+          "grad_norms": {
+            "targets": [
+              1,
+              22
+            ],
+            "observed_optimizer_steps": 22,
+            "expected_optimizer_steps": 22,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.668401244161848,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "22": {
+                "fusion": 0.8959162057655713,
+                "heads": 3.292784354393075,
+                "question_proj": 1.746588467681875,
+                "state_proj": 4.401510011439803
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "question_encoder",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        }
+      }
+    },
+    "yelp": {
+      "question": "yelp_stars",
+      "seed": 0,
+      "head_hidden": 128,
+      "arms": {
+        "full": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.23454603353477857,
+                "heads": 0.3793640414936008,
+                "question_encoder": 0.21979090698320594,
+                "question_proj": 0.8432070274658763,
+                "schema_encoder": 0.15630956462937237,
+                "schema_proj": 0.23109140992297703,
+                "state_proj": 0.18257259713115173
+              },
+              "48": {
+                "fusion": 0.989551111444095,
+                "heads": 0.9302994340110179,
+                "question_encoder": 0.21983072462311573,
+                "question_proj": 0.9186920390929941,
+                "schema_encoder": 0.8053037259936509,
+                "schema_proj": 1.0491465926180348,
+                "state_proj": 3.4028510714780444
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "off": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.36607697982855,
+                "question_encoder": 0.0,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "48": {
+                "fusion": 0.2125883593976986,
+                "heads": 0.7360917167958844,
+                "question_encoder": 0.03251099982789351,
+                "question_proj": 0.14177807021622016,
+                "state_proj": 1.2377946075425013
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        },
+        "state_only": {
+          "trainable_params": 1280385,
+          "trainable_params_by_module": {
+            "state_proj": 16768,
+            "question_encoder": 557312,
+            "question_proj": 16768,
+            "schema_encoder": 557312,
+            "schema_proj": 16768,
+            "fusion": 65920,
+            "heads": 49537
+          },
+          "conditioning_half_params": 1148160,
+          "grad_norms": {
+            "targets": [
+              1,
+              48
+            ],
+            "observed_optimizer_steps": 48,
+            "expected_optimizer_steps": 48,
+            "at_step": {
+              "1": {
+                "fusion": 0.0,
+                "heads": 0.3379041723323417,
+                "question_proj": 0.0,
+                "state_proj": 0.0
+              },
+              "48": {
+                "fusion": 0.17731986003891928,
+                "heads": 0.74724387319973,
+                "question_proj": 0.3759025929847649,
+                "state_proj": 1.0792633182181837
+              }
+            },
+            "modules_with_no_gradient": [
+              "calibrator",
+              "confidence",
+              "model",
+              "question_encoder",
+              "schema_encoder",
+              "schema_proj"
+            ],
+            "note": "per-module L2 norm of the accumulated gradient, read after loss.backward() and before clip_grad_norm_(1.0). A module listed in modules_with_no_gradient received NO gradient at all on the recorded steps."
+          }
+        }
+      }
+    }
+  }
+}

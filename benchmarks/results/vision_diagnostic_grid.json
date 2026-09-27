@@ -1,0 +1,4233 @@
+{
+  "phase": "grid",
+  "provenance": {
+    "feature_cache": "benchmarks\\cache\\vision_diagnostic\\deit_tiny_cls_features.npz",
+    "feature_cache_sha256": "f3861d4b0124481a584183977608c665e4c99ffa58992d1f1101adfd72466e94",
+    "n_features": 1600,
+    "feature_dim": 192,
+    "backbone_id": "facebook/deit-tiny-patch16-224",
+    "backbone_revision_api": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "dataset_id": "frgfm/imagenette",
+    "dataset_revision": "a8a496123b40fa739da2acf9b0dae339d30c7bae",
+    "question": "Which category does this image belong to?",
+    "options": [
+      "tench",
+      "English springer",
+      "cassette player",
+      "chain saw",
+      "church",
+      "French horn",
+      "garbage truck",
+      "gas pump",
+      "golf ball",
+      "parachute"
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "split_seed": 0,
+    "split_sizes": {
+      "train": 800,
+      "cal": 300,
+      "test": 500
+    },
+    "hyperparams": {
+      "lr": 0.001,
+      "epochs_default": 4,
+      "head_batch_size": 64,
+      "optimizer": "HeadTrainer AdamW (lr a priori, no search)"
+    },
+    "cell_definitions": {
+      "V0": "reference: the shipped stack (interaction ON, state_pathway=mlp)",
+      "V0L": "supplementary: the shipped stack with the CURRENT config default state_pathway='linear' (the MODALITY_BENCHMARKS.md 4.1 stack)",
+      "V1": "conditioning_mode=off equivalent: state-only head, schema removed before fusion, residual exactly zero (the shipped forward(condition_options=False) path)",
+      "V2": "state path ONLY as an exact nn.Linear(D,K) probe (P1): state_proj -> Linear(192,10), no question/schema/fusion",
+      "V3": "V2 + probe-style initialization of the state path (nn.Linear's own kaiming-uniform weight / uniform bias instead of the shipped zero-init residual convention)",
+      "V4": "V2 + 20 epochs (budget sensitivity)",
+      "V2m": "V2 with the mlp state path, H = D = 192 (sweep centre for V5)",
+      "V5a": "V2m with state_hidden_size halved: H = 96",
+      "V5b": "V2m with state_hidden_size doubled: H = 384",
+      "V6": "V2 with a class-balanced (inverse-frequency) re-weighting of the training cross-entropy",
+      "V2I": "V2 expressed ONLY through shipped config fields: fusion_type='identity' (the Fusion.context of jevx/representations/fusion.py:IdentityFusion returns the state unchanged) + conditioning_mode='off' + state_pathway='linear'. Confirms the V2 logits are reachable without any code change.",
+      "R1": "B1 linear probe, nn.Linear(192,10) on the pooled feature (== P1), same features / splits / 5 seeds",
+      "R2": "B2 MLP probe, Linear(192,192)-ReLU-Linear(192,10) (== P2), same features / splits / 5 seeds"
+    },
+    "class_balance": {
+      "train": {
+        "n": 800,
+        "counts": {
+          "0": 81,
+          "1": 81,
+          "2": 84,
+          "3": 72,
+          "4": 80,
+          "5": 81,
+          "6": 81,
+          "7": 79,
+          "8": 80,
+          "9": 81
+        },
+        "min": 72,
+        "max": 84,
+        "max_over_min": 1.1666666666666667,
+        "max_dev_from_uniform_frac": 0.1,
+        "entropy_nats": 2.3018978261591174,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0006872668349284794,
+        "normalized_entropy_deficit": 0.0002984761940045516,
+        "chi2_vs_uniform": 1.075,
+        "chi2_df": 9
+      },
+      "cal": {
+        "n": 300,
+        "counts": {
+          "0": 31,
+          "1": 30,
+          "2": 32,
+          "3": 27,
+          "4": 30,
+          "5": 30,
+          "6": 30,
+          "7": 30,
+          "8": 30,
+          "9": 30
+        },
+        "min": 27,
+        "max": 32,
+        "max_over_min": 1.1851851851851851,
+        "max_dev_from_uniform_frac": 0.1,
+        "entropy_nats": 2.3017951487902,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.000789944203845927,
+        "normalized_entropy_deficit": 0.0003430684087417436,
+        "chi2_vs_uniform": 0.4666666666666667,
+        "chi2_df": 9
+      },
+      "test": {
+        "n": 500,
+        "counts": {
+          "0": 49,
+          "1": 50,
+          "2": 46,
+          "3": 49,
+          "4": 52,
+          "5": 50,
+          "6": 50,
+          "7": 53,
+          "8": 51,
+          "9": 50
+        },
+        "min": 46,
+        "max": 53,
+        "max_over_min": 1.1521739130434783,
+        "max_dev_from_uniform_frac": 0.08,
+        "entropy_nats": 2.301940605237379,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0006444877566669227,
+        "normalized_entropy_deficit": 0.0002798974763746502,
+        "chi2_vs_uniform": 0.6400000000000001,
+        "chi2_df": 9
+      }
+    },
+    "balanced_loss_weights": {
+      "class_counts": [
+        81.0,
+        81.0,
+        84.0,
+        72.0,
+        80.0,
+        81.0,
+        81.0,
+        79.0,
+        80.0,
+        81.0
+      ],
+      "weights": [
+        0.9876543209876543,
+        0.9876543209876543,
+        0.9523809523809523,
+        1.1111111111111112,
+        1.0,
+        0.9876543209876543,
+        0.9876543209876543,
+        1.0126582278481013,
+        1.0,
+        0.9876543209876543
+      ],
+      "formula": "w_k = n / (K * n_k)"
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32",
+      "script": "benchmarks/run_vision_diagnostic.py",
+      "platform_detail": "Windows-11-10.0.26100-SP0"
+    },
+    "published_reference": {
+      "jevx_accuracy_mean": 0.9087,
+      "jevx_accuracy_std": 0.0257,
+      "jevx_ece_temperature": 0.0207,
+      "b1_linear_accuracy_mean": 0.9467,
+      "b1_linear_accuracy_std": 0.0046,
+      "b2_mlp_accuracy_mean": 0.9673,
+      "b2_mlp_accuracy_std": 0.0042,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "source": "reports/MODALITY_BENCHMARKS.md 4.1/4.2 (run 2026-09-25, 3 seeds)"
+    }
+  },
+  "wrapper_equivalence": {
+    "check": "VisionHead(conditioning=True, use_question=True) vs benchmarks.bench_common.FeaturizedJevX on 8 cached rows, canonical model (shipped default fusion_type='concat', state_pathway='mlp')",
+    "max_abs_diff": 0.0
+  },
+  "cells": {
+    "V0": {
+      "cell": "V0",
+      "description": "reference: the shipped stack (interaction ON, state_pathway=mlp)",
+      "state_pathway": "mlp",
+      "state_hidden_size": null,
+      "conditioning": true,
+      "use_question": true,
+      "init": "default",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.219699008533588,
+          "train_loss_last": 0.07299111840816644,
+          "train_loss_curve": [
+            1.219699008533588,
+            0.21723334663189375,
+            0.09957338536444765,
+            0.07299111840816644
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 29,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9319999814033508,
+            "macro_f1": 0.9328792307092939,
+            "nll": 0.2880482724237663,
+            "brier": 0.10202369459154381,
+            "ece": 0.0361056986451149,
+            "mce": 0.3662571609020233
+          },
+          "temperature": {
+            "accuracy": 0.9319999814033508,
+            "macro_f1": 0.9328792307092939,
+            "nll": 0.23750970177357014,
+            "brier": 0.09599406212980238,
+            "ece": 0.026312218129634905,
+            "mce": 0.4304870516061783
+          },
+          "wall_s": 17.7,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.2471795815687914,
+          "train_loss_last": 0.0379915413303444,
+          "train_loss_curve": [
+            1.2471795815687914,
+            0.2243378385901451,
+            0.084220172980657,
+            0.0379915413303444
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 29,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.952095777591002,
+            "nll": 0.297215824371609,
+            "brier": 0.08405497901477772,
+            "ece": 0.0319851073026657,
+            "mce": 0.6086820065975189
+          },
+          "temperature": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.952095777591002,
+            "nll": 0.22181553282122818,
+            "brier": 0.08181664693906336,
+            "ece": 0.030435842990875282,
+            "mce": 0.632998913526535
+          },
+          "wall_s": 234.0,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.257008291207827,
+          "train_loss_last": 0.06047357074343241,
+          "train_loss_curve": [
+            1.257008291207827,
+            0.27119682242090887,
+            0.13240222403636345,
+            0.06047357074343241
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 29,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9459999799728394,
+            "macro_f1": 0.9459747626885886,
+            "nll": 0.2736134217340825,
+            "brier": 0.09380462449519718,
+            "ece": 0.038676724731922144,
+            "mce": 0.7068888346354166
+          },
+          "temperature": {
+            "accuracy": 0.9459999799728394,
+            "macro_f1": 0.9459747626885886,
+            "nll": 0.1953105707521391,
+            "brier": 0.0860358065230203,
+            "ece": 0.017640600442886345,
+            "mce": 0.3352034315466881
+          },
+          "wall_s": 201.87,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.293127009501824,
+          "train_loss_last": 0.025567371819096688,
+          "train_loss_curve": [
+            1.293127009501824,
+            0.2347209407733037,
+            0.11821263699004284,
+            0.025567371819096688
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 29,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9387049774898111,
+            "nll": 0.4725422285467897,
+            "brier": 0.11092510727482133,
+            "ece": 0.05082619172334668,
+            "mce": 0.5812043150266012
+          },
+          "temperature": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9387049774898111,
+            "nll": 0.2583094215694969,
+            "brier": 0.09942304357199658,
+            "ece": 0.021978786051273312,
+            "mce": 0.25880490882056106
+          },
+          "wall_s": 233.81,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.1950026108668401,
+          "train_loss_last": 0.04416970786853479,
+          "train_loss_curve": [
+            1.1950026108668401,
+            0.24280899533858666,
+            0.12596080631304246,
+            0.04416970786853479
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 29,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9379888268639285,
+            "nll": 0.45259092296057757,
+            "brier": 0.1148387876896514,
+            "ece": 0.05290210741758347,
+            "mce": 0.5739393432935078
+          },
+          "temperature": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9379888268639285,
+            "nll": 0.2680777382367493,
+            "brier": 0.1045337431124534,
+            "ece": 0.02445733320713045,
+            "mce": 0.30099111795425415
+          },
+          "wall_s": 279.08,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9412000060081482,
+            "std": 0.007823048073367514
+          },
+          "macro_f1": {
+            "mean": 0.9415287150685249,
+            "std": 0.007529077498088264
+          },
+          "nll": {
+            "mean": 0.356802134007365,
+            "std": 0.09717155602524573
+          },
+          "brier": {
+            "mean": 0.10112943861319827,
+            "std": 0.012548816107750174
+          },
+          "ece": {
+            "mean": 0.04209916596412658,
+            "std": 0.009257341137555839
+          },
+          "mce": {
+            "mean": 0.5673943320910135,
+            "std": 0.12435142011703844
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9412000060081482,
+            "std": 0.007823048073367514
+          },
+          "macro_f1": {
+            "mean": 0.9415287150685249,
+            "std": 0.007529077498088264
+          },
+          "nll": {
+            "mean": 0.23620459303063673,
+            "std": 0.029092912585015743
+          },
+          "brier": {
+            "mean": 0.0935606604552672,
+            "std": 0.009423942947206533
+          },
+          "ece": {
+            "mean": 0.024164956164360058,
+            "std": 0.004779299039014451
+          },
+          "mce": {
+            "mean": 0.3916970846908433,
+            "std": 0.1490055953542279
+          }
+        }
+      },
+      "trainable_params": 2179073,
+      "params_with_gradient": 29,
+      "wall_s": 966.55,
+      "per_seed_wall_s": [
+        17.7,
+        234.0,
+        201.87,
+        233.81,
+        279.08
+      ]
+    },
+    "V0L": {
+      "cell": "V0L",
+      "description": "supplementary: the shipped stack with the CURRENT config default state_pathway='linear' (the MODALITY_BENCHMARKS.md 4.1 stack)",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": true,
+      "use_question": true,
+      "init": "default",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.0508411661363566,
+          "train_loss_last": 0.04503399484719221,
+          "train_loss_curve": [
+            1.0508411661363566,
+            0.11957084932006322,
+            0.08253750076087621,
+            0.04503399484719221
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 27,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9375955621028507,
+            "nll": 0.3699567913551703,
+            "brier": 0.10141688638816967,
+            "ece": 0.044998200237750974,
+            "mce": 0.5189284682273865
+          },
+          "temperature": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9375955621028507,
+            "nll": 0.22693049235432347,
+            "brier": 0.09308404245788914,
+            "ece": 0.019872632175684038,
+            "mce": 0.3119945600628853
+          },
+          "wall_s": 184.21,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.071630352964768,
+          "train_loss_last": 0.023979146481276706,
+          "train_loss_curve": [
+            1.071630352964768,
+            0.10725849752242748,
+            0.09794691878442581,
+            0.023979146481276706
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 27,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9605366567327124,
+            "nll": 0.3003652679227805,
+            "brier": 0.07656121219327497,
+            "ece": 0.03759157705307001,
+            "mce": 0.48666808009147644
+          },
+          "temperature": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9605366567327124,
+            "nll": 0.19770708922920743,
+            "brier": 0.0781458686538158,
+            "ece": 0.023521360218524932,
+            "mce": 0.6888628900051117
+          },
+          "wall_s": 130.76,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.0571721356648665,
+          "train_loss_last": 0.04332247830909462,
+          "train_loss_curve": [
+            1.0571721356648665,
+            0.12271692600244513,
+            0.033244308442450486,
+            0.04332247830909462
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 27,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9498558123877366,
+            "nll": 0.26402921221217207,
+            "brier": 0.08560151363461149,
+            "ece": 0.03958035475015641,
+            "mce": 0.4945882260799408
+          },
+          "temperature": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9498558123877366,
+            "nll": 0.17480845628576433,
+            "brier": 0.07727481889958153,
+            "ece": 0.015632497131824484,
+            "mce": 0.31804702430963516
+          },
+          "wall_s": 169.85,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.046555010172037,
+          "train_loss_last": 0.028393857601958398,
+          "train_loss_curve": [
+            1.046555010172037,
+            0.14102144123843083,
+            0.08795082877175166,
+            0.028393857601958398
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 27,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.921999990940094,
+            "macro_f1": 0.9214079372952778,
+            "nll": 0.36414970578276185,
+            "brier": 0.12472674141575765,
+            "ece": 0.051388085126876905,
+            "mce": 0.5559574961662292
+          },
+          "temperature": {
+            "accuracy": 0.921999990940094,
+            "macro_f1": 0.9214079372952778,
+            "nll": 0.23264308432961,
+            "brier": 0.10910417554189962,
+            "ece": 0.02506269511580467,
+            "mce": 0.3014605045318604
+          },
+          "wall_s": 76.52,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.0637848663788576,
+          "train_loss_last": 0.021608973615981925,
+          "train_loss_curve": [
+            1.0637848663788576,
+            0.15422188834502146,
+            0.026912142970384315,
+            0.021608973615981925
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 27,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9480000138282776,
+            "macro_f1": 0.9478382054090979,
+            "nll": 0.21181961668537697,
+            "brier": 0.08261644845464265,
+            "ece": 0.03881892013549803,
+            "mce": 0.8345835506916046
+          },
+          "temperature": {
+            "accuracy": 0.9480000138282776,
+            "macro_f1": 0.9478382054090979,
+            "nll": 0.15734824866445665,
+            "brier": 0.07309902366791224,
+            "ece": 0.019121026813983907,
+            "mce": 0.4207003116607666
+          },
+          "wall_s": 32.25,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "full",
+            "conditioning_enabled": true,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9435999989509583,
+            "std": 0.01438053715087192
+          },
+          "macro_f1": {
+            "mean": 0.943446834785535,
+            "std": 0.014767968196729295
+          },
+          "nll": {
+            "mean": 0.30206411879165235,
+            "std": 0.06718936945872034
+          },
+          "brier": {
+            "mean": 0.09418456041729129,
+            "std": 0.019385585290178278
+          },
+          "ece": {
+            "mean": 0.04247542746067047,
+            "std": 0.0057315647030673255
+          },
+          "mce": {
+            "mean": 0.5781451642513276,
+            "std": 0.14586755515372896
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9435999989509583,
+            "std": 0.01438053715087192
+          },
+          "macro_f1": {
+            "mean": 0.943446834785535,
+            "std": 0.014767968196729295
+          },
+          "nll": {
+            "mean": 0.19788747417267238,
+            "std": 0.0325098129517795
+          },
+          "brier": {
+            "mean": 0.08614158584421967,
+            "std": 0.014900819667211037
+          },
+          "ece": {
+            "mean": 0.020642042291164404,
+            "std": 0.003736096419858294
+          },
+          "mce": {
+            "mean": 0.40821305811405184,
+            "std": 0.16409165149176566
+          }
+        }
+      },
+      "trainable_params": 2067905,
+      "params_with_gradient": 27,
+      "wall_s": 593.68,
+      "per_seed_wall_s": [
+        184.21,
+        130.76,
+        169.85,
+        76.52,
+        32.25
+      ]
+    },
+    "V1": {
+      "cell": "V1",
+      "description": "conditioning_mode=off equivalent: state-only head, schema removed before fusion, residual exactly zero (the shipped forward(condition_options=False) path)",
+      "state_pathway": "mlp",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": true,
+      "init": "default",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9739704773976252,
+          "train_loss_last": 0.027063255663961172,
+          "train_loss_curve": [
+            1.9739704773976252,
+            0.4544932297789134,
+            0.06519331854696457,
+            0.027063255663961172
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 19,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9500955357308051,
+            "nll": 0.20655064059776398,
+            "brier": 0.0806207388043928,
+            "ece": 0.029428143858909628,
+            "mce": 0.4752832502126694
+          },
+          "temperature": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9500955357308051,
+            "nll": 0.1698822768869915,
+            "brier": 0.0760177314143008,
+            "ece": 0.024491202473640464,
+            "mce": 0.3307046890258789
+          },
+          "wall_s": 20.83,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9891806474098792,
+          "train_loss_last": 0.025046643711483248,
+          "train_loss_curve": [
+            1.9891806474098792,
+            0.4723273263527797,
+            0.07156344431524093,
+            0.025046643711483248
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 19,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9503510905939301,
+            "nll": 0.2114252927904824,
+            "brier": 0.07614738080595779,
+            "ece": 0.03218515014648441,
+            "mce": 0.4425863027572632
+          },
+          "temperature": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9503510905939301,
+            "nll": 0.17589813205137034,
+            "brier": 0.07315828151530926,
+            "ece": 0.015172840237617502,
+            "mce": 0.43368154764175415
+          },
+          "wall_s": 13.54,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.99566283592811,
+          "train_loss_last": 0.012829975654872565,
+          "train_loss_curve": [
+            1.99566283592811,
+            0.4820534489475764,
+            0.058516182435246616,
+            0.012829975654872565
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 19,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.9518795245836624,
+            "nll": 0.17990880644219118,
+            "brier": 0.07456880774315945,
+            "ece": 0.03009368062019352,
+            "mce": 0.49806985259056097
+          },
+          "temperature": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.9518795245836624,
+            "nll": 0.15113084899599158,
+            "brier": 0.07036793360874452,
+            "ece": 0.02168955069780349,
+            "mce": 0.5981439054012299
+          },
+          "wall_s": 20.99,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.009497193189768,
+          "train_loss_last": 0.031245375983417034,
+          "train_loss_curve": [
+            2.009497193189768,
+            0.5000399236495678,
+            0.08781514374109414,
+            0.031245375983417034
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 19,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9359999895095825,
+            "macro_f1": 0.9358462368269731,
+            "nll": 0.2623885440372134,
+            "brier": 0.1065254676143394,
+            "ece": 0.04701724612712865,
+            "mce": 0.5685044229030609
+          },
+          "temperature": {
+            "accuracy": 0.9359999895095825,
+            "macro_f1": 0.9358462368269731,
+            "nll": 0.20810415898490475,
+            "brier": 0.0986742935661364,
+            "ece": 0.022053899109363555,
+            "mce": 0.6548233032226562
+          },
+          "wall_s": 38.72,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9908308340952947,
+          "train_loss_last": 0.020006548846140504,
+          "train_loss_curve": [
+            1.9908308340952947,
+            0.48482094131983244,
+            0.07159771877699174,
+            0.020006548846140504
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 19,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9377648730522813,
+            "nll": 0.1996824710236986,
+            "brier": 0.08827013668903623,
+            "ece": 0.03388181662559514,
+            "mce": 0.4365950624148051
+          },
+          "temperature": {
+            "accuracy": 0.9380000233650208,
+            "macro_f1": 0.9377648730522813,
+            "nll": 0.17426636342753576,
+            "brier": 0.08372038812576714,
+            "ece": 0.024676773726940156,
+            "mce": 0.38453274965286255
+          },
+          "wall_s": 25.79,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9452000021934509,
+            "std": 0.007563066937365263
+          },
+          "macro_f1": {
+            "mean": 0.9451874521575304,
+            "std": 0.007711829615049675
+          },
+          "nll": {
+            "mean": 0.21199115097826993,
+            "std": 0.030621058966757056
+          },
+          "brier": {
+            "mean": 0.08522650633137713,
+            "std": 0.013039743014180066
+          },
+          "ece": {
+            "mean": 0.03452120747566227,
+            "std": 0.007203458501710885
+          },
+          "mce": {
+            "mean": 0.48420777817567184,
+            "std": 0.053331619459923284
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9452000021934509,
+            "std": 0.007563066937365263
+          },
+          "macro_f1": {
+            "mean": 0.9451874521575304,
+            "std": 0.007711829615049675
+          },
+          "nll": {
+            "mean": 0.1758563560693588,
+            "std": 0.020551708790426313
+          },
+          "brier": {
+            "mean": 0.08038772564605162,
+            "std": 0.011371709963716108
+          },
+          "ece": {
+            "mean": 0.021616853249073035,
+            "std": 0.003851837045180492
+          },
+          "mce": {
+            "mean": 0.48037723898887635,
+            "std": 0.1397041006765975
+          }
+        }
+      },
+      "trainable_params": 2179073,
+      "params_with_gradient": 19,
+      "wall_s": 119.89,
+      "per_seed_wall_s": [
+        20.83,
+        13.54,
+        20.99,
+        38.72,
+        25.79
+      ]
+    },
+    "V2": {
+      "cell": "V2",
+      "description": "state path ONLY as an exact nn.Linear(D,K) probe (P1): state_proj -> Linear(192,10), no question/schema/fusion",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7043430896905751,
+          "train_loss_last": 0.033101811861762635,
+          "train_loss_curve": [
+            1.7043430896905751,
+            0.53436095897968,
+            0.11719484054125272,
+            0.033101811861762635
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702335072762661,
+            "nll": 0.11307004012384414,
+            "brier": 0.049717564714484117,
+            "ece": 0.023142266571521783,
+            "mce": 0.4495714604854584
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702335072762661,
+            "nll": 0.11359198179300335,
+            "brier": 0.05017183297737485,
+            "ece": 0.0166011688709259,
+            "mce": 0.2953786253929138
+          },
+          "wall_s": 18.41,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7197597393622766,
+          "train_loss_last": 0.03434024880138727,
+          "train_loss_curve": [
+            1.7197597393622766,
+            0.5438347940261548,
+            0.12068629666016652,
+            0.03434024880138727
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.11807022640756608,
+            "brier": 0.05211230925389215,
+            "ece": 0.030087226629257162,
+            "mce": 0.4394172430038452
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.11492205827377192,
+            "brier": 0.05282080873837371,
+            "ece": 0.02050686854124063,
+            "mce": 0.5156245132287344
+          },
+          "wall_s": 30.19,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7208967850758479,
+          "train_loss_last": 0.034174455759617,
+          "train_loss_curve": [
+            1.7208967850758479,
+            0.5511468694760249,
+            0.12045603130872433,
+            0.034174455759617
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662547907625368,
+            "nll": 0.11482105897235464,
+            "brier": 0.05234940537141527,
+            "ece": 0.019151044249534593,
+            "mce": 0.3588234484195709
+          },
+          "temperature": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662547907625368,
+            "nll": 0.11173296100891861,
+            "brier": 0.052981707489666616,
+            "ece": 0.020572522699832882,
+            "mce": 0.5674178600311279
+          },
+          "wall_s": 18.6,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.721708866266104,
+          "train_loss_last": 0.03177362193281834,
+          "train_loss_curve": [
+            1.721708866266104,
+            0.5381998752172177,
+            0.11587870464875148,
+            0.03177362193281834
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702957830970643,
+            "nll": 0.11468872228938494,
+            "brier": 0.050522027423770315,
+            "ece": 0.024010553717613167,
+            "mce": 0.3730651259422302
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702957830970643,
+            "nll": 0.11230131056609927,
+            "brier": 0.05147746005928606,
+            "ece": 0.018133196890354128,
+            "mce": 0.2268887857596079
+          },
+          "wall_s": 30.45,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7053791559659517,
+          "train_loss_last": 0.032232699485925526,
+          "train_loss_curve": [
+            1.7053791559659517,
+            0.5368078912679966,
+            0.11729131094538249,
+            0.032232699485925526
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701942915899917,
+            "nll": 0.11171436000304193,
+            "brier": 0.0501811875350858,
+            "ece": 0.02412069416046146,
+            "mce": 0.6822351217269897
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701942915899917,
+            "nll": 0.10739635180189386,
+            "brier": 0.050575629866078914,
+            "ece": 0.015907959401607493,
+            "mce": 0.6464489996433258
+          },
+          "wall_s": 14.21,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9688000202178955,
+            "std": 0.0017888613392643363
+          },
+          "macro_f1": {
+            "mean": 0.9690506707485431,
+            "std": 0.001780162569594856
+          },
+          "nll": {
+            "mean": 0.11447288155923836,
+            "std": 0.002381496901029048
+          },
+          "brier": {
+            "mean": 0.050976498859729526,
+            "std": 0.0011831015502262638
+          },
+          "ece": {
+            "mean": 0.02410235706567763,
+            "std": 0.003913588511746359
+          },
+          "mce": {
+            "mean": 0.46062247991561894,
+            "std": 0.13010888052118103
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9688000202178955,
+            "std": 0.0017888613392643363
+          },
+          "macro_f1": {
+            "mean": 0.9690506707485431,
+            "std": 0.001780162569594856
+          },
+          "nll": {
+            "mean": 0.1119889326887374,
+            "std": 0.0028472746956347095
+          },
+          "brier": {
+            "mean": 0.05160548782615604,
+            "std": 0.0012750833535856115
+          },
+          "ece": {
+            "mean": 0.018344343280792208,
+            "std": 0.0021598903475450373
+          },
+          "mce": {
+            "mean": 0.450351756811142,
+            "std": 0.18053497223017304
+          }
+        }
+      },
+      "trainable_params": 2067905,
+      "params_with_gradient": 6,
+      "wall_s": 111.92,
+      "per_seed_wall_s": [
+        18.41,
+        30.19,
+        18.6,
+        30.45,
+        14.21
+      ]
+    },
+    "V3": {
+      "cell": "V3",
+      "description": "V2 + probe-style initialization of the state path (nn.Linear's own kaiming-uniform weight / uniform bias instead of the shipped zero-init residual convention)",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": false,
+      "init": "probe",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 0.6957008064939425,
+          "train_loss_last": 0.010094602735569844,
+          "train_loss_curve": [
+            0.6957008064939425,
+            0.07675760038770162,
+            0.02248830018708339,
+            0.010094602735569844
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9661439751553956,
+            "nll": 0.11067778215473294,
+            "brier": 0.05245949277094974,
+            "ece": 0.019561784029006973,
+            "mce": 0.7122299373149872
+          },
+          "temperature": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9661439751553956,
+            "nll": 0.11174331589755118,
+            "brier": 0.05267465895085367,
+            "ece": 0.021602104902267417,
+            "mce": 0.7032468616962433
+          },
+          "wall_s": 17.25,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 0.7330355426439872,
+          "train_loss_last": 0.009317343624738546,
+          "train_loss_curve": [
+            0.7330355426439872,
+            0.06813142792536662,
+            0.021433653453221686,
+            0.009317343624738546
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682540858047071,
+            "nll": 0.11239374222763256,
+            "brier": 0.050970907886329665,
+            "ece": 0.016173526167869507,
+            "mce": 0.5120457410812378
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682540858047071,
+            "nll": 0.11422102518368228,
+            "brier": 0.05121168940316018,
+            "ece": 0.018670741438865577,
+            "mce": 0.4722927212715149
+          },
+          "wall_s": 23.02,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 0.7035071964447315,
+          "train_loss_last": 0.009546721497407326,
+          "train_loss_curve": [
+            0.7035071964447315,
+            0.07585182055257834,
+            0.01998602620397623,
+            0.009546721497407326
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622182122280947,
+            "nll": 0.11364037708259611,
+            "brier": 0.055293002699057375,
+            "ece": 0.015764572918415102,
+            "mce": 0.44488700230916345
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622182122280947,
+            "nll": 0.11549689605883537,
+            "brier": 0.0559289010436119,
+            "ece": 0.017630558311939236,
+            "mce": 0.44786251584688824
+          },
+          "wall_s": 21.97,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 0.7046754830158674,
+          "train_loss_last": 0.010106525025688685,
+          "train_loss_curve": [
+            0.7046754830158674,
+            0.07714251299890187,
+            0.023250356889688052,
+            0.010106525025688685
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.966216608345621,
+            "nll": 0.10847910349273593,
+            "brier": 0.0502217967023406,
+            "ece": 0.017516348063945718,
+            "mce": 0.4491909593343735
+          },
+          "temperature": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.966216608345621,
+            "nll": 0.10951900114565326,
+            "brier": 0.05035803876236793,
+            "ece": 0.01931619024276732,
+            "mce": 0.45788440108299255
+          },
+          "wall_s": 21.89,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 0.6996886890668136,
+          "train_loss_last": 0.009136314790409345,
+          "train_loss_curve": [
+            0.6996886890668136,
+            0.07140619565661137,
+            0.019654649309813976,
+            0.009136314790409345
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682699170368222,
+            "nll": 0.11152357594377553,
+            "brier": 0.053087389248910745,
+            "ece": 0.015046387553215013,
+            "mce": 0.6064947843551636
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682699170368222,
+            "nll": 0.11199545084783151,
+            "brier": 0.05321031328109166,
+            "ece": 0.01453126502037044,
+            "mce": 0.4896789640188217
+          },
+          "wall_s": 22.33,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9660000085830689,
+            "std": 0.0024494825400930287
+          },
+          "macro_f1": {
+            "mean": 0.966220559714128,
+            "std": 0.0024677803794124742
+          },
+          "nll": {
+            "mean": 0.11134291618029461,
+            "std": 0.0019402980641444534
+          },
+          "brier": {
+            "mean": 0.052406517861517635,
+            "std": 0.0019768769213561214
+          },
+          "ece": {
+            "mean": 0.016812523746490463,
+            "std": 0.0017804182561696627
+          },
+          "mce": {
+            "mean": 0.5449696848789851,
+            "std": 0.11405637159210763
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9660000085830689,
+            "std": 0.0024494825400930287
+          },
+          "macro_f1": {
+            "mean": 0.966220559714128,
+            "std": 0.0024677803794124742
+          },
+          "nll": {
+            "mean": 0.11259513782671071,
+            "std": 0.0023244113495380237
+          },
+          "brier": {
+            "mean": 0.05267672028821707,
+            "std": 0.002143828637589872
+          },
+          "ece": {
+            "mean": 0.018350171983242,
+            "std": 0.002584227059995456
+          },
+          "mce": {
+            "mean": 0.5141930927832922,
+            "std": 0.10685074330557216
+          }
+        }
+      },
+      "trainable_params": 2067905,
+      "params_with_gradient": 6,
+      "wall_s": 106.47,
+      "per_seed_wall_s": [
+        17.25,
+        23.02,
+        21.97,
+        21.89,
+        22.33
+      ]
+    },
+    "V4": {
+      "cell": "V4",
+      "description": "V2 + 20 epochs (budget sensitivity)",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 20,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7043430896905751,
+          "train_loss_last": 0.0017024912835600285,
+          "train_loss_curve": [
+            1.7043430896905751,
+            0.53436095897968,
+            0.11719484054125272,
+            0.033101811861762635,
+            0.014829541699817548,
+            0.009958683226544123,
+            0.007659768685698509,
+            0.006191380966741305,
+            0.005282088755988157,
+            0.004519671524086824,
+            0.003992828361403484,
+            0.003515549165268357,
+            0.0031140610539855864,
+            0.0028311411599413706,
+            0.002561033721296833,
+            0.0023323934650621735,
+            0.002122028856180035,
+            0.001995641881456742,
+            0.0018225272204010533,
+            0.0017024912835600285
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723222685433622,
+            "nll": 0.1217352984790863,
+            "brier": 0.04879997804936447,
+            "ece": 0.02299152243137359,
+            "mce": 0.562682569026947
+          },
+          "temperature": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723222685433622,
+            "nll": 0.11835629013913206,
+            "brier": 0.04879863412282403,
+            "ece": 0.02112279051542282,
+            "mce": 0.5370114147663116
+          },
+          "wall_s": 38.75,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 20,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7197597393622766,
+          "train_loss_last": 0.001694350539205166,
+          "train_loss_curve": [
+            1.7197597393622766,
+            0.5438347940261548,
+            0.12068629666016652,
+            0.03434024880138727,
+            0.016257615759968758,
+            0.010314997106503982,
+            0.007642315414089423,
+            0.006298784918796558,
+            0.005277303853430427,
+            0.004578742216556118,
+            0.004000843090649981,
+            0.0035582202701614453,
+            0.003180863496919091,
+            0.0028860804338294724,
+            0.0025838375127372835,
+            0.002342985665354018,
+            0.0021699209554264178,
+            0.001988169701340107,
+            0.0018209072564227076,
+            0.001694350539205166
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9739999771118164,
+            "macro_f1": 0.974276711021498,
+            "nll": 0.1229862697738978,
+            "brier": 0.04888853202685824,
+            "ece": 0.0193915302157402,
+            "mce": 0.4358431498209635
+          },
+          "temperature": {
+            "accuracy": 0.9739999771118164,
+            "macro_f1": 0.974276711021498,
+            "nll": 0.11873518421357893,
+            "brier": 0.04892344663725571,
+            "ece": 0.016366523027419956,
+            "mce": 0.5390254110097885
+          },
+          "wall_s": 35.98,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 20,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7208967850758479,
+          "train_loss_last": 0.0016620110702485992,
+          "train_loss_curve": [
+            1.7208967850758479,
+            0.5511468694760249,
+            0.12045603130872433,
+            0.034174455759617,
+            0.014797708592735805,
+            0.009941071952478243,
+            0.007392974427113166,
+            0.0060922274939142745,
+            0.005237802254179349,
+            0.004466590292465229,
+            0.003935174962792259,
+            0.003506893668180475,
+            0.0031085501675708936,
+            0.002858801046386361,
+            0.0025596688501536846,
+            0.002321425431336348,
+            0.0021125755380265988,
+            0.0019517246580037933,
+            0.0018000125598448974,
+            0.0016620110702485992
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723583886602283,
+            "nll": 0.12114468863778714,
+            "brier": 0.05112712796068077,
+            "ece": 0.021535786509513835,
+            "mce": 0.4879326721032461
+          },
+          "temperature": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723583886602283,
+            "nll": 0.11833869926958324,
+            "brier": 0.05110399445064573,
+            "ece": 0.01744511520862578,
+            "mce": 0.498468279838562
+          },
+          "wall_s": 25.95,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 20,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.721708866266104,
+          "train_loss_last": 0.0016668967795200073,
+          "train_loss_curve": [
+            1.721708866266104,
+            0.5381998752172177,
+            0.11587870464875148,
+            0.03177362193281834,
+            0.01486979231524926,
+            0.009703509473743347,
+            0.007363003463699267,
+            0.006040157499508216,
+            0.005172165540548472,
+            0.004537602904467628,
+            0.003967294344105399,
+            0.0034637004137039185,
+            0.0031182899927863707,
+            0.0028217997795973834,
+            0.00252062316912298,
+            0.0022913671385210296,
+            0.0021193364384369208,
+            0.0019453476505497326,
+            0.0017924931151076006,
+            0.0016668967795200073
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9739999771118164,
+            "macro_f1": 0.9743214919951193,
+            "nll": 0.12409294376346039,
+            "brier": 0.04884422952139428,
+            "ece": 0.01479950523376463,
+            "mce": 0.30808115005493164
+          },
+          "temperature": {
+            "accuracy": 0.9739999771118164,
+            "macro_f1": 0.9743214919951193,
+            "nll": 0.12061469677567896,
+            "brier": 0.04888192132737527,
+            "ece": 0.016062706291675617,
+            "mce": 0.541732132434845
+          },
+          "wall_s": 14.43,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 20,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7053791559659517,
+          "train_loss_last": 0.0016677235969557213,
+          "train_loss_curve": [
+            1.7053791559659517,
+            0.5368078912679966,
+            0.11729131094538249,
+            0.032232699485925526,
+            0.014959015023822967,
+            0.009777284191491513,
+            0.007500266477179069,
+            0.006191667634993792,
+            0.005202380761217613,
+            0.004506950875600943,
+            0.0039398652465584185,
+            0.0035215155579722845,
+            0.003113292856141925,
+            0.002805190125050453,
+            0.0025301651420215,
+            0.0023293588310480118,
+            0.002120430849922391,
+            0.001939766977627117,
+            0.0017861808435275005,
+            0.0016677235969557213
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723222685433622,
+            "nll": 0.12088570756827619,
+            "brier": 0.049323043958379366,
+            "ece": 0.02215705841779704,
+            "mce": 0.5399825274944305
+          },
+          "temperature": {
+            "accuracy": 0.972000002861023,
+            "macro_f1": 0.9723222685433622,
+            "nll": 0.11688348070511093,
+            "brier": 0.0493232926584041,
+            "ece": 0.01593584406375889,
+            "mce": 0.47854113578796387
+          },
+          "wall_s": 14.31,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9727999925613403,
+            "std": 0.0010954310115890706
+          },
+          "macro_f1": {
+            "mean": 0.9731202257527138,
+            "std": 0.001076378875379979
+          },
+          "nll": {
+            "mean": 0.12216898164450156,
+            "std": 0.001346629099633721
+          },
+          "brier": {
+            "mean": 0.04939658230333542,
+            "std": 0.0009898663388734133
+          },
+          "ece": {
+            "mean": 0.020175080561637863,
+            "std": 0.0032872048519481797
+          },
+          "mce": {
+            "mean": 0.46690441370010377,
+            "std": 0.10142199538770208
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9727999925613403,
+            "std": 0.0010954310115890706
+          },
+          "macro_f1": {
+            "mean": 0.9731202257527138,
+            "std": 0.001076378875379979
+          },
+          "nll": {
+            "mean": 0.1185856702206168,
+            "std": 0.0013370080604070216
+          },
+          "brier": {
+            "mean": 0.049406257839300964,
+            "std": 0.0009703652454263919
+          },
+          "ece": {
+            "mean": 0.017386595821380614,
+            "std": 0.002171433165248037
+          },
+          "mce": {
+            "mean": 0.5189556747674942,
+            "std": 0.02872559570972721
+          }
+        }
+      },
+      "trainable_params": 2067905,
+      "params_with_gradient": 6,
+      "wall_s": 129.44,
+      "per_seed_wall_s": [
+        38.75,
+        35.98,
+        25.95,
+        14.43,
+        14.31
+      ]
+    },
+    "V2m": {
+      "cell": "V2m",
+      "description": "V2 with the mlp state path, H = D = 192 (sweep centre for V5)",
+      "state_pathway": "mlp",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9106077597691462,
+          "train_loss_last": 0.012955196345081696,
+          "train_loss_curve": [
+            1.9106077597691462,
+            0.5418522965449554,
+            0.06532479378466423,
+            0.012955196345081696
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9681548528088776,
+            "nll": 0.13051577782311963,
+            "brier": 0.05394783143979969,
+            "ece": 0.022246369779109963,
+            "mce": 0.5563432723283768
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9681548528088776,
+            "nll": 0.12429612633878427,
+            "brier": 0.05374090150712043,
+            "ece": 0.014236125886440205,
+            "mce": 0.620168000459671
+          },
+          "wall_s": 12.35,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9156505511357234,
+          "train_loss_last": 0.012354603055148171,
+          "train_loss_curve": [
+            1.9156505511357234,
+            0.5772203974998914,
+            0.07278833767542472,
+            0.012354603055148171
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701706661419861,
+            "nll": 0.13240987874395363,
+            "brier": 0.056368067407115655,
+            "ece": 0.024880285859107926,
+            "mce": 0.5724592208862305
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701706661419861,
+            "nll": 0.1299255392468426,
+            "brier": 0.05617684141259367,
+            "ece": 0.024745131611824078,
+            "mce": 0.5801647404829662
+          },
+          "wall_s": 17.23,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9291974764603834,
+          "train_loss_last": 0.008187035761343745,
+          "train_loss_curve": [
+            1.9291974764603834,
+            0.5711500335198182,
+            0.058303337830763594,
+            0.008187035761343745
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9641312372420389,
+            "nll": 0.13030635128819198,
+            "brier": 0.05757362851007792,
+            "ece": 0.019049233078956666,
+            "mce": 0.6424513459205627
+          },
+          "temperature": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9641312372420389,
+            "nll": 0.1253800463345279,
+            "brier": 0.05673449495666375,
+            "ece": 0.021022245287895272,
+            "mce": 0.652349591255188
+          },
+          "wall_s": 17.41,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9216812023749719,
+          "train_loss_last": 0.013330825676138584,
+          "train_loss_curve": [
+            1.9216812023749719,
+            0.5707686107892257,
+            0.07353361896597423,
+            0.013330825676138584
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9602305024895866,
+            "nll": 0.13523707660426212,
+            "brier": 0.06675854102317726,
+            "ece": 0.027495779991149865,
+            "mce": 0.6648428440093994
+          },
+          "temperature": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9602305024895866,
+            "nll": 0.13125404470752683,
+            "brier": 0.06561975141223035,
+            "ece": 0.023952839434146878,
+            "mce": 0.4424162606398265
+          },
+          "wall_s": 14.71,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.914206128854018,
+          "train_loss_last": 0.009967841315441407,
+          "train_loss_curve": [
+            1.914206128854018,
+            0.5716876811706103,
+            0.06739494971071298,
+            0.009967841315441407
+          ],
+          "trainable_params": 2179073,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662186122680987,
+            "nll": 0.13043246692037042,
+            "brier": 0.05680147074099085,
+            "ece": 0.022651776552200367,
+            "mce": 0.5791597664356232
+          },
+          "temperature": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662186122680987,
+            "nll": 0.12455486292439667,
+            "brier": 0.055996916995763556,
+            "ece": 0.017643557250499705,
+            "mce": 0.3904555241266887
+          },
+          "wall_s": 16.89,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9656000018119812,
+            "std": 0.0038470939047754497
+          },
+          "macro_f1": {
+            "mean": 0.9657811741901176,
+            "std": 0.003828367475584572
+          },
+          "nll": {
+            "mean": 0.13178031027597953,
+            "std": 0.0021174199534746752
+          },
+          "brier": {
+            "mean": 0.05828990782423227,
+            "std": 0.004924260025172231
+          },
+          "ece": {
+            "mean": 0.023264689052104957,
+            "std": 0.0031501979506496913
+          },
+          "mce": {
+            "mean": 0.6030512899160385,
+            "std": 0.047589071905064215
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9656000018119812,
+            "std": 0.0038470939047754497
+          },
+          "macro_f1": {
+            "mean": 0.9657811741901176,
+            "std": 0.003828367475584572
+          },
+          "nll": {
+            "mean": 0.12708212391041568,
+            "std": 0.0032609750285660833
+          },
+          "brier": {
+            "mean": 0.05765378125687435,
+            "std": 0.00459725315370988
+          },
+          "ece": {
+            "mean": 0.020319979894161226,
+            "std": 0.004400265065868275
+          },
+          "mce": {
+            "mean": 0.5371108233928681,
+            "std": 0.11457196982178419
+          }
+        }
+      },
+      "trainable_params": 2179073,
+      "params_with_gradient": 8,
+      "wall_s": 78.6,
+      "per_seed_wall_s": [
+        12.35,
+        17.23,
+        17.41,
+        14.71,
+        16.89
+      ]
+    },
+    "V5a": {
+      "cell": "V5a",
+      "description": "V2m with state_hidden_size halved: H = 96",
+      "state_pathway": "mlp",
+      "state_hidden_size": 96,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.0670838997914243,
+          "train_loss_last": 0.03216209004704769,
+          "train_loss_curve": [
+            2.0670838997914243,
+            1.0280850644295032,
+            0.21513183873433334,
+            0.03216209004704769
+          ],
+          "trainable_params": 2098817,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9683605585023851,
+            "nll": 0.12366723642955188,
+            "brier": 0.054707543580383156,
+            "ece": 0.01605971610546107,
+            "mce": 0.5946703553199768
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9683605585023851,
+            "nll": 0.12776662537348504,
+            "brier": 0.055051384586766026,
+            "ece": 0.020141066133976024,
+            "mce": 0.6634066700935364
+          },
+          "wall_s": 15.67,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 96,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.063898196587196,
+          "train_loss_last": 0.03827793043679916,
+          "train_loss_curve": [
+            2.063898196587196,
+            1.0254119221980755,
+            0.2294188800912637,
+            0.03827793043679916
+          ],
+          "trainable_params": 2098817,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.968214676305057,
+            "nll": 0.11855838395190775,
+            "brier": 0.05298388492323163,
+            "ece": 0.016577848255634343,
+            "mce": 0.720195472240448
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.968214676305057,
+            "nll": 0.12022862635509748,
+            "brier": 0.05320026709449553,
+            "ece": 0.01804743260145188,
+            "mce": 0.7023274898529053
+          },
+          "wall_s": 13.81,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 96,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.073062089773325,
+          "train_loss_last": 0.033882947925191656,
+          "train_loss_curve": [
+            2.073062089773325,
+            1.0338803575589106,
+            0.22323246443500885,
+            0.033882947925191656
+          ],
+          "trainable_params": 2098817,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9619061070875089,
+            "nll": 0.1315477534433248,
+            "brier": 0.05725827686779862,
+            "ece": 0.019093149125576095,
+            "mce": 0.7389063239097595
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9619061070875089,
+            "nll": 0.13491569372199086,
+            "brier": 0.05826829876039757,
+            "ece": 0.019229907810688004,
+            "mce": 0.716788649559021
+          },
+          "wall_s": 20.45,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 96,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.0789808126596303,
+          "train_loss_last": 0.031139578598623093,
+          "train_loss_curve": [
+            2.0789808126596303,
+            1.038475710612077,
+            0.22496208605857995,
+            0.031139578598623093
+          ],
+          "trainable_params": 2098817,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9641342863221289,
+            "nll": 0.11678219824407655,
+            "brier": 0.055965930839025985,
+            "ece": 0.01758122479915628,
+            "mce": 0.4894840121269226
+          },
+          "temperature": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9641342863221289,
+            "nll": 0.11927425111442062,
+            "brier": 0.056982561750620705,
+            "ece": 0.01597041332721714,
+            "mce": 0.6461547613143921
+          },
+          "wall_s": 12.88,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 96,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.07284375337454,
+          "train_loss_last": 0.037181894366557784,
+          "train_loss_curve": [
+            2.07284375337454,
+            1.0650055500177236,
+            0.23872827337338373,
+            0.037181894366557784
+          ],
+          "trainable_params": 2098817,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9623102141891653,
+            "nll": 0.12139408162380702,
+            "brier": 0.05690265937108991,
+            "ece": 0.01680567145347598,
+            "mce": 0.697149008512497
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9623102141891653,
+            "nll": 0.12186238930593274,
+            "brier": 0.057461861847285335,
+            "ece": 0.01513550132513052,
+            "mce": 0.7468721866607666
+          },
+          "wall_s": 12.62,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 96,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9648000001907349,
+            "std": 0.003033142568739263
+          },
+          "macro_f1": {
+            "mean": 0.9649851684812492,
+            "std": 0.0031298154322055797
+          },
+          "nll": {
+            "mean": 0.12238993073853359,
+            "std": 0.0057579587634744986
+          },
+          "brier": {
+            "mean": 0.05556365911630586,
+            "std": 0.0017474726208861152
+          },
+          "ece": {
+            "mean": 0.017223521947860754,
+            "std": 0.0011799782524236737
+          },
+          "mce": {
+            "mean": 0.6480810344219208,
+            "std": 0.104717605440485
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9648000001907349,
+            "std": 0.003033142568739263
+          },
+          "macro_f1": {
+            "mean": 0.9649851684812492,
+            "std": 0.0031298154322055797
+          },
+          "nll": {
+            "mean": 0.12480951717418534,
+            "std": 0.0065419528246235
+          },
+          "brier": {
+            "mean": 0.05619287480791304,
+            "std": 0.00204939131253066
+          },
+          "ece": {
+            "mean": 0.017704864239692714,
+            "std": 0.0021206211590084215
+          },
+          "mce": {
+            "mean": 0.6951099514961243,
+            "std": 0.04062971971443695
+          }
+        }
+      },
+      "trainable_params": 2098817,
+      "params_with_gradient": 8,
+      "wall_s": 75.44,
+      "per_seed_wall_s": [
+        15.67,
+        13.81,
+        20.45,
+        12.88,
+        12.62
+      ]
+    },
+    "V5b": {
+      "cell": "V5b",
+      "description": "V2m with state_hidden_size doubled: H = 384",
+      "state_pathway": "mlp",
+      "state_hidden_size": 384,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.6581236949333777,
+          "train_loss_last": 0.004022485921338487,
+          "train_loss_curve": [
+            1.6581236949333777,
+            0.2204969164270621,
+            0.023362314221090995,
+            0.004022485921338487
+          ],
+          "trainable_params": 2339585,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9559999704360962,
+            "macro_f1": 0.9562099401157971,
+            "nll": 0.17235047726605973,
+            "brier": 0.06669929025523422,
+            "ece": 0.029155696034431425,
+            "mce": 0.7554347515106201
+          },
+          "temperature": {
+            "accuracy": 0.9559999704360962,
+            "macro_f1": 0.9562099401157971,
+            "nll": 0.14475691715926942,
+            "brier": 0.06338282782698142,
+            "ece": 0.02008944255113597,
+            "mce": 0.4448713958263397
+          },
+          "wall_s": 12.81,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 384,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.6676914875323956,
+          "train_loss_last": 0.012560543908665959,
+          "train_loss_curve": [
+            1.6676914875323956,
+            0.23675668698090774,
+            0.0288346756536227,
+            0.012560543908665959
+          ],
+          "trainable_params": 2339585,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.962193136669533,
+            "nll": 0.1607200060141248,
+            "brier": 0.06327502530429283,
+            "ece": 0.02452923738956443,
+            "mce": 0.6536496579647064
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.962193136669533,
+            "nll": 0.14087661433668672,
+            "brier": 0.06183214755836275,
+            "ece": 0.020674942016601555,
+            "mce": 0.7040040791034698
+          },
+          "wall_s": 12.53,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 384,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.6867902783247142,
+          "train_loss_last": 0.009186767323766477,
+          "train_loss_curve": [
+            1.6867902783247142,
+            0.2545729700762492,
+            0.0367448407655152,
+            0.009186767323766477
+          ],
+          "trainable_params": 2339585,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9624418921677351,
+            "nll": 0.16466980041850468,
+            "brier": 0.0643768992368751,
+            "ece": 0.029989502012729645,
+            "mce": 0.6409107645352682
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9624418921677351,
+            "nll": 0.14102672613471423,
+            "brier": 0.06204699574121893,
+            "ece": 0.015317187190055776,
+            "mce": 0.6737169027328491
+          },
+          "wall_s": 11.76,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 384,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.6811980880223787,
+          "train_loss_last": 0.010937001860628907,
+          "train_loss_curve": [
+            1.6811980880223787,
+            0.238145530796968,
+            0.028830087528778955,
+            0.010937001860628907
+          ],
+          "trainable_params": 2339585,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9621231855738076,
+            "nll": 0.1613697008778224,
+            "brier": 0.06870624272693047,
+            "ece": 0.03249255824089044,
+            "mce": 0.6568233966827393
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9621231855738076,
+            "nll": 0.13887624327198972,
+            "brier": 0.06554331123719855,
+            "ece": 0.02405926066637037,
+            "mce": 0.5850653201341629
+          },
+          "wall_s": 14.09,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 384,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.6770649735744183,
+          "train_loss_last": 0.005139637102659505,
+          "train_loss_curve": [
+            1.6770649735744183,
+            0.23502705704707366,
+            0.023993271259734265,
+            0.005139637102659505
+          ],
+          "trainable_params": 2339585,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622652950398173,
+            "nll": 0.15023572470177146,
+            "brier": 0.060475821387745286,
+            "ece": 0.021640567958355002,
+            "mce": 0.2251289337873459
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622652950398173,
+            "nll": 0.13059420715436706,
+            "brier": 0.05905957987037644,
+            "ece": 0.018284775793552414,
+            "mce": 0.4967445433139801
+          },
+          "wall_s": 13.7,
+          "config": {
+            "state_pathway": "mlp",
+            "state_hidden_size": 384,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9608000040054321,
+            "std": 0.0026833003388290265
+          },
+          "macro_f1": {
+            "mean": 0.961046689913338,
+            "std": 0.002706423814777006
+          },
+          "nll": {
+            "mean": 0.16186914185565662,
+            "std": 0.007978227082503462
+          },
+          "brier": {
+            "mean": 0.06470665578221559,
+            "std": 0.0031632875600133606
+          },
+          "ece": {
+            "mean": 0.027561512327194188,
+            "std": 0.004387597375692468
+          },
+          "mce": {
+            "mean": 0.586389500896136,
+            "std": 0.20708870363714493
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9608000040054321,
+            "std": 0.0026833003388290265
+          },
+          "macro_f1": {
+            "mean": 0.961046689913338,
+            "std": 0.002706423814777006
+          },
+          "nll": {
+            "mean": 0.13922614161140542,
+            "std": 0.005272294669350787
+          },
+          "brier": {
+            "mean": 0.0623729724468276,
+            "std": 0.002368975446940116
+          },
+          "ece": {
+            "mean": 0.01968512164354322,
+            "std": 0.0032138812924486786
+          },
+          "mce": {
+            "mean": 0.5808804482221603,
+            "std": 0.11110002446979865
+          }
+        }
+      },
+      "trainable_params": 2339585,
+      "params_with_gradient": 8,
+      "wall_s": 64.91,
+      "per_seed_wall_s": [
+        12.81,
+        12.53,
+        11.76,
+        14.09,
+        13.7
+      ]
+    },
+    "V6": {
+      "cell": "V6",
+      "description": "V2 with a class-balanced (inverse-frequency) re-weighting of the training cross-entropy",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": false,
+      "init": "zero",
+      "loss": {
+        "class_counts": [
+          81.0,
+          81.0,
+          84.0,
+          72.0,
+          80.0,
+          81.0,
+          81.0,
+          79.0,
+          80.0,
+          81.0
+        ],
+        "weights": [
+          0.9876543209876543,
+          0.9876543209876543,
+          0.9523809523809523,
+          1.1111111111111112,
+          1.0,
+          0.9876543209876543,
+          0.9876543209876543,
+          1.0126582278481013,
+          1.0,
+          0.9876543209876543
+        ],
+        "formula": "w_k = n / (K * n_k)",
+        "kind": "class-balanced CE"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7071687808403602,
+          "train_loss_last": 0.033276137251120344,
+          "train_loss_curve": [
+            1.7071687808403602,
+            0.5372161383812244,
+            0.11775399687198493,
+            0.033276137251120344
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "class_counts": [
+              81.0,
+              81.0,
+              84.0,
+              72.0,
+              80.0,
+              81.0,
+              81.0,
+              79.0,
+              80.0,
+              81.0
+            ],
+            "weights": [
+              0.9876543209876543,
+              0.9876543209876543,
+              0.9523809523809523,
+              1.1111111111111112,
+              1.0,
+              0.9876543209876543,
+              0.9876543209876543,
+              1.0126582278481013,
+              1.0,
+              0.9876543209876543
+            ],
+            "formula": "w_k = n / (K * n_k)",
+            "kind": "class-balanced CE"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702335072762661,
+            "nll": 0.11287434819907252,
+            "brier": 0.049557507327505815,
+            "ece": 0.024913978278636915,
+            "mce": 0.4524056613445282
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702335072762661,
+            "nll": 0.11310656595745455,
+            "brier": 0.04990618075575998,
+            "ece": 0.018821503162383957,
+            "mce": 0.5186574757099152
+          },
+          "wall_s": 11.26,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7219624977845411,
+          "train_loss_last": 0.03453699155495717,
+          "train_loss_curve": [
+            1.7219624977845411,
+            0.5461891133051652,
+            0.12120829694546185,
+            0.03453699155495717
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "class_counts": [
+              81.0,
+              81.0,
+              84.0,
+              72.0,
+              80.0,
+              81.0,
+              81.0,
+              79.0,
+              80.0,
+              81.0
+            ],
+            "weights": [
+              0.9876543209876543,
+              0.9876543209876543,
+              0.9523809523809523,
+              1.1111111111111112,
+              1.0,
+              0.9876543209876543,
+              0.9876543209876543,
+              1.0126582278481013,
+              1.0,
+              0.9876543209876543
+            ],
+            "formula": "w_k = n / (K * n_k)",
+            "kind": "class-balanced CE"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.1185411905527057,
+            "brier": 0.052291167324379585,
+            "ece": 0.02881951791048045,
+            "mce": 0.43743521968523663
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.11550155480842458,
+            "brier": 0.053001538740103805,
+            "ece": 0.02028685355186461,
+            "mce": 0.5099322001139323
+          },
+          "wall_s": 10.85,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.722938400048476,
+          "train_loss_last": 0.03423821352995359,
+          "train_loss_curve": [
+            1.722938400048476,
+            0.5535461696294638,
+            0.12082742871000217,
+            0.03423821352995359
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "class_counts": [
+              81.0,
+              81.0,
+              84.0,
+              72.0,
+              80.0,
+              81.0,
+              81.0,
+              79.0,
+              80.0,
+              81.0
+            ],
+            "weights": [
+              0.9876543209876543,
+              0.9876543209876543,
+              0.9523809523809523,
+              1.1111111111111112,
+              1.0,
+              0.9876543209876543,
+              0.9876543209876543,
+              1.0126582278481013,
+              1.0,
+              0.9876543209876543
+            ],
+            "formula": "w_k = n / (K * n_k)",
+            "kind": "class-balanced CE"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.11519363887934074,
+            "brier": 0.05246807044535209,
+            "ece": 0.019754319906234778,
+            "mce": 0.35916009545326233
+          },
+          "temperature": {
+            "accuracy": 0.9679999947547913,
+            "macro_f1": 0.9682749810168563,
+            "nll": 0.11201328319471986,
+            "brier": 0.05304532805093601,
+            "ece": 0.019152706742286627,
+            "mce": 0.32711079716682434
+          },
+          "wall_s": 12.73,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7236037254333496,
+          "train_loss_last": 0.03192486613988876,
+          "train_loss_curve": [
+            1.7236037254333496,
+            0.5408060997724533,
+            0.1167158094736246,
+            0.03192486613988876
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "class_counts": [
+              81.0,
+              81.0,
+              84.0,
+              72.0,
+              80.0,
+              81.0,
+              81.0,
+              79.0,
+              80.0,
+              81.0
+            ],
+            "weights": [
+              0.9876543209876543,
+              0.9876543209876543,
+              0.9523809523809523,
+              1.1111111111111112,
+              1.0,
+              0.9876543209876543,
+              0.9876543209876543,
+              1.0126582278481013,
+              1.0,
+              0.9876543209876543
+            ],
+            "formula": "w_k = n / (K * n_k)",
+            "kind": "class-balanced CE"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702957830970643,
+            "nll": 0.11537859157635094,
+            "brier": 0.05062353438046327,
+            "ece": 0.024472537398338226,
+            "mce": 0.3648631970087687
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702957830970643,
+            "nll": 0.11281229433404101,
+            "brier": 0.05147341438210926,
+            "ece": 0.020052579164504983,
+            "mce": 0.37491708993911743
+          },
+          "wall_s": 12.06,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.7087206473717322,
+          "train_loss_last": 0.032294619326981217,
+          "train_loss_curve": [
+            1.7087206473717322,
+            0.5394925440733249,
+            0.1177213630424096,
+            0.032294619326981217
+          ],
+          "trainable_params": 2067905,
+          "params_with_gradient": 6,
+          "loss": {
+            "class_counts": [
+              81.0,
+              81.0,
+              84.0,
+              72.0,
+              80.0,
+              81.0,
+              81.0,
+              79.0,
+              80.0,
+              81.0
+            ],
+            "weights": [
+              0.9876543209876543,
+              0.9876543209876543,
+              0.9523809523809523,
+              1.1111111111111112,
+              1.0,
+              0.9876543209876543,
+              0.9876543209876543,
+              1.0126582278481013,
+              1.0,
+              0.9876543209876543
+            ],
+            "formula": "w_k = n / (K * n_k)",
+            "kind": "class-balanced CE"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701942915899917,
+            "nll": 0.11172569836174281,
+            "brier": 0.05000438108059983,
+            "ece": 0.02460748207569119,
+            "mce": 0.6803408861160278
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9701942915899917,
+            "nll": 0.10727887873324281,
+            "brier": 0.05028374730752195,
+            "ece": 0.015693785250186935,
+            "mce": 0.6450143158435822
+          },
+          "wall_s": 11.27,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9692000150680542,
+            "std": 0.0010954636583975464
+          },
+          "macro_f1": {
+            "mean": 0.9694547087994069,
+            "std": 0.0010775471019532064
+          },
+          "nll": {
+            "mean": 0.11474269351384254,
+            "std": 0.002628177685480702
+          },
+          "brier": {
+            "mean": 0.050988932111660126,
+            "std": 0.0013262258392578202
+          },
+          "ece": {
+            "mean": 0.02451356711387631,
+            "std": 0.0032156833956677984
+          },
+          "mce": {
+            "mean": 0.4588410119215648,
+            "std": 0.1306999720258402
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9692000150680542,
+            "std": 0.0010954636583975464
+          },
+          "macro_f1": {
+            "mean": 0.9694547087994069,
+            "std": 0.0010775471019532064
+          },
+          "nll": {
+            "mean": 0.11214251540557656,
+            "std": 0.0030138350002227024
+          },
+          "brier": {
+            "mean": 0.0515420418472862,
+            "std": 0.0014708889301009954
+          },
+          "ece": {
+            "mean": 0.018801485574245425,
+            "std": 0.0018407275407697774
+          },
+          "mce": {
+            "mean": 0.47512637575467426,
+            "std": 0.12641086457327647
+          }
+        }
+      },
+      "trainable_params": 2067905,
+      "params_with_gradient": 6,
+      "wall_s": 58.18,
+      "per_seed_wall_s": [
+        11.26,
+        10.85,
+        12.73,
+        12.06,
+        11.27
+      ]
+    },
+    "R1": {
+      "cell": "R1",
+      "description": "B1 linear probe, nn.Linear(192,10) on the pooled feature (== P1), same features / splits / 5 seeds",
+      "state_pathway": null,
+      "state_hidden_size": null,
+      "conditioning": null,
+      "use_question": null,
+      "init": null,
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9908803609701304,
+          "train_loss_last": 0.3197564436839177,
+          "train_loss_curve": [
+            1.9908803609701304,
+            1.0746839596674993,
+            0.5528316772901095,
+            0.3197564436839177
+          ],
+          "trainable_params": 1930,
+          "params_with_gradient": 2,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.9520804943877568,
+            "nll": 0.2580627499183764,
+            "brier": 0.09418026414817135,
+            "ece": 0.1199341625273228,
+            "mce": 0.36210904187626314
+          },
+          "temperature": {
+            "accuracy": 0.9520000219345093,
+            "macro_f1": 0.9520804943877568,
+            "nll": 0.13783676728377148,
+            "brier": 0.0655380538060065,
+            "ece": 0.012476007878780348,
+            "mce": 0.43783655762672424
+          },
+          "wall_s": 0.67
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.144963291975168,
+          "train_loss_last": 0.34662098724108475,
+          "train_loss_curve": [
+            2.144963291975168,
+            1.1755295991897583,
+            0.6184628674617181,
+            0.34662098724108475
+          ],
+          "trainable_params": 1930,
+          "params_with_gradient": 2,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9359999895095825,
+            "macro_f1": 0.9369021221779598,
+            "nll": 0.2927759852265818,
+            "brier": 0.1094105839052417,
+            "ece": 0.11676260781288142,
+            "mce": 0.29864669839541114
+          },
+          "temperature": {
+            "accuracy": 0.9359999895095825,
+            "macro_f1": 0.9369021221779598,
+            "nll": 0.1815108622051203,
+            "brier": 0.08583679392964506,
+            "ece": 0.021572476357221593,
+            "mce": 0.4274013390143712
+          },
+          "wall_s": 0.59
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.137802866789011,
+          "train_loss_last": 0.33101886969346267,
+          "train_loss_curve": [
+            2.137802866789011,
+            1.1690192635242755,
+            0.6023226609596839,
+            0.33101886969346267
+          ],
+          "trainable_params": 1930,
+          "params_with_gradient": 2,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9502143830967004,
+            "nll": 0.26697042076809646,
+            "brier": 0.09686896169302492,
+            "ece": 0.12367875859141347,
+            "mce": 0.5842727257145774
+          },
+          "temperature": {
+            "accuracy": 0.949999988079071,
+            "macro_f1": 0.9502143830967004,
+            "nll": 0.15149613933487438,
+            "brier": 0.07000537543200834,
+            "ece": 0.026516537666320842,
+            "mce": 0.38131289556622505
+          },
+          "wall_s": 0.72
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9730562338462243,
+          "train_loss_last": 0.29402456833766055,
+          "train_loss_curve": [
+            1.9730562338462243,
+            1.0487447060071504,
+            0.5288353195557227,
+            0.29402456833766055
+          ],
+          "trainable_params": 1930,
+          "params_with_gradient": 2,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9480000138282776,
+            "macro_f1": 0.9479789577628024,
+            "nll": 0.2701422582527858,
+            "brier": 0.10182420095640801,
+            "ece": 0.11624393889307977,
+            "mce": 0.4360380843281746
+          },
+          "temperature": {
+            "accuracy": 0.9480000138282776,
+            "macro_f1": 0.9479789577628024,
+            "nll": 0.16429212676494326,
+            "brier": 0.07414587975390009,
+            "ece": 0.019936229646205943,
+            "mce": 0.3563884496688842
+          },
+          "wall_s": 0.75
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 2.148392989085271,
+          "train_loss_last": 0.33302265176406276,
+          "train_loss_curve": [
+            2.148392989085271,
+            1.1763999278728778,
+            0.597265532383552,
+            0.33302265176406276
+          ],
+          "trainable_params": 1930,
+          "params_with_gradient": 2,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9600303771654518,
+            "nll": 0.26696802449199925,
+            "brier": 0.09423500216713472,
+            "ece": 0.13307446551322935,
+            "mce": 0.8170670568943024
+          },
+          "temperature": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9600303771654518,
+            "nll": 0.1448957480804048,
+            "brier": 0.06308991606328367,
+            "ece": 0.023789619982242622,
+            "mce": 0.7302080988883972
+          },
+          "wall_s": 0.71
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9491999983787537,
+            "std": 0.008671791683881927
+          },
+          "macro_f1": {
+            "mean": 0.9494412669181342,
+            "std": 0.008352559263073645
+          },
+          "nll": {
+            "mean": 0.27098388773156795,
+            "std": 0.012988405699170988
+          },
+          "brier": {
+            "mean": 0.09930380257399612,
+            "std": 0.006449249385874853
+          },
+          "ece": {
+            "mean": 0.12193878666758536,
+            "std": 0.006896982715351549
+          },
+          "mce": {
+            "mean": 0.49962672144174575,
+            "std": 0.20693048907684514
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9491999983787537,
+            "std": 0.008671791683881927
+          },
+          "macro_f1": {
+            "mean": 0.9494412669181342,
+            "std": 0.008352559263073645
+          },
+          "nll": {
+            "mean": 0.15600632873382286,
+            "std": 0.01727031738821509
+          },
+          "brier": {
+            "mean": 0.07172320379696874,
+            "std": 0.008955493523813075
+          },
+          "ece": {
+            "mean": 0.02085817430615427,
+            "std": 0.005296965477041864
+          },
+          "mce": {
+            "mean": 0.46662946815292033,
+            "std": 0.1510575818247859
+          }
+        }
+      },
+      "trainable_params": 1930,
+      "params_with_gradient": 2,
+      "wall_s": 3.46,
+      "per_seed_wall_s": [
+        0.67,
+        0.59,
+        0.72,
+        0.75,
+        0.71
+      ]
+    },
+    "R2": {
+      "cell": "R2",
+      "description": "B2 MLP probe, Linear(192,192)-ReLU-Linear(192,10) (== P2), same features / splits / 5 seeds",
+      "state_pathway": null,
+      "state_hidden_size": null,
+      "conditioning": null,
+      "use_question": null,
+      "init": null,
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.5069658022660475,
+          "train_loss_last": 0.07274361728475644,
+          "train_loss_curve": [
+            1.5069658022660475,
+            0.40405311492773205,
+            0.1339072218308082,
+            0.07274361728475644
+          ],
+          "trainable_params": 38986,
+          "params_with_gradient": 4,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622378851697923,
+            "nll": 0.10145717327778953,
+            "brier": 0.0467062103302024,
+            "ece": 0.022667618602514303,
+            "mce": 0.32166582345962524
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622378851697923,
+            "nll": 0.0880985193769296,
+            "brier": 0.04546469274750871,
+            "ece": 0.014414013028144811,
+            "mce": 0.6270771622657776
+          },
+          "wall_s": 0.77
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.5534153626515315,
+          "train_loss_last": 0.0669377099436063,
+          "train_loss_curve": [
+            1.5534153626515315,
+            0.40640742962176984,
+            0.1258862093091011,
+            0.0669377099436063
+          ],
+          "trainable_params": 38986,
+          "params_with_gradient": 4,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.970343129008987,
+            "nll": 0.10763488188030132,
+            "brier": 0.04710549885350922,
+            "ece": 0.03629974472522742,
+            "mce": 0.7655001133680344
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.970343129008987,
+            "nll": 0.0979451364803156,
+            "brier": 0.04528566625855823,
+            "ece": 0.020701827287673995,
+            "mce": 0.7649602591991425
+          },
+          "wall_s": 0.87
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.5526303694798396,
+          "train_loss_last": 0.06202775770081924,
+          "train_loss_curve": [
+            1.5526303694798396,
+            0.40674070899303144,
+            0.12880169399655783,
+            0.06202775770081924
+          ],
+          "trainable_params": 38986,
+          "params_with_gradient": 4,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.964303958336864,
+            "nll": 0.10781439290586149,
+            "brier": 0.048856940001199806,
+            "ece": 0.02042018395662301,
+            "mce": 0.4472077935934067
+          },
+          "temperature": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.964303958336864,
+            "nll": 0.09732506226262301,
+            "brier": 0.047801985106561196,
+            "ece": 0.01363243496418,
+            "mce": 0.4407971054315567
+          },
+          "wall_s": 0.94
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.458558045900785,
+          "train_loss_last": 0.05798203684389591,
+          "train_loss_curve": [
+            1.458558045900785,
+            0.360075810780892,
+            0.11193502235871094,
+            0.05798203684389591
+          ],
+          "trainable_params": 38986,
+          "params_with_gradient": 4,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702491096984065,
+            "nll": 0.10437237389850769,
+            "brier": 0.04571519390788795,
+            "ece": 0.02135272479057309,
+            "mce": 0.3267291784286499
+          },
+          "temperature": {
+            "accuracy": 0.9700000286102295,
+            "macro_f1": 0.9702491096984065,
+            "nll": 0.09762653794461731,
+            "brier": 0.04475159912177616,
+            "ece": 0.014260151863098173,
+            "mce": 0.5153816243012747
+          },
+          "wall_s": 0.9
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.56455037685541,
+          "train_loss_last": 0.06658101425721095,
+          "train_loss_curve": [
+            1.56455037685541,
+            0.41322918236255646,
+            0.12907659004514033,
+            0.06658101425721095
+          ],
+          "trainable_params": 38986,
+          "params_with_gradient": 4,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9643514220198997,
+            "nll": 0.10571724808242808,
+            "brier": 0.048520432046819925,
+            "ece": 0.02692986631393429,
+            "mce": 0.6209024637937546
+          },
+          "temperature": {
+            "accuracy": 0.9639999866485596,
+            "macro_f1": 0.9643514220198997,
+            "nll": 0.09590528128878544,
+            "brier": 0.04737869806541974,
+            "ece": 0.016648625373840355,
+            "mce": 0.38217973709106445
+          },
+          "wall_s": 0.88
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9660000085830689,
+            "std": 0.003741672934492183
+          },
+          "macro_f1": {
+            "mean": 0.9662971008467899,
+            "std": 0.003749140999189489
+          },
+          "nll": {
+            "mean": 0.10539921400897763,
+            "std": 0.0026232866477719128
+          },
+          "brier": {
+            "mean": 0.047380855027923864,
+            "std": 0.0013021958462610698
+          },
+          "ece": {
+            "mean": 0.025534027677774424,
+            "std": 0.006513448039817855
+          },
+          "mce": {
+            "mean": 0.49640107452869414,
+            "std": 0.19342687753691298
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9660000085830689,
+            "std": 0.003741672934492183
+          },
+          "macro_f1": {
+            "mean": 0.9662971008467899,
+            "std": 0.003749140999189489
+          },
+          "nll": {
+            "mean": 0.09538010747065419,
+            "std": 0.004144454292891874
+          },
+          "brier": {
+            "mean": 0.04613652825996481,
+            "std": 0.0013610740384433016
+          },
+          "ece": {
+            "mean": 0.015931410503387467,
+            "std": 0.0029005241998943066
+          },
+          "mce": {
+            "mean": 0.5460791776577631,
+            "std": 0.15277375633570012
+          }
+        }
+      },
+      "trainable_params": 38986,
+      "params_with_gradient": 4,
+      "wall_s": 4.37,
+      "per_seed_wall_s": [
+        0.77,
+        0.87,
+        0.94,
+        0.9,
+        0.88
+      ]
+    },
+    "V2I": {
+      "cell": "V2I",
+      "description": "V2 expressed ONLY through shipped config fields: fusion_type='identity' (the Fusion.context of jevx/representations/fusion.py:IdentityFusion returns the state unchanged) + conditioning_mode='off' + state_pathway='linear'. Confirms the V2 logits are reachable without any code change.",
+      "state_pathway": "linear",
+      "state_hidden_size": null,
+      "conditioning": false,
+      "use_question": true,
+      "init": "zero",
+      "loss": {
+        "kind": "choice_loss (shipped default)"
+      },
+      "per_seed": [
+        {
+          "seed": 0,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.8937482650463398,
+          "train_loss_last": 0.011628959202565826,
+          "train_loss_curve": [
+            1.8937482650463398,
+            0.4882114747395882,
+            0.0590364126345286,
+            0.011628959202565826
+          ],
+          "trainable_params": 2031041,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9623171505386715,
+            "nll": 0.15250369585653448,
+            "brier": 0.06371566143093958,
+            "ece": 0.024562765002250606,
+            "mce": 0.633651077747345
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9623171505386715,
+            "nll": 0.1389909252084463,
+            "brier": 0.0617375995656383,
+            "ece": 0.017893361866474125,
+            "mce": 0.608750969171524
+          },
+          "wall_s": 14.45,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 1,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9065447954031138,
+          "train_loss_last": 0.009980250149965286,
+          "train_loss_curve": [
+            1.9065447954031138,
+            0.48929197513140166,
+            0.050652335612819746,
+            0.009980250149965286
+          ],
+          "trainable_params": 2031041,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622797351300914,
+            "nll": 0.15434996092790276,
+            "brier": 0.06375140123184965,
+            "ece": 0.022528669297695182,
+            "mce": 0.2709644238154093
+          },
+          "temperature": {
+            "accuracy": 0.9620000123977661,
+            "macro_f1": 0.9622797351300914,
+            "nll": 0.1397266045020147,
+            "brier": 0.0624564008112184,
+            "ece": 0.016953436017036465,
+            "mce": 0.4524112641811371
+          },
+          "wall_s": 16.04,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 2,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.911327783878033,
+          "train_loss_last": 0.009481242562357623,
+          "train_loss_curve": [
+            1.911327783878033,
+            0.5112956578914936,
+            0.05540188631186119,
+            0.009481242562357623
+          ],
+          "trainable_params": 2031041,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9580000042915344,
+            "macro_f1": 0.9583546759519525,
+            "nll": 0.1543394726943336,
+            "brier": 0.06171113419171631,
+            "ece": 0.032067342221736975,
+            "mce": 0.7653703689575195
+          },
+          "temperature": {
+            "accuracy": 0.9580000042915344,
+            "macro_f1": 0.9583546759519525,
+            "nll": 0.13956528975978255,
+            "brier": 0.059789005487661105,
+            "ece": 0.020279045403003654,
+            "mce": 0.4663614332675934
+          },
+          "wall_s": 11.01,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 3,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.9152194903447077,
+          "train_loss_last": 0.012417593827614417,
+          "train_loss_curve": [
+            1.9152194903447077,
+            0.49112750532535404,
+            0.05124859733936878,
+            0.012417593827614417
+          ],
+          "trainable_params": 2031041,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9603203220680852,
+            "nll": 0.14199411453678804,
+            "brier": 0.06121114003594029,
+            "ece": 0.023341310322284724,
+            "mce": 0.5783078074455261
+          },
+          "temperature": {
+            "accuracy": 0.9599999785423279,
+            "macro_f1": 0.9603203220680852,
+            "nll": 0.13130526145335725,
+            "brier": 0.059473307773157395,
+            "ece": 0.016997015476226757,
+            "mce": 0.3656737605730692
+          },
+          "wall_s": 11.18,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        },
+        {
+          "seed": 4,
+          "epochs": 4,
+          "lr": 0.001,
+          "head_batch_size": 64,
+          "train_loss_first": 1.902010284937345,
+          "train_loss_last": 0.009005913367638221,
+          "train_loss_curve": [
+            1.902010284937345,
+            0.5029504024065458,
+            0.05760772683872627,
+            0.009005913367638221
+          ],
+          "trainable_params": 2031041,
+          "params_with_gradient": 8,
+          "loss": {
+            "kind": "choice_loss (shipped default)"
+          },
+          "uncalibrated": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662475439611216,
+            "nll": 0.12319244573690685,
+            "brier": 0.059758709082537796,
+            "ece": 0.030913162112236027,
+            "mce": 0.4961557090282441
+          },
+          "temperature": {
+            "accuracy": 0.9660000205039978,
+            "macro_f1": 0.9662475439611216,
+            "nll": 0.11662309572146394,
+            "brier": 0.058733632950920905,
+            "ece": 0.02256212973594665,
+            "mce": 0.5060527722040813
+          },
+          "wall_s": 9.84,
+          "config": {
+            "state_pathway": "linear",
+            "state_hidden_size": null,
+            "conditioning_mode": "off",
+            "conditioning_enabled": false,
+            "interaction_scale": 1.0,
+            "decision_hidden_size": 192
+          }
+        }
+      ],
+      "aggregate": {
+        "uncalibrated": {
+          "accuracy": {
+            "mean": 0.9616000056266785,
+            "std": 0.0029664894251521337
+          },
+          "macro_f1": {
+            "mean": 0.9619038855299845,
+            "std": 0.002927626227951183
+          },
+          "nll": {
+            "mean": 0.14527593795049315,
+            "std": 0.013371397016224345
+          },
+          "brier": {
+            "mean": 0.06202960919459673,
+            "std": 0.0017128664114069898
+          },
+          "ece": {
+            "mean": 0.026682649791240704,
+            "std": 0.0044667147316369
+          },
+          "mce": {
+            "mean": 0.5488898773988088,
+            "std": 0.18366894755342605
+          }
+        },
+        "temperature": {
+          "accuracy": {
+            "mean": 0.9616000056266785,
+            "std": 0.0029664894251521337
+          },
+          "macro_f1": {
+            "mean": 0.9619038855299845,
+            "std": 0.002927626227951183
+          },
+          "nll": {
+            "mean": 0.13324223532901297,
+            "std": 0.009937594846419416
+          },
+          "brier": {
+            "mean": 0.06043798931771922,
+            "std": 0.0015826870247088428
+          },
+          "ece": {
+            "mean": 0.01893699769973753,
+            "std": 0.0024356671594698985
+          },
+          "mce": {
+            "mean": 0.47985003987948094,
+            "std": 0.08842098793560975
+          }
+        }
+      },
+      "trainable_params": 2031041,
+      "params_with_gradient": 8,
+      "wall_s": 62.53,
+      "per_seed_wall_s": [
+        14.45,
+        16.04,
+        11.01,
+        11.18,
+        9.84
+      ]
+    }
+  },
+  "failures": {},
+  "invariants": {
+    "n_batches_checked": 65,
+    "max_prob_sum_abs_dev": 3.5762786865234375e-07,
+    "min_prob": 2.9902194054187703e-09,
+    "max_prob": 0.9999492168426514,
+    "contract": "probs finite, in [0,1], sum=1 (tol 1e-4), K = schema size"
+  },
+  "wall_s": 75.63
+}

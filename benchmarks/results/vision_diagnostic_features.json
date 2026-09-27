@@ -1,0 +1,247 @@
+{
+  "phase": "featurize",
+  "provenance": {
+    "backbone_id": "facebook/deit-tiny-patch16-224",
+    "backbone_revision_api": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_revision_loaded": "b3428f18dcc7b543470d07f14b4a4157815d1880",
+    "backbone_params": 5561472,
+    "pooling_method": "cls",
+    "pooling_rationale": "deit-tiny ships no pooler (load report: pooler.dense.{weight,bias} MISSING) so pooler_output would be a random projection; 'cls' is the token the checkpoint's own classifier consumes (MODALITY_BENCHMARKS.md 4)",
+    "feature_dim": 192,
+    "feat_batch": 32,
+    "head_batch": 64,
+    "lr": 0.001,
+    "epochs": 4,
+    "split_seed": 0,
+    "split_sizes": {
+      "train": 800,
+      "cal": 300,
+      "test": 500
+    },
+    "question": "Which category does this image belong to?",
+    "options": [
+      "tench",
+      "English springer",
+      "cassette player",
+      "chain saw",
+      "church",
+      "French horn",
+      "garbage truck",
+      "gas pump",
+      "golf ball",
+      "parachute"
+    ],
+    "dataset": {
+      "data_provenance": {
+        "dataset_id": "frgfm/imagenette",
+        "dataset_revision": "a8a496123b40fa739da2acf9b0dae339d30c7bae",
+        "config": "imagenette2-160",
+        "archive": {
+          "url": "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz",
+          "cached": true,
+          "bytes": 99003388,
+          "sha256": "64d0c4859f35a461889e0147755a999a48b49bf38a7e0f9bd27003f10db02fe5",
+          "etag": null
+        },
+        "metadata_train": {
+          "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/train.txt",
+          "bytes": 499691,
+          "sha256": "971de5a44d69360ebb362bc104887995be67e4cdefdec3d2c51762073b549967"
+        },
+        "metadata_val": {
+          "url": "https://huggingface.co/datasets/frgfm/imagenette/raw/a8a496123b40fa739da2acf9b0dae339d30c7bae/metadata/imagenette2-160/val.txt",
+          "bytes": 199182,
+          "sha256": "fb0f7c7d9eb125e0fb69d30fc3a2da29d836b080c0a3f61f9e59a09f65ce0221"
+        },
+        "archive_members_indexed": {
+          "train": 9469,
+          "val": 3925,
+          "unmatched": 0
+        }
+      },
+      "official_train_pool_n": 9469,
+      "official_val_pool_n": 3925,
+      "official_train_pool_balance": {
+        "n": 9469,
+        "counts": {
+          "0": 963,
+          "1": 955,
+          "2": 993,
+          "3": 858,
+          "4": 941,
+          "5": 956,
+          "6": 961,
+          "7": 931,
+          "8": 951,
+          "9": 960
+        },
+        "min": 858,
+        "max": 993,
+        "max_over_min": 1.1573426573426573,
+        "max_dev_from_uniform_frac": 0.09388530995881295,
+        "entropy_nats": 2.3019530150285235,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0006320779655224484,
+        "normalized_entropy_deficit": 0.0002745079725590332,
+        "chi2_vs_uniform": 11.73397402048791,
+        "chi2_df": 9
+      },
+      "official_val_pool_balance": {
+        "n": 3925,
+        "counts": {
+          "0": 387,
+          "1": 395,
+          "2": 357,
+          "3": 386,
+          "4": 409,
+          "5": 394,
+          "6": 389,
+          "7": 419,
+          "8": 399,
+          "9": 390
+        },
+        "min": 357,
+        "max": 419,
+        "max_over_min": 1.173669467787115,
+        "max_dev_from_uniform_frac": 0.09044585987261146,
+        "entropy_nats": 2.301806979810302,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0007781131837441002,
+        "normalized_entropy_deficit": 0.00033793026199623375,
+        "chi2_vs_uniform": 6.054777070063695,
+        "chi2_df": 9
+      },
+      "train_source": "stratified carve from official train split (disjoint, seed=0)",
+      "cal_source": "stratified carve from the remainder of official train (disjoint, seed=1)",
+      "test_source": "official validation split, stratified subsample (n=500, seed=0) - never fitted on",
+      "train_n": 800,
+      "train_balance": {
+        "n": 800,
+        "counts": {
+          "0": 81,
+          "1": 81,
+          "2": 84,
+          "3": 72,
+          "4": 80,
+          "5": 81,
+          "6": 81,
+          "7": 79,
+          "8": 80,
+          "9": 81
+        },
+        "min": 72,
+        "max": 84,
+        "max_over_min": 1.1666666666666667,
+        "max_dev_from_uniform_frac": 0.1,
+        "entropy_nats": 2.3018978261591174,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0006872668349284794,
+        "normalized_entropy_deficit": 0.0002984761940045516,
+        "chi2_vs_uniform": 1.075,
+        "chi2_df": 9
+      },
+      "cal_n": 300,
+      "cal_balance": {
+        "n": 300,
+        "counts": {
+          "0": 31,
+          "1": 30,
+          "2": 32,
+          "3": 27,
+          "4": 30,
+          "5": 30,
+          "6": 30,
+          "7": 30,
+          "8": 30,
+          "9": 30
+        },
+        "min": 27,
+        "max": 32,
+        "max_over_min": 1.1851851851851851,
+        "max_dev_from_uniform_frac": 0.1,
+        "entropy_nats": 2.3017951487902,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.000789944203845927,
+        "normalized_entropy_deficit": 0.0003430684087417436,
+        "chi2_vs_uniform": 0.4666666666666667,
+        "chi2_df": 9
+      },
+      "test_n": 500,
+      "test_balance": {
+        "n": 500,
+        "counts": {
+          "0": 49,
+          "1": 50,
+          "2": 46,
+          "3": 49,
+          "4": 52,
+          "5": 50,
+          "6": 50,
+          "7": 53,
+          "8": 51,
+          "9": 50
+        },
+        "min": 46,
+        "max": 53,
+        "max_over_min": 1.1521739130434783,
+        "max_dev_from_uniform_frac": 0.08,
+        "entropy_nats": 2.301940605237379,
+        "max_entropy_nats": 2.302585092994046,
+        "entropy_deficit_nats": 0.0006444877566669227,
+        "normalized_entropy_deficit": 0.0002798974763746502,
+        "chi2_vs_uniform": 0.6400000000000001,
+        "chi2_df": 9
+      }
+    },
+    "environment": {
+      "python": "3.14.3",
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+      "cpu_count": 4,
+      "torch": "2.14.0+cpu",
+      "transformers": "5.16.1",
+      "datasets": "4.4.1",
+      "numpy": "2.3.5",
+      "torch_threads": 2,
+      "cuda_available": false,
+      "dtype": "float32",
+      "script": "benchmarks/run_vision_diagnostic.py",
+      "platform_detail": "Windows-11-10.0.26100-SP0"
+    }
+  },
+  "features": {
+    "n": 1600,
+    "dim": 192,
+    "dtype": "float32",
+    "abs_mean": 1.079584002494812,
+    "finite": true,
+    "n_rows_all_finite": true
+  },
+  "cache": {
+    "path": "benchmarks\\cache\\vision_diagnostic\\deit_tiny_cls_features.npz",
+    "bytes": 1151599,
+    "sha256": "f3861d4b0124481a584183977608c665e4c99ffa58992d1f1101adfd72466e94"
+  },
+  "wall_s": {
+    "load_and_splits_s": 8.14,
+    "extract_selected_images_s": 20.67,
+    "load_backbone_s": 61.89,
+    "featurize_forward_s": 267.59,
+    "total_s": 362.34
+  },
+  "published_reference": {
+    "jevx_accuracy_mean": 0.9087,
+    "jevx_accuracy_std": 0.0257,
+    "jevx_ece_temperature": 0.0207,
+    "b1_linear_accuracy_mean": 0.9467,
+    "b1_linear_accuracy_std": 0.0046,
+    "b2_mlp_accuracy_mean": 0.9673,
+    "b2_mlp_accuracy_std": 0.0042,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "source": "reports/MODALITY_BENCHMARKS.md 4.1/4.2 (run 2026-09-25, 3 seeds)"
+  }
+}

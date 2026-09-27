@@ -1,0 +1,4563 @@
+{
+  "experiment": "jevx_next_ablation_curriculum_fixed",
+  "what_this_is": "Cells E and F re-run after the Stage-B defect was fixed in jevx/training/curriculum.py. Before the fix _CurriculumModelView.condition_options was assigned once at construction from stage_a_epochs < 1 and never updated when the stage flipped to B, so every Stage-B step still called the model with condition_options=False and the interaction residual was dropped whatever the lambda ramp wrote into the head. The old E/F numbers below are therefore state-only-for-4-epochs plus an inert ramp, and are kept here only as the superseded comparison.",
+  "fix": {
+    "file": "jevx/training/curriculum.py",
+    "mechanism": "_StageController now owns the per-call flag as well as the scale. _StageController.condition_options is a pure function of the stage (False in A, True in B); apply_stage() pushes it into the model view through _CurriculumModelView.set_condition_options(), once per epoch (begin_epoch) and again before every training step (advance). EpochRecord.condition_options records the flag the epoch ran under, read back off the view.",
+    "regression_tests": [
+      "tests/unit/test_curriculum.py::test_stage_b_calls_the_real_wrapper_with_condition_options_true",
+      "tests/unit/test_curriculum.py::test_stage_b_ramp_from_zero_still_opens_the_option_pathway",
+      "tests/unit/test_curriculum.py::test_history_records_the_stage_and_the_flag_per_epoch",
+      "tests/unit/test_curriculum.py::test_stage_b_trains_the_option_pathway_of_a_1_plus_1_curriculum"
+    ]
+  },
+  "protocol": {
+    "harness": "benchmarks/run_head_ablation.py (unchanged)",
+    "command": "python benchmarks/run_head_ablation.py --datasets synthetic ag_news sst2 ravdess --seeds 0,1,2,3,4 --cells E_curriculum F_gate_curriculum --output-dir benchmarks/results/curriculum_fixed_rerun",
+    "unchanged_vs_the_2026-09-26_matrix": [
+      "features (same frozen-backbone caches; synthetic computed)",
+      "splits, seeds, optimizer, lr, batch size, epochs, loss",
+      "stage_a_epochs=2, stage_b_epochs=2, lambda 0.0 -> 1.0 linear",
+      "cells A-D and the P1/P2/P4 references (NOT re-run, NOT edited)"
+    ],
+    "note": "The re-run wrote its payloads to a separate directory so the 2026-09-26 per-dataset files keep their A-D/P cells and their superseded E/F rows verbatim."
+  },
+  "datasets": {
+    "synthetic": {
+      "features": {
+        "kind": "synthetic_gaussian_mixture",
+        "dim": 128,
+        "classes": 4,
+        "snr_margin": 0.28,
+        "note": "Kingman-style equiangular Gaussian mixture, unit-variance features, D=128=K-free control matching the tiny BERT backbone width. No backbone / no text: any head-vs-probe gap is purely the scoring function.",
+        "source": "computed"
+      },
+      "protocol": {
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "cells": [
+          "E_curriculum",
+          "F_gate_curriculum"
+        ],
+        "epochs": 4,
+        "stage_a_epochs": 2,
+        "stage_b_epochs": 2,
+        "lr": 0.001,
+        "batch_size": 64,
+        "train_n": 3000,
+        "cal_n": 1000,
+        "test_n": 1500,
+        "feature_dim": 128,
+        "num_classes": 4,
+        "question": "Which Gaussian component generated this vector?",
+        "options": [
+          "c0",
+          "c1",
+          "c2",
+          "c3"
+        ],
+        "optimizer": "torch.optim.AdamW (HeadTrainer default), grad_clip=1.0",
+        "loss": "jevx.training.choice_loss (masked cross-entropy)",
+        "gate_split": "calibration",
+        "latency": {
+          "batch_size": 1,
+          "warmup": 20,
+          "iters": 120
+        },
+        "interaction_mode": "bilinear",
+        "lambda_on": 1.0,
+        "lambda_off": 0.0,
+        "note": "IDENTICAL features / splits / seeds / optimizer / lr / epochs / batch / loss for every cell; the backbone is frozen and featurized once, so the only thing that varies is the scoring function (+ gate / curriculum). `interaction OFF` is enforced explicitly with config.conditioning_enabled=False AND set_interaction_scale(0.0), both asserted."
+      },
+      "failures": {
+        "old": {},
+        "new": {}
+      },
+      "wall_s": {
+        "old": 462.89,
+        "new": 129.4
+      },
+      "superseded_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.9508000016212463,
+            "std": 0.002328567581218246,
+            "min": 0.9480000138282776,
+            "max": 0.9539999961853027,
+            "per_seed": [
+              0.9480000138282776,
+              0.9520000219345093,
+              0.9506666660308838,
+              0.9539999961853027,
+              0.9493333101272583
+            ]
+          },
+          "nll": {
+            "mean": 0.18726625373441502,
+            "std": 0.003780329326494549,
+            "min": 0.18307176455636034,
+            "max": 0.19116610791377003,
+            "per_seed": [
+              0.1895306375063999,
+              0.1833408378840101,
+              0.18307176455636034,
+              0.19116610791377003,
+              0.18922192081153466
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.9507450951991354,
+            "std": 0.0022423617645995608,
+            "min": 0.9481249300166732,
+            "max": 0.9538648265160266,
+            "per_seed": [
+              0.9481249300166732,
+              0.9519147253609528,
+              0.9505243428000567,
+              0.9538648265160266,
+              0.9492966513019679
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.5795343089769495,
+            "std": 0.018548837790511682,
+            "min": 0.5567518564614844,
+            "max": 0.6058965533020648,
+            "per_seed": [
+              0.5884862461305679,
+              0.5719323736080464,
+              0.6058965533020648,
+              0.5746045153825841,
+              0.5567518564614844
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.07825335172559829,
+            "std": 0.004276730306368311,
+            "min": 0.0736383717665647,
+            "max": 0.08300348511956473,
+            "per_seed": [
+              0.0736383717665647,
+              0.08093748613696625,
+              0.07985378352013674,
+              0.08300348511956473,
+              0.07383363208475899
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.9480000138282776,
+              "nll": 0.1895306375063999,
+              "macro_f1": 0.9481249300166732
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.9520000219345093,
+              "nll": 0.1833408378840101,
+              "macro_f1": 0.9519147253609528
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.9506666660308838,
+              "nll": 0.18307176455636034,
+              "macro_f1": 0.9505243428000567
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.9539999961853027,
+              "nll": 0.19116610791377003,
+              "macro_f1": 0.9538648265160266
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.9493333101272583,
+              "nll": 0.18922192081153466,
+              "macro_f1": 0.9492966513019679
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.388649803017913,
+              "fusion": 5.029848563291073,
+              "question": 19.095418235425928,
+              "state_proj": 11.942507384773261,
+              "option_pathway": 5.029848563291073,
+              "state_stack": 14.043348195747356,
+              "total": 24.23117831849039
+            },
+            "final": {
+              "state_pathway": 7.574397964236286,
+              "fusion": 5.3461278276992665,
+              "question": 19.07248470579796,
+              "state_proj": 12.088786869689148,
+              "option_pathway": 5.3461278276992665,
+              "state_stack": 14.265702664131043,
+              "total": 24.410059977484554
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.9497333407402039,
+            "std": 0.0026499429621429232,
+            "min": 0.9453333616256714,
+            "max": 0.9520000219345093,
+            "per_seed": [
+              0.9453333616256714,
+              0.9520000219345093,
+              0.9506666660308838,
+              0.9513333439826965,
+              0.9493333101272583
+            ]
+          },
+          "nll": {
+            "mean": 0.18809762189629842,
+            "std": 0.004805312628220658,
+            "min": 0.18307176455636034,
+            "max": 0.19390340485834712,
+            "per_seed": [
+              0.18888958451253968,
+              0.1833408378840101,
+              0.18307176455636034,
+              0.19390340485834712,
+              0.1912825176702348
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.9496529811864747,
+            "std": 0.0025613681772554318,
+            "min": 0.9454143413176768,
+            "max": 0.9519147253609528,
+            "per_seed": [
+              0.9454143413176768,
+              0.9519147253609528,
+              0.9505243428000567,
+              0.9511519245439795,
+              0.9492595719097076
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.5795343089769495,
+            "std": 0.018548837790511682,
+            "min": 0.5567518564614844,
+            "max": 0.6058965533020648,
+            "per_seed": [
+              0.5884862461305679,
+              0.5719323736080464,
+              0.6058965533020648,
+              0.5746045153825841,
+              0.5567518564614844
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.07825335172559829,
+            "std": 0.004276730306368311,
+            "min": 0.0736383717665647,
+            "max": 0.08300348511956473,
+            "per_seed": [
+              0.0736383717665647,
+              0.08093748613696625,
+              0.07985378352013674,
+              0.08300348511956473,
+              0.07383363208475899
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.9453333616256714,
+              "nll": 0.18888958451253968,
+              "macro_f1": 0.9454143413176768
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.9520000219345093,
+              "nll": 0.1833408378840101,
+              "macro_f1": 0.9519147253609528
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.9506666660308838,
+              "nll": 0.18307176455636034,
+              "macro_f1": 0.9505243428000567
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.9513333439826965,
+              "nll": 0.19390340485834712,
+              "macro_f1": 0.9511519245439795
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.9493333101272583,
+              "nll": 0.1912825176702348,
+              "macro_f1": 0.9492595719097076
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.388649803017913,
+              "fusion": 5.029848563291073,
+              "question": 19.095418235425928,
+              "state_proj": 11.942507384773261,
+              "option_pathway": 5.029848563291073,
+              "state_stack": 14.043348195747356,
+              "total": 24.23117831849039
+            },
+            "final": {
+              "state_pathway": 7.574397964236286,
+              "fusion": 5.3461278276992665,
+              "question": 19.07248470579796,
+              "state_proj": 12.088786869689148,
+              "option_pathway": 5.3461278276992665,
+              "state_stack": 14.265702664131043,
+              "total": 24.410059977484554
+            }
+          },
+          "gate_seed0": {
+            "decision": "state_only",
+            "delta_nll": 0.0032506271774936923,
+            "conditioned_nll": 0.2671804498467202,
+            "state_only_nll": 0.2639298226692265,
+            "applied_flag": false,
+            "tau": 0.0017060191808079138
+          },
+          "gate_decisions_all_seeds": [
+            "state_only",
+            "conditioned",
+            "conditioned",
+            "state_only",
+            "state_only"
+          ]
+        }
+      },
+      "fixed_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.95,
+            "std": 0.0024494663177500437,
+            "min": 0.9480000138282776,
+            "max": 0.9526666402816772,
+            "per_seed": [
+              0.9480000138282776,
+              0.9526666402816772,
+              0.9486666917800903,
+              0.9526666402816772,
+              0.9480000138282776
+            ]
+          },
+          "nll": {
+            "mean": 0.18408088849285592,
+            "std": 0.004574370041446897,
+            "min": 0.17853535316938848,
+            "max": 0.19116389829086905,
+            "per_seed": [
+              0.1841829171378902,
+              0.17853535316938848,
+              0.18410465936839562,
+              0.18241761449773636,
+              0.19116389829086905
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.9498900406618753,
+            "std": 0.002406096690465192,
+            "min": 0.9478355697357663,
+            "max": 0.9525405961774145,
+            "per_seed": [
+              0.947997712980054,
+              0.9525405961774145,
+              0.9486029771167149,
+              0.9524733472994272,
+              0.9478355697357663
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.5795343089769495,
+            "std": 0.018548837790511682,
+            "min": 0.5567518564614844,
+            "max": 0.6058965533020648,
+            "per_seed": [
+              0.5884862461305679,
+              0.5719323736080464,
+              0.6058965533020648,
+              0.5746045153825841,
+              0.5567518564614844
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.07895142925467262,
+            "std": 0.004971141836599706,
+            "min": 0.07267891853413683,
+            "max": 0.08403527797100709,
+            "per_seed": [
+              0.07511647493439785,
+              0.08324282458844653,
+              0.07968365024537483,
+              0.08403527797100709,
+              0.07267891853413683
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.9480000138282776,
+              "nll": 0.1841829171378902,
+              "macro_f1": 0.947997712980054
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.9526666402816772,
+              "nll": 0.17853535316938848,
+              "macro_f1": 0.9525405961774145
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.9486666917800903,
+              "nll": 0.18410465936839562,
+              "macro_f1": 0.9486029771167149
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.9526666402816772,
+              "nll": 0.18241761449773636,
+              "macro_f1": 0.9524733472994272
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.9480000138282776,
+              "nll": 0.19116389829086905,
+              "macro_f1": 0.9478355697357663
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.388649803017913,
+              "fusion": 5.029848563291073,
+              "question": 19.095418235425928,
+              "state_proj": 11.942507384773261,
+              "option_pathway": 5.029848563291073,
+              "state_stack": 14.043348195747356,
+              "total": 24.23117831849039
+            },
+            "final": {
+              "option_interaction": 11.28526173127804,
+              "state_pathway": 7.557395059111456,
+              "fusion": 6.637514210202508,
+              "schema": 18.638923442538825,
+              "question": 19.08131513034017,
+              "state_proj": 12.08394350465125,
+              "option_pathway": 22.777690715498622,
+              "state_stack": 14.25257558138477,
+              "total": 32.95535908069196
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.9505333304405212,
+            "std": 0.0023757856353293586,
+            "min": 0.9480000138282776,
+            "max": 0.9526666402816772,
+            "per_seed": [
+              0.9480000138282776,
+              0.9526666402816772,
+              0.9480000138282776,
+              0.9526666402816772,
+              0.9513333439826965
+            ]
+          },
+          "nll": {
+            "mean": 0.18324181277281554,
+            "std": 0.003792654578440367,
+            "min": 0.1778826143384898,
+            "max": 0.18804492137171674,
+            "per_seed": [
+              0.1841829171378902,
+              0.1778826143384898,
+              0.1845962798798139,
+              0.18150233113616704,
+              0.18804492137171674
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.9504277451635772,
+            "std": 0.0023091420237972417,
+            "min": 0.9479385509716073,
+            "max": 0.9525405961774145,
+            "per_seed": [
+              0.947997712980054,
+              0.9525405961774145,
+              0.9479385509716073,
+              0.9524733472994272,
+              0.9511885183893829
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.5795343089769495,
+            "std": 0.018548837790511682,
+            "min": 0.5567518564614844,
+            "max": 0.6058965533020648,
+            "per_seed": [
+              0.5884862461305679,
+              0.5719323736080464,
+              0.6058965533020648,
+              0.5746045153825841,
+              0.5567518564614844
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.07895142925467262,
+            "std": 0.004971141836599706,
+            "min": 0.07267891853413683,
+            "max": 0.08403527797100709,
+            "per_seed": [
+              0.07511647493439785,
+              0.08324282458844653,
+              0.07968365024537483,
+              0.08403527797100709,
+              0.07267891853413683
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.9480000138282776,
+              "nll": 0.1841829171378902,
+              "macro_f1": 0.947997712980054
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.9526666402816772,
+              "nll": 0.1778826143384898,
+              "macro_f1": 0.9525405961774145
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.9480000138282776,
+              "nll": 0.1845962798798139,
+              "macro_f1": 0.9479385509716073
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.9526666402816772,
+              "nll": 0.18150233113616704,
+              "macro_f1": 0.9524733472994272
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.9513333439826965,
+              "nll": 0.18804492137171674,
+              "macro_f1": 0.9511885183893829
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.388649803017913,
+              "fusion": 5.029848563291073,
+              "question": 19.095418235425928,
+              "state_proj": 11.942507384773261,
+              "option_pathway": 5.029848563291073,
+              "state_stack": 14.043348195747356,
+              "total": 24.23117831849039
+            },
+            "final": {
+              "option_interaction": 11.28526173127804,
+              "state_pathway": 7.557395059111456,
+              "fusion": 6.637514210202508,
+              "schema": 18.638923442538825,
+              "question": 19.08131513034017,
+              "state_proj": 12.08394350465125,
+              "option_pathway": 22.777690715498622,
+              "state_stack": 14.25257558138477,
+              "total": 32.95535908069196
+            }
+          },
+          "gate_seed0": {
+            "decision": "conditioned",
+            "delta_nll": -9.095340179671174e-05,
+            "conditioned_nll": 0.25554645206195914,
+            "state_only_nll": 0.25563740546375585,
+            "applied_flag": true,
+            "tau": 0.00022082303313887338
+          },
+          "gate_decisions_all_seeds": [
+            "conditioned",
+            "state_only",
+            "state_only",
+            "state_only",
+            "state_only"
+          ]
+        }
+      },
+      "untouched_references": {
+        "p1_linear": {
+          "label": "P1 Linear probe [D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.9383999943733216,
+            "std": 0.002139581636164042,
+            "min": 0.9359999895095825,
+            "max": 0.9413333535194397,
+            "per_seed": [
+              0.9366666674613953,
+              0.9386666417121887,
+              0.9393333196640015,
+              0.9359999895095825,
+              0.9413333535194397
+            ]
+          },
+          "nll": {
+            "mean": 0.32901868195325185,
+            "std": 0.008173156966206544,
+            "min": 0.321147720040297,
+            "max": 0.3392680891219158,
+            "per_seed": [
+              0.32226353048319795,
+              0.3392680891219158,
+              0.321147720040297,
+              0.3359499107917735,
+              0.3264641593290751
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "p2_mlp": {
+          "label": "P2 MLP probe [D->D]->ReLU->[D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.9615999937057496,
+            "std": 0.0022410224561657623,
+            "min": 0.9593333601951599,
+            "max": 0.9639999866485596,
+            "per_seed": [
+              0.9606666564941406,
+              0.9599999785423279,
+              0.9639999866485596,
+              0.9593333601951599,
+              0.9639999866485596
+            ]
+          },
+          "nll": {
+            "mean": 0.1229707026803692,
+            "std": 0.003091522158494912,
+            "min": 0.12028180989414086,
+            "max": 0.1279157926138439,
+            "per_seed": [
+              0.12061520796416142,
+              0.12372487002322616,
+              0.12231583290647371,
+              0.1279157926138439,
+              0.12028180989414086
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "p4_state_only_bypass": {
+          "label": "P4 JevX with the question/schema pathway bypassed (fixed basis)",
+          "accuracy": {
+            "mean": 0.9522666573524475,
+            "std": 0.0035150392593743186,
+            "min": 0.9473333358764648,
+            "max": 0.9559999704360962,
+            "per_seed": [
+              0.949999988079071,
+              0.9559999704360962,
+              0.9539999961853027,
+              0.9539999961853027,
+              0.9473333358764648
+            ]
+          },
+          "nll": {
+            "mean": 0.18893580170331944,
+            "std": 0.00992112006454086,
+            "min": 0.1754108439722119,
+            "max": 0.2012038534885553,
+            "per_seed": [
+              0.18530178709058373,
+              0.18719089786086798,
+              0.1754108439722119,
+              0.1955716261043783,
+              0.2012038534885553
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "A_linear_interact": {
+          "label": "A JevX: linear state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.9445333480834961,
+            "std": 0.0031055615715537403,
+            "min": 0.9399999976158142,
+            "max": 0.9486666917800903,
+            "per_seed": [
+              0.9486666917800903,
+              0.9446666836738586,
+              0.9453333616256714,
+              0.9399999976158142,
+              0.9440000057220459
+            ]
+          },
+          "nll": {
+            "mean": 0.18405289912605766,
+            "std": 0.014249744290873579,
+            "min": 0.16042850147179813,
+            "max": 0.19663299508487708,
+            "per_seed": [
+              0.16042850147179813,
+              0.1845701697816347,
+              0.19379821731752703,
+              0.19663299508487708,
+              0.18483461197445133
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "B_mlp_no_interact": {
+          "label": "B JevX: MLP state path + option interaction OFF",
+          "accuracy": {
+            "mean": 0.9505333423614502,
+            "std": 0.003476904519372087,
+            "min": 0.9453333616256714,
+            "max": 0.9546666741371155,
+            "per_seed": [
+              0.9453333616256714,
+              0.9520000219345093,
+              0.9546666741371155,
+              0.9513333439826965,
+              0.9493333101272583
+            ]
+          },
+          "nll": {
+            "mean": 0.18598689839744348,
+            "std": 0.0077322596695381645,
+            "min": 0.17464068468706295,
+            "max": 0.19355703187350873,
+            "per_seed": [
+              0.18870724044272277,
+              0.18176343506955686,
+              0.17464068468706295,
+              0.19355703187350873,
+              0.19126609991436605
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "C_mlp_interact": {
+          "label": "C JevX: MLP state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.9453333377838135,
+            "std": 0.00707106528307843,
+            "min": 0.9333333373069763,
+            "max": 0.9513333439826965,
+            "per_seed": [
+              0.9493333101272583,
+              0.9473333358764648,
+              0.9513333439826965,
+              0.9333333373069763,
+              0.9453333616256714
+            ]
+          },
+          "nll": {
+            "mean": 0.1799002027781378,
+            "std": 0.02153568511601144,
+            "min": 0.1605803520627118,
+            "max": 0.2157623607283725,
+            "per_seed": [
+              0.1605803520627118,
+              0.17506703062287085,
+              0.18125259208269914,
+              0.2157623607283725,
+              0.16683867839403474
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        },
+        "D_gate": {
+          "label": "D JevX: MLP state path + interaction + adaptive gate (cal-only)",
+          "accuracy": {
+            "mean": 0.9453333377838135,
+            "std": 0.00707106528307843,
+            "min": 0.9333333373069763,
+            "max": 0.9513333439826965,
+            "per_seed": [
+              0.9493333101272583,
+              0.9473333358764648,
+              0.9513333439826965,
+              0.9333333373069763,
+              0.9453333616256714
+            ]
+          },
+          "nll": {
+            "mean": 0.1799002027781378,
+            "std": 0.02153568511601144,
+            "min": 0.1605803520627118,
+            "max": 0.2157623607283725,
+            "per_seed": [
+              0.1605803520627118,
+              0.17506703062287085,
+              0.18125259208269914,
+              0.2157623607283725,
+              0.16683867839403474
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_synthetic.json (2026-09-26, not re-run)"
+        }
+      },
+      "comparisons": {
+        "E_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.004666662216186524,
+            "per_seed_delta": [
+              -0.0013332962989807129,
+              0.005333304405212402,
+              -0.002666652202606201,
+              0.019333302974700928,
+              0.002666652202606201
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": 0.0041806857147181405,
+            "per_seed_delta": [
+              0.02360256507517841,
+              0.0034683225465176326,
+              0.00285206728569648,
+              -0.03334474623063613,
+              0.02432521989683431
+            ],
+            "seeds_favouring_left": 4,
+            "seeds_favouring_right": 1,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -0.0005333423614501953,
+            "per_seed_delta": [
+              0.002666652202606201,
+              0.0006666183471679688,
+              -0.0059999823570251465,
+              0.0013332962989807129,
+              -0.0013332962989807129
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.00190600990458753,
+            "per_seed_delta": [
+              -0.004524323304832573,
+              -0.003228081900168378,
+              0.00946397468133267,
+              -0.01113941737577237,
+              -0.00010220162349700024
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 4,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "F_gate_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.005199992656707763,
+            "per_seed_delta": [
+              -0.0013332962989807129,
+              0.005333304405212402,
+              -0.0033333301544189453,
+              0.019333302974700928,
+              0.0059999823570251465
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": 0.00334160999467773,
+            "per_seed_delta": [
+              0.02360256507517841,
+              0.0028155837156189356,
+              0.003343687797114747,
+              -0.03426002959220545,
+              0.021206242977682005
+            ],
+            "seeds_favouring_left": 4,
+            "seeds_favouring_right": 1,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -1.1920928955078126e-08,
+            "per_seed_delta": [
+              0.002666652202606201,
+              0.0006666183471679688,
+              -0.006666660308837891,
+              0.0013332962989807129,
+              0.0020000338554382324
+            ],
+            "seeds_favouring_left": 4,
+            "seeds_favouring_right": 1,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.002745085624627941,
+            "per_seed_delta": [
+              -0.004524323304832573,
+              -0.003880820731067075,
+              0.009955595192750938,
+              -0.01205470073734169,
+              -0.0032211785426493056
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 4,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "E_vs_F_accuracy": {
+          "mean_delta": -0.0005333304405212402,
+          "per_seed_delta": [
+            0.0,
+            0.0,
+            0.0006666779518127441,
+            0.0,
+            -0.0033333301544189453
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 1,
+          "seeds_tied": 3
+        },
+        "E_old_vs_E_new_accuracy": {
+          "mean_delta": -0.0008000016212463378,
+          "per_seed_delta": [
+            0.0,
+            0.0006666183471679688,
+            -0.001999974250793457,
+            -0.0013333559036254883,
+            -0.0013332962989807129
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 3,
+          "seeds_tied": 1
+        },
+        "F_old_vs_F_new_accuracy": {
+          "mean_delta": 0.0007999897003173828,
+          "per_seed_delta": [
+            0.002666652202606201,
+            0.0006666183471679688,
+            -0.002666652202606201,
+            0.0013332962989807129,
+            0.0020000338554382324
+          ],
+          "seeds_favouring_left": 4,
+          "seeds_favouring_right": 1,
+          "seeds_tied": 0
+        },
+        "C_minus_B_accuracy": {
+          "mean_delta": -0.005200004577636719,
+          "per_seed_delta": [
+            0.003999948501586914,
+            -0.004666686058044434,
+            -0.0033333301544189453,
+            -0.018000006675720215,
+            -0.003999948501586914
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 4,
+          "seeds_tied": 0
+        }
+      }
+    },
+    "ag_news": {
+      "features": {
+        "kind": "text",
+        "dataset_id": "fancyzhx/ag_news",
+        "dataset_revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+        "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+        "pooling": "cls",
+        "fusion": "concat",
+        "max_length": 128,
+        "feature_dim": 128,
+        "source_protocol": "benchmarks/run_exp7.py (EXP-7)",
+        "split_seed": 0,
+        "source": "cache"
+      },
+      "protocol": {
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "cells": [
+          "E_curriculum",
+          "F_gate_curriculum"
+        ],
+        "epochs": 4,
+        "stage_a_epochs": 2,
+        "stage_b_epochs": 2,
+        "lr": 0.001,
+        "batch_size": 64,
+        "train_n": 3000,
+        "cal_n": 1000,
+        "test_n": 1500,
+        "feature_dim": 128,
+        "num_classes": 4,
+        "question": "What is the topic of this news article?",
+        "options": [
+          "World",
+          "Sports",
+          "Business",
+          "Sci/Tech"
+        ],
+        "optimizer": "torch.optim.AdamW (HeadTrainer default), grad_clip=1.0",
+        "loss": "jevx.training.choice_loss (masked cross-entropy)",
+        "gate_split": "calibration",
+        "latency": {
+          "batch_size": 1,
+          "warmup": 20,
+          "iters": 120
+        },
+        "interaction_mode": "bilinear",
+        "lambda_on": 1.0,
+        "lambda_off": 0.0,
+        "note": "IDENTICAL features / splits / seeds / optimizer / lr / epochs / batch / loss for every cell; the backbone is frozen and featurized once, so the only thing that varies is the scoring function (+ gate / curriculum). `interaction OFF` is enforced explicitly with config.conditioning_enabled=False AND set_interaction_scale(0.0), both asserted."
+      },
+      "failures": {
+        "old": {},
+        "new": {}
+      },
+      "wall_s": {
+        "old": 470.01,
+        "new": 130.4
+      },
+      "superseded_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.8321333408355713,
+            "std": 0.006243211570851287,
+            "min": 0.8246666789054871,
+            "max": 0.8399999737739563,
+            "per_seed": [
+              0.8246666789054871,
+              0.8273333311080933,
+              0.8360000252723694,
+              0.8326666951179504,
+              0.8399999737739563
+            ]
+          },
+          "nll": {
+            "mean": 0.49223482871579344,
+            "std": 0.02693625129034447,
+            "min": 0.46182993979851655,
+            "max": 0.5279673057224381,
+            "per_seed": [
+              0.5279673057224381,
+              0.5078054466720391,
+              0.47082744800663967,
+              0.49274400337933383,
+              0.46182993979851655
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.8294147506290324,
+            "std": 0.005671402754194934,
+            "min": 0.8226326663680512,
+            "max": 0.837171032723776,
+            "per_seed": [
+              0.8226326663680512,
+              0.8260015395013358,
+              0.8326189807855399,
+              0.828649533766459,
+              0.837171032723776
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.7431611553151557,
+            "std": 0.008855675314843846,
+            "min": 0.7317193245634119,
+            "max": 0.7499403306778442,
+            "per_seed": [
+              0.7499368222469979,
+              0.7499403306778442,
+              0.7487633716552815,
+              0.7317193245634119,
+              0.7354459274322429
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.3724838913755214,
+            "std": 0.00630926644607215,
+            "min": 0.36579116196074385,
+            "max": 0.3808248819822961,
+            "per_seed": [
+              0.3750137639172534,
+              0.3742505971421587,
+              0.36579116196074385,
+              0.3808248819822961,
+              0.366539051875155
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.8246666789054871,
+              "nll": 0.5279673057224381,
+              "macro_f1": 0.8226326663680512
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.8273333311080933,
+              "nll": 0.5078054466720391,
+              "macro_f1": 0.8260015395013358
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.8360000252723694,
+              "nll": 0.47082744800663967,
+              "macro_f1": 0.8326189807855399
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.8326666951179504,
+              "nll": 0.49274400337933383,
+              "macro_f1": 0.828649533766459
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.8399999737739563,
+              "nll": 0.46182993979851655,
+              "macro_f1": 0.837171032723776
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.098454329672667,
+              "fusion": 4.679999012512481,
+              "question": 19.153318611280458,
+              "state_proj": 11.883931767730854,
+              "option_pathway": 4.679999012512481,
+              "state_stack": 13.842539078165219,
+              "total": 24.09082590350259
+            },
+            "final": {
+              "state_pathway": 7.188509715904362,
+              "fusion": 4.89836164495244,
+              "question": 19.14511146810149,
+              "state_proj": 12.01826935162703,
+              "option_pathway": 4.89836164495244,
+              "state_stack": 14.004051918780828,
+              "total": 24.220708290111613
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.8332000136375427,
+            "std": 0.008129508782106236,
+            "min": 0.8206666707992554,
+            "max": 0.8426666855812073,
+            "per_seed": [
+              0.8206666707992554,
+              0.8326666951179504,
+              0.8373333215713501,
+              0.8326666951179504,
+              0.8426666855812073
+            ]
+          },
+          "nll": {
+            "mean": 0.48661512858721745,
+            "std": 0.024000529214086224,
+            "min": 0.4596092141302829,
+            "max": 0.5190362145597716,
+            "per_seed": [
+              0.5190362145597716,
+              0.49532515933006593,
+              0.4663610515366331,
+              0.49274400337933383,
+              0.4596092141302829
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.8305759839740041,
+            "std": 0.007653223925997416,
+            "min": 0.8190548093493571,
+            "max": 0.8396543603212918,
+            "per_seed": [
+              0.8190548093493571,
+              0.8310464630289549,
+              0.8344747534039573,
+              0.828649533766459,
+              0.8396543603212918
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.7431611553151557,
+            "std": 0.008855675314843846,
+            "min": 0.7317193245634119,
+            "max": 0.7499403306778442,
+            "per_seed": [
+              0.7499368222469979,
+              0.7499403306778442,
+              0.7487633716552815,
+              0.7317193245634119,
+              0.7354459274322429
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.3724838913755214,
+            "std": 0.00630926644607215,
+            "min": 0.36579116196074385,
+            "max": 0.3808248819822961,
+            "per_seed": [
+              0.3750137639172534,
+              0.3742505971421587,
+              0.36579116196074385,
+              0.3808248819822961,
+              0.366539051875155
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.8206666707992554,
+              "nll": 0.5190362145597716,
+              "macro_f1": 0.8190548093493571
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.8326666951179504,
+              "nll": 0.49532515933006593,
+              "macro_f1": 0.8310464630289549
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.8373333215713501,
+              "nll": 0.4663610515366331,
+              "macro_f1": 0.8344747534039573
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.8326666951179504,
+              "nll": 0.49274400337933383,
+              "macro_f1": 0.828649533766459
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.8426666855812073,
+              "nll": 0.4596092141302829,
+              "macro_f1": 0.8396543603212918
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.098454329672667,
+              "fusion": 4.679999012512481,
+              "question": 19.153318611280458,
+              "state_proj": 11.883931767730854,
+              "option_pathway": 4.679999012512481,
+              "state_stack": 13.842539078165219,
+              "total": 24.09082590350259
+            },
+            "final": {
+              "state_pathway": 7.188509715904362,
+              "fusion": 4.89836164495244,
+              "question": 19.14511146810149,
+              "state_proj": 12.01826935162703,
+              "option_pathway": 4.89836164495244,
+              "state_stack": 14.004051918780828,
+              "total": 24.220708290111613
+            }
+          },
+          "gate_seed0": {
+            "decision": "state_only",
+            "delta_nll": 0.01848908875952482,
+            "conditioned_nll": 0.5312739369228948,
+            "state_only_nll": 0.51278484816337,
+            "applied_flag": false,
+            "tau": 0.007203114797879327
+          },
+          "gate_decisions_all_seeds": [
+            "state_only",
+            "state_only",
+            "state_only",
+            "conditioned",
+            "state_only"
+          ]
+        }
+      },
+      "fixed_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.8315999865531921,
+            "std": 0.008036023598070817,
+            "min": 0.8193333148956299,
+            "max": 0.8399999737739563,
+            "per_seed": [
+              0.8193333148956299,
+              0.8333333134651184,
+              0.8366666436195374,
+              0.8286666870117188,
+              0.8399999737739563
+            ]
+          },
+          "nll": {
+            "mean": 0.4856791454833,
+            "std": 0.023736294739564765,
+            "min": 0.4578343059967652,
+            "max": 0.5165583992248017,
+            "per_seed": [
+              0.5165583992248017,
+              0.5003740464711178,
+              0.46810590216558945,
+              0.4855230735582257,
+              0.4578343059967652
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.829047295487985,
+            "std": 0.007743730547681255,
+            "min": 0.8172119589321412,
+            "max": 0.8369147022382271,
+            "per_seed": [
+              0.8172119589321412,
+              0.8317174750553673,
+              0.8335638723829595,
+              0.8258284688312301,
+              0.8369147022382271
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.7431611553151557,
+            "std": 0.008855675314843846,
+            "min": 0.7317193245634119,
+            "max": 0.7499403306778442,
+            "per_seed": [
+              0.7499368222469979,
+              0.7499403306778442,
+              0.7487633716552815,
+              0.7317193245634119,
+              0.7354459274322429
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.37116135828038477,
+            "std": 0.0036557195496415723,
+            "min": 0.36627538026647366,
+            "max": 0.3758804221102532,
+            "per_seed": [
+              0.3758804221102532,
+              0.3716558363843471,
+              0.36627538026647366,
+              0.372870627235859,
+              0.36912452540499097
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.8193333148956299,
+              "nll": 0.5165583992248017,
+              "macro_f1": 0.8172119589321412
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.8333333134651184,
+              "nll": 0.5003740464711178,
+              "macro_f1": 0.8317174750553673
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.8366666436195374,
+              "nll": 0.46810590216558945,
+              "macro_f1": 0.8335638723829595
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.8286666870117188,
+              "nll": 0.4855230735582257,
+              "macro_f1": 0.8258284688312301
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.8399999737739563,
+              "nll": 0.4578343059967652,
+              "macro_f1": 0.8369147022382271
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.098454329672667,
+              "fusion": 4.679999012512481,
+              "question": 19.153318611280458,
+              "state_proj": 11.883931767730854,
+              "option_pathway": 4.679999012512481,
+              "state_stack": 13.842539078165219,
+              "total": 24.09082590350259
+            },
+            "final": {
+              "option_interaction": 11.29459028509121,
+              "state_pathway": 7.19118042111118,
+              "fusion": 6.193158947718546,
+              "schema": 18.628721674313375,
+              "question": 19.148242812753775,
+              "state_proj": 12.022228330144237,
+              "option_pathway": 22.648449365879685,
+              "state_stack": 14.008820431110374,
+              "total": 32.800221209102965
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.8318666577339172,
+            "std": 0.00818399125193067,
+            "min": 0.8193333148956299,
+            "max": 0.8399999737739563,
+            "per_seed": [
+              0.8193333148956299,
+              0.8339999914169312,
+              0.8373333215713501,
+              0.8286666870117188,
+              0.8399999737739563
+            ]
+          },
+          "nll": {
+            "mean": 0.48486201670788676,
+            "std": 0.02364973787647698,
+            "min": 0.4578343059967652,
+            "max": 0.5165583992248017,
+            "per_seed": [
+              0.5165583992248017,
+              0.49959737746256866,
+              0.46820681773240086,
+              0.48211318312289725,
+              0.4578343059967652
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.8293182052529577,
+            "std": 0.007890890436226712,
+            "min": 0.8172119589321412,
+            "max": 0.8369147022382271,
+            "per_seed": [
+              0.8172119589321412,
+              0.8323828163015587,
+              0.8341856862088366,
+              0.8258958625840254,
+              0.8369147022382271
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.7431611553151557,
+            "std": 0.008855675314843846,
+            "min": 0.7317193245634119,
+            "max": 0.7499403306778442,
+            "per_seed": [
+              0.7499368222469979,
+              0.7499403306778442,
+              0.7487633716552815,
+              0.7317193245634119,
+              0.7354459274322429
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.37116135828038477,
+            "std": 0.0036557195496415723,
+            "min": 0.36627538026647366,
+            "max": 0.3758804221102532,
+            "per_seed": [
+              0.3758804221102532,
+              0.3716558363843471,
+              0.36627538026647366,
+              0.372870627235859,
+              0.36912452540499097
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.8193333148956299,
+              "nll": 0.5165583992248017,
+              "macro_f1": 0.8172119589321412
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.8339999914169312,
+              "nll": 0.49959737746256866,
+              "macro_f1": 0.8323828163015587
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.8373333215713501,
+              "nll": 0.46820681773240086,
+              "macro_f1": 0.8341856862088366
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.8286666870117188,
+              "nll": 0.48211318312289725,
+              "macro_f1": 0.8258958625840254
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.8399999737739563,
+              "nll": 0.4578343059967652,
+              "macro_f1": 0.8369147022382271
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 7.098454329672667,
+              "fusion": 4.679999012512481,
+              "question": 19.153318611280458,
+              "state_proj": 11.883931767730854,
+              "option_pathway": 4.679999012512481,
+              "state_stack": 13.842539078165219,
+              "total": 24.09082590350259
+            },
+            "final": {
+              "option_interaction": 11.29459028509121,
+              "state_pathway": 7.19118042111118,
+              "fusion": 6.193158947718546,
+              "schema": 18.628721674313375,
+              "question": 19.148242812753775,
+              "state_proj": 12.022228330144237,
+              "option_pathway": 22.648449365879685,
+              "state_stack": 14.008820431110374,
+              "total": 32.800221209102965
+            }
+          },
+          "gate_seed0": {
+            "decision": "conditioned",
+            "delta_nll": -0.0002900203889002473,
+            "conditioned_nll": 0.5142581519352971,
+            "state_only_nll": 0.5145481723241974,
+            "applied_flag": true,
+            "tau": 0.00021555479378061856
+          },
+          "gate_decisions_all_seeds": [
+            "conditioned",
+            "state_only",
+            "state_only",
+            "state_only",
+            "conditioned"
+          ]
+        }
+      },
+      "untouched_references": {
+        "p1_linear": {
+          "label": "P1 Linear probe [D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.8254666686058044,
+            "std": 0.0033132792854349545,
+            "min": 0.8199999928474426,
+            "max": 0.8286666870117188,
+            "per_seed": [
+              0.8273333311080933,
+              0.8259999752044678,
+              0.8253333568572998,
+              0.8286666870117188,
+              0.8199999928474426
+            ]
+          },
+          "nll": {
+            "mean": 0.50000563191826,
+            "std": 0.00302598564686152,
+            "min": 0.49510236826737536,
+            "max": 0.5029976470479985,
+            "per_seed": [
+              0.5018296296891805,
+              0.5029976470479985,
+              0.4996610348324392,
+              0.5004374797543059,
+              0.49510236826737536
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "p2_mlp": {
+          "label": "P2 MLP probe [D->D]->ReLU->[D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.836133337020874,
+            "std": 0.0031055372605338382,
+            "min": 0.8320000171661377,
+            "max": 0.840666651725769,
+            "per_seed": [
+              0.8360000252723694,
+              0.8353333473205566,
+              0.840666651725769,
+              0.8366666436195374,
+              0.8320000171661377
+            ]
+          },
+          "nll": {
+            "mean": 0.4608434162064913,
+            "std": 0.0030371803929318667,
+            "min": 0.4578726291358233,
+            "max": 0.46439562521479705,
+            "per_seed": [
+              0.46350007830683854,
+              0.46439562521479705,
+              0.4578726291358233,
+              0.4579686579247718,
+              0.46048009045022553
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "p4_state_only_bypass": {
+          "label": "P4 JevX with the question/schema pathway bypassed (fixed basis)",
+          "accuracy": {
+            "mean": 0.8315999865531921,
+            "std": 0.014851861532519234,
+            "min": 0.8053333163261414,
+            "max": 0.840666651725769,
+            "per_seed": [
+              0.8053333163261414,
+              0.840666651725769,
+              0.8399999737739563,
+              0.8353333473205566,
+              0.8366666436195374
+            ]
+          },
+          "nll": {
+            "mean": 0.47935817335314146,
+            "std": 0.026344836046667274,
+            "min": 0.4579124599032496,
+            "max": 0.5235738974738036,
+            "per_seed": [
+              0.5235738974738036,
+              0.4711258030728001,
+              0.4579124599032496,
+              0.4817797929291752,
+              0.4623989133866787
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "A_linear_interact": {
+          "label": "A JevX: linear state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.8326666831970215,
+            "std": 0.010821786478200661,
+            "min": 0.8146666884422302,
+            "max": 0.8420000076293945,
+            "per_seed": [
+              0.8146666884422302,
+              0.831333339214325,
+              0.8393333554267883,
+              0.8420000076293945,
+              0.8360000252723694
+            ]
+          },
+          "nll": {
+            "mean": 0.4912516071999093,
+            "std": 0.02280264105266941,
+            "min": 0.46879807079580244,
+            "max": 0.5192721515629366,
+            "per_seed": [
+              0.5192721515629366,
+              0.5120814385972428,
+              0.46879807079580244,
+              0.48008433404718776,
+              0.4760220409963771
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "B_mlp_no_interact": {
+          "label": "B JevX: MLP state path + option interaction OFF",
+          "accuracy": {
+            "mean": 0.8328000068664551,
+            "std": 0.00821110636092242,
+            "min": 0.8206666707992554,
+            "max": 0.8426666855812073,
+            "per_seed": [
+              0.8206666707992554,
+              0.8326666951179504,
+              0.8373333215713501,
+              0.8306666612625122,
+              0.8426666855812073
+            ]
+          },
+          "nll": {
+            "mean": 0.48567186274670615,
+            "std": 0.023829781081025996,
+            "min": 0.45962916543195614,
+            "max": 0.5191059251842242,
+            "per_seed": [
+              0.5191059251842242,
+              0.49546607526425623,
+              0.46631393080812267,
+              0.4878442170449716,
+              0.45962916543195614
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "C_mlp_interact": {
+          "label": "C JevX: MLP state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.831333327293396,
+            "std": 0.012292735231163294,
+            "min": 0.8119999766349792,
+            "max": 0.8426666855812073,
+            "per_seed": [
+              0.8119999766349792,
+              0.8273333311080933,
+              0.8399999737739563,
+              0.8426666855812073,
+              0.8346666693687439
+            ]
+          },
+          "nll": {
+            "mean": 0.4975232876680874,
+            "std": 0.024165434842732526,
+            "min": 0.4715533919933731,
+            "max": 0.5371087108638599,
+            "per_seed": [
+              0.5371087108638599,
+              0.4941928508463519,
+              0.4715533919933731,
+              0.4884789223046866,
+              0.49628256233216517
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        },
+        "D_gate": {
+          "label": "D JevX: MLP state path + interaction + adaptive gate (cal-only)",
+          "accuracy": {
+            "mean": 0.831333327293396,
+            "std": 0.012292735231163294,
+            "min": 0.8119999766349792,
+            "max": 0.8426666855812073,
+            "per_seed": [
+              0.8119999766349792,
+              0.8273333311080933,
+              0.8399999737739563,
+              0.8426666855812073,
+              0.8346666693687439
+            ]
+          },
+          "nll": {
+            "mean": 0.4975232876680874,
+            "std": 0.024165434842732526,
+            "min": 0.4715533919933731,
+            "max": 0.5371087108638599,
+            "per_seed": [
+              0.5371087108638599,
+              0.4941928508463519,
+              0.4715533919933731,
+              0.4884789223046866,
+              0.49628256233216517
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ag_news.json (2026-09-26, not re-run)"
+        }
+      },
+      "comparisons": {
+        "E_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.0002666592597961426,
+            "per_seed_delta": [
+              0.007333338260650635,
+              0.0059999823570251465,
+              -0.0033333301544189453,
+              -0.013999998569488525,
+              0.005333304405212402
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.011844142184787344,
+            "per_seed_delta": [
+              -0.020550311639058183,
+              0.006181195624765934,
+              -0.003447489827783645,
+              -0.0029558487464608763,
+              -0.038448256335399944
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 4,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -0.0012000203132629395,
+            "per_seed_delta": [
+              -0.0013333559036254883,
+              0.0006666183471679688,
+              -0.0006666779518127441,
+              -0.001999974250793457,
+              -0.0026667118072509766
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 4,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": 7.282736593827721e-06,
+            "per_seed_delta": [
+              -0.0025475259594224253,
+              0.004907971206861594,
+              0.0017919713574667817,
+              -0.0023211434867458913,
+              -0.0017948594351909208
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "F_gate_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.0005333304405212402,
+            "per_seed_delta": [
+              0.007333338260650635,
+              0.006666660308837891,
+              -0.002666652202606201,
+              -0.013999998569488525,
+              0.005333304405212402
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.012661270960200588,
+            "per_seed_delta": [
+              -0.020550311639058183,
+              0.005404526616216765,
+              -0.003346574260972235,
+              -0.006365739181789343,
+              -0.038448256335399944
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 4,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -0.0009333491325378418,
+            "per_seed_delta": [
+              -0.0013333559036254883,
+              0.0013332962989807129,
+              0.0,
+              -0.001999974250793457,
+              -0.0026667118072509766
+            ],
+            "seeds_favouring_left": 1,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 1
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.0008098460388194173,
+            "per_seed_delta": [
+              -0.0025475259594224253,
+              0.004131302198312425,
+              0.001892886924278192,
+              -0.005731033922074358,
+              -0.0017948594351909208
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "E_vs_F_accuracy": {
+          "mean_delta": -0.00026667118072509766,
+          "per_seed_delta": [
+            0.0,
+            -0.0006666779518127441,
+            -0.0006666779518127441,
+            0.0,
+            0.0
+          ],
+          "seeds_favouring_left": 0,
+          "seeds_favouring_right": 2,
+          "seeds_tied": 3
+        },
+        "E_old_vs_E_new_accuracy": {
+          "mean_delta": -0.0005333542823791504,
+          "per_seed_delta": [
+            -0.005333364009857178,
+            0.0059999823570251465,
+            0.0006666183471679688,
+            -0.0040000081062316895,
+            0.0
+          ],
+          "seeds_favouring_left": 2,
+          "seeds_favouring_right": 2,
+          "seeds_tied": 1
+        },
+        "F_old_vs_F_new_accuracy": {
+          "mean_delta": -0.0013333559036254883,
+          "per_seed_delta": [
+            -0.0013333559036254883,
+            0.0013332962989807129,
+            0.0,
+            -0.0040000081062316895,
+            -0.0026667118072509766
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 3,
+          "seeds_tied": 1
+        },
+        "C_minus_B_accuracy": {
+          "mean_delta": -0.001466679573059082,
+          "per_seed_delta": [
+            -0.008666694164276123,
+            -0.005333364009857178,
+            0.002666652202606201,
+            0.012000024318695068,
+            -0.008000016212463379
+          ],
+          "seeds_favouring_left": 2,
+          "seeds_favouring_right": 3,
+          "seeds_tied": 0
+        }
+      }
+    },
+    "sst2": {
+      "features": {
+        "kind": "text",
+        "dataset_id": "stanfordnlp/sst2",
+        "dataset_revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+        "backbone_id": "google/bert_uncased_L-2_H-128_A-2",
+        "pooling": "cls",
+        "fusion": "concat",
+        "max_length": 128,
+        "feature_dim": 128,
+        "source_protocol": "benchmarks/run_quality.py (EXP-1 / EXP-2)",
+        "split_seed": 0,
+        "source": "cache"
+      },
+      "protocol": {
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "cells": [
+          "E_curriculum",
+          "F_gate_curriculum"
+        ],
+        "epochs": 4,
+        "stage_a_epochs": 2,
+        "stage_b_epochs": 2,
+        "lr": 0.001,
+        "batch_size": 64,
+        "train_n": 3000,
+        "cal_n": 1000,
+        "test_n": 872,
+        "feature_dim": 128,
+        "num_classes": 2,
+        "question": "Is the sentiment of this review positive or negative?",
+        "options": [
+          "negative",
+          "positive"
+        ],
+        "optimizer": "torch.optim.AdamW (HeadTrainer default), grad_clip=1.0",
+        "loss": "jevx.training.choice_loss (masked cross-entropy)",
+        "gate_split": "calibration",
+        "latency": {
+          "batch_size": 1,
+          "warmup": 20,
+          "iters": 120
+        },
+        "interaction_mode": "bilinear",
+        "lambda_on": 1.0,
+        "lambda_off": 0.0,
+        "note": "IDENTICAL features / splits / seeds / optimizer / lr / epochs / batch / loss for every cell; the backbone is frozen and featurized once, so the only thing that varies is the scoring function (+ gate / curriculum). `interaction OFF` is enforced explicitly with config.conditioning_enabled=False AND set_interaction_scale(0.0), both asserted."
+      },
+      "failures": {
+        "old": {},
+        "new": {}
+      },
+      "wall_s": {
+        "old": 426.41,
+        "new": 126.87
+      },
+      "superseded_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.7006880760192871,
+            "std": 0.013520446349294264,
+            "min": 0.6857798099517822,
+            "max": 0.7190366983413696,
+            "per_seed": [
+              0.7190366983413696,
+              0.6995412707328796,
+              0.7087156176567078,
+              0.6903669834136963,
+              0.6857798099517822
+            ]
+          },
+          "nll": {
+            "mean": 0.5825075213870703,
+            "std": 0.012237617186146832,
+            "min": 0.5676933410424496,
+            "max": 0.5954658826595944,
+            "per_seed": [
+              0.5676933410424496,
+              0.5806181288413843,
+              0.5743532901522117,
+              0.5954658826595944,
+              0.5944069642397113
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.6978127999858422,
+            "std": 0.017372525341492397,
+            "min": 0.6733653777799651,
+            "max": 0.7184735584683928,
+            "per_seed": [
+              0.7184735584683928,
+              0.6995270586626123,
+              0.7082720869093342,
+              0.6894259181089066,
+              0.6733653777799651
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.608399894262882,
+            "std": 0.008864413532428424,
+            "min": 0.5988525596070797,
+            "max": 0.6227331104430747,
+            "per_seed": [
+              0.6053807316942418,
+              0.6056400176058424,
+              0.6093930519641714,
+              0.6227331104430747,
+              0.5988525596070797
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.5232173068726317,
+            "std": 0.008174343451332836,
+            "min": 0.516615241765976,
+            "max": 0.5360631118429467,
+            "per_seed": [
+              0.526573066381698,
+              0.5175986315341706,
+              0.5192364828383669,
+              0.5360631118429467,
+              0.516615241765976
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.7190366983413696,
+              "nll": 0.5676933410424496,
+              "macro_f1": 0.7184735584683928
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.6995412707328796,
+              "nll": 0.5806181288413843,
+              "macro_f1": 0.6995270586626123
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.7087156176567078,
+              "nll": 0.5743532901522117,
+              "macro_f1": 0.7082720869093342
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.6903669834136963,
+              "nll": 0.5954658826595944,
+              "macro_f1": 0.6894259181089066
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.6857798099517822,
+              "nll": 0.5944069642397113,
+              "macro_f1": 0.6733653777799651
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 6.63340410931545,
+              "fusion": 3.9034705677168042,
+              "question": 18.94734347636898,
+              "state_proj": 11.695114685651664,
+              "option_pathway": 3.9034705677168042,
+              "state_stack": 13.445361935925277,
+              "total": 23.5587916683467
+            },
+            "final": {
+              "state_pathway": 6.636662849541146,
+              "fusion": 4.033053501793199,
+              "question": 18.855136096905003,
+              "state_proj": 11.736535407599456,
+              "option_pathway": 4.033053501793199,
+              "state_stack": 13.483009944085754,
+              "total": 23.528137090161895
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.7006880760192871,
+            "std": 0.013520446349294264,
+            "min": 0.6857798099517822,
+            "max": 0.7190366983413696,
+            "per_seed": [
+              0.7190366983413696,
+              0.6995412707328796,
+              0.7087156176567078,
+              0.6903669834136963,
+              0.6857798099517822
+            ]
+          },
+          "nll": {
+            "mean": 0.5825075213870703,
+            "std": 0.012237617186146832,
+            "min": 0.5676933410424496,
+            "max": 0.5954658826595944,
+            "per_seed": [
+              0.5676933410424496,
+              0.5806181288413843,
+              0.5743532901522117,
+              0.5954658826595944,
+              0.5944069642397113
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.6978127999858422,
+            "std": 0.017372525341492397,
+            "min": 0.6733653777799651,
+            "max": 0.7184735584683928,
+            "per_seed": [
+              0.7184735584683928,
+              0.6995270586626123,
+              0.7082720869093342,
+              0.6894259181089066,
+              0.6733653777799651
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.608399894262882,
+            "std": 0.008864413532428424,
+            "min": 0.5988525596070797,
+            "max": 0.6227331104430747,
+            "per_seed": [
+              0.6053807316942418,
+              0.6056400176058424,
+              0.6093930519641714,
+              0.6227331104430747,
+              0.5988525596070797
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.5232173068726317,
+            "std": 0.008174343451332836,
+            "min": 0.516615241765976,
+            "max": 0.5360631118429467,
+            "per_seed": [
+              0.526573066381698,
+              0.5175986315341706,
+              0.5192364828383669,
+              0.5360631118429467,
+              0.516615241765976
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.7190366983413696,
+              "nll": 0.5676933410424496,
+              "macro_f1": 0.7184735584683928
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.6995412707328796,
+              "nll": 0.5806181288413843,
+              "macro_f1": 0.6995270586626123
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.7087156176567078,
+              "nll": 0.5743532901522117,
+              "macro_f1": 0.7082720869093342
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.6903669834136963,
+              "nll": 0.5954658826595944,
+              "macro_f1": 0.6894259181089066
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.6857798099517822,
+              "nll": 0.5944069642397113,
+              "macro_f1": 0.6733653777799651
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 6.63340410931545,
+              "fusion": 3.9034705677168042,
+              "question": 18.94734347636898,
+              "state_proj": 11.695114685651664,
+              "option_pathway": 3.9034705677168042,
+              "state_stack": 13.445361935925277,
+              "total": 23.5587916683467
+            },
+            "final": {
+              "state_pathway": 6.636662849541146,
+              "fusion": 4.033053501793199,
+              "question": 18.855136096905003,
+              "state_proj": 11.736535407599456,
+              "option_pathway": 4.033053501793199,
+              "state_stack": 13.483009944085754,
+              "total": 23.528137090161895
+            }
+          },
+          "gate_seed0": {
+            "decision": "conditioned",
+            "delta_nll": -0.001090721747837975,
+            "conditioned_nll": 0.5521205637473613,
+            "state_only_nll": 0.5532112854951993,
+            "applied_flag": true,
+            "tau": 0.00033760757591713134
+          },
+          "gate_decisions_all_seeds": [
+            "conditioned",
+            "conditioned",
+            "conditioned",
+            "conditioned",
+            "conditioned"
+          ]
+        }
+      },
+      "fixed_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.7013761401176453,
+            "std": 0.0138234592339122,
+            "min": 0.6811926364898682,
+            "max": 0.7178899049758911,
+            "per_seed": [
+              0.7178899049758911,
+              0.7029816508293152,
+              0.7087156176567078,
+              0.6961008906364441,
+              0.6811926364898682
+            ]
+          },
+          "nll": {
+            "mean": 0.5832763145943568,
+            "std": 0.011907876886505046,
+            "min": 0.5677396666329914,
+            "max": 0.5990024771216338,
+            "per_seed": [
+              0.5677396666329914,
+              0.583166637018471,
+              0.5769724000136264,
+              0.5895003921850617,
+              0.5990024771216338
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.6983479682250174,
+            "std": 0.018933328660631018,
+            "min": 0.6676537685355796,
+            "max": 0.7174082583310499,
+            "per_seed": [
+              0.7174082583310499,
+              0.7029781357882624,
+              0.7082720869093342,
+              0.6954275915608611,
+              0.6676537685355796
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.608399894262882,
+            "std": 0.008864413532428424,
+            "min": 0.5988525596070797,
+            "max": 0.6227331104430747,
+            "per_seed": [
+              0.6053807316942418,
+              0.6056400176058424,
+              0.6093930519641714,
+              0.6227331104430747,
+              0.5988525596070797
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.5235446759994994,
+            "std": 0.008525617620275596,
+            "min": 0.516563042047176,
+            "max": 0.5367236727095664,
+            "per_seed": [
+              0.5274629288531364,
+              0.5175382082766675,
+              0.5194355281109505,
+              0.5367236727095664,
+              0.516563042047176
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.7178899049758911,
+              "nll": 0.5677396666329914,
+              "macro_f1": 0.7174082583310499
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.7029816508293152,
+              "nll": 0.583166637018471,
+              "macro_f1": 0.7029781357882624
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.7087156176567078,
+              "nll": 0.5769724000136264,
+              "macro_f1": 0.7082720869093342
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.6961008906364441,
+              "nll": 0.5895003921850617,
+              "macro_f1": 0.6954275915608611
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.6811926364898682,
+              "nll": 0.5990024771216338,
+              "macro_f1": 0.6676537685355796
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 6.63340410931545,
+              "fusion": 3.9034705677168042,
+              "question": 18.94734347636898,
+              "state_proj": 11.695114685651664,
+              "option_pathway": 3.9034705677168042,
+              "state_stack": 13.445361935925277,
+              "total": 23.5587916683467
+            },
+            "final": {
+              "option_interaction": 11.325871527880498,
+              "state_pathway": 6.63491807958838,
+              "fusion": 5.612026267053239,
+              "schema": 18.68533853706188,
+              "question": 18.855419423051476,
+              "state_proj": 11.736121197577505,
+              "option_pathway": 22.55907978913944,
+              "state_stack": 13.481790633557429,
+              "total": 32.344977991011575
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.7011467814445496,
+            "std": 0.01424514676029969,
+            "min": 0.6800458431243896,
+            "max": 0.7178899049758911,
+            "per_seed": [
+              0.7178899049758911,
+              0.7029816508293152,
+              0.7087156176567078,
+              0.6961008906364441,
+              0.6800458431243896
+            ]
+          },
+          "nll": {
+            "mean": 0.5831847881931314,
+            "std": 0.011757594128976541,
+            "min": 0.5677396666329914,
+            "max": 0.5985448451155061,
+            "per_seed": [
+              0.5677396666329914,
+              0.583166637018471,
+              0.5769724000136264,
+              0.5895003921850617,
+              0.5985448451155061
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.6981409556433964,
+            "std": 0.01935382181928092,
+            "min": 0.6666187056274744,
+            "max": 0.7174082583310499,
+            "per_seed": [
+              0.7174082583310499,
+              0.7029781357882624,
+              0.7082720869093342,
+              0.6954275915608611,
+              0.6666187056274744
+            ]
+          },
+          "train_loss_first": {
+            "mean": 0.608399894262882,
+            "std": 0.008864413532428424,
+            "min": 0.5988525596070797,
+            "max": 0.6227331104430747,
+            "per_seed": [
+              0.6053807316942418,
+              0.6056400176058424,
+              0.6093930519641714,
+              0.6227331104430747,
+              0.5988525596070797
+            ]
+          },
+          "train_loss_last": {
+            "mean": 0.5235446759994994,
+            "std": 0.008525617620275596,
+            "min": 0.516563042047176,
+            "max": 0.5367236727095664,
+            "per_seed": [
+              0.5274629288531364,
+              0.5175382082766675,
+              0.5194355281109505,
+              0.5367236727095664,
+              0.516563042047176
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.7178899049758911,
+              "nll": 0.5677396666329914,
+              "macro_f1": 0.7174082583310499
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.7029816508293152,
+              "nll": 0.583166637018471,
+              "macro_f1": 0.7029781357882624
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.7087156176567078,
+              "nll": 0.5769724000136264,
+              "macro_f1": 0.7082720869093342
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.6961008906364441,
+              "nll": 0.5895003921850617,
+              "macro_f1": 0.6954275915608611
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.6800458431243896,
+              "nll": 0.5985448451155061,
+              "macro_f1": 0.6666187056274744
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.4946236559139785,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5053763440860215,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 6.63340410931545,
+              "fusion": 3.9034705677168042,
+              "question": 18.94734347636898,
+              "state_proj": 11.695114685651664,
+              "option_pathway": 3.9034705677168042,
+              "state_stack": 13.445361935925277,
+              "total": 23.5587916683467
+            },
+            "final": {
+              "option_interaction": 11.325871527880498,
+              "state_pathway": 6.63491807958838,
+              "fusion": 5.612026267053239,
+              "schema": 18.68533853706188,
+              "question": 18.855419423051476,
+              "state_proj": 11.736121197577505,
+              "option_pathway": 22.55907978913944,
+              "state_stack": 13.481790633557429,
+              "total": 32.344977991011575
+            }
+          },
+          "gate_seed0": {
+            "decision": "conditioned",
+            "delta_nll": -8.331350050849728e-06,
+            "conditioned_nll": 0.5517911594817415,
+            "state_only_nll": 0.5517994908317924,
+            "applied_flag": true,
+            "tau": 6.509229582390805e-05
+          },
+          "gate_decisions_all_seeds": [
+            "conditioned",
+            "conditioned",
+            "conditioned",
+            "conditioned",
+            "state_only"
+          ]
+        }
+      },
+      "untouched_references": {
+        "p1_linear": {
+          "label": "P1 Linear probe [D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.699999988079071,
+            "std": 0.004558413470174413,
+            "min": 0.6961008906364441,
+            "max": 0.7075688242912292,
+            "per_seed": [
+              0.7075688242912292,
+              0.6972476840019226,
+              0.6961008906364441,
+              0.6983944773674011,
+              0.7006880640983582
+            ]
+          },
+          "nll": {
+            "mean": 0.5805339921774422,
+            "std": 0.005320103010798841,
+            "min": 0.5749550929696016,
+            "max": 0.5884282075503052,
+            "per_seed": [
+              0.5764478381532016,
+              0.5805514700416518,
+              0.5749550929696016,
+              0.5884282075503052,
+              0.5822873521724508
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "p2_mlp": {
+          "label": "P2 MLP probe [D->D]->ReLU->[D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.6965596318244934,
+            "std": 0.016351308276631744,
+            "min": 0.6685779690742493,
+            "max": 0.7087156176567078,
+            "per_seed": [
+              0.6961008906364441,
+              0.7029816508293152,
+              0.6685779690742493,
+              0.7064220309257507,
+              0.7087156176567078
+            ]
+          },
+          "nll": {
+            "mean": 0.5889128335298647,
+            "std": 0.014636306238934195,
+            "min": 0.5734784626964484,
+            "max": 0.6126294743402181,
+            "per_seed": [
+              0.5867982345313925,
+              0.5817857706567787,
+              0.6126294743402181,
+              0.589872225424486,
+              0.5734784626964484
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "p4_state_only_bypass": {
+          "label": "P4 JevX with the question/schema pathway bypassed (fixed basis)",
+          "accuracy": {
+            "mean": 0.6974770665168762,
+            "std": 0.018445135521697537,
+            "min": 0.6674311757087708,
+            "max": 0.7144495248794556,
+            "per_seed": [
+              0.7144495248794556,
+              0.7029816508293152,
+              0.6938073635101318,
+              0.6674311757087708,
+              0.7087156176567078
+            ]
+          },
+          "nll": {
+            "mean": 0.6005462693811554,
+            "std": 0.015410105286736553,
+            "min": 0.5813622260693988,
+            "max": 0.6223910276593952,
+            "per_seed": [
+              0.5813622260693988,
+              0.595374965931236,
+              0.5956872161052142,
+              0.6079159111405328,
+              0.6223910276593952
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "A_linear_interact": {
+          "label": "A JevX: linear state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.6928899049758911,
+            "std": 0.025622467435458866,
+            "min": 0.6548165082931519,
+            "max": 0.7201834917068481,
+            "per_seed": [
+              0.7201834917068481,
+              0.6995412707328796,
+              0.7087156176567078,
+              0.6548165082931519,
+              0.6811926364898682
+            ]
+          },
+          "nll": {
+            "mean": 0.6018156159123798,
+            "std": 0.03589660286690256,
+            "min": 0.5773953958180366,
+            "max": 0.6620498263176255,
+            "per_seed": [
+              0.5773953958180366,
+              0.5804458201751271,
+              0.5810146455382134,
+              0.6620498263176255,
+              0.6081723917128966
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "B_mlp_no_interact": {
+          "label": "B JevX: MLP state path + option interaction OFF",
+          "accuracy": {
+            "mean": 0.7013761520385742,
+            "std": 0.014337163272436478,
+            "min": 0.6834862232208252,
+            "max": 0.7201834917068481,
+            "per_seed": [
+              0.7201834917068481,
+              0.7006880640983582,
+              0.7098624110221863,
+              0.6926605701446533,
+              0.6834862232208252
+            ]
+          },
+          "nll": {
+            "mean": 0.5839881085286048,
+            "std": 0.012197348464206302,
+            "min": 0.5681990151114297,
+            "max": 0.5966962232832869,
+            "per_seed": [
+              0.5681990151114297,
+              0.5836229092527916,
+              0.5762709076459482,
+              0.5951514873495677,
+              0.5966962232832869
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "C_mlp_interact": {
+          "label": "C JevX: MLP state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.7,
+            "std": 0.012233609031658037,
+            "min": 0.6892201900482178,
+            "max": 0.7201834917068481,
+            "per_seed": [
+              0.7201834917068481,
+              0.7006880640983582,
+              0.6983944773674011,
+              0.6915137767791748,
+              0.6892201900482178
+            ]
+          },
+          "nll": {
+            "mean": 0.5864614425739985,
+            "std": 0.013014272372805159,
+            "min": 0.5694931137189359,
+            "max": 0.6024921107959263,
+            "per_seed": [
+              0.5694931137189359,
+              0.5819852450448953,
+              0.5821723956910653,
+              0.6024921107959263,
+              0.5961643476191698
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        },
+        "D_gate": {
+          "label": "D JevX: MLP state path + interaction + adaptive gate (cal-only)",
+          "accuracy": {
+            "mean": 0.7002293586730957,
+            "std": 0.012708161319989931,
+            "min": 0.6892201900482178,
+            "max": 0.7213302850723267,
+            "per_seed": [
+              0.7213302850723267,
+              0.7006880640983582,
+              0.6983944773674011,
+              0.6915137767791748,
+              0.6892201900482178
+            ]
+          },
+          "nll": {
+            "mean": 0.5834232654970172,
+            "std": 0.011664692699875079,
+            "min": 0.5655954276765012,
+            "max": 0.5961643476191698,
+            "per_seed": [
+              0.5655954276765012,
+              0.5819852450448953,
+              0.5821723956910653,
+              0.5911989114534542,
+              0.5961643476191698
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_sst2.json (2026-09-26, not re-run)"
+        }
+      },
+      "comparisons": {
+        "E_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.0013761401176452636,
+            "per_seed_delta": [
+              -0.0022935867309570312,
+              0.0022935867309570312,
+              0.01032114028930664,
+              0.004587113857269287,
+              -0.00802755355834961
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.0031851279796416775,
+            "per_seed_delta": [
+              -0.0017534470859444928,
+              0.0011813919735756961,
+              -0.005199995677438896,
+              -0.012991718610864678,
+              0.002838129502463982
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -1.1920928955078126e-08,
+            "per_seed_delta": [
+              -0.0022935867309570312,
+              0.0022935867309570312,
+              -0.0011467933654785156,
+              0.0034403204917907715,
+              -0.0022935867309570312
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.0007117939342479618,
+            "per_seed_delta": [
+              -0.00045934847843831506,
+              -0.00045627223432054276,
+              0.0007014923676781359,
+              -0.005651095164506015,
+              0.0023062538383469278
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "F_gate_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.0011467814445495605,
+            "per_seed_delta": [
+              -0.0022935867309570312,
+              0.0022935867309570312,
+              0.01032114028930664,
+              0.004587113857269287,
+              -0.009174346923828125
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.0032766543808672166,
+            "per_seed_delta": [
+              -0.0017534470859444928,
+              0.0011813919735756961,
+              -0.005199995677438896,
+              -0.012991718610864678,
+              0.002380497496336287
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": -0.0002293705940246582,
+            "per_seed_delta": [
+              -0.0022935867309570312,
+              0.0022935867309570312,
+              -0.0011467933654785156,
+              0.0034403204917907715,
+              -0.003440380096435547
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.0008033203354735008,
+            "per_seed_delta": [
+              -0.00045934847843831506,
+              -0.00045627223432054276,
+              0.0007014923676781359,
+              -0.005651095164506015,
+              0.0018486218322192327
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": true,
+            "B": true
+          }
+        },
+        "E_vs_F_accuracy": {
+          "mean_delta": 0.00022935867309570312,
+          "per_seed_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0011467933654785156
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 0,
+          "seeds_tied": 4
+        },
+        "E_old_vs_E_new_accuracy": {
+          "mean_delta": 0.0006880640983581543,
+          "per_seed_delta": [
+            -0.0011467933654785156,
+            0.003440380096435547,
+            0.0,
+            0.005733907222747803,
+            -0.0045871734619140625
+          ],
+          "seeds_favouring_left": 2,
+          "seeds_favouring_right": 2,
+          "seeds_tied": 1
+        },
+        "F_old_vs_F_new_accuracy": {
+          "mean_delta": 0.0004587054252624512,
+          "per_seed_delta": [
+            -0.0011467933654785156,
+            0.003440380096435547,
+            0.0,
+            0.005733907222747803,
+            -0.005733966827392578
+          ],
+          "seeds_favouring_left": 2,
+          "seeds_favouring_right": 2,
+          "seeds_tied": 1
+        },
+        "C_minus_B_accuracy": {
+          "mean_delta": -0.0013761520385742188,
+          "per_seed_delta": [
+            0.0,
+            0.0,
+            -0.011467933654785156,
+            -0.0011467933654785156,
+            0.005733966827392578
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 2,
+          "seeds_tied": 2
+        }
+      }
+    },
+    "ravdess": {
+      "features": {
+        "kind": "audio",
+        "dataset": {
+          "dataset_id": "Codec-SUPERB/RAVDESS",
+          "dataset_revision": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+          "snapshot_component": "46aa36c5fdeb1b6d63b746b74fde528a540044b2",
+          "n_clips": 1440,
+          "label_counts": {
+            "neutral": 96,
+            "calm": 192,
+            "happy": 192,
+            "sad": 192,
+            "angry": 192,
+            "fearful": 192,
+            "disgusted": 192,
+            "surprised": 192
+          },
+          "download_wall_s": 3.49
+        },
+        "backbone_id": "superb/wav2vec2-base-superb-ks",
+        "pooling": "native (wav2vec2 has no pooler; adapter masked_mean)",
+        "fusion": "concat",
+        "audio_max_seconds": 3.0,
+        "feature_dim": 768,
+        "source_protocol": "benchmarks/run_modality.py --modality audio (EXP-A)",
+        "split_seed": 0,
+        "source": "cache"
+      },
+      "protocol": {
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "cells": [
+          "E_curriculum",
+          "F_gate_curriculum"
+        ],
+        "epochs": 4,
+        "stage_a_epochs": 2,
+        "stage_b_epochs": 2,
+        "lr": 0.001,
+        "batch_size": 64,
+        "train_n": 700,
+        "cal_n": 240,
+        "test_n": 500,
+        "feature_dim": 768,
+        "num_classes": 8,
+        "question": "Which emotion is spoken in this audio?",
+        "options": [
+          "neutral",
+          "calm",
+          "happy",
+          "sad",
+          "angry",
+          "fearful",
+          "disgusted",
+          "surprised"
+        ],
+        "optimizer": "torch.optim.AdamW (HeadTrainer default), grad_clip=1.0",
+        "loss": "jevx.training.choice_loss (masked cross-entropy)",
+        "gate_split": "calibration",
+        "latency": {
+          "batch_size": 1,
+          "warmup": 20,
+          "iters": 120
+        },
+        "interaction_mode": "bilinear",
+        "lambda_on": 1.0,
+        "lambda_off": 0.0,
+        "note": "IDENTICAL features / splits / seeds / optimizer / lr / epochs / batch / loss for every cell; the backbone is frozen and featurized once, so the only thing that varies is the scoring function (+ gate / curriculum). `interaction OFF` is enforced explicitly with config.conditioning_enabled=False AND set_interaction_scale(0.0), both asserted."
+      },
+      "failures": {
+        "old": {},
+        "new": {}
+      },
+      "wall_s": {
+        "old": 703.0,
+        "new": 234.94
+      },
+      "superseded_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.2812000006437302,
+            "std": 0.05790681883218127,
+            "min": 0.23600000143051147,
+            "max": 0.3540000021457672,
+            "per_seed": [
+              0.2460000067949295,
+              0.23600000143051147,
+              0.3540000021457672,
+              0.33399999141693115,
+              0.23600000143051147
+            ]
+          },
+          "nll": {
+            "mean": 1.8637798718129628,
+            "std": 0.05473928529285066,
+            "min": 1.7990401673954297,
+            "max": 1.9175017486392512,
+            "per_seed": [
+              1.9012932548626356,
+              1.9175017486392512,
+              1.8108456549494352,
+              1.7990401673954297,
+              1.890218533218062
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.22467042448002988,
+            "std": 0.06296086804095714,
+            "min": 0.165710005050293,
+            "max": 0.2996601573037199,
+            "per_seed": [
+              0.19059897843464368,
+              0.18157206151754934,
+              0.2858109200939435,
+              0.2996601573037199,
+              0.165710005050293
+            ]
+          },
+          "train_loss_first": {
+            "mean": 2.064165234565735,
+            "std": 0.02754189557231479,
+            "min": 2.0293485901572486,
+            "max": 2.1002882610667837,
+            "per_seed": [
+              2.080432891845703,
+              2.0483749237927524,
+              2.0623815059661865,
+              2.0293485901572486,
+              2.1002882610667837
+            ]
+          },
+          "train_loss_last": {
+            "mean": 1.7076439489017834,
+            "std": 0.05854210889554735,
+            "min": 1.6242022947831587,
+            "max": 1.7729720202359287,
+            "per_seed": [
+              1.719540455124595,
+              1.7729720202359287,
+              1.676711375063116,
+              1.6242022947831587,
+              1.7447935993021184
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.2460000067949295,
+              "nll": 1.9012932548626356,
+              "macro_f1": 0.19059897843464368
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.23600000143051147,
+              "nll": 1.9175017486392512,
+              "macro_f1": 0.18157206151754934
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.3540000021457672,
+              "nll": 1.8108456549494352,
+              "macro_f1": 0.2858109200939435
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.33399999141693115,
+              "nll": 1.7990401673954297,
+              "macro_f1": 0.2996601573037199
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.23600000143051147,
+              "nll": 1.890218533218062,
+              "macro_f1": 0.165710005050293
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.47619047619047616,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5238095238095238,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 16.14530816892035,
+              "fusion": 21.9128595720493,
+              "question": 52.48896278709346,
+              "state_proj": 31.80234704096732,
+              "option_pathway": 21.9128595720493,
+              "state_stack": 35.66595369793901,
+              "total": 67.1366135746566
+            },
+            "final": {
+              "state_pathway": 16.549914716172744,
+              "fusion": 22.38085883070741,
+              "question": 52.83087441812237,
+              "state_proj": 32.30620720785537,
+              "option_pathway": 22.38085883070741,
+              "state_stack": 36.29863222312209,
+              "total": 67.89399704725705
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.30679999887943266,
+            "std": 0.05106075276802236,
+            "min": 0.23999999463558197,
+            "max": 0.3720000088214874,
+            "per_seed": [
+              0.31200000643730164,
+              0.23999999463558197,
+              0.33399999141693115,
+              0.3720000088214874,
+              0.2759999930858612
+            ]
+          },
+          "nll": {
+            "mean": 1.7636580964352195,
+            "std": 0.08750988377640474,
+            "min": 1.6674640308829636,
+            "max": 1.8545281027795633,
+            "per_seed": [
+              1.8465802280996872,
+              1.8545281027795633,
+              1.6846443092473689,
+              1.6674640308829636,
+              1.765073811166514
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.2541024562723605,
+            "std": 0.047067205260339924,
+            "min": 0.19734176789442703,
+            "max": 0.3269727002025073,
+            "per_seed": [
+              0.23603242772626942,
+              0.19734176789442703,
+              0.2557867487555342,
+              0.3269727002025073,
+              0.2543786367830643
+            ]
+          },
+          "train_loss_first": {
+            "mean": 2.064165234565735,
+            "std": 0.02754189557231479,
+            "min": 2.0293485901572486,
+            "max": 2.1002882610667837,
+            "per_seed": [
+              2.080432891845703,
+              2.0483749237927524,
+              2.0623815059661865,
+              2.0293485901572486,
+              2.1002882610667837
+            ]
+          },
+          "train_loss_last": {
+            "mean": 1.7076439489017834,
+            "std": 0.05854210889554735,
+            "min": 1.6242022947831587,
+            "max": 1.7729720202359287,
+            "per_seed": [
+              1.719540455124595,
+              1.7729720202359287,
+              1.676711375063116,
+              1.6242022947831587,
+              1.7447935993021184
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.31200000643730164,
+              "nll": 1.8465802280996872,
+              "macro_f1": 0.23603242772626942
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.23999999463558197,
+              "nll": 1.8545281027795633,
+              "macro_f1": 0.19734176789442703
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.33399999141693115,
+              "nll": 1.6846443092473689,
+              "macro_f1": 0.2557867487555342
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.3720000088214874,
+              "nll": 1.6674640308829636,
+              "macro_f1": 0.3269727002025073
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.2759999930858612,
+              "nll": 1.765073811166514,
+              "macro_f1": 0.2543786367830643
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.47619047619047616,
+              "interaction_scale_first": 0.0,
+              "condition_options": null
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5238095238095238,
+              "condition_options": null
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 16.14530816892035,
+              "fusion": 21.9128595720493,
+              "question": 52.48896278709346,
+              "state_proj": 31.80234704096732,
+              "option_pathway": 21.9128595720493,
+              "state_stack": 35.66595369793901,
+              "total": 67.1366135746566
+            },
+            "final": {
+              "state_pathway": 16.549914716172744,
+              "fusion": 22.38085883070741,
+              "question": 52.83087441812237,
+              "state_proj": 32.30620720785537,
+              "option_pathway": 22.38085883070741,
+              "state_stack": 36.29863222312209,
+              "total": 67.89399704725705
+            }
+          },
+          "gate_seed0": {
+            "decision": "state_only",
+            "delta_nll": 0.058376237129171615,
+            "conditioned_nll": 1.9233580435315767,
+            "state_only_nll": 1.864981806402405,
+            "applied_flag": false,
+            "tau": 0.02396902055022019
+          },
+          "gate_decisions_all_seeds": [
+            "state_only",
+            "state_only",
+            "state_only",
+            "state_only",
+            "state_only"
+          ]
+        }
+      },
+      "fixed_ef": {
+        "E_curriculum": {
+          "label": "E JevX: MLP state path + interaction + Stage A/B curriculum",
+          "accuracy": {
+            "mean": 0.32800000309944155,
+            "std": 0.03635931456150629,
+            "min": 0.2840000092983246,
+            "max": 0.3659999966621399,
+            "per_seed": [
+              0.29600000381469727,
+              0.2840000092983246,
+              0.33799999952316284,
+              0.3659999966621399,
+              0.35600000619888306
+            ]
+          },
+          "nll": {
+            "mean": 1.751734727148199,
+            "std": 0.05902277064676138,
+            "min": 1.7052490753369431,
+            "max": 1.82045641261159,
+            "per_seed": [
+              1.7128201431343681,
+              1.812024613836424,
+              1.82045641261159,
+              1.708123390821669,
+              1.7052490753369431
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.26207983930012524,
+            "std": 0.04403936574997329,
+            "min": 0.19894690479499674,
+            "max": 0.31614332450565363,
+            "per_seed": [
+              0.2436666597191188,
+              0.19894690479499674,
+              0.28396186818897307,
+              0.2676804392918838,
+              0.31614332450565363
+            ]
+          },
+          "train_loss_first": {
+            "mean": 2.064165234565735,
+            "std": 0.02754189557231479,
+            "min": 2.0293485901572486,
+            "max": 2.1002882610667837,
+            "per_seed": [
+              2.080432891845703,
+              2.0483749237927524,
+              2.0623815059661865,
+              2.0293485901572486,
+              2.1002882610667837
+            ]
+          },
+          "train_loss_last": {
+            "mean": 1.7755625681443648,
+            "std": 0.04167481402195906,
+            "min": 1.7223372567783704,
+            "max": 1.8269867897033691,
+            "per_seed": [
+              1.7223372567783704,
+              1.7576839598742398,
+              1.8072711879556829,
+              1.7635336464101619,
+              1.8269867897033691
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.29600000381469727,
+              "nll": 1.7128201431343681,
+              "macro_f1": 0.2436666597191188
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.2840000092983246,
+              "nll": 1.812024613836424,
+              "macro_f1": 0.19894690479499674
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.33799999952316284,
+              "nll": 1.82045641261159,
+              "macro_f1": 0.28396186818897307
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.3659999966621399,
+              "nll": 1.708123390821669,
+              "macro_f1": 0.2676804392918838
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.35600000619888306,
+              "nll": 1.7052490753369431,
+              "macro_f1": 0.31614332450565363
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.47619047619047616,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5238095238095238,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 16.14530816892035,
+              "fusion": 21.9128595720493,
+              "question": 52.48896278709346,
+              "state_proj": 31.80234704096732,
+              "option_pathway": 21.9128595720493,
+              "state_stack": 35.66595369793901,
+              "total": 67.1366135746566
+            },
+            "final": {
+              "option_interaction": 27.782929151034622,
+              "state_pathway": 16.552066426428414,
+              "fusion": 31.488679977352145,
+              "schema": 47.69677665780306,
+              "question": 52.829869996309675,
+              "state_proj": 32.253073288713686,
+              "option_pathway": 63.54849032409703,
+              "state_stack": 36.25233288427153,
+              "total": 90.24210450699204
+            }
+          },
+          "gate_seed0": {
+            "decision": null,
+            "delta_nll": null,
+            "conditioned_nll": null,
+            "state_only_nll": null,
+            "applied_flag": null,
+            "tau": null
+          },
+          "gate_decisions_all_seeds": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "F_gate_curriculum": {
+          "label": "F JevX: MLP state path + interaction + gate + curriculum",
+          "accuracy": {
+            "mean": 0.32680000066757203,
+            "std": 0.036044413360424486,
+            "min": 0.2840000092983246,
+            "max": 0.3659999966621399,
+            "per_seed": [
+              0.29600000381469727,
+              0.2840000092983246,
+              0.3319999873638153,
+              0.3659999966621399,
+              0.35600000619888306
+            ]
+          },
+          "nll": {
+            "mean": 1.7319976669466168,
+            "std": 0.045172282142501116,
+            "min": 1.7052490753369431,
+            "max": 1.812024613836424,
+            "per_seed": [
+              1.7128201431343681,
+              1.812024613836424,
+              1.7217711116036793,
+              1.708123390821669,
+              1.7052490753369431
+            ]
+          },
+          "macro_f1": {
+            "mean": 0.2679038207434246,
+            "std": 0.049271298545861125,
+            "min": 0.19894690479499674,
+            "max": 0.31614332450565363,
+            "per_seed": [
+              0.2436666597191188,
+              0.19894690479499674,
+              0.31308177540547005,
+              0.2676804392918838,
+              0.31614332450565363
+            ]
+          },
+          "train_loss_first": {
+            "mean": 2.064165234565735,
+            "std": 0.02754189557231479,
+            "min": 2.0293485901572486,
+            "max": 2.1002882610667837,
+            "per_seed": [
+              2.080432891845703,
+              2.0483749237927524,
+              2.0623815059661865,
+              2.0293485901572486,
+              2.1002882610667837
+            ]
+          },
+          "train_loss_last": {
+            "mean": 1.7755625681443648,
+            "std": 0.04167481402195906,
+            "min": 1.7223372567783704,
+            "max": 1.8269867897033691,
+            "per_seed": [
+              1.7223372567783704,
+              1.7576839598742398,
+              1.8072711879556829,
+              1.7635336464101619,
+              1.8269867897033691
+            ]
+          },
+          "per_seed_rows": [
+            {
+              "seed": 0,
+              "accuracy": 0.29600000381469727,
+              "nll": 1.7128201431343681,
+              "macro_f1": 0.2436666597191188
+            },
+            {
+              "seed": 1,
+              "accuracy": 0.2840000092983246,
+              "nll": 1.812024613836424,
+              "macro_f1": 0.19894690479499674
+            },
+            {
+              "seed": 2,
+              "accuracy": 0.3319999873638153,
+              "nll": 1.7217711116036793,
+              "macro_f1": 0.31308177540547005
+            },
+            {
+              "seed": 3,
+              "accuracy": 0.3659999966621399,
+              "nll": 1.708123390821669,
+              "macro_f1": 0.2676804392918838
+            },
+            {
+              "seed": 4,
+              "accuracy": 0.35600000619888306,
+              "nll": 1.7052490753369431,
+              "macro_f1": 0.31614332450565363
+            }
+          ],
+          "epoch_records_seed0": [
+            {
+              "stage": "a",
+              "epoch": 1,
+              "global_epoch": 1,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "a",
+              "epoch": 2,
+              "global_epoch": 2,
+              "interaction_scale": 0.0,
+              "interaction_scale_first": 0.0,
+              "condition_options": false
+            },
+            {
+              "stage": "b",
+              "epoch": 1,
+              "global_epoch": 3,
+              "interaction_scale": 0.47619047619047616,
+              "interaction_scale_first": 0.0,
+              "condition_options": true
+            },
+            {
+              "stage": "b",
+              "epoch": 2,
+              "global_epoch": 4,
+              "interaction_scale": 1.0,
+              "interaction_scale_first": 0.5238095238095238,
+              "condition_options": true
+            }
+          ],
+          "grad_norms_seed0": {
+            "epoch1": {
+              "state_pathway": 16.14530816892035,
+              "fusion": 21.9128595720493,
+              "question": 52.48896278709346,
+              "state_proj": 31.80234704096732,
+              "option_pathway": 21.9128595720493,
+              "state_stack": 35.66595369793901,
+              "total": 67.1366135746566
+            },
+            "final": {
+              "option_interaction": 27.782929151034622,
+              "state_pathway": 16.552066426428414,
+              "fusion": 31.488679977352145,
+              "schema": 47.69677665780306,
+              "question": 52.829869996309675,
+              "state_proj": 32.253073288713686,
+              "option_pathway": 63.54849032409703,
+              "state_stack": 36.25233288427153,
+              "total": 90.24210450699204
+            }
+          },
+          "gate_seed0": {
+            "decision": "conditioned",
+            "delta_nll": 0.0008816522856553988,
+            "conditioned_nll": 1.6964455710103115,
+            "state_only_nll": 1.695563918724656,
+            "applied_flag": true,
+            "tau": 0.007762536558162927
+          },
+          "gate_decisions_all_seeds": [
+            "conditioned",
+            "conditioned",
+            "state_only",
+            "conditioned",
+            "conditioned"
+          ]
+        }
+      },
+      "untouched_references": {
+        "p1_linear": {
+          "label": "P1 Linear probe [D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.3472000002861023,
+            "std": 0.016223440379230663,
+            "min": 0.32600000500679016,
+            "max": 0.3619999885559082,
+            "per_seed": [
+              0.3540000021457672,
+              0.32600000500679016,
+              0.36000001430511475,
+              0.33399999141693115,
+              0.3619999885559082
+            ]
+          },
+          "nll": {
+            "mean": 1.9169042533406138,
+            "std": 0.0015036822439184546,
+            "min": 1.9157663558732874,
+            "max": 1.919366900749414,
+            "per_seed": [
+              1.9173120440790732,
+              1.9161319414124576,
+              1.919366900749414,
+              1.9159440245888373,
+              1.9157663558732874
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "p2_mlp": {
+          "label": "P2 MLP probe [D->D]->ReLU->[D->K] on the pooled state",
+          "accuracy": {
+            "mean": 0.3631999969482422,
+            "std": 0.02170713789486485,
+            "min": 0.32600000500679016,
+            "max": 0.3779999911785126,
+            "per_seed": [
+              0.37599998712539673,
+              0.32600000500679016,
+              0.3619999885559082,
+              0.3779999911785126,
+              0.37400001287460327
+            ]
+          },
+          "nll": {
+            "mean": 1.7303694173532889,
+            "std": 0.010883070479986622,
+            "min": 1.7195811097348015,
+            "max": 1.7472083067983109,
+            "per_seed": [
+              1.7341918102990892,
+              1.7472083067983109,
+              1.7277221012163901,
+              1.7195811097348015,
+              1.7231437587178529
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "p4_state_only_bypass": {
+          "label": "P4 JevX with the question/schema pathway bypassed (fixed basis)",
+          "accuracy": {
+            "mean": 0.2719999969005585,
+            "std": 0.05721887820264439,
+            "min": 0.19599999487400055,
+            "max": 0.3199999928474426,
+            "per_seed": [
+              0.22599999606609344,
+              0.19599999487400055,
+              0.30000001192092896,
+              0.3179999887943268,
+              0.3199999928474426
+            ]
+          },
+          "nll": {
+            "mean": 2.098190109991175,
+            "std": 0.22315831212101842,
+            "min": 1.9301447944899024,
+            "max": 2.4840087302542124,
+            "per_seed": [
+              2.4840087302542124,
+              2.013664125207131,
+              1.9764246916567723,
+              2.0867082083478583,
+              1.9301447944899024
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "A_linear_interact": {
+          "label": "A JevX: linear state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.21040000021457672,
+            "std": 0.03513972948221628,
+            "min": 0.18799999356269836,
+            "max": 0.2720000147819519,
+            "per_seed": [
+              0.2720000147819519,
+              0.18799999356269836,
+              0.20600000023841858,
+              0.19599999487400055,
+              0.1899999976158142
+            ]
+          },
+          "nll": {
+            "mean": 2.0500458194048945,
+            "std": 0.13585437620804014,
+            "min": 1.9371250789387637,
+            "max": 2.2864152948158103,
+            "per_seed": [
+              2.2864152948158103,
+              2.0125181428460674,
+              1.9371250789387637,
+              1.999857463392375,
+              2.014313117031457
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "B_mlp_no_interact": {
+          "label": "B JevX: MLP state path + option interaction OFF",
+          "accuracy": {
+            "mean": 0.30719999969005585,
+            "std": 0.051119472753301996,
+            "min": 0.23999999463558197,
+            "max": 0.3720000088214874,
+            "per_seed": [
+              0.3140000104904175,
+              0.23999999463558197,
+              0.33399999141693115,
+              0.3720000088214874,
+              0.2759999930858612
+            ]
+          },
+          "nll": {
+            "mean": 1.7639835939418056,
+            "std": 0.08694085097754933,
+            "min": 1.6674754135723115,
+            "max": 1.8541896372291526,
+            "per_seed": [
+              1.8465124050735362,
+              1.8541896372291526,
+              1.6867063094278711,
+              1.6674754135723115,
+              1.7650342044061562
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "C_mlp_interact": {
+          "label": "C JevX: MLP state path + option interaction ON",
+          "accuracy": {
+            "mean": 0.23759999871253967,
+            "std": 0.027437195147514803,
+            "min": 0.20200000703334808,
+            "max": 0.25999999046325684,
+            "per_seed": [
+              0.2540000081062317,
+              0.20200000703334808,
+              0.25999999046325684,
+              0.257999986410141,
+              0.21400000154972076
+            ]
+          },
+          "nll": {
+            "mean": 1.8722367687735928,
+            "std": 0.04830090833033904,
+            "min": 1.7964927793274212,
+            "max": 1.9228343009513786,
+            "per_seed": [
+              1.8988246102371436,
+              1.8842968566707818,
+              1.8587352966812392,
+              1.7964927793274212,
+              1.9228343009513786
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        },
+        "D_gate": {
+          "label": "D JevX: MLP state path + interaction + adaptive gate (cal-only)",
+          "accuracy": {
+            "mean": 0.23759999871253967,
+            "std": 0.027437195147514803,
+            "min": 0.20200000703334808,
+            "max": 0.25999999046325684,
+            "per_seed": [
+              0.2540000081062317,
+              0.20200000703334808,
+              0.25999999046325684,
+              0.257999986410141,
+              0.21400000154972076
+            ]
+          },
+          "nll": {
+            "mean": 1.8722367687735928,
+            "std": 0.04830090833033904,
+            "min": 1.7964927793274212,
+            "max": 1.9228343009513786,
+            "per_seed": [
+              1.8988246102371436,
+              1.8842968566707818,
+              1.8587352966812392,
+              1.7964927793274212,
+              1.9228343009513786
+            ]
+          },
+          "source": "benchmarks/results/head_ablation_ravdess.json (2026-09-26, not re-run)"
+        }
+      },
+      "comparisons": {
+        "E_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.09040000438690185,
+            "per_seed_delta": [
+              0.041999995708465576,
+              0.0820000022649765,
+              0.078000009059906,
+              0.1080000102519989,
+              0.1420000046491623
+            ],
+            "seeds_favouring_left": 5,
+            "seeds_favouring_right": 0,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.12050204162539399,
+            "per_seed_delta": [
+              -0.1860044671027754,
+              -0.07227224283435785,
+              -0.03827888406964908,
+              -0.08836938850575216,
+              -0.2175852256144355
+            ],
+            "seeds_favouring_left": 0,
+            "seeds_favouring_right": 5,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": 0.020800003409385683,
+            "per_seed_delta": [
+              -0.018000006675720215,
+              0.044000014662742615,
+              0.0040000081062316895,
+              -0.006000012159347534,
+              0.08000001311302185
+            ],
+            "seeds_favouring_left": 3,
+            "seeds_favouring_right": 2,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.01224886679360666,
+            "per_seed_delta": [
+              -0.13369226193916806,
+              -0.04216502339272865,
+              0.13375010318371894,
+              0.040647977249357536,
+              -0.05978512906921307
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": false,
+            "B": true
+          }
+        },
+        "F_gate_curriculum": {
+          "vs_C_accuracy": {
+            "mean_delta": 0.08920000195503235,
+            "per_seed_delta": [
+              0.041999995708465576,
+              0.0820000022649765,
+              0.07199999690055847,
+              0.1080000102519989,
+              0.1420000046491623
+            ],
+            "seeds_favouring_left": 5,
+            "seeds_favouring_right": 0,
+            "seeds_tied": 0
+          },
+          "vs_C_nll": {
+            "mean_delta": -0.14023910182697613,
+            "per_seed_delta": [
+              -0.1860044671027754,
+              -0.07227224283435785,
+              -0.1369641850775598,
+              -0.08836938850575216,
+              -0.2175852256144355
+            ],
+            "seeds_favouring_left": 0,
+            "seeds_favouring_right": 5,
+            "seeds_tied": 0
+          },
+          "vs_B_accuracy": {
+            "mean_delta": 0.019600000977516175,
+            "per_seed_delta": [
+              -0.018000006675720215,
+              0.044000014662742615,
+              -0.0020000040531158447,
+              -0.006000012159347534,
+              0.08000001311302185
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "vs_B_nll": {
+            "mean_delta": -0.031985926995188804,
+            "per_seed_delta": [
+              -0.13369226193916806,
+              -0.04216502339272865,
+              0.03506480217580821,
+              0.040647977249357536,
+              -0.05978512906921307
+            ],
+            "seeds_favouring_left": 2,
+            "seeds_favouring_right": 3,
+            "seeds_tied": 0
+          },
+          "accuracy_range_overlaps": {
+            "C": false,
+            "B": true
+          }
+        },
+        "E_vs_F_accuracy": {
+          "mean_delta": 0.0012000024318695069,
+          "per_seed_delta": [
+            0.0,
+            0.0,
+            0.006000012159347534,
+            0.0,
+            0.0
+          ],
+          "seeds_favouring_left": 1,
+          "seeds_favouring_right": 0,
+          "seeds_tied": 4
+        },
+        "E_old_vs_E_new_accuracy": {
+          "mean_delta": 0.046800002455711365,
+          "per_seed_delta": [
+            0.04999999701976776,
+            0.04800000786781311,
+            -0.01600000262260437,
+            0.03200000524520874,
+            0.12000000476837158
+          ],
+          "seeds_favouring_left": 4,
+          "seeds_favouring_right": 1,
+          "seeds_tied": 0
+        },
+        "F_old_vs_F_new_accuracy": {
+          "mean_delta": 0.020000001788139342,
+          "per_seed_delta": [
+            -0.01600000262260437,
+            0.044000014662742615,
+            -0.0020000040531158447,
+            -0.006000012159347534,
+            0.08000001311302185
+          ],
+          "seeds_favouring_left": 2,
+          "seeds_favouring_right": 3,
+          "seeds_tied": 0
+        },
+        "C_minus_B_accuracy": {
+          "mean_delta": -0.06960000097751617,
+          "per_seed_delta": [
+            -0.06000000238418579,
+            -0.03799998760223389,
+            -0.07400000095367432,
+            -0.11400002241134644,
+            -0.06199999153614044
+          ],
+          "seeds_favouring_left": 0,
+          "seeds_favouring_right": 5,
+          "seeds_tied": 0
+        }
+      }
+    }
+  }
+}
